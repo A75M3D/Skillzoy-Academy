@@ -1,0 +1,48 @@
+<!-- Supabase Auth - عرض اسم المستخدم بعد الدخول -->
+<script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+  // ✏️ استبدل هذه القيم ببيانات مشروعك من Supabase
+  const supabase = createClient(
+    'https://sjipwstkvvrautexigmt.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNqaXB3c3RrdnZyYXV0ZXhpZ210Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MTE5MDcsImV4cCI6MjA3NDQ4NzkwN30.FSh2yIdZdvdNvtWxK5JB02PIdWOG3707qO-F0c84PnY'
+  );
+
+  // دالة لعرض اسم المستخدم
+  async function checkUser() {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+      // مثال: عرض الترحيب في مكان مخصص (بدون مسح الصفحة)
+      const welcomeDiv = document.createElement('div');
+      welcomeDiv.id = 'user-welcome';
+      welcomeDiv.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #e6f4ea;
+        padding: 10px 16px;
+        border-radius: 8px;
+        font-weight: bold;
+        color: #137333;
+        z-index: 1000;
+      `;
+      welcomeDiv.textContent = ` Skillzoy Academy مرحباً بك في ، ${user.user_metadata.full_name || user.email}!`;
+      document.body.appendChild(welcomeDiv);
+    }
+  }
+// إضافة حدث النقر على زر Google Login
+document.getElementById('google-login')?.addEventListener('click', async () => {
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: 'https://a75m3d.github.io/Skillzoy-Academy/'
+    
+  });
+  if (error) {
+    alert('حدث خطأ أثناء تسجيل الدخول: ' + error.message);
+  }
+});
+
+  // تشغيل التحقق عند تحميل الصفحة
+  checkUser();
+</script>
