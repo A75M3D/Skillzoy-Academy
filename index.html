@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skillzoy Academy - منصة التعلم الإلكتروني</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a0ca3;
+            --primary-light: #4895ef;
+            --secondary: #7209b7;
+            --success: #4cc9f0;
+            --error: #e63946;
+            --warning: #f4a261;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a2980, #26d0ce);
+            background-attachment: fixed;
+            color: var(--light);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* تأثيرات الخلفية المتحركة */
+        .bg-bubbles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .bg-bubbles li {
+            position: absolute;
+            list-style: none;
+            display: block;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.15);
+            bottom: -160px;
+            animation: square 25s infinite;
+            border-radius: 50%;
+        }
+
+        .bg-bubbles li:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .bg-bubbles li:nth-child(2) { left: 20%; width: 80px; height: 80px; animation-delay: 2s; animation-duration: 17s; }
+        .bg-bubbles li:nth-child(3) { left: 25%; animation-delay: 4s; }
+        .bg-bubbles li:nth-child(4) { left: 40%; width: 60px; height: 60px; animation-duration: 22s; }
+        .bg-bubbles li:nth-child(5) { left: 70%; }
+        .bg-bubbles li:nth-child(6) { left: 80%; width: 120px; height: 120px; animation-delay: 3s; }
+        .bg-bubbles li:nth-child(7) { left: 32%; width: 160px; height: 160px; animation-delay: 7s; }
+        .bg-bubbles li:nth-child(8) { left: 55%; width: 20px; height: 20px; animation-delay: 15s; animation-duration: 40s; }
+        .bg-bubbles li:nth-child(9) { left: 25%; width: 10px; height: 10px; animation-delay: 2s; animation-duration: 40s; }
+        .bg-bubbles li:nth-child(10) { left: 90%; width: 160px; height: 160px; animation-delay: 11s; }
+
+        @keyframes square {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; border-radius: 50%; }
+            100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; border-radius: 10%; }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* تصميم الزجاجي */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            box-shadow: var(--glass-shadow);
+            transition: all 0.4s ease;
+        }
+
+        /* Header */
+        header {
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(26, 42, 108, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li a {
+            color: var(--light);
+            text-decoration: none;
+            padding: 10px 15px;
+            transition: all 0.3s ease;
+            border-radius: 5px;
+            font-weight: 500;
+        }
+
+        nav ul li a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--light);
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(67, 97, 238, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--light);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .btn-whatsapp {
+            background: #25D366;
+            color: white;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .btn-whatsapp:hover {
+            background: #128C7E;
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 0;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            font-weight: 700;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .hero-video-container {
+            padding: 20px;
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Sections Common Styles */
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .section-title p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Courses Section */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 30px;
+        }
+
+        .course-card {
+            padding: 0;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .course-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .course-info {
+            padding: 25px;
+        }
+
+        .course-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .free-badge {
+            background: #25D366;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .course-free-note {
+            background: rgba(37, 211, 102, 0.2);
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .course-instructor {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .course-desc {
+            margin-bottom: 15px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .course-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .course-certificate-note {
+            background: rgba(255, 193, 7, 0.2);
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Process Section */
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .process-step {
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .process-step:hover {
+            transform: translateY(-5px);
+        }
+
+        .step-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(77, 208, 225, 0.3);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px;
+            font-size: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .process-step h3 {
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        /* Certificate Section */
+        .certificate {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .certificate-image {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .certificate-image:hover {
+            transform: scale(1.02);
+        }
+
+        /* Contact Section */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .contact-info, .contact-form {
+            padding: 30px;
+        }
+
+        .contact-info p {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .contact-form form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .contact-form input, .contact-form textarea {
+            padding: 14px 16px;
+            border: 1px solid var(--glass-border);
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            color: var(--light);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .contact-form input:focus, .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.25);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .contact-form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 50px 0 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--light);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: rgba(77, 208, 225, 0.5);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 300px;
+            height: 100vh;
+            background: rgba(26, 42, 108, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            transition: right 0.3s ease;
+            padding: 80px 30px 30px;
+            overflow-y: auto;
+        }
+
+        .mobile-nav.active {
+            right: 0;
+        }
+
+        .close-menu {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .mobile-nav ul {
+            list-style: none;
+        }
+
+        .mobile-nav ul li {
+            margin-bottom: 15px;
+        }
+
+        .mobile-nav ul li a {
+            color: var(--light);
+            text-decoration: none;
+            font-size: 1.1rem;
+            display: block;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .mobile-nav .btn {
+            display: block;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+            
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav, .header-actions {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .logo-section {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+            }
+            
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+            }
+            
+            .hero-text h1 {
+                font-size: 2rem;
+            }
+        }
+
+        /* تأثيرات إضافية */
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(67, 97, 238, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(67, 97, 238, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(67, 97, 238, 0); }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- تأثيرات الخلفية -->
+    <ul class="bg-bubbles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <a href="#" class="logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <span>Skillzoy Academy</span>
+                    </a>
+                    
+                    <button class="mobile-menu-btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+
+                <nav>
+                    <ul>
+                        <li><a href="#home">الرئيسية</a></li>
+                        <li><a href="#courses">الدورات</a></li>
+                        <li><a href="#process">كيفية الاشتراك</a></li>
+                        <li><a href="#certificate">الشهادات</a></li>
+                        <li><a href="#contact">التواصل</a></li>
+                    </ul>
+                </nav>
+
+                <div class="header-actions">
+                    <a href="login.html" class="btn btn-secondary">تسجيل الدخول</a>
+                    <a href="register.html" class="btn btn-primary">إنشاء حساب</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav">
+        <button class="close-menu">
+            <i class="fas fa-times"></i>
+        </button>
+        <ul>
+            <li><a href="#home">الرئيسية</a></li>
+            <li><a href="#courses">الدورات</a></li>
+            <li><a href="#process">كيفية الاشتراك</a></li>
+            <li><a href="#certificate">الشهادات</a></li>
+            <li><a href="#contact">التواصل</a></li>
+            <li><a href="login.html" class="btn btn-secondary">تسجيل الدخول</a></li>
+            <li><a href="register.html" class="btn btn-primary">إنشاء حساب</a></li>
+            <li><a href="#" class="btn btn-primary contact-whatsapp">تواصل معنا</a></li>
+        </ul>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Skillzoy Academy<br>منصة التعلم الإلكتروني المتقدمة</h1>
+                    <p>انضم إلى آلاف الطلاب حول العالم وطور مهاراتك مع دوراتنا المتخصصة. احصل على شهادات معتمدة وافتح أبوابًا جديدة لمستقبلك المهني.</p>
+                    <div class="hero-buttons">
+                        <a href="register.html" class="btn btn-primary pulse">ابدأ التعلم الآن</a>
+                        <button class="btn btn-secondary contact-whatsapp">اطلب شهاداتك ودورتك على واتساب</button>
+                    </div>
+                </div>
+                <div class="hero-video-container glass">
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/7Ok6J0CURvc?rel=0&modestbranding=1&autoplay=0" 
+                                title="مقدمة عن Skillzoy Academy" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Courses Section -->
+    <section class="courses" id="courses">
+        <div class="container">
+            <div class="section-title">
+                <h2>دوراتنا التعليمية المجانية</h2>
+                <p>اختر من بين مجموعة واسعة من الدورات المجانية المصممة خصيصًا لتلبية احتياجات سوق العمل الحديث</p>
+            </div>
+            <div class="courses-grid">
+                <!-- دورة 1: TOT -->
+                <div class="course-card glass fade-in">
+                    <div class="video-wrapper">
+<iframe width="100%" height="315" src="https://youtube/embed/Wu2Zky9KW2Q?" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <div class="course-info">
+                        <h3 class="course-title">دورة مدرب مدربين (TOT) <span class="free-badge">مجاني</span></h3>
+                        <div class="course-free-note">
+                            <i class="fas fa-gift"></i> هذه الدورة مقدمة مجاناً بالكامل
+                        </div>
+                        <div class="course-instructor"><i class="fas fa-user-tie"></i> د. أحمد محمد</div>
+                        <p class="course-desc">تعلم كيفية تصميم وتقديم برامج تدريبية فعالة، وإدارة جلسات التدريب، وتطوير مهاراتك كمدرب محترف. هذه السلسلة الكاملة تغطي جميع جوانب التدريب والتطوير.</p>
+                        <div class="course-meta">
+                            <span><i class="far fa-clock"></i> 40 ساعة</span>
+                            <span><i class="far fa-user"></i> 250 طالب</span>
+                        </div>
+                        <div class="course-certificate-note">
+                            <i class="fas fa-award"></i> بعد إكمال الدورة، تواصل مع المعلم على واتساب لتحصل على شهادتك
+                        </div>
+                        <button class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> اطلب الدورة على واتساب</button>
+                    </div>
+                </div>
+                
+                <!-- دورة 2: القيادة -->
+                <div class="course-card glass fade-in">
+                    <div class="video-wrapper">
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0;">
+    <iframe 
+        src="https://www.youtube.com/embed/5MgBikgcWnY" 
+        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" 
+        allowfullscreen 
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture">
+    </iframe>
+</div>
+
+                    </div>
+                    <div class="course-info">
+                        <h3 class="course-title">دورة القيادة والإدارة المتقدمة <span class="free-badge">مجاني</span></h3>
+                        <div class="course-free-note">
+                            <i class="fas fa-gift"></i> هذه الدورة مقدمة مجاناً بالكامل
+                        </div>
+                        <div class="course-instructor"><i class="fas fa-user-tie"></i> د. خالد الحربي</div>
+                        <p class="course-desc">طور مهاراتك القيادية وتعلم كيفية إدارة الفرق بفعالية، واتخاذ القرارات الاستراتيجية، وتحقيق الأهداف التنظيمية. سلسلة شاملة عن فنون القيادة الحديثة.</p>
+                        <div class="course-meta">
+                            <span><i class="far fa-clock"></i> 32 ساعة</span>
+                            <span><i class="far fa-user"></i> 320 طالب</span>
+                        </div>
+                        <div class="course-certificate-note">
+                            <i class="fas fa-award"></i> بعد إكمال الدورة، تواصل مع المعلم على واتساب لتحصل على شهادتك
+                        </div>
+                        <button class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> اطلب الدورة على واتساب</button>
+                    </div>
+                </div>
+
+                <!-- دورة 3: leadership -->
+                <div class="course-card glass fade-in">
+                    <div class="video-wrapper">
+                        <iframe class="course-video" 
+                                src="https://www.youtube.com/embed/PC3005GGYtA?rel=0&modestbranding=1&autoplay=0" 
+                                title="دورة القيادة" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="course-info">
+                        <h3 class="course-title">دورة القيادة المتقدمة <span class="free-badge">مجاني</span></h3>
+                        <div class="course-free-note">
+                            <i class="fas fa-gift"></i> هذه الدورة مقدمة مجاناً بالكامل
+                        </div>
+                        <div class="course-instructor"><i class="fas fa-user-tie"></i> د. خالد الحربي</div>
+                        <p class="course-desc">طور مهاراتك القيادية وتعلم كيفية إدارة الفرق بفعالية، واتخاذ القرارات الاستراتيجية، وتحقيق الأهداف التنظيمية. سلسلة شاملة عن فنون القيادة الحديثة.</p>
+                        <div class="course-meta">
+                            <span><i class="far fa-clock"></i> 3 أشهر</span>
+                            <span><i class="far fa-user"></i> 2,320 طالب</span>
+                        </div>
+                        <div class="course-certificate-note">
+                            <i class="fas fa-award"></i> بعد إكمال الدورة، تواصل مع المعلم على واتساب لتحصل على شهادتك
+                        </div>
+                        <button class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> اطلب الدورة على واتساب</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process" id="process">
+        <div class="container">
+            <div class="section-title">
+                <h2>كيفية الحصول على الدورة والشهادة</h2>
+                <p>اتبع هذه الخطوات البسيطة للحصول على دورتك المجانية وشهادتك المعتمدة</p>
+            </div>
+            <div class="process-steps">
+                <div class="process-step glass fade-in">
+                    <div class="step-icon">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <h3>الخطوة 1: تواصل معنا عبر واتساب</h3>
+                    <p>ارسل رسالة على واتساب تخبرنا فيها بالدورة التي ترغب في الالتحاق بها</p>
+                </div>
+                
+                <div class="process-step glass fade-in">
+                    <div class="step-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3>الخطوة 2: احصل على مواد الدورة</h3>
+                    <p>سنرسل لك رابط الدورة كاملة مع جميع الفيديوهات والمواد التعليمية</p>
+                </div>
+                
+                <div class="process-step glass fade-in">
+                    <div class="step-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>الخطوة 3: اختبر معلوماتك</h3>
+                    <p>بعد إكمال الدورة، ستخضع لامتحان قصير لقياس مدى استفادتك من المحتوى</p>
+                </div>
+                
+                <div class="process-step glass fade-in">
+                    <div class="step-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <h3>الخطوة 4: احصل على شهادتك</h3>
+                    <p>بعد اجتياز الامتحان، سنرسل لك شهادتك المعتمدة عبر البريد الإلكتروني</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certificate Template -->
+    <section class="certificate-template" id="certificate">
+        <div class="container">
+            <div class="section-title">
+                <h2>نموذج الشهادة المعتمدة</h2>
+                <p>شهادة معتمدة من Skillzoy Academy تثبت إنجازك في الدورة التدريبية</p>
+            </div>
+            <div class="certificate">
+                <img src="https://dl.dropbox.com/scl/fi/8qp2k21gy5um5gelp3iq2/Blue-Grey-Modern-Gradient-Certificate-of-Completion_20250927_110652_.png?rlkey=gadbixsqdabfsymguk6bv8ua8&st=dl6zl89j&raw=1" 
+                     alt="نموذج شهادة Skillzoy Academy" class="certificate-image glass">
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>تواصل معنا</h2>
+                <p>يسعدنا تواصلكم معنا لأي استفسار حول الدورات أو الشهادات</p>
+            </div>
+            <div class="contact-container">
+                <div class="contact-info glass">
+                    <h3>معلومات الاتصال</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> العنوان: الرياض، المملكة العربية السعودية</p>
+                    <p><i class="fas fa-phone"></i> الهاتف: +966 123 456 789</p>
+                    <p><i class="fas fa-envelope"></i> البريد الإلكتروني: info@skillzoyacademy.com</p>
+                    <p><i class="fas fa-clock"></i> أوقات العمل: من الأحد إلى الخميس، 9 صباحاً - 6 مساءً</p>
+                    
+                    <button class="btn btn-whatsapp contact-whatsapp" style="margin-top: 2rem;">
+                        <i class="fab fa-whatsapp"></i> تواصل معنا عبر واتساب
+                    </button>
+                </div>
+                <div class="contact-form glass">
+                    <h3>أرسل رسالة</h3>
+                    <form id="contactForm">
+                        <input type="text" placeholder="اسمك" required>
+                        <input type="email" placeholder="بريدك الإلكتروني" required>
+                        <input type="text" placeholder="الموضوع" required>
+                        <textarea placeholder="رسالتك" required></textarea>
+                        <button type="submit" class="btn btn-primary">إرسال</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Skillzoy Academy</h3>
+                    <p>منصة التعلم الإلكتروني الرائدة في تقديم دورات تدريبية متخصصة وشهادات معتمدة.</p>
+                    <div class="social-links">
+                        <a href="https://twitter.com/skillzoy" class="social-link" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="https://linkedin.com/company/skillzoy" class="social-link" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://youtube.com/c/skillzoy" class="social-link" target="_blank"><i class="fab fa-youtube"></i></a>
+                        <a href="https://instagram.com/skillzoy" class="social-link" target="_blank"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>روابط سريعة</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">الرئيسية</a></li>
+                        <li><a href="#courses">الدورات</a></li>
+                        <li><a href="#process">كيفية الاشتراك</a></li>
+                        <li><a href="#certificate">الشهادات</a></li>
+                        <li><a href="#contact">التواصل</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>الدورات</h3>
+                    <ul class="footer-links">
+                        <li><a href="#courses">مدرب مدربين (TOT)</a></li>
+                        <li><a href="#courses">القيادة والإدارة</a></li>
+                        <li><a href="#courses">إدارة الموارد البشرية</a></li>
+                        <li><a href="#courses">تطوير الأعمال</a></li>
+                        <li><a href="#courses">مهارات التواصل</a></li>
+                        <li><a href="#courses">إدارة المشاريع</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>جميع الحقوق محفوظة &copy; 2023 Skillzoy Academy</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Menu Toggle
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const closeMenuBtn = document.querySelector('.close-menu');
+            const mobileNav = document.querySelector('.mobile-nav');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                mobileNav.classList.add('active');
+            });
+            
+            closeMenuBtn.addEventListener('click', function() {
+                mobileNav.classList.remove('active');
+            });
+            
+            // Close mobile menu when clicking on a link
+            const mobileNavLinks = document.querySelectorAll('.mobile-nav a');
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileNav.classList.remove('active');
+                });
+            });
+            
+            // WhatsApp buttons functionality
+            const whatsappButtons = document.querySelectorAll('.contact-whatsapp, .btn-whatsapp');
+            whatsappButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const phoneNumber = "966123456789";
+                    const message = "مرحباً، أرغب في الاستفسار عن دورات Skillzoy Academy";
+                    const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+                    window.open(whatsappURL, '_blank');
+                });
+            });
+            
+            // Form submission
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('شكراً لتواصلكم معنا! سنرد على رسالتكم في أقرب وقت ممكن.');
+                    contactForm.reset();
+                });
+            }
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Add animation on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe elements for animation
+            const animatedElements = document.querySelectorAll('.fade-in');
+            animatedElements.forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
