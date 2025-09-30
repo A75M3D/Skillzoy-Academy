@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>تفعيل الحساب - Skillzoy Academy</title>
+</head>
+<body>
+    <div id="auth-container">
+        <h2>جاري تفعيل حسابك...</h2>
+        <div id="message"></div>
+    </div>
+
+    <script>
+        // معالجة تحقق البريد الإلكتروني
+        async function handleEmailVerification() {
+            const hash = window.location.hash;
+            const messageEl = document.getElementById('message');
+            
+            try {
+                // Supabase يتولى التحقق تلقائياً من الرابط
+                const { data, error } = await supabase.auth.getSession();
+                
+                if (error) throw error;
+                
+                if (data.session) {
+                    messageEl.innerHTML = `
+                        <div style="color: green; margin: 20px 0;">
+                            ✅ تم تفعيل حسابك بنجاح!
+                        </div>
+                        <p>يمكنك الآن تسجيل الدخول إلى حسابك.</p>
+                        <button onclick="window.location.href='login.html'" 
+                                style="padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 4px;">
+                            الانتقال إلى تسجيل الدخول
+                        </button>
+                    `;
+                    
+                    // تحديث حالة البريد في user_profiles
+                    await supabase
+                        .from('user_profiles')
+                        .update({ email_confirmed: true })
+                        .eq('user_id', data.session.user.id);
+                        
+                } else {
+                    messageEl.innerHTML = `
+                        <div style="color: red; margin: 20px 0;">
+                            ⚠️ رابط التفعيل غير صالح أو منتهي الصلاحية
+                        </div>
+                        <p>يرجى طلب رابط تفعيل جديد من صفحة التسجيل.</p>
+                    `;
+                }
+            } catch (error) {
+                console.error('Verification error:', error);
+                messageEl.innerHTML = `
+                    <div style="color: red; margin: 20px 0;">
+                        ❌ حدث خطأ أثناء تفعيل الحساب
+                    </div>
+                    <p>${error.message}</p>
+                `;
+            }
+        }
+
+        // تشغيل التحقق عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', handleEmailVerification);
+    </script>
+</body>
+</html>
