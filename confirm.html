@@ -1,48 +1,79 @@
-<!-- Supabase Auth - عرض اسم المستخدم بعد الدخول -->
-<script type="module">
-  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+<!DOCTYPE html>
+<html>
+<head>
+    <title>تأكيد البريد الإلكتروني</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <div id="message">
+        <h2>جارٍ تأكيد بريدك الإلكتروني...</h2>
+    </div>
 
-  // ✏️ استبدل هذه القيم ببيانات مشروعك من Supabase
-  const supabase = createClient(
-    'https://sjipwstkvvrautexigmt.supabase.co',
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNqaXB3c3RrdnZyYXV0ZXhpZ210Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MTE5MDcsImV4cCI6MjA3NDQ4NzkwN30.FSh2yIdZdvdNvtWxK5JB02PIdWOG3707qO-F0c84PnY'
-  );
+    <script>
+        // 🔧 إعداد Supabase - ضع مفاتيحك الحقيقية هنا
+        const supabaseUrl = 'https://sjipwstkvvrautexigmt.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNqaXB3c3RrdnZyYXV0ZXhpZ210Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MTE5MDcsImV4cCI6MjA3NDQ4NzkwN30.FSh2yIdZdvdNvtWxK5JB02PIdWOG3707qO-F0c84PnY';
+        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-  // دالة لعرض اسم المستخدم
-  async function checkUser() {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (user) {
-      // مثال: عرض الترحيب في مكان مخصص (بدون مسح الصفحة)
-      const welcomeDiv = document.createElement('div');
-      welcomeDiv.id = 'user-welcome';
-      welcomeDiv.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: #e6f4ea;
-        padding: 10px 16px;
-        border-radius: 8px;
-        font-weight: bold;
-        color: #137333;
-        z-index: 1000;
-      `;
-      welcomeDiv.textContent = ` Skillzoy Academy مرحباً بك في ، ${user.user_metadata.full_name || user.email}!`;
-      document.body.appendChild(welcomeDiv);
-    }
-  }
-// إضافة حدث النقر على زر Google Login
-document.getElementById('google-login')?.addEventListener('click', async () => {
-  const { error } = await supabase.auth.signInWithOAuth({
-    provider: 'google',
-    options: {
-      redirectTo: 'https://a75m3d.github.io/Skillzoy-Academy/'
-    
-  });
-  if (error) {
-    alert('حدث خطأ أثناء تسجيل الدخول: ' + error.message);
-  }
-});
+        // التحقق من تأكيد البريد
+        async function confirmEmail() {
+            try {
+                console.log('بدء عملية التأكيد...');
+                
+                const { data: { session }, error } = await supabase.auth.getSession();
+                
+                if (error) {
+                    console.error('خطأ في الجلسة:', error);
+                    document.getElementById('message').innerHTML = `
+                        <h2>❌ خطأ في التأكيد</h2>
+                        <p>${error.message}</p>
+                        <a href="login.html">العودة لتسجيل الدخول</a>
+                    `;
+                    return;
+                }
+                
+                console.log('الجلسة:', session);
+                
+                if (session && session.user) {
+                    console.log('المستخدم:', session.user);
+                    
+                    document.getElementById('message').innerHTML = `
+                        <h2>✅ تم تأكيد بريدك الإلكتروني بنجاح!</h2>
+                        <p>مرحباً ${session.user.email}</p>
+                        <p>سيتم توجيهك إلى لوحة التحكم خلال 3 ثوانٍ...</p>
+                    `;
+                    
+                    // إعادة التوجيه بعد 3 ثواني
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 3000);
+                    
+                } else {
+                    console.log('لا توجد جلسة نشطة');
+                    document.getElementById('message').innerHTML = `
+                        <h2>❌ لم يتم العثور على جلسة نشطة</h2>
+                        <p>يرجى:</p>
+                        <ul>
+                            <li>التأكد من رابط التأكيد</li>
+                            <li>التأكد من عدم انتهاء صلاحية الرابط</li>
+                            <li><a href="login.html">تسجيل الدخول مجدداً</a></li>
+                        </ul>
+                    `;
+                }
+            } catch (error) {
+                console.error('خطأ غير متوقع:', error);
+                document.getElementById('message').innerHTML = `
+                    <h2>❌ حدث خطأ غير متوقع</h2>
+                    <p>${error.message}</p>
+                    <a href="login.html">العودة لتسجيل الدخول</a>
+                `;
+            }
+        }
 
-  // تشغيل التحقق عند تحميل الصفحة
-  checkUser();
-</script>
+        // تشغيل التأكيد عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            confirmEmail();
+        });
+    </script>
+</body>
+</html>
