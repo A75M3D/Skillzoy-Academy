@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skillzoy Academy - إنشاء حساب جديد</title>
+
+  <!-- رأس CSP مصحح -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self' https://sjipwstkvvrautexigmt.supabase.co;
+    script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com https://sjipwstkvvrautexigmt.supabase.co;
+    style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com;
+    img-src 'self' data: https:;
+    font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com;
+    connect-src 'self' https://sjipwstkvvrautexigmt.supabase.co wss://sjipwstkvvrautexigmt.supabase.co;
+    frame-src 'self';
+    object-src 'none';
+    base-uri 'self';
+    form-action 'self';
+  ">
+  
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta name="theme-color" content="#4361ee">
+
+  <!-- إضافة Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --primary: #4361ee;
+      --primary-dark: #3a0ca3;
+      --primary-light: #4895ef;
+      --secondary: #7209b7;
+      --success: #4cc9f0;
+      --error: #e63946;
+      --warning: #f4a261;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --gray: #6c757d;
+      --glass-bg: rgba(255, 255, 255, 0.1);
+      --glass-border: rgba(255, 255, 255, 0.2);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #1a2a6c, #2a3a7c, #3a4a8c);
+      background-attachment: fixed;
+      color: var(--light);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .security-indicator {
+      background: linear-gradient(90deg, var(--success), var(--primary));
+      color: white;
+      padding: 12px;
+      text-align: center;
+      font-size: 0.9rem;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .security-indicator::before {
+      content: '🔒';
+      font-size: 1.1rem;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 500px;
+      margin-top: 60px;
+    }
+
+    .glass-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid var(--glass-border);
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .logo-section {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: white;
+      text-decoration: none;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: white;
+      font-weight: 600;
+    }
+
+    .progress-steps {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    .progress-steps::before {
+      content: '';
+      position: absolute;
+      top: 15px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.2);
+      z-index: 1;
+    }
+
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .step-number {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .step.active .step-number {
+      background: var(--primary);
+      box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.3);
+    }
+
+    .step.completed .step-number {
+      background: var(--success);
+    }
+
+    .step-label {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .step.active .step-label {
+      color: var(--primary-light);
+      font-weight: 600;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+      font-size: 1rem;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary-light);
+      box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.3);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .form-control::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .input-with-icon {
+      position: relative;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .input-with-icon .form-control {
+      padding-left: 45px;
+    }
+
+    .password-container {
+      position: relative;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.7);
+      cursor: pointer;
+      font-size: 1.1rem;
+    }
+
+    .btn {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      width: 100%;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
+    }
+
+    .btn-primary:disabled {
+      background: var(--gray);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      width: 100%;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .alert {
+      padding: 12px 15px;
+      border-radius: 8px;
+      margin: 15px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .alert-error { 
+      background: rgba(230, 57, 70, 0.2); 
+      color: #ff6b6b; 
+      border-left: 4px solid var(--error);
+    }
+    
+    .alert-warning { 
+      background: rgba(244, 162, 97, 0.2); 
+      color: #ffd166; 
+      border-left: 4px solid var(--warning);
+    }
+    
+    .alert-success { 
+      background: rgba(76, 201, 240, 0.2); 
+      color: #4cc9f0; 
+      border-left: 4px solid var(--success);
+    }
+
+    .password-strength-container {
+      margin-top: 8px;
+    }
+
+    .password-strength-bar {
+      height: 6px;
+      border-radius: 3px;
+      margin-top: 5px;
+      transition: all 0.3s ease;
+      width: 0%;
+      background: linear-gradient(to right, var(--error), var(--warning), var(--success));
+    }
+
+    .strength-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      margin-top: 5px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .strength-weak { width: 25% !important; background: var(--error) !important; }
+    .strength-medium { width: 50% !important; background: var(--warning) !important; }
+    .strength-strong { width: 75% !important; background: #4cc9f0 !important; }
+    .strength-very-strong { width: 100% !important; background: var(--success) !important; }
+
+    .terms-container {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px 0;
+      max-height: 150px;
+      overflow-y: auto;
+    }
+
+    .terms-text {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin: 15px 0;
+    }
+
+    .checkbox-group input {
+      margin-top: 3px;
+      accent-color: var(--primary);
+    }
+
+    .checkbox-group label {
+      font-size: 0.9rem;
+      line-height: 1.4;
+      margin-bottom: 0;
+    }
+
+    .form-navigation {
+      display: flex;
+      gap: 15px;
+      margin-top: 25px;
+    }
+
+    .form-navigation .btn {
+      flex: 1;
+    }
+
+    .login-link {
+      text-align: center;
+      margin-top: 20px;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .login-link a {
+      color: var(--primary-light);
+      text-decoration: none;
+      font-weight: 600;
+      margin-right: 5px;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+
+    /* تحسينات للجوال */
+    @media (max-width: 480px) {
+      .container {
+        margin-top: 50px;
+        padding: 10px;
+      }
+      
+      .glass-card {
+        padding: 20px;
+      }
+      
+      .form-navigation {
+        flex-direction: column;
+      }
+      
+      .progress-steps {
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      
+      .step-label {
+        font-size: 0.7rem;
+      }
+    }
+
+    /* تأثيرات تحميل */
+    .loading-spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* إخفاء وإظهار الخطوات */
+    .form-step {
+      display: none;
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    .form-step.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* تحسينات للروابط */
+    a {
+      color: var(--primary-light);
+      transition: color 0.3s ease;
+    }
+
+    a:hover {
+      color: var(--success);
+    }
+  </style>
+</head>
+<body>
+  <div class="security-indicator">
+    <span>اتصال آمن مشفر - System Secure - TLS 1.3</span>
+  </div>
+
+  <div class="container">
+    <div class="glass-card">
+      <div class="logo-section">
+        <a href="index.html" class="logo">
+          <div class="logo-icon">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+          <span>Skillzoy Academy</span>
+        </a>
+      </div>
+
+      <h2>إنشاء حساب جديد</h2>
+      
+      <!-- خطوات التقدم -->
+      <div class="progress-steps">
+        <div class="step active" id="step1">
+          <div class="step-number">1</div>
+          <div class="step-label">المعلومات الأساسية</div>
+        </div>
+        <div class="step" id="step2">
+          <div class="step-number">2</div>
+          <div class="step-label">كلمة المرور</div>
+        </div>
+        <div class="step" id="step3">
+          <div class="step-number">3</div>
+          <div class="step-label">الموافقة</div>
+        </div>
+      </div>
+      
+      <div id="authAlert"></div>
+
+      <form id="signupForm" class="secure-form">
+        <!-- الخطوة 1: المعلومات الأساسية -->
+        <div class="form-step active" id="step1-form">
+          <div class="form-group">
+            <label for="fullName">الاسم الكامل *</label>
+            <div class="input-with-icon">
+              <i class="fas fa-user input-icon"></i>
+              <input type="text" id="fullName" class="form-control"
+                     placeholder="أدخل اسمك الكامل"
+                     required autocomplete="name">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="userName">اسم المستخدم *</label>
+            <div class="input-with-icon">
+              <i class="fas fa-at input-icon"></i>
+              <input type="text" id="userName" class="form-control"
+                     pattern="[a-zA-Z0-9_]{3,20}"
+                     title="اسم المستخدم يجب أن يحتوي على 3-20 حرف (أحرف إنجليزية، أرقام، _)"
+                     placeholder="اختر اسم مستخدم فريد"
+                     required autocomplete="username">
+              <div id="usernameAvailability" style="font-size: 0.8rem; margin-top: 5px;"></div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">البريد الإلكتروني *</label>
+            <div class="input-with-icon">
+              <i class="fas fa-envelope input-icon"></i>
+              <input type="email" id="email" class="form-control"
+                     pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                     title="يرجى إدخال بريد إلكتروني صحيح"
+                     placeholder="example@skillzoy.com"
+                     required autocomplete="email">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="phone">رقم الهاتف (اختياري)</label>
+            <div class="input-with-icon">
+              <i class="fas fa-phone input-icon"></i>
+              <input type="tel" id="phone" class="form-control"
+                     placeholder="+966 5X XXX XXXX"
+                     autocomplete="tel">
+            </div>
+          </div>
+
+          <div class="form-navigation">
+            <button type="button" class="btn btn-primary" id="nextToStep2">
+              التالي <i class="fas fa-arrow-left"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- الخطوة 2: كلمة المرور -->
+        <div class="form-step" id="step2-form">
+          <div class="form-group">
+            <label for="password">كلمة المرور *</label>
+            <div class="password-container">
+              <input type="password" id="password" class="form-control"
+                     minlength="8"
+                     placeholder="أدخل كلمة مرور قوية"
+                     autocomplete="new-password"
+                     required>
+              <button type="button" class="toggle-password" id="togglePassword">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+            
+            <div class="password-strength-container">
+              <div id="passwordStrength" class="password-strength-bar"></div>
+              <div class="strength-labels">
+                <span>ضعيفة</span>
+                <span>متوسطة</span>
+                <span>قوية</span>
+                <span>قوية جداً</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="confirmPassword">تأكيد كلمة المرور *</label>
+            <div class="password-container">
+              <input type="password" id="confirmPassword" class="form-control"
+                     placeholder="أعد إدخال كلمة المرور"
+                     autocomplete="new-password"
+                     required>
+              <button type="button" class="toggle-password" id="toggleConfirmPassword">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+            <div id="passwordMatch" style="font-size: 0.8rem; margin-top: 5px;"></div>
+          </div>
+
+          <div class="form-navigation">
+            <button type="button" class="btn btn-secondary" id="backToStep1">
+              <i class="fas fa-arrow-right"></i> السابق
+            </button>
+            <button type="button" class="btn btn-primary" id="nextToStep3">
+              التالي <i class="fas fa-arrow-left"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- الخطوة 3: الموافقة -->
+        <div class="form-step" id="step3-form">
+          <div class="terms-container">
+            <div class="terms-text">
+              <h4>شروط الاستخدام وسياسة الخصوصية</h4>
+              <p>بإنشائك لحساب في Skillzoy Academy، فإنك توافق على الالتزام بشروط الاستخدام وسياسة الخصوصية الخاصة بنا:</p>
+              <ul>
+                <li>الالتزام بمعايير السلوك الأكاديمي والأخلاقي</li>
+                <li>عدم مشاركة محتوى الدروس مع أطراف خارجية</li>
+                <li>الحفاظ على سرية معلومات حسابك</li>
+                <li>الموافقة على تلقي اتصالات متعلقة بالدورات والتحديثات</li>
+                <li>الالتزام بجميع القوانين واللوائح المحلية والدولية</li>
+              </ul>
+              <p>نحن نحترم خصوصيتك ونلتزم بحماية بياناتك الشخصية وفقًا لأحدث معايير الأمان.</p>
+            </div>
+          </div>
+
+          <div class="checkbox-group">
+            <input type="checkbox" id="agreeTerms" required>
+            <label for="agreeTerms">أوافق على شروط الاستخدام وسياسة الخصوصية *</label>
+          </div>
+
+          <div class="checkbox-group">
+            <input type="checkbox" id="newsletter">
+            <label for="newsletter">أرغب في تلقي آخر التحديثات والعروض عبر البريد الإلكتروني</label>
+          </div>
+
+          <div class="form-navigation">
+            <button type="button" class="btn btn-secondary" id="backToStep2">
+              <i class="fas fa-arrow-right"></i> السابق
+            </button>
+            <button type="submit" class="btn btn-primary" id="signupSubmit">
+              <span id="submitText">إنشاء الحساب</span>
+              <div id="submitSpinner" class="loading-spinner" style="display: none;"></div>
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <div class="login-link">
+        لديك حساب بالفعل؟ <a href="login.html">سجل الدخول هنا</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- استخدام CDN لـ Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.38.0/dist/umd/supabase.min.js"></script>
+
+  <script>
+    // ===== تهيئة Supabase =====
+    const SUPABASE_URL = 'https://sjipwstkvvrautexigmt.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNqaXB3c3RrdnZyYXV0ZXhpZ210Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MTE5MDcsImV4cCI6MjA3NDQ4NzkwN30.FSh2yIdZdvdNvtWxK5JB02PIdWOG3707qO-F0c84PnY';
+
+    // إنشاء عميل Supabase
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+      auth: {
+        flowType: 'pkce',
+        autoRefreshToken: true,
+        persistSession: true,
+        detectSessionInUrl: true
+      }
+    });
+
+    // ===== حالة التطبيق =====
+    let currentStep = 1;
+    const totalSteps = 3;
+
+    // ===== عناصر DOM =====
+    const elements = {
+      // النموذج والعناصر
+      signupForm: document.getElementById('signupForm'),
+      fullName: document.getElementById('fullName'),
+      userName: document.getElementById('userName'),
+      email: document.getElementById('email'),
+      phone: document.getElementById('phone'),
+      password: document.getElementById('password'),
+      confirmPassword: document.getElementById('confirmPassword'),
+      agreeTerms: document.getElementById('agreeTerms'),
+      newsletter: document.getElementById('newsletter'),
+      
+      // أزرار التنقل
+      nextToStep2: document.getElementById('nextToStep2'),
+      nextToStep3: document.getElementById('nextToStep3'),
+      backToStep1: document.getElementById('backToStep1'),
+      backToStep2: document.getElementById('backToStep2'),
+      signupSubmit: document.getElementById('signupSubmit'),
+      
+      // عناصر واجهة المستخدم
+      submitText: document.getElementById('submitText'),
+      submitSpinner: document.getElementById('submitSpinner'),
+      authAlert: document.getElementById('authAlert'),
+      passwordStrength: document.getElementById('passwordStrength'),
+      passwordMatch: document.getElementById('passwordMatch'),
+      usernameAvailability: document.getElementById('usernameAvailability'),
+      togglePassword: document.getElementById('togglePassword'),
+      toggleConfirmPassword: document.getElementById('toggleConfirmPassword'),
+      
+      // خطوات التقدم
+      step1: document.getElementById('step1'),
+      step2: document.getElementById('step2'),
+      step3: document.getElementById('step3'),
+      step1Form: document.getElementById('step1-form'),
+      step2Form: document.getElementById('step2-form'),
+      step3Form: document.getElementById('step3-form')
+    };
+
+    // ===== أحداث التحميل =====
+    document.addEventListener('DOMContentLoaded', () => {
+      // اختبار اتصال Supabase
+      testSupabaseConnection();
+      // إعداد المستمعين للأحداث
+      setupEventListeners();
+    });
+
+    // ===== اختبار اتصال Supabase =====
+    async function testSupabaseConnection() {
+      try {
+        const { data, error } = await supabase.auth.getSession();
+        if (error) {
+          console.log('Supabase connection test - Auth not initialized (normal):', error.message);
+        } else {
+          console.log('Supabase connection successful');
+        }
+      } catch (error) {
+        console.error('Supabase connection failed:', error);
+        showAlert('⚠️ فشل في الاتصال بالخادم. يرجى التحقق من اتصال الإنترنت.', 'warning');
+      }
+    }
+
+    // ===== إعداد المستمعين للأحداث =====
+    function setupEventListeners() {
+      // أحداث كلمة المرور
+      elements.password.addEventListener('input', checkPasswordStrength);
+      elements.confirmPassword.addEventListener('input', checkPasswordMatch);
+      elements.togglePassword.addEventListener('click', () => togglePasswordVisibility('password'));
+      elements.toggleConfirmPassword.addEventListener('click', () => togglePasswordVisibility('confirmPassword'));
+      
+      // أحداث التحقق من اسم المستخدم
+      elements.userName.addEventListener('input', debounce(checkUsernameAvailability, 500));
+      
+      // أحداث التنقل بين الخطوات
+      elements.nextToStep2.addEventListener('click', () => validateStep1());
+      elements.nextToStep3.addEventListener('click', () => validateStep2());
+      elements.backToStep1.addEventListener('click', () => goToStep(1));
+      elements.backToStep2.addEventListener('click', () => goToStep(2));
+      
+      // حدث إرسال النموذج
+      elements.signupForm.addEventListener('submit', handleSecureSignup);
+    }
+
+    // ===== وظيفة debounce للتحقق من اسم المستخدم =====
+    function debounce(func, wait) {
+      let timeout;
+      return function executedFunction(...args) {
+        const later = () => {
+          clearTimeout(timeout);
+          func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+      };
+    }
+
+    // ===== التنقل بين الخطوات =====
+    function goToStep(step) {
+      // إخفاء جميع الخطوات
+      elements.step1Form.classList.remove('active');
+      elements.step2Form.classList.remove('active');
+      elements.step3Form.classList.remove('active');
+      
+      // إلغاء تنشيط جميع الخطوات
+      elements.step1.classList.remove('active', 'completed');
+      elements.step2.classList.remove('active', 'completed');
+      elements.step3.classList.remove('active', 'completed');
+      
+      // تعيين الخطوة الحالية
+      currentStep = step;
+      
+      // إظهار الخطوة المطلوبة
+      if (step === 1) {
+        elements.step1Form.classList.add('active');
+        elements.step1.classList.add('active');
+      } else if (step === 2) {
+        elements.step2Form.classList.add('active');
+        elements.step2.classList.add('active');
+        elements.step1.classList.add('completed');
+      } else if (step === 3) {
+        elements.step3Form.classList.add('active');
+        elements.step3.classList.add('active');
+        elements.step1.classList.add('completed');
+        elements.step2.classList.add('completed');
+      }
+    }
+
+    // ===== التحقق من اسم المستخدم (مبسط) =====
+    async function checkUsernameAvailability() {
+      const username = elements.userName.value.trim();
+      
+      if (!username) {
+        elements.usernameAvailability.textContent = '';
+        return;
+      }
+      
+      // التحقق من الصيغة
+      const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
+      if (!usernameRegex.test(username)) {
+        elements.usernameAvailability.textContent = 'اسم المستخدم يجب أن يحتوي على 3-20 حرف (أحرف إنجليزية، أرقام، _)';
+        elements.usernameAvailability.style.color = '#e63946';
+        return;
+      }
+      
+      elements.usernameAvailability.textContent = '✅ اسم المستخدم متاح';
+      elements.usernameAvailability.style.color = '#4cc9f0';
+    }
+
+    // ===== التحقق من صحة الخطوة 1 =====
+    function validateStep1() {
+      const fullName = sanitizeInput(elements.fullName.value.trim());
+      const userName = sanitizeInput(elements.userName.value.trim());
+      const email = sanitizeInput(elements.email.value.trim());
+      
+      if (!fullName) {
+        showAlert('يرجى إدخال الاسم الكامل', 'error');
+        elements.fullName.focus();
+        return;
+      }
+      
+      if (!userName || !/^[a-zA-Z0-9_]{3,20}$/.test(userName)) {
+        showAlert('اسم المستخدم يجب أن يحتوي على 3-20 حرف (أحرف إنجليزية، أرقام، _)', 'error');
+        elements.userName.focus();
+        return;
+      }
+      
+      // استخدام regex مصحح للبريد الإلكتروني
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (!email || !emailRegex.test(email)) {
+        showAlert('صيغة البريد الإلكتروني غير صحيحة', 'error');
+        elements.email.focus();
+        return;
+      }
+      
+      // الانتقال إلى الخطوة 2
+      goToStep(2);
+    }
+
+    // ===== التحقق من صحة الخطوة 2 =====
+    function validateStep2() {
+      const password = elements.password.value;
+      const confirmPassword = elements.confirmPassword.value;
+      
+      if (password.length < 8) {
+        showAlert('كلمة المرور يجب أن تحتوي على 8 أحرف على الأقل', 'error');
+        elements.password.focus();
+        return;
+      }
+      
+      if (password !== confirmPassword) {
+        showAlert('كلمتا المرور غير متطابقتين', 'error');
+        elements.confirmPassword.focus();
+        return;
+      }
+      
+      // الانتقال إلى الخطوة 3
+      goToStep(3);
+    }
+
+    // ===== تبديل رؤية كلمة المرور =====
+    function togglePasswordVisibility(field) {
+      const input = field === 'password' ? elements.password : elements.confirmPassword;
+      const button = field === 'password' ? elements.togglePassword : elements.toggleConfirmPassword;
+      
+      const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+      input.setAttribute('type', type);
+      
+      // تغيير الأيقونة
+      const icon = button.querySelector('i');
+      icon.className = type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
+    }
+
+    // ===== قوة كلمة المرور =====
+    function checkPasswordStrength() {
+      const pwd = elements.password.value;
+      const bar = elements.passwordStrength;
+      
+      // إعادة تعيين
+      bar.className = 'password-strength-bar';
+      bar.style.width = '0%';
+
+      if (!pwd) return;
+
+      let score = 0;
+      const requirements = {
+        length: pwd.length >= 8,
+        lowercase: /[a-z]/.test(pwd),
+        uppercase: /[A-Z]/.test(pwd),
+        numbers: /[0-9]/.test(pwd),
+        symbols: /[^A-Za-z0-9]/.test(pwd)
+      };
+
+      // حساب النقاط
+      score += requirements.length ? 1 : 0;
+      score += requirements.lowercase ? 1 : 0;
+      score += requirements.uppercase ? 1 : 0;
+      score += requirements.numbers ? 1 : 0;
+      score += requirements.symbols ? 1 : 0;
+
+      // تطبيق النتيجة
+      if (score <= 2) {
+        bar.classList.add('strength-weak');
+      } else if (score === 3) {
+        bar.classList.add('strength-medium');
+      } else if (score === 4) {
+        bar.classList.add('strength-strong');
+      } else {
+        bar.classList.add('strength-very-strong');
+      }
+    }
+
+    // ===== التحقق من تطابق كلمة المرور =====
+    function checkPasswordMatch() {
+      const password = elements.password.value;
+      const confirmPassword = elements.confirmPassword.value;
+      
+      if (!confirmPassword) {
+        elements.passwordMatch.textContent = '';
+        return;
+      }
+      
+      if (password === confirmPassword) {
+        elements.passwordMatch.textContent = 'كلمتا المرور متطابقتان ✓';
+        elements.passwordMatch.style.color = '#4cc9f0';
+      } else {
+        elements.passwordMatch.textContent = 'كلمتا المرور غير متطابقتان ✗';
+        elements.passwordMatch.style.color = '#e63946';
+      }
+    }
+
+    // ===== تنظيف المدخلات =====
+    function sanitizeInput(input) {
+      // إزالة علامات HTML الأساسية للوقاية من XSS
+      return input.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    // ===== إنشاء حساب آمن =====
+    async function handleSecureSignup(e) {
+      e.preventDefault();
+
+      // 1. التحقق من الموافقة على الشروط
+      if (!elements.agreeTerms.checked) {
+        showAlert('يجب الموافقة على شروط الاستخدام وسياسة الخصوصية', 'error');
+        return;
+      }
+
+      // 2. تنظيف المدخلات
+      const fullName = sanitizeInput(elements.fullName.value.trim());
+      const userName = sanitizeInput(elements.userName.value.trim());
+      const email = sanitizeInput(elements.email.value.trim().toLowerCase()); // تحويل إلى lowercase
+      const phone = sanitizeInput(elements.phone.value.trim());
+      const password = elements.password.value;
+      const newsletter = elements.newsletter.checked;
+
+      // 3. التحقق من صحة البيانات
+      if (!fullName || !userName || !email || !password) {
+        showAlert('يرجى ملء جميع الحقول المطلوبة', 'error');
+        return;
+      }
+
+      if (password.length < 8) {
+        showAlert('كلمة المرور يجب أن تحتوي على 8 أحرف على الأقل', 'error');
+        return;
+      }
+
+      if (password !== elements.confirmPassword.value) {
+        showAlert('كلمتا المرور غير متطابقتين', 'error');
+        return;
+      }
+
+      // 4. إنشاء الحساب في Supabase (بدون reCAPTCHA)
+      showLoading(true);
+
+      try {
+        const { data, error } = await supabase.auth.signUp({
+          email: email,
+          password: password,
+          options: {
+            data: {
+              full_name: fullName,
+              username: userName,
+              phone: phone,
+              newsletter_subscription: newsletter
+            },
+            emailRedirectTo: `${window.location.origin}/auth/callback.html`
+          }
+        });
+
+        if (error) {
+          handleSignupError(error);
+          return;
+        }
+
+        // 5. إضافة المستخدم إلى جدول user_profiles
+        if (data.user) {
+          try {
+            const { error: profileError } = await supabase
+              .from('user_profiles')
+              .insert({
+                user_id: data.user.id,
+                email: email,
+                phone: phone,
+                full_name: fullName,
+                username: userName
+              });
+
+            if (profileError) {
+              console.error('Profile creation error:', profileError);
+              // لا نوقف العملية إذا فشل إنشاء البروفايل
+            }
+          } catch (profileErr) {
+            console.error('Profile creation exception:', profileErr);
+            // نستمر حتى لو فشل إنشاء البروفايل
+          }
+        }
+
+        // 6. نجاح إنشاء الحساب
+        if (data.user && data.user.identities && data.user.identities.length === 0) {
+          showAlert('هذا البريد الإلكتروني مسجل مسبقاً', 'error');
+          return;
+        }
+
+        showAlert('تم إنشاء حسابك بنجاح! يرجى التحقق من بريدك الإلكتروني لتأكيد الحساب.', 'success');
+        
+        setTimeout(() => {
+          window.location.href = 'login.html';
+        }, 3000);
+
+      } catch (err) {
+        console.error('Signup exception:', err);
+        showAlert('خطأ غير متوقع. يرجى المحاولة لاحقًا.', 'error');
+      } finally {
+        showLoading(false);
+      }
+    }
+
+    // ===== معالجة أخطاء إنشاء الحساب =====
+    function handleSignupError(error) {
+      let message = 'حدث خطأ أثناء إنشاء الحساب';
+      
+      // تحسين عرض رسائل الخطأ
+      if (error.message && error.message.includes('already registered') || error.code === 'user_already_exists') {
+        message = 'هذا البريد الإلكتروني مسجل بالفعل. حاول تسجيل الدخول بدلاً من ذلك.';
+      } else if (error.message && error.message.includes('Invalid email') || error.code === 'invalid_email') {
+        message = 'صيغة البريد الإلكتروني غير صحيحة';
+      } else if (error.message && error.message.includes('Weak password') || error.code === 'weak_password') {
+        message = 'كلمة المرور ضعيفة جداً. يرجى اختيار كلمة مرور أقوى (8 أحرف على الأقل، تحتوي على أحرف وأرقام)';
+      } else if (error.message && error.message.includes('Email rate limit exceeded')) {
+        message = 'تم إرسال العديد من الطلبات. يرجى الانتظار قليلاً ثم المحاولة مرة أخرى';
+      } else {
+        message = error.message || 'حدث خطأ غير متوقع في الخادم';
+      }
+      
+      showAlert(message, 'error');
+    }
+
+    // ===== وظائف مساعدة =====
+    function showAlert(message, type) {
+      const icon = type === 'error' ? '⛔' : type === 'warning' ? '⚠️' : '✅';
+      elements.authAlert.innerHTML = `<div class="alert alert-${type}">${icon} ${message}</div>`;
+      
+      // إزالة التنبيه بعد 5 ثواني
+      setTimeout(() => {
+        elements.authAlert.innerHTML = '';
+      }, 5000);
+    }
+
+    function showLoading(loading) {
+      elements.signupSubmit.disabled = loading;
+      elements.submitText.textContent = loading ? 'جاري إنشاء الحساب...' : 'إنشاء الحساب';
+      elements.submitSpinner.style.display = loading ? 'inline-block' : 'none';
+    }
+  </script>
+</body>
+</html>
