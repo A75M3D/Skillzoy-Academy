@@ -671,8 +671,8 @@
 
   <script>
     // ===== تهيئة Supabase =====
-    const SUPABASE_URL = 'url';
-    const SUPABASE_ANON_KEY = 'key';
+    const SUPABASE_URL = 'https://sjipwstkvvrautexigmt.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNqaXB3c3RrdnZyYXV0ZXhpZ210Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MTE5MDcsImV4cCI6MjA3NDQ4NzkwN30.FSh2yIdZdvdNvtWxK5JB02PIdWOG3707qO-F0c84PnY';
 
     // إنشاء عميل Supabase
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
@@ -751,25 +751,29 @@
     }
 
     // ===== إعداد المستمعين للأحداث =====
-    function setupEventListeners() {
-      // أحداث كلمة المرور
-      elements.password.addEventListener('input', checkPasswordStrength);
-      elements.confirmPassword.addEventListener('input', checkPasswordMatch);
-      elements.togglePassword.addEventListener('click', () => togglePasswordVisibility('password'));
-      elements.toggleConfirmPassword.addEventListener('click', () => togglePasswordVisibility('confirmPassword'));
-      
-      // أحداث التحقق من اسم المستخدم
-      elements.userName.addEventListener('input', debounce(checkUsernameAvailability, 500));
-      
-      // أحداث التنقل بين الخطوات
-      elements.nextToStep2.addEventListener('click', () => validateStep1());
-      elements.nextToStep3.addEventListener('click', () => validateStep2());
-      elements.backToStep1.addEventListener('click', () => goToStep(1));
-      elements.backToStep2.addEventListener('click', () => goToStep(2));
-      
-      // حدث إرسال النموذج
-      elements.signupForm.addEventListener('submit', handleSecureSignup);
-    }
+function setupEventListeners() {
+    console.log('جاري إعداد مستمعي الأحداث...');
+    
+    // أحداث كلمة المرور
+    elements.password.addEventListener('input', checkPasswordStrength);
+    elements.confirmPassword.addEventListener('input', checkPasswordMatch);
+    elements.togglePassword.addEventListener('click', () => togglePasswordVisibility('password'));
+    elements.toggleConfirmPassword.addEventListener('click', () => togglePasswordVisibility('confirmPassword'));
+    
+    // أحداث التحقق من اسم المستخدم
+    elements.userName.addEventListener('input', debounce(checkUsernameAvailability, 500));
+    
+    // أحداث التنقل بين الخطوات
+    elements.nextToStep2.addEventListener('click', validateStep1);
+    elements.nextToStep3.addEventListener('click', validateStep2);
+    elements.backToStep1.addEventListener('click', () => goToStep(1));
+    elements.backToStep2.addEventListener('click', () => goToStep(2));
+    
+    // حدث إرسال النموذج
+    elements.signupForm.addEventListener('submit', handleSecureSignup);
+    
+    console.log('تم إعداد مستمعي الأحداث بنجاح');
+}
 
     // ===== وظيفة debounce للتحقق من اسم المستخدم =====
     function debounce(func, wait) {
@@ -783,37 +787,41 @@
         timeout = setTimeout(later, wait);
       };
     }
-
+    
     // ===== التنقل بين الخطوات =====
-    function goToStep(step) {
-      // إخفاء جميع الخطوات
-      elements.step1Form.classList.remove('active');
-      elements.step2Form.classList.remove('active');
-      elements.step3Form.classList.remove('active');
-      
-      // إلغاء تنشيط جميع الخطوات
-      elements.step1.classList.remove('active', 'completed');
-      elements.step2.classList.remove('active', 'completed');
-      elements.step3.classList.remove('active', 'completed');
-      
-      // تعيين الخطوة الحالية
-      currentStep = step;
-      
-      // إظهار الخطوة المطلوبة
-      if (step === 1) {
-        elements.step1Form.classList.add('active');
-        elements.step1.classList.add('active');
-      } else if (step === 2) {
-        elements.step2Form.classList.add('active');
-        elements.step2.classList.add('active');
-        elements.step1.classList.add('completed');
-      } else if (step === 3) {
-        elements.step3Form.classList.add('active');
-        elements.step3.classList.add('active');
-        elements.step1.classList.add('completed');
-        elements.step2.classList.add('completed');
-      }
+function goToStep(step) {
+    console.log('جاري الانتقال إلى الخطوة:', step);
+    
+    // إخفاء جميع الخطوات
+    document.querySelectorAll('.form-step').forEach(formStep => {
+        formStep.classList.remove('active');
+    });
+    
+    // إلغاء تنشيط جميع الخطوات في المؤشر
+    document.querySelectorAll('.step').forEach(stepElement => {
+        stepElement.classList.remove('active', 'completed');
+    });
+    
+    // تعيين الخطوة الحالية
+    currentStep = step;
+    
+    // إظهار الخطوة المطلوبة وتحديث المؤشر
+    if (step === 1) {
+        document.getElementById('step1-form').classList.add('active');
+        document.getElementById('step1').classList.add('active');
+    } else if (step === 2) {
+        document.getElementById('step2-form').classList.add('active');
+        document.getElementById('step2').classList.add('active');
+        document.getElementById('step1').classList.add('completed');
+    } else if (step === 3) {
+        document.getElementById('step3-form').classList.add('active');
+        document.getElementById('step3').classList.add('active');
+        document.getElementById('step1').classList.add('completed');
+        document.getElementById('step2').classList.add('completed');
     }
+    
+    console.log('تم الانتقال بنجاح إلى الخطوة:', step);
+}
 
     // ===== التحقق من اسم المستخدم (مبسط) =====
     async function checkUsernameAvailability() {
@@ -835,58 +843,87 @@
       elements.usernameAvailability.textContent = '✅ اسم المستخدم متاح';
       elements.usernameAvailability.style.color = '#4cc9f0';
     }
-
-    // ===== التحقق من صحة الخطوة 1 =====
-    function validateStep1() {
-      const fullName = sanitizeInput(elements.fullName.value.trim());
-      const userName = sanitizeInput(elements.userName.value.trim());
-      const email = sanitizeInput(elements.email.value.trim());
-      
-      if (!fullName) {
+// ===== التحقق من صحة الخطوة 1 =====
+function validateStep1() {
+    const fullName = elements.fullName.value.trim();
+    const userName = elements.userName.value.trim();
+    const email = elements.email.value.trim();
+    
+    // إعادة تعيين التنبيهات
+    elements.authAlert.innerHTML = '';
+    
+    if (!fullName) {
         showAlert('يرجى إدخال الاسم الكامل', 'error');
         elements.fullName.focus();
-        return;
-      }
-      
-      if (!userName || !/^[a-zA-Z0-9_]{3,20}$/.test(userName)) {
+        return false;
+    }
+    
+    if (!userName) {
+        showAlert('يرجى إدخال اسم المستخدم', 'error');
+        elements.userName.focus();
+        return false;
+    }
+    
+    if (!/^[a-zA-Z0-9_]{3,20}$/.test(userName)) {
         showAlert('اسم المستخدم يجب أن يحتوي على 3-20 حرف (أحرف إنجليزية، أرقام، _)', 'error');
         elements.userName.focus();
-        return;
-      }
-      
-      // استخدام regex مصحح للبريد الإلكتروني
-      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      if (!email || !emailRegex.test(email)) {
+        return false;
+    }
+    
+    if (!email) {
+        showAlert('يرجى إدخال البريد الإلكتروني', 'error');
+        elements.email.focus();
+        return false;
+    }
+    
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) {
         showAlert('صيغة البريد الإلكتروني غير صحيحة', 'error');
         elements.email.focus();
-        return;
-      }
-      
-      // الانتقال إلى الخطوة 2
-      goToStep(2);
+        return false;
     }
+    
+    // الانتقال إلى الخطوة 2
+    goToStep(2);
+    return true;
+}
 
-    // ===== التحقق من صحة الخطوة 2 =====
-    function validateStep2() {
-      const password = elements.password.value;
-      const confirmPassword = elements.confirmPassword.value;
-      
-      if (password.length < 8) {
+// ===== التحقق من صحة الخطوة 2 =====
+function validateStep2() {
+    const password = elements.password.value;
+    const confirmPassword = elements.confirmPassword.value;
+    
+    // إعادة تعيين التنبيهات
+    elements.authAlert.innerHTML = '';
+    
+    if (!password) {
+        showAlert('يرجى إدخال كلمة المرور', 'error');
+        elements.password.focus();
+        return false;
+    }
+    
+    if (password.length < 8) {
         showAlert('كلمة المرور يجب أن تحتوي على 8 أحرف على الأقل', 'error');
         elements.password.focus();
-        return;
-      }
-      
-      if (password !== confirmPassword) {
+        return false;
+    }
+    
+    if (!confirmPassword) {
+        showAlert('يرجى تأكيد كلمة المرور', 'error');
+        elements.confirmPassword.focus();
+        return false;
+    }
+    
+    if (password !== confirmPassword) {
         showAlert('كلمتا المرور غير متطابقتين', 'error');
         elements.confirmPassword.focus();
-        return;
-      }
-      
-      // الانتقال إلى الخطوة 3
-      goToStep(3);
+        return false;
     }
-
+    
+    // الانتقال إلى الخطوة 3
+    goToStep(3);
+    return true;
+}
     // ===== تبديل رؤية كلمة المرور =====
     function togglePasswordVisibility(field) {
       const input = field === 'password' ? elements.password : elements.confirmPassword;
@@ -1011,8 +1048,8 @@
               username: userName,
               phone: phone,
               newsletter_subscription: newsletter
-            },
-            emailRedirectTo: `https://a75m3d.github.io/Skillzoy-Academy/auth/callback.html`
+            }
+            emailRedirectTo: `https://skillzoy-academy.vercel.app/couses.html`
           }
         });
 
