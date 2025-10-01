@@ -1,47 +1,52 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>جاري التسجيل...</title>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <title>تفعيل الحساب - Skillzoy Academy</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
+    .loading { color: #007bff; }
+    .success { color: green; }
+    .error { color: red; }
+  </style>
 </head>
 <body>
-    <div style="text-align: center; padding: 50px;">
-        <h2>جاري إكمال عملية التسجيل...</h2>
-        <p>يرجى الانتظار</p>
-    </div>
+  <h2>جاري تفعيل حسابك...</h2>
+  <div id="message" class="loading">يرجى الانتظار...</div>
 
-    <script>
-        // ⚙️ نفس الإعدادات
-        const supabaseUrl = 'https://sjipwstkvvrautexigmt.supabase.co';
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNqaXB3c3RrdnZyYXV0ZXhpZ210Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MTE5MDcsImV4cCI6MjA3NDQ4NzkwN30.FSh2yIdZdvdNvtWxK5JB02PIdWOG3707qO-F0c84PnY';
-        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    // ✅ غير هدول ببيانات مشروعك من Supabase
+    const supabase = supabase.createClient(
+      'https://sjipwstkvvrautexigmt.supabase.co',   // ← Project URL
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNqaXB3c3RrdnZyYXV0ZXhpZ210Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MTE5MDcsImV4cCI6MjA3NDQ4NzkwN30.FSh2yIdZdvdNvtWxK5JB02PIdWOG3707qO-F0c84PnY'                       // ← Public Key
+    );
 
-        // 🔄 معالجة الـ callback
-        async function handleCallback() {
-            try {
-                const { data, error } = await supabase.auth.getSession();
-                
-                if (error) {
-                    throw error;
-                }
-                
-                if (data.session) {
-                    // ✅ نجح التسجيل - توجيه للصفحة الرئيسية
-                    window.location.href = 'https://a75m3d.github.io/Skillzoy-Academy';
-                } else {
-                    // ❌ فشل التسجيل
-                    window.location.href = 'https://a75m3d.github.io/Skillzoy-Academy?error=auth_failed';
-                }
-            } catch (error) {
-                console.error('خطأ في المعالجة:', error);
-                window.location.href = 'https://a75m3d.github.io/Skillzoy-Academy?error=' + error.message;
-            }
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+
+    const messageEl = document.getElementById('message');
+
+    if (token) {
+      supabase.auth.verifyOtp({
+        token_hash: token,
+        type: 'email'
+      }).then(({ data, error }) => {
+        if (error) {
+          messageEl.innerHTML = '❌ حدث خطأ: ' + error.message;
+          messageEl.className = 'error';
+          console.error(error);
+        } else {
+          messageEl.innerHTML = '✅ تم تفعيل حسابك بنجاح!';
+          messageEl.className = 'success';
+          setTimeout(() => {
+            window.location.href = '/';
+          }, 2000);
         }
-
-        // تشغيل المعالجة عند تحميل الصفحة
-        handleCallback();
-    </script>
+      });
+    } else {
+      messageEl.innerHTML = '❌ لا يوجد رمز تفعيل في الرابط.';
+      messageEl.className = 'error';
+    }
+  </script>
 </body>
 </html>
