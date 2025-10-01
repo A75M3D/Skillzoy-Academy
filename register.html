@@ -1013,10 +1013,7 @@
               phone: phone,
               newsletter_subscription: newsletter
             },
-          emailRedirectTo: `${window.location.origin}/auth/callback.html`
-          // يرسل إيميل تأكيد ويوجه إلى confirm.html
-emailRedirectTo: 'https://a75m3d.github.io/Skillzoy-Academy/confirm.html'
-          
+          emailRedirectTo: `${window.location.origin}/auth/callback.html
           }
         });
 
@@ -1057,7 +1054,7 @@ emailRedirectTo: 'https://a75m3d.github.io/Skillzoy-Academy/confirm.html'
         showAlert('تم إنشاء حسابك بنجاح! يرجى التحقق من بريدك الإلكتروني لتأكيد الحساب.', 'success');
         
         setTimeout(() => {
-          window.location.href = 'login.html';
+          window.location.href = 'corses.html';
         }, 3000);
 
       } catch (err) {
