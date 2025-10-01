@@ -1,0 +1,136 @@
+<!-- sidebar.html -->
+<aside class="sidebar" id="sidebar">
+    <!-- زر إغلاق الشريط -->
+    <button class="sidebar-close" id="sidebarClose">
+        <i class="fas fa-times"></i>
+    </button>
+
+    <!-- معلومات المستخدم -->
+    <div class="user-profile">
+        <div class="user-avatar">
+            <i class="fas fa-user-graduate"></i>
+        </div>
+        <div class="user-info">
+            <h4>أحمد محمد</h4>
+            <p>طالب نشط</p>
+            <span class="user-level">المستوى: مبتدئ</span>
+        </div>
+    </div>
+
+    <!-- قائمة التنقل الرئيسية -->
+    <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>لوحة التحكم</span>
+        </a>
+        <a href="courses.html" class="nav-item">
+            <i class="fas fa-book-open"></i>
+            <span>الدورات التعليمية</span>
+        </a>
+        <a href="my-courses.html" class="nav-item">
+            <i class="fas fa-play-circle"></i>
+            <span>دوراتي</span>
+            <span class="badge">5</span>
+        </a>
+        <a href="progress.html" class="nav-item">
+            <i class="fas fa-chart-line"></i>
+            <span>التقدم الدراسي</span>
+        </a>
+        <a href="certificates.html" class="nav-item">
+            <i class="fas fa-award"></i>
+            <span>الشهادات</span>
+            <span class="badge">2</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+            <i class="fas fa-user-cog"></i>
+            <span>الملف الشخصي</span>
+        </a>
+    </nav>
+
+    <!-- قسم التقدم الدراسي -->
+    <div class="progress-section">
+        <h4>تقدمك الدراسي</h4>
+        <div class="progress-item">
+            <span>Python للمبتدئين</span>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 75%"></div>
+            </div>
+            <span>75%</span>
+        </div>
+        <div class="progress-item">
+            <span>تصميم UI/UX</span>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 40%"></div>
+            </div>
+            <span>40%</span>
+        </div>
+        <div class="progress-item">
+            <span>التسويق الرقمي</span>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 20%"></div>
+            </div>
+            <span>20%</span>
+        </div>
+    </div>
+
+    <!-- الدورات المقترحة -->
+    <div class="suggested-courses">
+        <h4>مقترحة لك</h4>
+        <div class="suggested-course">
+            <div class="course-icon">
+                <i class="fab fa-js-square"></i>
+            </div>
+            <div class="course-info">
+                <h5>JavaScript متقدم</h5>
+                <span>12 درس</span>
+            </div>
+        </div>
+        <div class="suggested-course">
+            <div class="course-icon">
+                <i class="fas fa-database"></i>
+            </div>
+            <div class="course-info">
+                <h5>قواعد البيانات</h5>
+                <span>8 دروس</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- الإشعارات -->
+    <div class="notifications">
+        <h4>الإشعارات</h4>
+        <div class="notification-item">
+            <i class="fas fa-bell"></i>
+            <div class="notification-content">
+                <p>دورة Python جاهزة للمراجعة</p>
+                <span>منذ ساعتين</span>
+            </div>
+        </div>
+        <div class="notification-item">
+            <i class="fas fa-certificate"></i>
+            <div class="notification-content">
+                <p>شهادة جديدة متاحة</p>
+                <span>منذ يوم</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- الإعدادات السريعة -->
+    <div class="quick-actions">
+        <button class="action-btn" onclick="openSettings()">
+            <i class="fas fa-cog"></i>
+            الإعدادات
+        </button>
+        <button class="action-btn" onclick="openHelp()">
+            <i class="fas fa-question-circle"></i>
+            المساعدة
+        </button>
+        <button class="action-btn logout" onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i>
+            تسجيل الخروج
+        </button>
+    </div>
+</aside>
+
+<!-- الغطاء الخلفي للشريط الجانبي -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
