@@ -73,7 +73,7 @@
           // إعادة التوجيه بعد 2 ثانية
           setTimeout(() => {
             // حاول العودة إلى الصفحة السابقة (إذا أمكن)
-            const redirect = urlParams.get('courses.html') || '/';
+            const redirect = urlParams.get('redirect_to') || 'corses.html';
             window.location.href = redirect;
           }, 2000);
         }
