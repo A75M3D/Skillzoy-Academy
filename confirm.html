@@ -3,27 +3,45 @@
 <head>
   <meta charset="utf-8">
   <title>تأكيد الحساب</title>
+  <h1 style="color: blue">Skillzoy Academy</h1>
   <style>
-    body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
-    #app { font-size: 1.2rem; color: #333; }
+    body {
+      font-family: "Cairo", Arial, sans-serif;
+      text-align: center;
+      padding: 60px;
+      background: #f9f9f9;
+      color: #333;
+    }
+    .box {
+      background: #fff;
+      border-radius: 12px;
+      padding: 40px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      display: inline-block;
+    }
+    h2 { color: #4CAF50; }
+    #countdown { font-weight: bold; color: #007BFF; }
   </style>
 </head>
 <body>
-  <h2 style ="color:blue">Skillzoy Academy👨‍🎓</h2>
-  <h2>🔑 تأكيد الحساب</h2>
-  <div id="app">جارٍ التحقق...</div>
+  <div class="box">
+    <h2>✅ تم تأكيد حسابك بنجاح</h2>
+    <p>سيتم تحويلك إلى صفحتك خلال <span id="countdown">3</span> ثوانٍ...</p>
+  </div>
 
   <script>
-    const params = new URLSearchParams(window.location.search);
-    const token = params.get("token");
+    let timeLeft = 3;
+    const countdownElem = document.getElementById("countdown");
 
-    if (!token) {
-      document.getElementById("app").innerText = "❌ رابط غير صالح أو لا يحتوي على توكين.";
-    } else {
-      // هنا ممكن تتصل بالباكند/سيرفرك لو تحب تتحقق بنفسك
-      // أو ببساطة تعرض رسالة نجاح
-      document.getElementById("app").innerText = "✅ تم تأكيد حسابك بنجاح!";
-    }
+    const timer = setInterval(() => {
+      timeLeft--;
+      countdownElem.innerText = timeLeft;
+      if (timeLeft <= 0) {
+        clearInterval(timer);
+        // غير الرابط للصفحة اللي عايز المستخدم يروح ليها
+        window.location.href = "/str.html"; 
+      }
+    }, 1000);
   </script>
 </body>
 </html>
