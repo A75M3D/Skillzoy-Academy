@@ -1092,5 +1092,11 @@
     }
   }
 </script>
+    <script>
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("type") === "signup") {
+    window.location.href = "/str.html";
+  }
+    </script>
 </body>
 </html>
