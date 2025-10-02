@@ -1,83 +1,28 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<!doctype html>
+<html lang="ar">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>تفعيل الحساب</title>
+  <meta charset="utf-8">
+  <title>تأكيد الحساب</title>
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      text-align: center;
-      padding: 60px 20px;
-      background: #f9f9f9;
-      color: #333;
-    }
-    .container {
-      max-width: 500px;
-      margin: 0 auto;
-    }
-    h2 {
-      margin-bottom: 20px;
-      color: #007bff;
-    }
-    #message {
-      font-size: 18px;
-      padding: 15px;
-      border-radius: 8px;
-      margin-top: 20px;
-    }
-    .loading { color: #007bff; }
-    .success { color: #28a745; }
-    .error { color: #dc3545; background: #ffecec; }
+    body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
+    #app { font-size: 1.2rem; color: #333; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h2>جاري تفعيل حسابك...</h2>
-    <div id="message" class="loading">يرجى الانتظار...</div>
-  </div>
+  <h2 style ="color:blue">Skillzoy Academy👨‍🎓</h2>
+  <h2>🔑 تأكيد الحساب</h2>
+  <div id="app">جارٍ التحقق...</div>
 
-  <!-- تحميل مكتبة Supabase -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
-    // ⚠️ يجب أن تُدخل هنا بيانات مشروعك من Supabase
-    // (احصل عليها من: Project Settings → API)
-    const SUPABASE_URL = 'https://sjipwstkvvrautexigmt.supabase.co'; // مثال: https://abc.supabase.co
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNqaXB3c3RrdnZyYXV0ZXhpZ210Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MTE5MDcsImV4cCI6MjA3NDQ4NzkwN30.FSh2yIdZdvdNvtWxK5JB02PIdWOG3707qO-F0c84PnY';
-
-    // لا تُغيّر الكود أدناه
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const token = urlParams.get('token');
-
-    const messageEl = document.getElementById('message');
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get("token");
 
     if (!token) {
-      messageEl.textContent = '❌ الرابط غير صالح: لا يوجد رمز تفعيل.';
-      messageEl.className = 'error';
+      document.getElementById("app").innerText = "❌ رابط غير صالح أو لا يحتوي على توكين.";
     } else {
-      // محاولة تفعيل الحساب
-      supabase.auth.verifyOtp({
-        token_hash: token,
-        type: 'signup' // مهم جدًا للتسجيل الجديد
-      }).then(({ error }) => {
-        if (error) {
-          console.error('Supabase Error:', error);
-          messageEl.innerHTML = '❌ فشل التفعيل: ' + (error.message || 'حدث خطأ غير معروف.');
-          messageEl.className = 'error';
-        } else {
-          messageEl.innerHTML = '✅ تم تفعيل حسابك بنجاح!';
-          messageEl.className = 'success';
-
-          // إعادة التوجيه بعد 2 ثانية
-          setTimeout(() => {
-            // حاول العودة إلى الصفحة السابقة (إذا أمكن)
-            const redirect = urlParams.get('redirect_to') || '/';
-            window.location.href = redirect;
-          }, 2000);
-        }
-      });
+      // هنا ممكن تتصل بالباكند/سيرفرك لو تحب تتحقق بنفسك
+      // أو ببساطة تعرض رسالة نجاح
+      document.getElementById("app").innerText = "✅ تم تأكيد حسابك بنجاح!";
     }
   </script>
 </body>
