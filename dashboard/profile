@@ -181,9 +181,150 @@
         
         <div class="nav-links">
             <a href="dashboard.html">الرئيسية</a>
-            <a href="#" onclick="logout()">تسجيل الخروج</a>
+            <a href="#" id="logoutBtn">تسجيل الخروج</a>
         </div>
     </div>
 
     <!-- Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
+    <script>
+        // تهيئة Supabase - استبدل هذه القيم بمعلومات مشروعك
+        const supabaseUrl = 'https://your-project.supabase.co';
+        const supabaseKey = 'your-anon-key';
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        // عناصر DOM
+        const profileForm = document.getElementById('profileForm');
+        const alertMessage = document.getElementById('alertMessage');
+        const loading = document.getElementById('loading');
+        const submitBtn = document.getElementById('submitBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+
+        // جلب بيانات المستخدم عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadUserProfile();
+        });
+
+        // دالة جلب بيانات الملف الشخصي
+        async function loadUserProfile() {
+            try {
+                showLoading(true);
+                
+                // الحصول على المستخدم الحالي من المصادقة
+                const { data: { user }, error: userError } = await supabase.auth.getUser();
+                
+                if (userError) throw userError;
+                if (!user) {
+                    window.location.href = 'login.html';
+                    return;
+                }
+
+                // جلب البيانات من جدول user_profiles
+                const { data: profile, error: profileError } = await supabase
+                    .from('user_profiles')
+                    .select('*')
+                    .eq('id', user.id)
+                    .single();
+
+                // PGRST116 يعني لا توجد بيانات (ليس بالضرورة خطأ)
+                if (profileError && profileError.code !== 'PGRST116') {
+                    throw profileError;
+                }
+
+                // تعبئة النموذج بالبيانات
+                if (profile) {
+                    document.getElementById('fullName').value = profile.full_name || '';
+                    document.getElementById('email').value = profile.email || user.email || '';
+                    document.getElementById('phone').value = profile.phone || '';
+                    document.getElementById('bio').value = profile.bio || '';
+                } else {
+                    // إذا لم يكن هناك ملف شخصي، استخدم بيانات المستخدم الأساسية
+                    document.getElementById('email').value = user.email || '';
+                }
+
+            } catch (error) {
+                console.error('Error loading profile:', error);
+                showAlert('حدث خطأ في جلب البيانات: ' + error.message, 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // دالة حفظ التغييرات
+        profileForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            try {
+                showLoading(true);
+                
+                const { data: { user }, error: userError } = await supabase.auth.getUser();
+                if (userError) throw userError;
+                if (!user) throw new Error('يجب تسجيل الدخول أولاً');
+
+                const formData = {
+                    full_name: document.getElementById('fullName').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    bio: document.getElementById('bio').value,
+                    updated_at: new Date().toISOString()
+                };
+
+                // استخدام upsert بدلاً من التحقق من الوجود أولاً
+                const { data, error } = await supabase
+                    .from('user_profiles')
+                    .upsert({
+                        id: user.id,
+                        ...formData
+                    })
+                    .select();
+
+                if (error) throw error;
+
+                showAlert('تم حفظ التغييرات بنجاح!', 'success');
+
+            } catch (error) {
+                console.error('Error saving profile:', error);
+                showAlert('حدث خطأ في حفظ البيانات: ' + error.message, 'error');
+            } finally {
+                showLoading(false);
+            }
+        });
+
+        // دالة تسجيل الخروج
+        async function logout() {
+            try {
+                const { error } = await supabase.auth.signOut();
+                if (error) throw error;
+                
+                window.location.href = 'login.html';
+            } catch (error) {
+                console.error('Error logging out:', error);
+                showAlert('حدث خطأ في تسجيل الخروج: ' + error.message, 'error');
+            }
+        }
+
+        // إضافة مستمع الحدث لتسجيل الخروج
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            logout();
+        });
+
+        // دوال مساعدة
+        function showAlert(message, type) {
+            alertMessage.textContent = message;
+            alertMessage.className = `alert ${type}`;
+            alertMessage.style.display = 'block';
+            
+            setTimeout(() => {
+                alertMessage.style.display = 'none';
+            }, 5000);
+        }
+
+        function showLoading(show) {
+            loading.style.display = show ? 'block' : 'none';
+            submitBtn.disabled = show;
+        }
+    </script>
+</body>
+</html>
