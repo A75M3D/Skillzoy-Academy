@@ -190,8 +190,8 @@
     
     <script>
         // تهيئة Supabase - استبدل هذه القيم بمعلومات مشروعك
-        const supabaseUrl = 'https://your-project.supabase.co';
-        const supabaseKey = 'your-anon-key';
+        const supabaseUrl = 'https://sjipwstkvvrautexigmt.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNqaXB3c3RrdnZyYXV0ZXhpZ210Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MTE5MDcsImV4cCI6MjA3NDQ4NzkwN30.FSh2yIdZdvdNvtWxK5JB02PIdWOG3707qO-F0c84PnY';
         const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
         // عناصر DOM
@@ -236,8 +236,8 @@
                 if (profile) {
                     document.getElementById('fullName').value = profile.full_name || '';
                     document.getElementById('email').value = profile.email || user.email || '';
+                    document.getElementById('username').value = profile.username || '';
                     document.getElementById('phone').value = profile.phone || '';
-                    document.getElementById('bio').value = profile.bio || '';
                 } else {
                     // إذا لم يكن هناك ملف شخصي، استخدم بيانات المستخدم الأساسية
                     document.getElementById('email').value = user.email || '';
@@ -265,8 +265,8 @@
                 const formData = {
                     full_name: document.getElementById('fullName').value,
                     email: document.getElementById('email').value,
-                    phone: document.getElementById('phone').value,
-                    bio: document.getElementById('bio').value,
+                    phone: document.getElementById('username').value,
+                    bio: document.getElementById('phone').value,
                     updated_at: new Date().toISOString()
                 };
 
