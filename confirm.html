@@ -32,10 +32,10 @@
   </style>
 </head>
 <body>
-  <div class="box">
+  <div class="box"><center>
     <h2>✅ تم تأكيد حسابك بنجاح</h2>
     <p>سيتم تحويلك إلى صفحتك خلال <span id="countdown">3</span> ثوانٍ...</p>
-  </div>
+  </center> </div>
   <script>
     let timeLeft = 3;
     const countdownElem = document.getElementById("countdown");
@@ -46,7 +46,7 @@
       if (timeLeft <= 0) {
         clearInterval(timer);
         // غير الرابط للصفحة اللي عايز المستخدم يروح ليها
-        window.location.href = "https://skillzoy-academy.vercel.app/str.html"; 
+        window.location.href = "https://skillzoy-academy.vercel.app/login.html"; 
       }
     }, 1000);
   </script>
