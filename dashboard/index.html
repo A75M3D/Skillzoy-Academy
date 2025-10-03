@@ -19,7 +19,10 @@
             --card-bg: rgba(255, 255, 255, 0.1);
             --glass-bg: rgba(255, 255, 255, 0.15);
             --glass-border: rgba(255, 255, 255, 0.2);
-            --nav-bg: rgba(13, 71, 161, 0.9);
+            --sidebar-bg: #1e293b;
+            --sidebar-hover: #334155;
+            --sidebar-active: #4361ee;
+            --sidebar-width: 280px;
             --border-radius: 16px;
             --box-shadow: 0 8px 32px rgba(30, 136, 229, 0.2);
             --transition: all 0.3s ease;
@@ -72,84 +75,147 @@
             }
         }
 
-        /* الهيكل الرئيسي */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
+        /* الشريط الجانبي الجديد */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--sidebar-bg);
+            transition: var(--transition);
+            position: fixed;
+            right: 0;
+            top: 0;
+            height: 100vh;
+            z-index: 1000;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        /* الهيدر */
-        header {
+        .sidebar-header {
+            padding: 25px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 15px 30px;
-            margin-bottom: 30px;
-            background: var(--nav-bg);
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border);
+            gap: 12px;
         }
 
         .logo {
             display: flex;
             align-items: center;
             text-decoration: none;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
         }
 
         .logo-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
             border-radius: 10px;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-left: 12px;
             color: white;
+            margin-left: 10px;
         }
 
-        .logo-text {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--light);
+        .sidebar-nav {
+            flex: 1;
+            padding: 20px 0;
         }
 
-        .logo-text span {
-            color: var(--accent);
+        .nav-section {
+            margin-bottom: 25px;
+        }
+
+        .nav-section-title {
+            padding: 0 20px 10px;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .nav-links {
-            display: flex;
-            gap: 20px;
+            list-style: none;
         }
 
         .nav-link {
-            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            color: #cbd5e1;
             text-decoration: none;
-            font-weight: 600;
-            padding: 8px 16px;
-            border-radius: 8px;
             transition: var(--transition);
+            border-right: 3px solid transparent;
         }
 
-        .nav-link:hover, .nav-link.active {
-            background: rgba(255, 255, 255, 0.2);
-            color: var(--accent);
+        .nav-link:hover {
+            background: var(--sidebar-hover);
+            color: white;
+            border-right-color: var(--primary-light);
         }
 
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--light);
-            font-size: 1.5rem;
-            cursor: pointer;
+        .nav-link.active {
+            background: var(--sidebar-active);
+            color: white;
+            border-right-color: white;
+            font-weight: 600;
         }
 
-        /* محتوى الصفحة */
+        .nav-link i {
+            width: 20px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .sidebar-footer {
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-light);
+        }
+
+        .user-info h4 {
+            font-size: 0.95rem;
+            margin-bottom: 3px;
+            color: white;
+        }
+
+        .user-info p {
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+
+        /* المحتوى الرئيسي */
+        .main-content {
+            margin-right: var(--sidebar-width);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 15px 0;
+        }
+
         .page-title {
             text-align: center;
             margin-bottom: 40px;
@@ -357,7 +423,7 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.9);
-            z-index: 1000;
+            z-index: 2000;
             justify-content: center;
             align-items: center;
         }
@@ -635,7 +701,7 @@
 
         /* الفوتر */
         footer {
-            background: var(--nav-bg);
+            background: var(--sidebar-bg);
             padding: 40px 20px;
             margin-top: 60px;
             border-radius: var(--border-radius) var(--border-radius) 0 0;
@@ -719,32 +785,20 @@
 
         /* التجاوب */
         @media (max-width: 992px) {
-            .courses-grid {
-                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            .sidebar {
+                right: -100%;
             }
             
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
+            .sidebar.active {
                 right: 0;
-                background: var(--nav-bg);
-                flex-direction: column;
-                width: 200px;
-                padding: 15px;
-                border-radius: var(--border-radius);
-                box-shadow: var(--box-shadow);
-                z-index: 100;
-                backdrop-filter: blur(10px);
-                border: 1px solid var(--glass-border);
             }
             
-            .nav-links.show {
-                display: flex;
+            .main-content {
+                margin-right: 0;
             }
             
             .mobile-menu-btn {
-                display: block;
+                display: flex;
             }
         }
 
@@ -793,7 +847,7 @@
         }
 
         @media (max-width: 576px) {
-            .container {
+            .main-content {
                 padding: 15px;
             }
             
@@ -809,12 +863,35 @@
                 padding: 20px;
             }
             
-            header {
-                padding: 15px 20px;
-            }
-            
             .stats-section {
                 grid-template-columns: 1fr;
+            }
+        }
+
+        /* زر القائمة المتنقلة */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+            background: var(--primary);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 992px) {
+            .mobile-menu-btn {
+                display: flex;
             }
         }
     </style>
@@ -822,6 +899,65 @@
 <body>
     <!-- تأثير الفقاعات -->
     <div class="bubbles" id="bubbles-container"></div>
+
+    <!-- زر القائمة المتنقلة -->
+    <button class="mobile-menu-btn">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- الشريط الجانبي الجديد -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <a href="#" class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <span>Skillzoy Academy</span>
+            </a>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <h3 class="nav-section-title">القائمة الرئيسية</h3>
+                <ul class="nav-links">
+                    <li><a href="user_profiles.html" class="nav-link active"><i class="fas fa-user"></i>الملف الشخصي </a></li>
+                    <li><a href="#" class="nav-link"><i class="fas fa-book-open"></i> الدورات</a></li>
+                    <li><a href="#" class="nav-link"><i class="fas fa-chart-line"></i> التقدم</a></li>
+                    <li><a href="#" class="nav-link"><i class="fas fa-award"></i> الشهادات</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <h3 class="nav-section-title">المحتوى التعليمي</h3>
+                <ul class="nav-links">
+                    <li><a href="#" class="nav-link"><i class="fas fa-play-circle"></i> الفيديوهات</a></li>
+                    <li><a href="#" class="nav-link"><i class="fas fa-file-alt"></i> المواد الدراسية</a></li>
+                    <li><a href="#" class="nav-link"><i class="fas fa-tasks"></i> الواجبات</a></li>
+                    <li><a href="#" class="nav-link"><i class="fas fa-question-circle"></i> الاختبارات</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <h3 class="nav-section-title">الحساب والإعدادات</h3>
+                <ul class="nav-links">
+                    <li><a href="#" class="nav-link"><i class="fas fa-user"></i> الملف الشخصي</a></li>
+                    <li><a href="#" class="nav-link"><i class="fas fa-cog"></i> الإعدادات</a></li>
+                    <li><a href="#" class="nav-link"><i class="fas fa-question"></i> المساعدة</a></li>
+                    <li><a href="#" class="nav-link"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</a></li>
+                </ul>
+            </div>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <img src="https://ui-avatars.com/api/?name=أحمد+محمد&background=4361ee&color=fff" alt="صورة المستخدم" class="user-avatar">
+                <div class="user-info">
+                    <h4>أحمد محمد</h4>
+                    <p>طالب</p>
+                </div>
+            </div>
+        </div>
+    </aside>
 
     <!-- مشغل الفيديو المدمج -->
     <div class="video-player-container" id="video-player">
@@ -833,29 +969,8 @@
         </div>
     </div>
 
-    <div class="container">
-        <!-- الهيدر -->
-        <header>
-            <a href="#" class="logo">
-                <div class="logo-icon">
-                    <i class="fas fa-graduation-cap"></i>
-                </div>
-                <div class="logo-text">Skillzoy <span>Academy</span></div>
-            </a>
-            
-            <nav class="nav-links">
-                <a href="#" class="nav-link active">الرئيسية</a>
-                <a href="#" class="nav-link">الدورات</a>
-                <a href="#" class="nav-link">المدربين</a>
-                <a href="#" class="nav-link">الشهادات</a>
-                <a href="#" class="nav-link">اتصل بنا</a>
-            </nav>
-            
-            <button class="mobile-menu-btn">
-                <i class="fas fa-bars"></i>
-            </button>
-        </header>
-        
+    <!-- المحتوى الرئيسي -->
+    <main class="main-content">
         <!-- محتوى الصفحة -->
         <div class="page-title">
             <h1>Skillzoy Academy - منصة التعلم</h1>
@@ -895,7 +1010,7 @@
                 <div class="stat-label">مدرب محترف</div>
             </div>
         </div>
-    </div>
+    </main>
 
     <!-- صفحة تفاصيل الدورة -->
     <div class="course-details" id="course-details">
@@ -1270,13 +1385,13 @@
             setupVideoEventListeners();
             
             // إظهار صفحة التفاصيل وإخفاء الصفحة الرئيسية
-            document.querySelector('.container').style.display = 'none';
+            document.querySelector('.main-content').style.display = 'none';
             document.getElementById('course-details').style.display = 'block';
         }
 
         // العودة للصفحة الرئيسية
         function showHomePage() {
-            document.querySelector('.container').style.display = 'block';
+            document.querySelector('.main-content').style.display = 'block';
             document.getElementById('course-details').style.display = 'none';
         }
 
@@ -1423,7 +1538,7 @@
             
             // زر القائمة المتنقلة
             document.querySelector('.mobile-menu-btn').addEventListener('click', () => {
-                document.querySelector('.nav-links').classList.toggle('show');
+                document.querySelector('.sidebar').classList.toggle('active');
             });
             
             // زر إغلاق الفيديو
@@ -1434,6 +1549,39 @@
                 if (e.target.id === 'video-player') {
                     closeVideoPlayer();
                 }
+            });
+
+            // إغلاق الشريط الجانبي عند النقر خارجها في الشاشات الصغيرة
+            document.addEventListener('click', (e) => {
+                const sidebar = document.querySelector('.sidebar');
+                const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+                
+                if (window.innerWidth <= 992 && 
+                    !sidebar.contains(e.target) && 
+                    !mobileMenuBtn.contains(e.target) && 
+                    sidebar.classList.contains('active')) {
+                    sidebar.classList.remove('active');
+                }
+            });
+
+            // تفعيل الروابط في الشريط الجانبي
+            document.querySelectorAll('.sidebar-nav .nav-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    // إزالة النشط من جميع الروابط
+                    document.querySelectorAll('.sidebar-nav .nav-link').forEach(l => {
+                        l.classList.remove('active');
+                    });
+                    
+                    // إضافة النشط للرابط المحدد
+                    e.target.classList.add('active');
+                    
+                    // إغلاق الشريط في الشاشات الصغيرة
+                    if (window.innerWidth <= 992) {
+                        document.querySelector('.sidebar').classList.remove('active');
+                    }
+                });
             });
         });
     </script>
