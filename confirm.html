@@ -36,34 +36,6 @@
     <h2>✅ تم تأكيد حسابك بنجاح</h2>
     <p>سيتم تحويلك إلى صفحتك خلال <span id="countdown">3</span> ثوانٍ...</p>
   </div>
-<script>
-
-
-  // 2. نشوف إذا في رابط فيه كلمة "token" بعد #
-  const hash = window.location.hash; // مثال: #token=abc123&type=email
-
-  if (hash) {
-    // 3. نستخرج الـ token من الرابط
-    const params = new URLSearchParams(hash.substring(1)); // نزيل الـ #
-    const token = params.get('token');
-
-    // 4. إذا وجدنا token، نرسله لـ Supabase علشان يتأكد منه
-    if (token) {
-      supabase.auth.verifyOtp({
-        token_hash: token,
-        type: 'signup'
-      }).then(({ data, error }) => {
-        if (error) {
-          alert('❌ خطأ: ' + error.message);
-        } else {
-          alert('✅ تم تفعيل حسابك!');
-          // نمسح الـ token من الرابط بعد ما نخلص
-          history.replaceState(null, null, ' ');
-        }
-      });
-    }
-  }
-</scr>ipt
   <script>
     let timeLeft = 3;
     const countdownElem = document.getElementById("countdown");
