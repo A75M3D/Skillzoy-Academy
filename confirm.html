@@ -1,11 +1,19 @@
 <!doctype html>
 <html lang="ar">
 <head>
+  <script src="https://unpkg.com/@supabase/supabase-js"></script>
+<script>
+  const supabase = supabase.createClient(
+    'https://sjipwstkvvrautexigmt.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNqaXB3c3RrdnZyYXV0ZXhpZ210Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MTE5MDcsImV4cCI6MjA3NDQ4NzkwN30.FSh2yIdZdvdNvtWxK5JB02PIdWOG3707qO-F0c84PnY'                       // ← اكتب المفتاح العام هنا
+  );
+');
+</script>
   <meta charset="utf-8">
   <title>تأكيد الحساب</title>
   <h1 style="color: blue">Skillzoy Academy</h1>
   <style>
-    body {
+    
       font-family: "Cairo", Arial, sans-serif;
       text-align: center;
       padding: 60px;
@@ -29,11 +37,7 @@
     <p>سيتم تحويلك إلى صفحتك خلال <span id="countdown">3</span> ثوانٍ...</p>
   </div>
 <script>
-  // 1. نربط موقعك بمشروع Supabase
-  const supabase = supabase.createClient(
-    'https://sjipwstkvvrautexigmt.supabase.co',   // ← اكتب رابط مشروعك هنا
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNqaXB3c3RrdnZyYXV0ZXhpZ210Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MTE5MDcsImV4cCI6MjA3NDQ4NzkwN30.FSh2yIdZdvdNvtWxK5JB02PIdWOG3707qO-F0c84PnY'                       // ← اكتب المفتاح العام هنا
-  );
+
 
   // 2. نشوف إذا في رابط فيه كلمة "token" بعد #
   const hash = window.location.hash; // مثال: #token=abc123&type=email
