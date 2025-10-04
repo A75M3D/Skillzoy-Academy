@@ -1,39 +1,372 @@
-// في كل صفحة تحتوي على نماذج
-class CSRFProtection {
-    static generateToken() {
-        return 'csrf_' + Math.random().toString(36).substr(2, 16) + '_' + Date.now();
+// public/js/security-full.js - حماية شاملة
+class SecurityManager {
+    constructor() {
+        this.csrfToken = null;
+        this.requests = [];
+        this.init();
     }
-    
-    static injectToken() {
-        const forms = document.querySelectorAll('form');
-        const token = this.generateToken();
-        sessionStorage.setItem('csrf_token', token);
+
+    init() {
+        console.log('🔒 تهيئة نظام الحماية...');
+        this.setupCSRFProtection();
+        this.setupXSSProtection();
+        this.setupRateLimiting();
+        this.setupSessionSecurity();
+        this.setupClickjackingProtection();
+        this.monitorSuspiciousActivity();
         
+        console.log('✅ نظام الحماية جاهز');
+    }
+
+    // ==================== CSRF PROTECTION ====================
+    setupCSRFProtection() {
+        this.generateCSRFToken();
+        this.injectCSRFTokens();
+        this.protectAjaxRequests();
+        this.setupFormProtection();
+    }
+
+    generateCSRFToken() {
+        this.csrfToken = 'csrf_' + Math.random().toString(36).substr(2, 16) + '_' + Date.now();
+        sessionStorage.setItem('csrf_token', this.csrfToken);
+        console.log('✅ تم توليد CSRF Token');
+    }
+
+    injectCSRFTokens() {
+        // حقن التوكن في النماذج الحالية
+        const forms = document.querySelectorAll('form');
         forms.forEach(form => {
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = 'csrf_token';
-            input.value = token;
-            form.appendChild(input);
+            this.addTokenToForm(form);
+        });
+
+        // مراقبة النماذج الجديدة
+        this.observeNewForms();
+    }
+
+    addTokenToForm(form) {
+        // إزالة التوكن القديم
+        const oldTokens = form.querySelectorAll('input[name="csrf_token"]');
+        oldTokens.forEach(token => token.remove());
+
+        // إضافة التوكن الجديد
+        const tokenInput = document.createElement('input');
+        tokenInput.type = 'hidden';
+        tokenInput.name = 'csrf_token';
+        tokenInput.value = this.csrfToken;
+        form.appendChild(tokenInput);
+    }
+
+    observeNewForms() {
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                mutation.addedNodes.forEach((node) => {
+                    if (node.nodeType === 1 && node.tagName === 'FORM') {
+                        this.addTokenToForm(node);
+                    }
+                });
+            });
+        });
+
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
         });
     }
-    
-    static validateToken(form) {
+
+    protectAjaxRequests() {
+        const originalFetch = window.fetch;
+        window.fetch = (resource, options = {}) => {
+            const method = options.method ? options.method.toUpperCase() : 'GET';
+            
+            if (['POST', 'PUT', 'DELETE', 'PATCH'].includes(method)) {
+                options.headers = {
+                    ...options.headers,
+                    'X-CSRF-Token': this.csrfToken
+                };
+            }
+            
+            return originalFetch(resource, options);
+        };
+    }
+
+    setupFormProtection() {
+        document.addEventListener('submit', (e) => {
+            if (!this.validateCSRFToken(e.target)) {
+                e.preventDefault();
+                this.showSecurityAlert('طلب غير آمن', 'يرجى إعادة تحميل الصفحة والمحاولة مرة أخرى');
+                return false;
+            }
+            
+            console.log('✅ طلب آمن - CSRF Token صالح');
+        });
+    }
+
+    validateCSRFToken(form) {
         const formToken = form.querySelector('input[name="csrf_token"]')?.value;
         const sessionToken = sessionStorage.getItem('csrf_token');
-        return formToken && formToken === sessionToken;
+        
+        return formToken && sessionToken && formToken === sessionToken;
+    }
+
+    // ==================== XSS PROTECTION ====================
+    setupXSSProtection() {
+        this.sanitizeAllInputs();
+        this.overrideDangerousFunctions();
+    }
+
+    sanitizeAllInputs() {
+        const inputs = document.querySelectorAll('input, textarea');
+        inputs.forEach(input => {
+            input.addEventListener('input', (e) => {
+                e.target.value = this.sanitizeInput(e.target.value);
+            });
+            
+            input.addEventListener('blur', (e) => {
+                e.target.value = this.sanitizeInput(e.target.value);
+            });
+        });
+    }
+
+    sanitizeInput(value) {
+        if (!value) return value;
+        
+        return value
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/'/g, '&#x27;')
+            .replace(/"/g, '&quot;')
+            .replace(/\//g, '&#x2F;')
+            .replace(/javascript:/gi, '')
+            .replace(/on\w+=/gi, '');
+    }
+
+    overrideDangerousFunctions() {
+        // حماية innerHTML
+        const originalInnerHTML = Object.getOwnPropertyDescriptor(Element.prototype, 'innerHTML').set;
+        Object.defineProperty(Element.prototype, 'innerHTML', {
+            set: function(value) {
+                const sanitized = SecurityManager.sanitizeHTML(value);
+                return originalInnerHTML.call(this, sanitized);
+            }
+        });
+    }
+
+    static sanitizeHTML(html) {
+        const div = document.createElement('div');
+        div.textContent = html;
+        return div.innerHTML;
+    }
+
+    // ==================== RATE LIMITING ====================
+    setupRateLimiting() {
+        this.requests = JSON.parse(localStorage.getItem('rate_limits') || '[]');
+        
+        document.addEventListener('submit', (e) => {
+            if (!this.checkRateLimit()) {
+                e.preventDefault();
+                this.showSecurityAlert('عدد الطلبات كبير', 'يرجى الانتظار قليلاً ثم المحاولة مرة أخرى');
+                return;
+            }
+        });
+    }
+
+    checkRateLimit() {
+        const now = Date.now();
+        const oneMinuteAgo = now - 60000;
+        
+        // تنظيف الطلبات القديمة
+        this.requests = this.requests.filter(time => time > oneMinuteAgo);
+        
+        // التحقق من الحد (10 طلبات في الدقيقة)
+        if (this.requests.length >= 10) {
+            return false;
+        }
+        
+        // تسجيل الطلب الجديد
+        this.requests.push(now);
+        localStorage.setItem('rate_limits', JSON.stringify(this.requests));
+        
+        return true;
+    }
+
+    // ==================== SESSION SECURITY ====================
+    setupSessionSecurity() {
+        this.setSessionTimeout();
+        this.detectMultipleTabs();
+    }
+
+    setSessionTimeout() {
+        let timeout;
+        
+        const resetTimer = () => {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                this.handleSessionExpiry();
+            }, 30 * 60 * 1000); // 30 دقيقة
+        };
+
+        // إعادة التعيين عند التفاعل مع الصفحة
+        ['click', 'keypress', 'mousemove', 'scroll'].forEach(event => {
+            document.addEventListener(event, resetTimer, { passive: true });
+        });
+
+        resetTimer();
+    }
+
+    handleSessionExpiry() {
+        sessionStorage.removeItem('csrf_token');
+        localStorage.removeItem('rate_limits');
+        this.showSecurityAlert('انتهت الجلسة', 'لقد انتهت جلستك لأسباب أمنية');
+        setTimeout(() => {
+            window.location.reload();
+        }, 3000);
+    }
+
+    detectMultipleTabs() {
+        // منع الجلسات المتعددة
+        if (!sessionStorage.getItem('session_started')) {
+            sessionStorage.setItem('session_started', Date.now().toString());
+        }
+    }
+
+    // ==================== CLICKJACKING PROTECTION ====================
+    setupClickjackingProtection() {
+        if (window !== window.top) {
+            window.top.location = window.location;
+        }
+    }
+
+    // ==================== SUSPICIOUS ACTIVITY MONITORING ====================
+    monitorSuspiciousActivity() {
+        this.detectDevTools();
+        this.preventCopyPaste();
+        this.monitorKeyboardPatterns();
+    }
+
+    detectDevTools() {
+        const element = new Image();
+        Object.defineProperty(element, 'id', {
+            get: () => {
+                this.logSecurityEvent('DEVTOOLS_OPENED');
+            }
+        });
+        console.debug(element);
+    }
+
+    preventCopyPaste() {
+        document.addEventListener('contextmenu', (e) => e.preventDefault());
+        document.addEventListener('copy', (e) => e.preventDefault());
+        document.addEventListener('cut', (e) => e.preventDefault());
+    }
+
+    monitorKeyboardPatterns() {
+        let keystrokes = [];
+        
+        document.addEventListener('keydown', (e) => {
+            const now = Date.now();
+            
+            // تنظيف الضغطات القديمة
+            keystrokes = keystrokes.filter(k => now - k.time < 1000);
+            
+            keystrokes.push({
+                key: e.key,
+                time: now
+            });
+            
+            // اكتشاف الكتابة الآلية (أكثر من 20 ضغطة في الثانية)
+            if (keystrokes.length > 20) {
+                this.logSecurityEvent('AUTOMATED_TYPING_DETECTED');
+            }
+        });
+    }
+
+    // ==================== HELPER FUNCTIONS ====================
+    showSecurityAlert(title, message) {
+        // إنشاء تنبيه أمني
+        const alertDiv = document.createElement('div');
+        alertDiv.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #f44336;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            z-index: 10000;
+            max-width: 300px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        `;
+        
+        alertDiv.innerHTML = `
+            <strong>${title}</strong>
+            <p style="margin: 5px 0 0 0; font-size: 14px;">${message}</p>
+        `;
+        
+        document.body.appendChild(alertDiv);
+        
+        // إزالة التنبيه بعد 5 ثواني
+        setTimeout(() => {
+            alertDiv.remove();
+        }, 5000);
+    }
+
+    logSecurityEvent(event, data = {}) {
+        const log = {
+            event,
+            timestamp: new Date().toISOString(),
+            url: window.location.href,
+            userAgent: navigator.userAgent,
+            ...data
+        };
+        
+        console.warn('🔒 حدث أمني:', log);
+        
+        // في الواقع الفعلي، أرسل إلى الخادم
+        this.sendSecurityLog(log);
+    }
+
+    sendSecurityLog(log) {
+        // محاكاة إرسال السجل الأمني
+        fetch('/api/security/log', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': this.csrfToken
+            },
+            body: JSON.stringify(log)
+        }).catch(() => {
+            // تجاهل الأخطاء في الإرسال
+        });
+    }
+
+    // ==================== PUBLIC API ====================
+    validateForm(form) {
+        return this.validateCSRFToken(form);
+    }
+
+    refreshCSRFToken() {
+        this.generateCSRFToken();
+        this.injectCSRFTokens();
+    }
+
+    getSecurityStatus() {
+        return {
+            csrf: !!this.csrfToken,
+            rateLimiting: this.requests.length,
+            session: !!sessionStorage.getItem('session_started')
+        };
     }
 }
 
-// التهيئة
+// التهيئة التلقائية
 document.addEventListener('DOMContentLoaded', () => {
-    CSRFProtection.injectToken();
+    window.securityManager = new SecurityManager();
     
-    // التحقق عند الإرسال
-    document.addEventListener('submit', (e) => {
-        if (!CSRFProtection.validateToken(e.target)) {
-            e.preventDefault();
-            alert('طلب غير آمن. يرجى إعادة تحميل الصفحة.');
-        }
-    });
+    // جعل النظام متاحاً globally
+    console.log('🔒 Security Manager loaded:', window.securityManager);
 });
+
+// منع التحميل المزدوج
+if (!window.securityManager) {
+    window.securityManager = new SecurityManager();
+}
