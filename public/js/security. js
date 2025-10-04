@@ -1,0 +1,39 @@
+// في كل صفحة تحتوي على نماذج
+class CSRFProtection {
+    static generateToken() {
+        return 'csrf_' + Math.random().toString(36).substr(2, 16) + '_' + Date.now();
+    }
+    
+    static injectToken() {
+        const forms = document.querySelectorAll('form');
+        const token = this.generateToken();
+        sessionStorage.setItem('csrf_token', token);
+        
+        forms.forEach(form => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'csrf_token';
+            input.value = token;
+            form.appendChild(input);
+        });
+    }
+    
+    static validateToken(form) {
+        const formToken = form.querySelector('input[name="csrf_token"]')?.value;
+        const sessionToken = sessionStorage.getItem('csrf_token');
+        return formToken && formToken === sessionToken;
+    }
+}
+
+// التهيئة
+document.addEventListener('DOMContentLoaded', () => {
+    CSRFProtection.injectToken();
+    
+    // التحقق عند الإرسال
+    document.addEventListener('submit', (e) => {
+        if (!CSRFProtection.validateToken(e.target)) {
+            e.preventDefault();
+            alert('طلب غير آمن. يرجى إعادة تحميل الصفحة.');
+        }
+    });
+});
