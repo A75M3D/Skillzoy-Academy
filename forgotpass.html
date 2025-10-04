@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skillzoy Academy - استعادة كلمة المرور</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --primary: #4361ee;
+      --primary-dark: #3a0ca3;
+      --primary-light: #4895ef;
+      --success: #4cc9f0;
+      --error: #e63946;
+      --warning: #f4a261;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --gray: #6c757d;
+      --glass-bg: rgba(255, 255, 255, 0.08);
+      --glass-border: rgba(255, 255, 255, 0.18);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #1a2980, #26d0ce);
+      color: var(--light);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .security-indicator {
+      background: linear-gradient(90deg, var(--success), var(--primary));
+      color: white;
+      padding: 12px;
+      text-align: center;
+      font-size: 0.9rem;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      backdrop-filter: blur(10px);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 450px;
+      margin-top: 60px;
+    }
+
+    .glass-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 40px 35px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--success));
+    }
+
+    .logo-section {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: white;
+      text-decoration: none;
+      font-size: 1.7rem;
+      font-weight: bold;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: white;
+      font-weight: 700;
+      font-size: 1.6rem;
+    }
+
+    .instructions {
+      text-align: center;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+      position: relative;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.95);
+      font-size: 1rem;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 16px 20px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 12px;
+      font-size: 1rem;
+      background: rgba(255, 255, 255, 0.08);
+      color: white;
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary-light);
+      box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.25);
+    }
+
+    .input-with-icon {
+      position: relative;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 1.1rem;
+    }
+
+    .input-with-icon .form-control {
+      padding-left: 50px;
+    }
+
+    .btn {
+      padding: 16px 24px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+    }
+
+    .btn-primary:disabled {
+      background: var(--gray);
+      cursor: not-allowed;
+    }
+
+    .alert {
+      padding: 16px 20px;
+      border-radius: 12px;
+      margin: 20px 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      backdrop-filter: blur(10px);
+    }
+
+    .alert-error { 
+      background: rgba(230, 57, 70, 0.15); 
+      color: #ff6b6b; 
+      border: 1px solid rgba(230, 57, 70, 0.3);
+    }
+    
+    .alert-success { 
+      background: rgba(76, 201, 240, 0.15); 
+      color: #4cc9f0; 
+      border: 1px solid rgba(76, 201, 240, 0.3);
+    }
+
+    .back-link {
+      text-align: center;
+      margin-top: 25px;
+    }
+
+    .back-link a {
+      color: var(--primary-light);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .back-link a:hover {
+      color: var(--success);
+    }
+
+    .loading-spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        margin-top: 50px;
+        padding: 10px;
+      }
+      
+      .glass-card {
+        padding: 30px 25px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="security-indicator">
+    <span>اتصال آمن مشفر - System Secure</span>
+  </div>
+
+  <div class="container">
+    <div class="glass-card">
+      <div class="logo-section">
+        <a href="index.html" class="logo">
+          <div class="logo-icon">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+          <span>Skillzoy Academy</span>
+        </a>
+      </div>
+
+      <h2>استعادة كلمة المرور</h2>
+      
+      <div class="instructions">
+        <i class="fas fa-key"></i>
+        أدخل بريدك الإلكتروني وسنرسل لك رابط لاستعادة كلمة المرور
+      </div>
+      
+      <div id="authAlert"></div>
+
+      <form id="forgotPasswordForm">
+        <div class="form-group">
+          <label for="email">البريد الإلكتروني</label>
+          <div class="input-with-icon">
+            <i class="fas fa-envelope input-icon"></i>
+            <input type="email" id="email" class="form-control"
+                   placeholder="example@skillzoy.com"
+                   required autocomplete="email"
+                   pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                   title="يرجى إدخال بريد إلكتروني صحيح">
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="submitBtn">
+          <span id="submitText">إرسال رابط الاستعادة</span>
+          <div id="submitSpinner" class="loading-spinner" style="display: none;"></div>
+        </button>
+      </form>
+
+      <div class="back-link">
+        <a href="login.html">
+          <i class="fas fa-arrow-right"></i>
+          العودة إلى تسجيل الدخول
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.38.0/dist/umd/supabase.min.js"></script>
+
+  <script>
+    // ===== نظام الأمان الشامل =====
+    class SecuritySystem {
+      static sanitizeInput(input) {
+        if (typeof input !== 'string') return '';
+        const div = document.createElement('div');
+        div.textContent = input;
+        return div.innerHTML;
+      }
+
+      static validateEmail(email) {
+        const re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        return re.test(email);
+      }
+
+      static safeTextContent(element, text) {
+        if (element && text !== undefined && text !== null) {
+          element.textContent = text.toString();
+        }
+      }
+
+      static escapeHtml(unsafe) {
+        return unsafe
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      static generateCSRFToken() {
+        return 'csrf_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
+      }
+    }
+
+    // ===== إدارة التطبيق =====
+    class PasswordResetManager {
+      constructor() {
+        this.supabase = null;
+        this.csrfToken = SecuritySystem.generateCSRFToken();
+        this.initializeApp();
+      }
+
+      async initializeApp() {
+        try {
+          await this.initializeSupabase();
+          this.setupEventListeners();
+          this.setupSecurityMeasures();
+        } catch (error) {
+          this.showAlert('❌ فشل في تهيئة التطبيق', 'error');
+        }
+      }
+
+      async initializeSupabase() {
+        // ⚠️ استبدل هذه القيم بمتغيرات البيئة
+        const SUPABASE_URL = 'https://sjipwstkvvrautexigmt.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNqaXB3c3RrdnZyYXV0ZXhpZ210Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MTE5MDcsImV4cCI6MjA3NDQ4NzkwN30.FSh2yIdZdvdNvtWxK5JB02PIdWOG3707qO-F0c84PnY';
+
+        if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+          throw new Error('Missing Supabase configuration');
+        }
+
+        this.supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+          auth: {
+            flowType: 'pkce',
+            autoRefreshToken: false,
+            persistSession: false,
+            detectSessionInUrl: false
+          }
+        });
+      }
+
+      setupEventListeners() {
+        const form = document.getElementById('forgotPasswordForm');
+        const emailInput = document.getElementById('email');
+
+        form.addEventListener('submit', (e) => this.handleFormSubmit(e));
+        
+        // حماية من XSS في الوقت الحقيقي
+        emailInput.addEventListener('input', (e) => {
+          e.target.value = SecuritySystem.sanitizeInput(e.target.value);
+        });
+
+        // منع محاولات الحقن
+        emailInput.addEventListener('keypress', (e) => {
+          const forbiddenChars = ['<', '>', 'script', 'javascript:'];
+          if (forbiddenChars.some(char => e.key.includes(char))) {
+            e.preventDefault();
+          }
+        });
+      }
+
+      setupSecurityMeasures() {
+        // إضافة CSRF token مخفي
+        const csrfInput = document.createElement('input');
+        csrfInput.type = 'hidden';
+        csrfInput.name = 'csrf_token';
+        csrfInput.value = this.csrfToken;
+        document.getElementById('forgotPasswordForm').appendChild(csrfInput);
+
+        // منع فتح النافذة في iframe
+        if (window.top !== window.self) {
+          window.top.location = window.self.location;
+        }
+
+        // حماية من back-button cache
+        window.onpageshow = (event) => {
+          if (event.persisted) {
+            window.location.reload();
+          }
+        };
+      }
+
+      async handleFormSubmit(e) {
+        e.preventDefault();
+
+        const formData = new FormData(e.target);
+        const email = SecuritySystem.sanitizeInput(formData.get('email')?.toString().trim().toLowerCase() || '');
+        const csrfToken = formData.get('csrf_token');
+
+        // التحقق من CSRF token
+        if (csrfToken !== this.csrfToken) {
+          this.showAlert('⛔ طلب غير مصرح به', 'error');
+          return;
+        }
+
+        // التحقق من صحة البيانات
+        if (!this.validateForm(email)) {
+          return;
+        }
+
+        await this.sendResetEmail(email);
+      }
+
+      validateForm(email) {
+        if (!email) {
+          this.showAlert('⛔ يرجى إدخال البريد الإلكتروني', 'error');
+          return false;
+        }
+
+        if (!SecuritySystem.validateEmail(email)) {
+          this.showAlert('⛔ صيغة البريد الإلكتروني غير صحيحة', 'error');
+          return false;
+        }
+
+        // منع عناوين البريد الوهمية
+        const fakeDomains = ['test.com', 'example.com', 'fake.com'];
+        const domain = email.split('@')[1];
+        if (fakeDomains.includes(domain)) {
+          this.showAlert('⛔ لا يمكن استخدام هذا النوع من عناوين البريد', 'error');
+          return false;
+        }
+
+        return true;
+      }
+
+      async sendResetEmail(email) {
+        this.showLoading(true);
+
+        try {
+          // إضافة تأخير لمكافحة automation attacks
+          await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 2000));
+
+          const { data, error } = await this.supabase.auth.resetPasswordForEmail(
+            email, 
+            {
+              redirectTo: `${window.location.origin}/reset-password.html`
+            }
+          );
+
+          if (error) {
+            this.handleSupabaseError(error);
+            return;
+          }
+
+          // نجاح الإرسال - لا نكشف إذا كان البريد مسجلاً أم لا
+          this.showAlert('✅ إذا كان البريد مسجلاً في نظامنا، ستتلقى رابط استعادة خلال دقائق', 'success');
+          this.resetForm();
+          
+          // تجديد CSRF token بعد كل عملية ناجحة
+          this.csrfToken = SecuritySystem.generateCSRFToken();
+          document.querySelector('input[name="csrf_token"]').value = this.csrfToken;
+
+        } catch (error) {
+          console.error('System error:', error);
+          this.showAlert('⛔ حدث خطأ في النظام. يرجى المحاولة لاحقاً', 'error');
+        } finally {
+          this.showLoading(false);
+        }
+      }
+
+      handleSupabaseError(error) {
+        // لا نكشف معلومات حساسة عن النظام
+        const safeMessages = {
+          'user_not_found': '✅ إذا كان البريد مسجلاً في نظامنا، ستتلقى رابط استعادة خلال دقائق',
+          'email_rate_limit_exceeded': '⏳ تم إرسال العديد من الطلبات. يرجى الانتظار 10 دقائق',
+          'invalid_email': '⛔ صيغة البريد الإلكتروني غير صحيحة'
+        };
+
+        const message = safeMessages[error.message] || 
+                       '✅ إذا كان البريد مسجلاً في نظامنا، ستتلقى رابط استعادة خلال دقائق';
+        
+        this.showAlert(message, 
+          error.message === 'email_rate_limit_exceeded' ? 'error' : 'success'
+        );
+      }
+
+      showAlert(message, type) {
+        const alertDiv = document.getElementById('authAlert');
+        const safeMessage = SecuritySystem.escapeHtml(message);
+        alertDiv.innerHTML = `<div class="alert alert-${type}">${safeMessage}</div>`;
+        
+        setTimeout(() => {
+          alertDiv.innerHTML = '';
+        }, type === 'error' ? 7000 : 10000);
+      }
+
+      showLoading(loading) {
+        const btn = document.getElementById('submitBtn');
+        const text = document.getElementById('submitText');
+        const spinner = document.getElementById('submitSpinner');
+        
+        btn.disabled = loading;
+        text.textContent = loading ? 'جاري الإرسال...' : 'إرسال رابط الاستعادة';
+        spinner.style.display = loading ? 'inline-block' : 'none';
+      }
+
+      resetForm() {
+        document.getElementById('forgotPasswordForm').reset();
+      }
+    }
+
+    // ===== تهيئة التطبيق =====
+    document.addEventListener('DOMContentLoaded', () => {
+      new PasswordResetManager();
+    });
+
+    // ===== حماية إضافية =====
+    Object.freeze(Object.prototype);
+    Object.freeze(Array.prototype);
+
+    // منع تعديل الكائنات الأساسية
+    const originalFetch = window.fetch;
+    window.fetch = function(...args) {
+      const url = args[0];
+      // منع طلبات إلى نطاقات غير مصرح بها
+      if (typeof url === 'string' && !url.includes('supabase.co')) {
+        console.warn('Blocked request to unauthorized domain:', url);
+        return Promise.reject(new Error('Unauthorized domain'));
+      }
+      return originalFetch.apply(this, args);
+    };
+  </script>
+</body>
+</html>
