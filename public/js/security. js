@@ -357,7 +357,15 @@ class SecurityManager {
         };
     }
 }
-
+// إضافة إلى security-full.js
+encryptSensitiveData(data) {
+    // استخدام Web Crypto API للتشفير
+    return crypto.subtle.encrypt(
+        { name: 'AES-GCM', iv: new Uint8Array(12) },
+        encryptionKey,
+        new TextEncoder().encode(data)
+    );
+}
 // التهيئة التلقائية
 document.addEventListener('DOMContentLoaded', () => {
     window.securityManager = new SecurityManager();
