@@ -7,27 +7,24 @@
 
 <!--syber guard -->
 <script src="js/security.js" defer></script>
-  <!-- بدل الكود الحالي بهذا الكود المصحح -->
-<meta http-equiv="Content-Security-Policy" content="
-  default-src 'self';
-  script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.youtube.com https://s.ytimg.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://unpkg.com;
-  style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com;
-  img-src 'self' data: https:;
-  font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com;
-  connect-src 'self' https://supabase-app.supabase.co wss://supabase-app.supabase.co;
-  frame-src 'self' https://www.youtube.com;
-  child-src 'self' https://www.youtube.com;
-  media-src 'self' https://www.youtube.com;
-  object-src 'none';
-  base-uri 'self';
-  form-action 'self';
-">
+<!-- رأس CSP مصحح -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self' https://sjipwstkvvrautexigmt.supabase.co;
+    script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com https://sjipwstkvvrautexigmt.supabase.co;
+    style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com;
+    img-src 'self' data: https:;
+    font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com;
+    connect-src 'self' https://sjipwstkvvrautexigmt.supabase.co wss://sjipwstkvvrautexigmt.supabase.co;
+    frame-src 'self';
+    object-src 'none';
+    base-uri 'self';
+    form-action 'self';
+  ">
+
+  
 
 <!-- أضف هذه أيضًا إذا لم تكن موجودة -->
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
-<meta http-equiv="X-Frame-Options" content="ALLOW-FROM https://www.youtube.com">
-<meta http-equiv="X-XSS-Protection" content="1; mode=block">
-  
   <meta name="theme-color" content="#4361ee">
 
   <!-- إضافة Font Awesome -->
