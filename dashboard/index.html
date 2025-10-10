@@ -1449,12 +1449,20 @@
         let currentUser = {
             id: 1,
             name: "نشط الان",
-            avatar: "https://ui-avatars.com/api/?name=نشط+الان&background=3b82f6&color=fff"
-        };
+            avatar: "https://ui-avatars.com/api/?name=نشط+الان& =====
+        const YOUTUBE_API_KEY = ""; // يجب استبداله بمفتاح حقيقي
+        // ===== YouTube Playlist Integration (آمن عبر Vercel) =====
 
-        // ===== YouTube API Integration =====
-        const YOUTUBE_API_KEY = "AIzaSyBdEIVHCYgh3Z7CVfPPzdn18Ic8EJOBBTE"; // يجب استبداله بمفتاح حقيقي
-        
+async function fetchPlaylistVideos(playlistId) {
+  try {
+    const response = await fetch(`/api/youtube?playlistId=${playlistId}`);
+    const data = await response.json();
+    return data.items || [];
+  } catch (error) {
+    console.error("خطأ في جلب قائمة التشغيل:", error);
+    return [];
+  }
+}
         // وظيفة لجلب فيديوهات قائمة التشغيل من YouTube
         async function fetchPlaylistVideos(playlistId) {
             try {
