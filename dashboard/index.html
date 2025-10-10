@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skillzoy Academy - منصة التعلم</title>
+    <title>Skillzoy Academy - منصة التعليم الالكتروني</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* ===== متغيرات التصميم ===== */
@@ -1449,20 +1449,12 @@
         let currentUser = {
             id: 1,
             name: "نشط الان",
-            avatar: "https://ui-avatars.com/api/?name=نشط+الان& =====
-        const YOUTUBE_API_KEY = ""; // يجب استبداله بمفتاح حقيقي
-        // ===== YouTube Playlist Integration (آمن عبر Vercel) =====
+            avatar: "https://ui-avatars.com/api/?name=نشط+الان&background=3b82f6&color=fff"
+        };
 
-async function fetchPlaylistVideos(playlistId) {
-  try {
-    const response = await fetch(`/api/youtube?playlistId=${playlistId}`);
-    const data = await response.json();
-    return data.items || [];
-  } catch (error) {
-    console.error("خطأ في جلب قائمة التشغيل:", error);
-    return [];
-  }
-}
+        // ===== YouTube API Integration =====
+        const YOUTUBE_API_KEY = "AIzaSyBdEIVHCYgh3Z7CVfPPzdn18Ic8EJOBBTE#eaeaff33"; // يجب استبداله بمفتاح حقيقي
+        
         // وظيفة لجلب فيديوهات قائمة التشغيل من YouTube
         async function fetchPlaylistVideos(playlistId) {
             try {
