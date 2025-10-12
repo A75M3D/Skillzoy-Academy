@@ -4,14 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="oSd203M5ljdzzVDAHe_R7NBxg5seGO5-EUleZL8D90E" />
-   
-  
-  <meta name="description" content="منصة تعليمية تقدم شهادات معتمدة و كورسات مجانية لتعلم البرمجة خطوة بخطوة.">
-  <meta name="keywords" content="التطوير المهني ,افضل شهادات مجانية, تعلم البرمجة, تعليم اونلاين, HTML, CSS, JavaScript, Skillzoy Academy">    <title>Skillzoy Academy - منصة التعلم الإلكتروني</title> 
+    <meta name="description" content="منصة تعليمية تقدم شهادات معتمدة و كورسات مجانية لتعلم البرمجة خطوة بخطوة.">
+    <meta name="keywords" content="التطوير المهني ,افضل شهادات مجانية, تعلم البرمجة, تعليم اونلاين, HTML, CSS, JavaScript, Skillzoy Academy">
+    <title>Skillzoy Academy - منصة التعلم الإلكتروني</title>
     
-<!-<!--syber guard -->
-<script src="js/security.js" defer></script> 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary: #4361ee;
@@ -194,14 +191,14 @@
             transform: translateY(-2px);
         }
 
-        .btn-whatsapp {
+        .btn-login {
             background: #25D366;
             color: white;
             width: 100%;
             margin-top: 15px;
         }
 
-        .btn-whatsapp:hover {
+        .btn-login:hover {
             background: #128C7E;
             transform: translateY(-2px);
         }
@@ -405,6 +402,54 @@
         .process-step h3 {
             margin-bottom: 15px;
             font-size: 1.3rem;
+        }
+
+        /* Testimonials Section جديد */
+        .testimonials {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 80px 0;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .testimonial-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            border: 3px solid var(--primary-light);
+            object-fit: cover;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--primary-light);
+        }
+
+        .testimonial-rating {
+            color: #FFD700;
+            margin: 10px 0;
         }
 
         /* Certificate Section */
@@ -661,7 +706,6 @@
             transform: translateY(0);
         }
     </style>
-
 </head>
 <body>
     <!-- تأثيرات الخلفية -->
@@ -700,6 +744,7 @@
                         <li><a href="#home">الرئيسية</a></li>
                         <li><a href="#courses">الدورات</a></li>
                         <li><a href="#process">الاشتراك</a></li>
+                        <li><a href="#testimonials">آراء الطلاب</a></li>
                         <li><a href="#certificate">الشهادات</a></li>
                         <li><a href="#contact">التواصل</a></li>
                     </ul>
@@ -722,11 +767,11 @@
             <li><a href="#home">الرئيسية</a></li>
             <li><a href="#courses">الدورات</a></li>
             <li><a href="#process">كيفية الاشتراك</a></li>
+            <li><a href="#testimonials">آراء الطلاب</a></li>
             <li><a href="#certificate">الشهادات</a></li>
             <li><a href="#contact">التواصل</a></li>
             <li><a href="login.html" class="btn btn-secondary">تسجيل الدخول</a></li>
             <li><a href="register.html" class="btn btn-primary">إنشاء حساب</a></li>
-            <li><a href="#" class="btn btn-primary contact-whatsapp">تواصل معنا</a></li>
         </ul>
     </div>
 
@@ -739,7 +784,7 @@
                     <p>انضم إلى آلاف الطلاب حول العالم وطور مهاراتك مع دوراتنا المتخصصة. احصل على شهادات معتمدة وافتح أبوابًا جديدة لمستقبلك المهني.</p>
                     <div class="hero-buttons">
                         <a href="register.html" class="btn btn-primary pulse">ابدأ التعلم الآن</a>
-                        <button class="btn btn-secondary contact-whatsapp">اطلب شهاداتك ودورتك على واتساب</button>
+                        <a href="login.html" class="btn btn-secondary">سجل الدخول لمشاهدة الدورات</a>
                     </div>
                 </div>
                 <div class="hero-video-container glass">
@@ -766,7 +811,7 @@
                 <!-- دورة 1: TOT -->
                 <div class="course-card glass fade-in">
                     <div class="video-wrapper">
-<iframe width="100%" height="315" src="https://www.youtube.com/embed/7Ok6J0CURvc?rel=0&modestbranding=1&autoplay=0" frameborder="0" allowfullscreen></iframe>
+                        <iframe width="100%" height="315" src="https://www.youtube.com/embed/7Ok6J0CURvc?rel=0&modestbranding=1&autoplay=0" frameborder="0" allowfullscreen></iframe>
                     </div>
                     <div class="course-info">
                         <h3 class="course-title">دورة مدرب مدربين (TOT) <span class="free-badge">مجاني</span></h3>
@@ -780,25 +825,16 @@
                             <span><i class="far fa-user"></i> 250 طالب</span>
                         </div>
                         <div class="course-certificate-note">
-                            <i class="fas fa-award"></i> بعد إكمال الدورة، تواصل مع المعلم على واتساب لتحصل على شهادتك
+                            <i class="fas fa-award"></i> بعد إكمال الدورة، ستحصل على شهادتك المعتمدة
                         </div>
-                        <button class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> اطلب الدورة على واتساب</button>
+                        <a href="login.html" class="btn btn-login"><i class="fas fa-sign-in-alt"></i> سجل الدخول لمشاهدة الدورة</a>
                     </div>
                 </div>
                 
                 <!-- دورة 2: القيادة -->
                 <div class="course-card glass fade-in">
                     <div class="video-wrapper">
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0;">
-    <iframe 
-        src="https://www.youtube.com/embed/5MgBikgcWnY" 
-        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" 
-        allowfullscreen 
-        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture">
-    </iframe>
-</div>
-
+                        <iframe width="100%" height="315" src="https://www.youtube.com/embed/5MgBikgcWnY?rel=0&modestbranding=1&autoplay=0" frameborder="0" allowfullscreen></iframe>
                     </div>
                     <div class="course-info">
                         <h3 class="course-title">دورة القيادة والإدارة المتقدمة <span class="free-badge">مجاني</span></h3>
@@ -812,9 +848,9 @@
                             <span><i class="far fa-user"></i> 320 طالب</span>
                         </div>
                         <div class="course-certificate-note">
-                            <i class="fas fa-award"></i> بعد إكمال الدورة، تواصل مع المعلم على واتساب لتحصل على شهادتك
+                            <i class="fas fa-award"></i> بعد إكمال الدورة، ستحصل على شهادتك المعتمدة
                         </div>
-                        <button class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> اطلب الدورة على واتساب</button>
+                        <a href="login.html" class="btn btn-login"><i class="fas fa-sign-in-alt"></i> سجل الدخول لمشاهدة الدورة</a>
                     </div>
                 </div>
 
@@ -840,9 +876,9 @@
                             <span><i class="far fa-user"></i> 2,320 طالب</span>
                         </div>
                         <div class="course-certificate-note">
-                            <i class="fas fa-award"></i> بعد إكمال الدورة، تواصل مع المعلم على واتساب لتحصل على شهادتك
+                            <i class="fas fa-award"></i> بعد إكمال الدورة، ستحصل على شهادتك المعتمدة
                         </div>
-                        <button class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> اطلب الدورة على واتساب</button>
+                        <a href="login.html" class="btn btn-login"><i class="fas fa-sign-in-alt"></i> سجل الدخول لمشاهدة الدورة</a>
                     </div>
                 </div>
             </div>
@@ -853,40 +889,112 @@
     <section class="process" id="process">
         <div class="container">
             <div class="section-title">
-                <h2>كيفية الحصول على الدورة والشهادة</h2>
-                <p>اتبع هذه الخطوات البسيطة للحصول على دورتك المجانية وشهادتك المعتمدة</p>
+                <h2>كيفية الاشتراك في الدورات</h2>
+                <p>اتبع هذه الخطوات البسيطة للانضمام إلى دوراتنا والحصول على شهادتك المعتمدة</p>
             </div>
             <div class="process-steps">
                 <div class="process-step glass fade-in">
                     <div class="step-icon">
-                        <i class="fab fa-whatsapp"></i>
+                        <i class="fas fa-user-plus"></i>
                     </div>
-                    <h3>الخطوة 1: تواصل معنا عبر واتساب</h3>
-                    <p>ارسل رسالة على واتساب تخبرنا فيها بالدورة التي ترغب في الالتحاق بها</p>
+                    <h3>الخطوة 1: إنشاء حساب</h3>
+                    <p>قم بإنشاء حساب جديد على المنصة باستخدام بريدك الإلكتروني</p>
                 </div>
                 
                 <div class="process-step glass fade-in">
                     <div class="step-icon">
-                        <i class="fas fa-video"></i>
+                        <i class="fas fa-sign-in-alt"></i>
                     </div>
-                    <h3>الخطوة 2: احصل على مواد الدورة</h3>
-                    <p>سنرسل لك رابط الدورة كاملة مع جميع الفيديوهات والمواد التعليمية</p>
+                    <h3>الخطوة 2: تسجيل الدخول</h3>
+                    <p>سجل الدخول إلى حسابك للوصول إلى جميع الدورات المتاحة</p>
                 </div>
                 
                 <div class="process-step glass fade-in">
                     <div class="step-icon">
-                        <i class="fas fa-graduation-cap"></i>
+                        <i class="fas fa-play-circle"></i>
                     </div>
-                    <h3>الخطوة 3: اختبر معلوماتك</h3>
-                    <p>بعد إكمال الدورة، ستخضع لامتحان قصير لقياس مدى استفادتك من المحتوى</p>
+                    <h3>الخطوة 3: بدء التعلم</h3>
+                    <p>اختر الدورة التي تريدها وابدأ رحلتك التعليمية فوراً</p>
                 </div>
                 
                 <div class="process-step glass fade-in">
                     <div class="step-icon">
                         <i class="fas fa-award"></i>
                     </div>
-                    <h3>الخطوة 4: احصل على شهادتك</h3>
-                    <p>بعد اجتياز الامتحان، سنرسل لك شهادتك المعتمدة عبر البريد الإلكتروني</p>
+                    <h3>الخطوة 4: الحصول على الشهادة</h3>
+                    <p>بعد إكمال الدورة بنجاح، احصل على شهادتك المعتمدة</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section جديد -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>آراء طلابنا</h2>
+                <p>انظر ماذا يقول طلابنا عن تجربتهم مع Skillzoy Academy</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card glass fade-in">
+                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="نورة" class="testimonial-avatar">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"الدورة كانت رائعة ومفيدة جداً. الشهادة ساعدتني في الحصول على ترقية في عملي. شكراً لـ Skillzoy Academy!"</p>
+                    <p class="testimonial-author">- نورة أحمد، 22 سنة</p>
+                </div>
+                <div class="testimonial-card glass fade-in">
+                    <img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="سارة" class="testimonial-avatar">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="testimonial-text">"المحتوى كان منظمًا جدًا وسهل المتابعة. فريق الدعم كان دائمًا متاحًا للإجابة على استفساراتي."</p>
+                    <p class="testimonial-author">- سارة الخالد </p>
+                </div>
+                <div class="testimonial-card glass fade-in">
+                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="فاطمة" class="testimonial-avatar">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"تجربة رائعة من البداية إلى النهاية. أنصح الجميع بالانضمام إلى هذه المنصة الرائعة للتعلم الإلكتروني."</p>
+                    <p class="testimonial-author">- فاطمة العتيبي، 22 سنة</p>
+                </div>
+                <div class="testimonial-card glass fade-in">
+                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="ريم" class="testimonial-avatar">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"الدورات مجانية ولكن الجودة عالية جداً. استفدت كثيراً من دورة القيادة وسأكمل باقي الدورات قريباً."</p>
+                    <p class="testimonial-author">- ريم السعدي، 23 سنة</p>
+                </div>
+                <div class="testimonial-card glass fade-in">
+                    <img src="https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="ليلى" class="testimonial-avatar">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"الشهادة معتمدة وساعدتني في إثراء سيرتي الذاتية. المنصة سهلة الاستخدام والمحتوى ممتاز."</p>
+                    <p class="testimonial-author">- ليلى الحربي، 22 سنة</p>
                 </div>
             </div>
         </div>
@@ -921,9 +1029,9 @@
                     <p><i class="fas fa-envelope"></i> البريد الإلكتروني: info@skillzoyacademy.com</p>
                     <p><i class="fas fa-clock"></i> أوقات العمل: من الأحد إلى الخميس، 9 صباحاً - 6 مساءً</p>
                     
-                    <button class="btn btn-whatsapp contact-whatsapp" style="margin-top: 2rem;">
-                        <i class="fab fa-whatsapp"></i> تواصل معنا عبر واتساب
-                    </button>
+                    <a href="register.html" class="btn btn-primary" style="margin-top: 2rem;">
+                        <i class="fas fa-user-plus"></i> إنشاء حساب جديد
+                    </a>
                 </div>
                 <div class="contact-form glass">
                     <h3>أرسل رسالة</h3>
@@ -959,6 +1067,7 @@
                         <li><a href="#home">الرئيسية</a></li>
                         <li><a href="#courses">الدورات</a></li>
                         <li><a href="#process">كيفية الاشتراك</a></li>
+                        <li><a href="#testimonials">آراء الطلاب</a></li>
                         <li><a href="#certificate">الشهادات</a></li>
                         <li><a href="#contact">التواصل</a></li>
                     </ul>
@@ -1001,17 +1110,6 @@
             mobileNavLinks.forEach(link => {
                 link.addEventListener('click', function() {
                     mobileNav.classList.remove('active');
-                });
-            });
-            
-            // WhatsApp buttons functionality
-            const whatsappButtons = document.querySelectorAll('.contact-whatsapp, .btn-whatsapp');
-            whatsappButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const phoneNumber = "966123456789";
-                    const message = "مرحباً، أرغب في الاستفسار عن دورات Skillzoy Academy";
-                    const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-                    window.open(whatsappURL, '_blank');
                 });
             });
             
@@ -1064,8 +1162,5 @@
             });
         });
     </script>
-    <!-- نربط الموقع بـ Supabase -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-
+</body>
 </html>
