@@ -231,43 +231,6 @@
         }
         
         /* تحسينات إضافية */
-        .progress-ring {
-            transform: rotate(-90deg);
-        }
-        
-        .progress-ring-circle {
-            transition: stroke-dashoffset 0.5s ease;
-        }
-        
-        .floating-notification {
-            animation: float 6s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
-        
-        .typing-animation {
-            overflow: hidden;
-            border-right: .15em solid rgb(var(--color-primary));
-            white-space: nowrap;
-            margin: 0 auto;
-            letter-spacing: .15em;
-            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
-        }
-        
-        @keyframes typing {
-            from { width: 0 }
-            to { width: 100% }
-        }
-        
-        @keyframes blink-caret {
-            from, to { border-color: transparent }
-            50% { border-color: rgb(var(--color-primary)); }
-        }
-        
         .scroll-indicator {
             animation: bounce 2s infinite;
         }
@@ -283,6 +246,97 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+        }
+        
+        /* تصميم زر التبديل بين الوضع الداكن والفاتح */
+        .dark-mode-toggle {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+        
+        .dark-mode-toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .dark-mode-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .dark-mode-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .dark-mode-slider {
+            background-color: #2196F3;
+        }
+        
+        input:checked + .dark-mode-slider:before {
+            transform: translateX(30px);
+        }
+        
+        /* تحسينات للجوال */
+        @media (max-width: 768px) {
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            .hero-text h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.75rem;
+            }
+            
+            .course-card {
+                margin-bottom: 1.5rem;
+            }
+            
+            .process-steps {
+                grid-template-columns: 1fr;
+            }
+            
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* إصلاح الخطوط الشفافة */
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 100%;
         }
     </style>
 </head>
@@ -301,215 +355,223 @@
         <li></li>
     </ul>
 
-    <!-- الشريط الجانبي -->
-    <div id="sidebar" class="fixed right-0 top-0 h-full w-80 sidebar-glass theme-transition flex flex-col z-40 transform transition-transform duration-500 lg:translate-x-0" style="transform: translateX(100%);">
-        <!-- اللوجو وزر الإغلاق -->
-        <div class="p-6 border-b border-gray-200/30 dark:border-gray-700/30 flex items-center justify-between">
-            <div class="flex items-center space-x-4 space-x-reverse">
-                <div class="w-12 h-12 bg-gradient-primary rounded-2xl flex items-center justify-center shadow-glow-primary">
-                    <i class="fas fa-graduation-cap text-white text-xl"></i>
+    <!-- Header -->
+    <header class="header-glass shadow-sm theme-transition z-30 sticky top-0">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <a href="#home" class="logo flex items-center text-gray-800 dark:text-white no-underline">
+                        <div class="logo-icon w-10 h-10 md:w-12 md:h-12 bg-gradient-primary rounded-2xl flex items-center justify-center shadow-glow-primary mr-3">
+                            <i class="fas fa-graduation-cap text-white text-lg md:text-xl"></i>
+                        </div>
+                        <span class="text-xl md:text-2xl font-bold">Skillzoy Academy</span>
+                    </a>
                 </div>
-                <div>
-                    <h1 class="text-2xl font-bold text-gray-800 dark:text-white">Skillzoy</h1>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">منصة التعلم الإلكتروني</p>
-                </div>
-            </div>
-            <button id="close-sidebar" class="p-2 rounded-xl hover:bg-gray-200/50 dark:hover:bg-gray-700/50 text-gray-500 dark:text-gray-400 lg:hidden">
-                <i class="fas fa-times text-lg"></i>
-            </button>
-        </div>
 
-        <!-- الملف الشخصي المصغر -->
-        <div class="p-6 border-b border-gray-200/30 dark:border-gray-700/30">
-            <div class="flex items-center space-x-4 space-x-reverse">
-                <div class="relative">
-                    <div class="w-16 h-16 bg-gradient-primary rounded-2xl overflow-hidden border-4 border-white/70 dark:border-gray-800/70 shadow-glow">
-                        <div class="w-full h-full flex items-center justify-center text-white">
-                            <i class="fas fa-user text-xl"></i>
-                        </div>
-                    </div>
-                    <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-white/70 dark:border-gray-800/70 shadow-glow"></div>
-                </div>
-                <div class="flex-1 min-w-0">
-                    <p class="text-lg font-semibold text-gray-800 dark:text-white truncate">مرحباً بك!</p>
-                    <p class="text-sm text-gray-500 dark:text-gray-400 truncate">طالب في Skillzoy</p>
-                    <div class="flex items-center mt-1">
-                        <div class="flex text-yellow-400 text-xs">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                        </div>
-                        <span class="text-xs text-gray-500 dark:text-gray-400 mr-1">4.8</span>
+                <nav class="hidden lg:block">
+                    <ul class="flex space-x-2 space-x-reverse">
+                        <li><a href="#home" class="text-gray-700 dark:text-gray-200 hover:text-primary py-2 px-4 rounded-2xl transition-all duration-300">الرئيسية</a></li>
+                        <li><a href="#courses" class="text-gray-700 dark:text-gray-200 hover:text-primary py-2 px-4 rounded-2xl transition-all duration-300">الدورات</a></li>
+                        <li><a href="#process" class="text-gray-700 dark:text-gray-200 hover:text-primary py-2 px-4 rounded-2xl transition-all duration-300">الاشتراك</a></li>
+                        <li><a href="#testimonials" class="text-gray-700 dark:text-gray-200 hover:text-primary py-2 px-4 rounded-2xl transition-all duration-300">آراء الطلاب</a></li>
+                        <li><a href="#certificate" class="text-gray-700 dark:text-gray-200 hover:text-primary py-2 px-4 rounded-2xl transition-all duration-300">الشهادات</a></li>
+                        <li><a href="#contact" class="text-gray-700 dark:text-gray-200 hover:text-primary py-2 px-4 rounded-2xl transition-all duration-300">التواصل</a></li>
+                    </ul>
+                </nav>
+
+                <div class="flex items-center space-x-3 space-x-reverse">
+                    <!-- زر الثيمات في الركن الأيسر -->
+                    <button id="themes-toggle" class="p-2 rounded-2xl hover:bg-gray-200/30 dark:hover:bg-gray-700/30 text-gray-600 dark:text-gray-300 theme-transition neon-border">
+                        <i class="fas fa-palette text-xl"></i>
+                    </button>
+                    
+                    <!-- زر القائمة للجوال -->
+                    <button id="mobile-menu-btn" class="p-2 rounded-2xl hover:bg-gray-200/30 dark:hover:bg-gray-700/30 text-gray-600 dark:text-gray-300 theme-transition lg:hidden neon-border">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                    
+                    <div class="hidden lg:flex space-x-3 space-x-reverse">
+                        <a href="login.html" class="btn bg-gray-200/30 dark:bg-gray-700/30 text-gray-700 dark:text-gray-300 hover:bg-gray-300/30 dark:hover:bg-gray-600/30 py-2 px-4 rounded-2xl transition-all duration-300 neon-border">تسجيل الدخول</a>
+                        <a href="register.html" class="btn bg-gradient-primary text-white hover:shadow-glow-primary py-2 px-4 rounded-2xl transition-all duration-300 pulse">إنشاء حساب</a>
                     </div>
                 </div>
             </div>
         </div>
+    </header>
 
-        <!-- القائمة الرئيسية -->
-        <nav class="flex-1 p-6 space-y-2 overflow-y-auto">
-            <a href="#home" class="sidebar-item flex items-center space-x-4 space-x-reverse p-4 rounded-2xl text-gray-700 dark:text-gray-200 hover:bg-gray-100/30 dark:hover:bg-gray-700/30 theme-transition group hover-lift">
-                <div class="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow-primary group-hover:scale-110 transition-transform">
-                    <i class="fas fa-home text-white text-sm"></i>
+    <!-- الشريط الجانبي للجوال -->
+    <div id="mobile-sidebar" class="fixed inset-0 bg-black/50 z-40 hidden theme-transition backdrop-blur-sm lg:hidden">
+        <div class="absolute top-0 right-0 h-full w-80 max-w-full sidebar-glass theme-transition flex flex-col overflow-y-auto">
+            <!-- اللوجو وزر الإغلاق -->
+            <div class="p-6 border-b border-gray-200/30 dark:border-gray-700/30 flex items-center justify-between">
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <div class="w-12 h-12 bg-gradient-primary rounded-2xl flex items-center justify-center shadow-glow-primary">
+                        <i class="fas fa-graduation-cap text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-800 dark:text-white">Skillzoy</h1>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">منصة التعلم الإلكتروني</p>
+                    </div>
                 </div>
-                <span class="font-medium">الرئيسية</span>
-            </a>
-            
-            <a href="#courses" class="sidebar-item flex items-center space-x-4 space-x-reverse p-4 rounded-2xl text-gray-700 dark:text-gray-200 hover:bg-gray-100/30 dark:hover:bg-gray-700/30 theme-transition group hover-lift">
-                <div class="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow-primary group-hover:scale-110 transition-transform">
-                    <i class="fas fa-book text-white text-sm"></i>
-                </div>
-                <div class="flex-1 flex items-center justify-between">
-                    <span class="font-medium">الدورات</span>
-                    <span class="bg-primary text-white text-xs px-2 py-1 rounded-full shadow-glow">3</span>
-                </div>
-            </a>
-            
-            <a href="#process" class="sidebar-item flex items-center space-x-4 space-x-reverse p-4 rounded-2xl text-gray-700 dark:text-gray-200 hover:bg-gray-100/30 dark:hover:bg-gray-700/30 theme-transition group hover-lift">
-                <div class="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow-primary group-hover:scale-110 transition-transform">
-                    <i class="fas fa-sign-in-alt text-white text-sm"></i>
-                </div>
-                <span class="font-medium">كيفية الاشتراك</span>
-            </a>
-            
-            <a href="#testimonials" class="sidebar-item flex items-center space-x-4 space-x-reverse p-4 rounded-2xl text-gray-700 dark:text-gray-200 hover:bg-gray-100/30 dark:hover:bg-gray-700/30 theme-transition group hover-lift">
-                <div class="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow-primary group-hover:scale-110 transition-transform">
-                    <i class="fas fa-comments text-white text-sm"></i>
-                </div>
-                <span class="font-medium">آراء الطلاب</span>
-            </a>
-            
-            <a href="#certificate" class="sidebar-item flex items-center space-x-4 space-x-reverse p-4 rounded-2xl text-gray-700 dark:text-gray-200 hover:bg-gray-100/30 dark:hover:bg-gray-700/30 theme-transition group hover-lift">
-                <div class="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow-primary group-hover:scale-110 transition-transform">
-                    <i class="fas fa-award text-white text-sm"></i>
-                </div>
-                <span class="font-medium">الشهادات</span>
-            </a>
-            
-            <a href="#contact" class="sidebar-item flex items-center space-x-4 space-x-reverse p-4 rounded-2xl text-gray-700 dark:text-gray-200 hover:bg-gray-100/30 dark:hover:bg-gray-700/30 theme-transition group hover-lift">
-                <div class="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow-primary group-hover:scale-110 transition-transform">
-                    <i class="fas fa-envelope text-white text-sm"></i>
-                </div>
-                <span class="font-medium">التواصل</span>
-            </a>
-        </nav>
+                <button id="close-mobile-sidebar" class="p-2 rounded-xl hover:bg-gray-200/50 dark:hover:bg-gray-700/50 text-gray-500 dark:text-gray-400">
+                    <i class="fas fa-times text-lg"></i>
+                </button>
+            </div>
 
-        <!-- الإعدادات السريعة -->
-        <div class="p-6 border-t border-gray-200/30 dark:border-gray-700/30">
-            <div class="space-y-3">
-                <button id="theme-toggle-sidebar" class="flex items-center space-x-4 space-x-reverse p-3 rounded-xl text-gray-700 dark:text-gray-200 hover:bg-gray-100/30 dark:hover:bg-gray-700/30 theme-transition w-full text-right group hover-lift">
-                    <div class="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow-primary group-hover:scale-110 transition-transform">
-                        <i class="fas fa-moon text-white text-sm"></i>
+            <!-- الملف الشخصي المصغر -->
+            <div class="p-6 border-b border-gray-200/30 dark:border-gray-700/30">
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <div class="relative">
+                        <div class="w-16 h-16 bg-gradient-primary rounded-2xl overflow-hidden border-4 border-white/70 dark:border-gray-800/70 shadow-glow">
+                            <div class="w-full h-full flex items-center justify-center text-white">
+                                <i class="fas fa-user text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-white/70 dark:border-gray-800/70 shadow-glow"></div>
                     </div>
-                    <span class="font-medium">الوضع الداكن</span>
-                </button>
-                
-                <button id="themes-toggle-sidebar" class="flex items-center space-x-4 space-x-reverse p-3 rounded-xl text-gray-700 dark:text-gray-200 hover:bg-gray-100/30 dark:hover:bg-gray-700/30 theme-transition w-full text-right group hover-lift">
-                    <div class="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow-primary group-hover:scale-110 transition-transform">
-                        <i class="fas fa-palette text-white text-sm"></i>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-lg font-semibold text-gray-800 dark:text-white truncate">مرحباً بك!</p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 truncate">طالب في Skillzoy</p>
+                        <div class="flex items-center mt-1">
+                            <div class="flex text-yellow-400 text-xs">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="text-xs text-gray-500 dark:text-gray-400 mr-1">4.8</span>
+                        </div>
                     </div>
-                    <span class="font-medium">الثيمات</span>
-                </button>
+                </div>
+            </div>
+
+            <!-- القائمة الرئيسية -->
+            <nav class="flex-1 p-6 space-y-2 overflow-y-auto">
+                <a href="#home" class="sidebar-item flex items-center space-x-4 space-x-reverse p-4 rounded-2xl text-gray-700 dark:text-gray-200 hover:bg-gray-100/30 dark:hover:bg-gray-700/30 theme-transition group hover-lift">
+                    <div class="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow-primary group-hover:scale-110 transition-transform">
+                        <i class="fas fa-home text-white text-sm"></i>
+                    </div>
+                    <span class="font-medium">الرئيسية</span>
+                </a>
                 
-                <a href="login.html" class="flex items-center space-x-4 space-x-reverse p-3 rounded-xl text-gray-700 dark:text-gray-200 hover:bg-gray-100/30 dark:hover:bg-gray-700/30 theme-transition w-full text-right group hover-lift">
+                <a href="#courses" class="sidebar-item flex items-center space-x-4 space-x-reverse p-4 rounded-2xl text-gray-700 dark:text-gray-200 hover:bg-gray-100/30 dark:hover:bg-gray-700/30 theme-transition group hover-lift">
+                    <div class="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow-primary group-hover:scale-110 transition-transform">
+                        <i class="fas fa-book text-white text-sm"></i>
+                    </div>
+                    <div class="flex-1 flex items-center justify-between">
+                        <span class="font-medium">الدورات</span>
+                        <span class="bg-primary text-white text-xs px-2 py-1 rounded-full shadow-glow">3</span>
+                    </div>
+                </a>
+                
+                <a href="#process" class="sidebar-item flex items-center space-x-4 space-x-reverse p-4 rounded-2xl text-gray-700 dark:text-gray-200 hover:bg-gray-100/30 dark:hover:bg-gray-700/30 theme-transition group hover-lift">
                     <div class="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow-primary group-hover:scale-110 transition-transform">
                         <i class="fas fa-sign-in-alt text-white text-sm"></i>
                     </div>
-                    <span class="font-medium">تسجيل الدخول</span>
+                    <span class="font-medium">كيفية الاشتراك</span>
                 </a>
+                
+                <a href="#testimonials" class="sidebar-item flex items-center space-x-4 space-x-reverse p-4 rounded-2xl text-gray-700 dark:text-gray-200 hover:bg-gray-100/30 dark:hover:bg-gray-700/30 theme-transition group hover-lift">
+                    <div class="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow-primary group-hover:scale-110 transition-transform">
+                        <i class="fas fa-comments text-white text-sm"></i>
+                    </div>
+                    <span class="font-medium">آراء الطلاب</span>
+                </a>
+                
+                <a href="#certificate" class="sidebar-item flex items-center space-x-4 space-x-reverse p-4 rounded-2xl text-gray-700 dark:text-gray-200 hover:bg-gray-100/30 dark:hover:bg-gray-700/30 theme-transition group hover-lift">
+                    <div class="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow-primary group-hover:scale-110 transition-transform">
+                        <i class="fas fa-award text-white text-sm"></i>
+                    </div>
+                    <span class="font-medium">الشهادات</span>
+                </a>
+                
+                <a href="#contact" class="sidebar-item flex items-center space-x-4 space-x-reverse p-4 rounded-2xl text-gray-700 dark:text-gray-200 hover:bg-gray-100/30 dark:hover:bg-gray-700/30 theme-transition group hover-lift">
+                    <div class="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow-primary group-hover:scale-110 transition-transform">
+                        <i class="fas fa-envelope text-white text-sm"></i>
+                    </div>
+                    <span class="font-medium">التواصل</span>
+                </a>
+               <!-- قسم طلباتي -->
+                <div class="pt-6 mt-6 border-t border-gray-200/30 dark:border-gray-700/30">
+                    <a href="https://wa.me/message/6TY5HI5QHOQBA1" class="sidebar-item flex items-center space-x-4 space-x-reverse p-4 rounded-2xl text-gray-700 dark:text-gray-200 hover:bg-gray-100/30 dark:hover:bg-gray-700/30 theme-transition group hover-lift">
+                        <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                            <i class="fas fa-clipboard-list text-white text-sm"></i>
+                        </div>
+                        <div class="flex-1 flex items-center justify-between">
+                            <span class="font-medium">help center</span>
+                            <span class="bg-purple-500 text-white text-xs px-2 py-1 rounded-full shadow-glow"></span>
+                        </div>    
+            
+                    </a>
+                </div>
+            </nav>
+
+            <!-- أزرار تسجيل الدخول وإنشاء حساب -->
+            <div class="p-6 border-t border-gray-200/30 dark:border-gray-700/30">
+                <div class="space-y-3">
+                    <a href="login.html" class="w-full flex items-center justify-center space-x-2 space-x-reverse p-3 rounded-xl bg-gradient-primary text-white hover:shadow-glow-primary theme-transition font-medium">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>تسجيل الدخول</span>
+                    </a>
+                    
+                    <a href="register.html" class="w-full flex items-center justify-center space-x-2 space-x-reverse p-3 rounded-xl bg-gray-200/30 dark:bg-gray-700/30 text-gray-700 dark:text-gray-300 hover:bg-gray-300/30 dark:hover:bg-gray-600/30 theme-transition font-medium">
+                        <i class="fas fa-user-plus"></i>
+                        <span>إنشاء حساب</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة الثيمات -->
+    <div id="themes-modal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden theme-transition backdrop-blur-sm">
+        <div class="bg-white/90 dark:bg-gray-800/90 glass-effect rounded-3xl shadow-2xl w-full max-w-md mx-4 theme-transition border border-gray-200/30 dark:border-gray-700/30">
+            <div class="p-6 border-b border-gray-200/30 dark:border-gray-700/30">
+                <h3 class="text-xl font-bold text-gray-800 dark:text-white flex items-center">
+                    <i class="fas fa-palette text-primary ml-2"></i>
+                    <span>إعدادات المظهر</span>
+                </h3>
+            </div>
+            
+            <!-- قسم التبديل بين الوضع الداكن والفاتح -->
+            <div class="p-6 border-b border-gray-200/30 dark:border-gray-700/30">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-lg font-medium text-gray-800 dark:text-white">الوضع الداكن</span>
+                    <label class="dark-mode-toggle">
+                        <input type="checkbox" id="dark-mode-switch">
+                        <span class="dark-mode-slider"></span>
+                    </label>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-400">قم بالتبديل بين الوضع الداكن والفاتح لتجربة تصفح مريحة</p>
+            </div>
+            
+            <div class="p-6">
+                <h4 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">اختر لون السمة</h4>
+                <div class="grid grid-cols-5 gap-4">
+                    <div class="w-12 h-12 bg-blue-500 rounded-2xl cursor-pointer border-4 border-blue-500 theme-option shadow-glow" data-theme="blue" title="أزرق"></div>
+                    <div class="w-12 h-12 bg-green-500 rounded-2xl cursor-pointer border-4 border-transparent theme-option shadow-glow hover:scale-110 transition-transform" data-theme="green" title="أخضر"></div>
+                    <div class="w-12 h-12 bg-purple-500 rounded-2xl cursor-pointer border-4 border-transparent theme-option shadow-glow hover:scale-110 transition-transform" data-theme="purple" title="بنفسجي"></div>
+                    <div class="w-12 h-12 bg-red-500 rounded-2xl cursor-pointer border-4 border-transparent theme-option shadow-glow hover:scale-110 transition-transform" data-theme="red" title="أحمر"></div>
+                    <div class="w-12 h-12 bg-orange-500 rounded-2xl cursor-pointer border-4 border-transparent theme-option shadow-glow hover:scale-110 transition-transform" data-theme="orange" title="برتقالي"></div>
+                    <div class="w-12 h-12 bg-teal-500 rounded-2xl cursor-pointer border-4 border-transparent theme-option shadow-glow hover:scale-110 transition-transform" data-theme="teal" title="تركواز"></div>
+                    <div class="w-12 h-12 bg-indigo-500 rounded-2xl cursor-pointer border-4 border-transparent theme-option shadow-glow hover:scale-110 transition-transform" data-theme="indigo" title="نيلي"></div>
+                    <div class="w-12 h-12 bg-pink-500 rounded-2xl cursor-pointer border-4 border-transparent theme-option shadow-glow hover:scale-110 transition-transform" data-theme="pink" title="وردي"></div>
+                    <div class="w-12 h-12 bg-yellow-500 rounded-2xl cursor-pointer border-4 border-transparent theme-option shadow-glow hover:scale-110 transition-transform" data-theme="yellow" title="أصفر"></div>
+                    <div class="w-12 h-12 bg-cyan-500 rounded-2xl cursor-pointer border-4 border-transparent theme-option shadow-glow hover:scale-110 transition-transform" data-theme="cyan" title="سماوي"></div>
+                </div>
+            </div>
+            
+            <div class="flex justify-end p-6 border-t border-gray-200/30 dark:border-gray-700/30">
+                <button id="close-themes-modal" class="bg-gradient-primary text-white px-8 py-3 rounded-2xl hover:shadow-glow-primary transition-all duration-300 font-medium">
+                    <span>تم</span>
+                </button>
             </div>
         </div>
     </div>
 
     <!-- المحتوى الرئيسي -->
     <div class="min-h-screen flex flex-col">
-        <!-- Header -->
-        <header class="header-glass shadow-sm theme-transition z-30 sticky top-0">
-            <div class="container mx-auto px-4">
-                <div class="flex justify-between items-center py-4">
-                    <div class="flex items-center">
-                        <a href="#home" class="logo flex items-center text-gray-800 dark:text-white no-underline">
-                            <div class="logo-icon w-12 h-12 bg-gradient-primary rounded-2xl flex items-center justify-center shadow-glow-primary mr-3">
-                                <i class="fas fa-graduation-cap text-white text-xl"></i>
-                            </div>
-                            <span class="text-2xl font-bold">Skillzoy Academy</span>
-                        </a>
-                        
-                        <button id="mobile-menu-btn" class="p-2 rounded-2xl hover:bg-gray-200/30 dark:hover:bg-gray-700/30 text-gray-600 dark:text-gray-300 theme-transition lg:hidden neon-border ml-4">
-                            <i class="fas fa-bars text-xl"></i>
-                        </button>
-                    </div>
-
-                    <nav class="hidden lg:block">
-                        <ul class="flex space-x-2 space-x-reverse">
-                            <li><a href="#home" class="text-gray-700 dark:text-gray-200 hover:text-primary py-2 px-4 rounded-2xl transition-all duration-300">الرئيسية</a></li>
-                            <li><a href="#courses" class="text-gray-700 dark:text-gray-200 hover:text-primary py-2 px-4 rounded-2xl transition-all duration-300">الدورات</a></li>
-                            <li><a href="#process" class="text-gray-700 dark:text-gray-200 hover:text-primary py-2 px-4 rounded-2xl transition-all duration-300">الاشتراك</a></li>
-                            <li><a href="#testimonials" class="text-gray-700 dark:text-gray-200 hover:text-primary py-2 px-4 rounded-2xl transition-all duration-300">آراء الطلاب</a></li>
-                            <li><a href="#certificate" class="text-gray-700 dark:text-gray-200 hover:text-primary py-2 px-4 rounded-2xl transition-all duration-300">الشهادات</a></li>
-                            <li><a href="#contact" class="text-gray-700 dark:text-gray-200 hover:text-primary py-2 px-4 rounded-2xl transition-all duration-300">التواصل</a></li>
-                        </ul>
-                    </nav>
-
-                    <div class="flex items-center space-x-3 space-x-reverse">
-                        <button id="theme-toggle" class="p-3 rounded-2xl hover:bg-gray-200/30 dark:hover:bg-gray-700/30 text-gray-600 dark:text-gray-300 theme-transition neon-border">
-                            <i class="fas fa-moon text-xl"></i>
-                        </button>
-                        
-                        <div class="hidden lg:flex space-x-3 space-x-reverse">
-                            <a href="login.html" class="btn bg-gray-200/30 dark:bg-gray-700/30 text-gray-700 dark:text-gray-300 hover:bg-gray-300/30 dark:hover:bg-gray-600/30 py-2 px-4 rounded-2xl transition-all duration-300 neon-border">تسجيل الدخول</a>
-                            <a href="register.html" class="btn bg-gradient-primary text-white hover:shadow-glow-primary py-2 px-4 rounded-2xl transition-all duration-300 pulse">إنشاء حساب</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <!-- نافذة الثيمات -->
-        <div id="themes-modal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden theme-transition backdrop-blur-sm">
-            <div class="bg-white/90 dark:bg-gray-800/90 glass-effect rounded-3xl shadow-2xl w-full max-w-md mx-4 theme-transition border border-gray-200/30 dark:border-gray-700/30">
-                <div class="p-6 border-b border-gray-200/30 dark:border-gray-700/30">
-                    <h3 class="text-xl font-bold text-gray-800 dark:text-white flex items-center">
-                        <i class="fas fa-palette text-primary ml-2"></i>
-                        <span>اختر لون السمة</span>
-                    </h3>
-                </div>
-                
-                <div class="p-6">
-                    <div class="grid grid-cols-5 gap-4">
-                        <div class="w-12 h-12 bg-blue-500 rounded-2xl cursor-pointer border-4 border-blue-500 theme-option shadow-glow" data-theme="blue" title="أزرق"></div>
-                        <div class="w-12 h-12 bg-green-500 rounded-2xl cursor-pointer border-4 border-transparent theme-option shadow-glow hover:scale-110 transition-transform" data-theme="green" title="أخضر"></div>
-                        <div class="w-12 h-12 bg-purple-500 rounded-2xl cursor-pointer border-4 border-transparent theme-option shadow-glow hover:scale-110 transition-transform" data-theme="purple" title="بنفسجي"></div>
-                        <div class="w-12 h-12 bg-red-500 rounded-2xl cursor-pointer border-4 border-transparent theme-option shadow-glow hover:scale-110 transition-transform" data-theme="red" title="أحمر"></div>
-                        <div class="w-12 h-12 bg-orange-500 rounded-2xl cursor-pointer border-4 border-transparent theme-option shadow-glow hover:scale-110 transition-transform" data-theme="orange" title="برتقالي"></div>
-                        <div class="w-12 h-12 bg-teal-500 rounded-2xl cursor-pointer border-4 border-transparent theme-option shadow-glow hover:scale-110 transition-transform" data-theme="teal" title="تركواز"></div>
-                        <div class="w-12 h-12 bg-indigo-500 rounded-2xl cursor-pointer border-4 border-transparent theme-option shadow-glow hover:scale-110 transition-transform" data-theme="indigo" title="نيلي"></div>
-                        <div class="w-12 h-12 bg-pink-500 rounded-2xl cursor-pointer border-4 border-transparent theme-option shadow-glow hover:scale-110 transition-transform" data-theme="pink" title="وردي"></div>
-                        <div class="w-12 h-12 bg-yellow-500 rounded-2xl cursor-pointer border-4 border-transparent theme-option shadow-glow hover:scale-110 transition-transform" data-theme="yellow" title="أصفر"></div>
-                        <div class="w-12 h-12 bg-cyan-500 rounded-2xl cursor-pointer border-4 border-transparent theme-option shadow-glow hover:scale-110 transition-transform" data-theme="cyan" title="سماوي"></div>
-                    </div>
-                </div>
-                
-                <div class="flex justify-end p-6 border-t border-gray-200/30 dark:border-gray-700/30">
-                    <button id="close-themes-modal" class="bg-gradient-primary text-white px-8 py-3 rounded-2xl hover:shadow-glow-primary transition-all duration-300 font-medium">
-                        <span>تم</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- إشعار عائم -->
-        <div id="floating-notification" class="fixed top-4 left-4 z-40 bg-gradient-primary text-white p-4 rounded-2xl shadow-glow-primary floating-notification hidden lg:block">
-            <div class="flex items-center">
-                <i class="fas fa-gift text-xl ml-2"></i>
-                <div>
-                    <p class="font-semibold">عرض خاص!</p>
-                    <p class="text-sm">انضم الآن واحصل على شهادة مجانية</p>
-                </div>
-            </div>
-        </div>
-
         <!-- Hero Section -->
         <section class="hero py-16 lg:py-24 relative overflow-hidden" id="home">
             <div class="container mx-auto px-4 relative z-10">
@@ -518,10 +580,10 @@
                         <div class="mb-4">
                             <span class="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium">منصة التعلم الإلكتروني المتقدمة</span>
                         </div>
-                        <h1 class="text-4xl lg:text-5xl font-bold text-gray-800 dark:text-white mb-6 leading-tight">
-                            <span class="typing-animation">طور مهاراتك مع Skillzoy Academy</span>
+                        <h1 class="text-3xl lg:text-5xl font-bold text-gray-800 dark:text-white mb-6 leading-tight">
+                            طور مهاراتك مع Skillzoy Academy
                         </h1>
-                        <p class="text-xl text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">انضم إلى آلاف الطلاب حول العالم وطور مهاراتك مع دوراتنا المتخصصة. احصل على شهادات معتمدة وافتح أبوابًا جديدة لمستقبلك المهني.</p>
+                        <p class="text-lg lg:text-xl text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">انضم إلى آلاف الطلاب حول العالم وطور مهاراتك مع دوراتنا المتخصصة. احصل على شهادات معتمدة وافتح أبوابًا جديدة لمستقبلك المهني.</p>
                         <div class="hero-buttons flex flex-wrap gap-4">
                             <a href="register.html" class="btn bg-gradient-primary text-white hover:shadow-glow-primary py-3 px-6 rounded-2xl transition-all duration-300 flex items-center pulse">
                                 <i class="fas fa-play-circle ml-2"></i>
@@ -536,11 +598,11 @@
                         <!-- إحصائيات سريعة -->
                         <div class="mt-12 grid grid-cols-3 gap-6">
                             <div class="text-center">
-                                <p class="text-2xl font-bold text-primary">2,847+</p>
+                                <p class="text-2xl font-bold text-primary">20,124+</p>
                                 <p class="text-gray-600 dark:text-gray-400">طالب مسجل</p>
                             </div>
                             <div class="text-center">
-                                <p class="text-2xl font-bold text-primary">15+</p>
+                                <p class="text-2xl font-bold text-primary">589+</p>
                                 <p class="text-gray-600 dark:text-gray-400">دورة تدريبية</p>
                             </div>
                             <div class="text-center">
@@ -551,7 +613,7 @@
                     </div>
                     <div class="hero-video-container card-glass rounded-2xl shadow-glow p-4 theme-transition hover-lift">
                         <div class="video-wrapper rounded-2xl overflow-hidden">
-                            <iframe class="w-full h-80 lg:h-96" src="https://www.youtube.com/embed/7Ok6J0CURvc?rel=0&modestbranding=1&autoplay=0" 
+                            <iframe class="w-full h-64 lg:h-96" src="https://www.youtube.com/embed/7Ok6J0CURvc?rel=0&modestbranding=1&autoplay=0" 
                                 title="مقدمة عن Skillzoy Academy" 
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                                 allowfullscreen>
@@ -595,7 +657,7 @@
                             </p>
                             <div class="course-meta flex text-gray-600 dark:text-gray-400 mb-4">
                                 <span class="flex items-center ml-4"><i class="far fa-clock ml-1"></i> 40 ساعة</span>
-                                <span class="flex items-center"><i class="far fa-user ml-1"></i> 250 طالب</span>
+                                <span class="flex items-center"><i class="far fa-user ml-1"></i> 1,250 طالب</span>
                             </div>
                             <div class="course-certificate-note bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 p-3 rounded-xl mb-4 flex items-center">
                                 <i class="fas fa-award ml-2"></i> بعد إكمال الدورة، ستحصل على شهادتك المعتمدة
@@ -625,7 +687,7 @@
                             </p>
                             <div class="course-meta flex text-gray-600 dark:text-gray-400 mb-4">
                                 <span class="flex items-center ml-4"><i class="far fa-clock ml-1"></i> 32 ساعة</span>
-                                <span class="flex items-center"><i class="far fa-user ml-1"></i> 320 طالب</span>
+                                <span class="flex items-center"><i class="far fa-user ml-1"></i> 2,820 طالب</span>
                             </div>
                             <div class="course-certificate-note bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 p-3 rounded-xl mb-4 flex items-center">
                                 <i class="fas fa-award ml-2"></i> بعد إكمال الدورة، ستحصل على شهادتك المعتمدة
@@ -635,21 +697,6 @@
                                 سجل الدخول لمشاهدة الدورة
                             </a>
                         </div>
-                    </div>
-                </div>
-                
-                <!-- دعوة للعمل إضافية -->
-                <div class="mt-16 text-center">
-                    <div class="card-glass rounded-2xl p-8 theme-transition">
-                        <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">هل تبحث عن دورات أخرى؟</h3>
-                        <p class="text-gray-600 dark:text-gray-400 mb-6 max-w-2xl mx-auto">نحن نعمل باستمرار على إضافة دورات جديدة تغطي مختلف المجالات المهنية والتقنية. سجل بريدك الإلكتروني ليصلك إشعار عند إطلاق دورات جديدة.</p>
-                        <form class="max-w-md mx-auto flex">
-                            <input type="email" placeholder="بريدك الإلكتروني" required
-                                class="flex-1 px-4 py-3 bg-white/50 dark:bg-gray-800/50 border border-gray-300/50 dark:border-gray-600/50 rounded-r-2xl focus:ring-2 focus:ring-primary focus:border-transparent theme-transition">
-                            <button type="submit" class="bg-gradient-primary text-white px-6 rounded-l-2xl hover:shadow-glow-primary transition-all duration-300">
-                                <span>اشتراك</span>
-                            </button>
-                        </form>
                     </div>
                 </div>
             </div>
@@ -770,33 +817,6 @@
                          alt="نموذج شهادة Skillzoy Academy" 
                          class="certificate-image w-full max-w-3xl rounded-2xl shadow-glow hover:scale-105 transition-transform duration-300">
                 </div>
-                
-                <!-- ميزات الشهادة -->
-                <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="text-center card-glass p-6 rounded-2xl theme-transition hover-lift">
-                        <div class="w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-glow-primary">
-                            <i class="fas fa-shield-alt text-white text-xl"></i>
-                        </div>
-                        <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-2">شهادة معتمدة</h3>
-                        <p class="text-gray-600 dark:text-gray-400">شهاداتنا معتمدة ومعترف بها في سوق العمل</p>
-                    </div>
-                    
-                    <div class="text-center card-glass p-6 rounded-2xl theme-transition hover-lift">
-                        <div class="w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-glow-primary">
-                            <i class="fas fa-qrcode text-white text-xl"></i>
-                        </div>
-                        <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-2">رمز التحقق</h3>
-                        <p class="text-gray-600 dark:text-gray-400">يمكن التحقق من صحة الشهادة عبر رمز QR فريد</p>
-                    </div>
-                    
-                    <div class="text-center card-glass p-6 rounded-2xl theme-transition hover-lift">
-                        <div class="w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-glow-primary">
-                            <i class="fas fa-download text-white text-xl"></i>
-                        </div>
-                        <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-2">تحميل فوري</h3>
-                        <p class="text-gray-600 dark:text-gray-400">احصل على شهادتك فور إكمال الدورة بنجاح</p>
-                    </div>
-                </div>
             </div>
         </section>
 
@@ -827,16 +847,6 @@
                                 <i class="fas fa-clock text-primary text-xl ml-4"></i> 
                                 <span>من الأحد إلى الخميس، 9 صباحاً - 6 مساءً</span>
                             </p>
-                        </div>
-                        
-                        <div class="mt-8">
-                            <h4 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">تابعنا على</h4>
-                            <div class="flex space-x-4 space-x-reverse">
-                                <a href="https://twitter.com/skillzoy" class="w-12 h-12 bg-gray-200/30 dark:bg-gray-700/30 rounded-2xl flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-primary hover:text-white transition-all duration-300" target="_blank"><i class="fab fa-twitter"></i></a>
-                                <a href="https://linkedin.com/company/skillzoy" class="w-12 h-12 bg-gray-200/30 dark:bg-gray-700/30 rounded-2xl flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-primary hover:text-white transition-all duration-300" target="_blank"><i class="fab fa-linkedin"></i></a>
-                                <a href="https://youtube.com/c/skillzoy" class="w-12 h-12 bg-gray-200/30 dark:bg-gray-700/30 rounded-2xl flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-primary hover:text-white transition-all duration-300" target="_blank"><i class="fab fa-youtube"></i></a>
-                                <a href="https://instagram.com/skillzoy" class="w-12 h-12 bg-gray-200/30 dark:bg-gray-700/30 rounded-2xl flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-primary hover:text-white transition-all duration-300" target="_blank"><i class="fab fa-instagram"></i></a>
-                            </div>
                         </div>
                         
                         <a href="register.html" class="w-full mt-8 bg-gradient-primary text-white hover:shadow-glow-primary py-4 rounded-2xl transition-all duration-300 flex items-center justify-center space-x-2 space-x-reverse font-medium text-lg">
@@ -923,17 +933,14 @@
 
     <script>
         // عناصر DOM
-        const sidebar = document.getElementById('sidebar');
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const closeSidebarBtn = document.getElementById('close-sidebar');
-        const themeToggle = document.getElementById('theme-toggle');
-        const themeToggleSidebar = document.getElementById('theme-toggle-sidebar');
-        const themesToggleSidebar = document.getElementById('themes-toggle-sidebar');
+        const closeMobileSidebarBtn = document.getElementById('close-mobile-sidebar');
+        const mobileSidebar = document.getElementById('mobile-sidebar');
+        const themesToggle = document.getElementById('themes-toggle');
         const themesModal = document.getElementById('themes-modal');
         const closeThemesModal = document.getElementById('close-themes-modal');
         const themeOptions = document.querySelectorAll('.theme-option');
-        const floatingNotification = document.getElementById('floating-notification');
-        const sidebarItems = document.querySelectorAll('.sidebar-item');
+        const darkModeSwitch = document.getElementById('dark-mode-switch');
         
         // تهيئة التطبيق
         document.addEventListener('DOMContentLoaded', function() {
@@ -942,11 +949,14 @@
             
             // إضافة مستمعي الأحداث
             mobileMenuBtn.addEventListener('click', toggleMobileSidebar);
-            closeSidebarBtn.addEventListener('click', closeMobileSidebar);
-            themeToggle.addEventListener('click', toggleDarkMode);
-            themeToggleSidebar.addEventListener('click', toggleDarkMode);
-            themesToggleSidebar.addEventListener('click', showThemesModal);
+            closeMobileSidebarBtn.addEventListener('click', closeMobileSidebar);
+            themesToggle.addEventListener('click', showThemesModal);
             closeThemesModal.addEventListener('click', hideThemesModal);
+            
+            // مستمع الحدث لزر التبديل بين الوضع الداكن والفاتح
+            if (darkModeSwitch) {
+                darkModeSwitch.addEventListener('change', toggleDarkMode);
+            }
             
             // التنقل السلس للروابط
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -974,21 +984,11 @@
             
             // إغلاق القوائم المنسدلة عند النقر خارجها
             document.addEventListener('click', function(e) {
-                if (!themesToggleSidebar.contains(e.target) && !themesModal.contains(e.target)) {
+                if (!themesToggle.contains(e.target) && !themesModal.contains(e.target)) {
                     themesModal.classList.add('hidden');
                 }
                 
-                // إغلاق الشريط الجانبي على الجوال عند النقر خارجها
-                if (window.innerWidth < 1024 && !sidebar.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
-                    closeMobileSidebar();
-                }
-            });
-            
-            // إغلاق الشريط الجانبي على الجوال عند تغيير حجم النافذة
-            window.addEventListener('resize', function() {
-                if (window.innerWidth >= 1024) {
-                    sidebar.style.transform = 'translateX(0)';
-                } else {
+                if (!mobileMenuBtn.contains(e.target) && !mobileSidebar.contains(e.target)) {
                     closeMobileSidebar();
                 }
             });
@@ -1001,46 +1001,6 @@
                     alert('شكراً لتواصلكم معنا! سنرد على رسالتكم في أقرب وقت ممكن.');
                     contactForm.reset();
                 });
-            }
-            
-            // إظهار الإشعار العائم بعد 3 ثوانٍ
-            setTimeout(() => {
-                if (floatingNotification) {
-                    floatingNotification.classList.remove('hidden');
-                }
-            }, 3000);
-            
-            // إخفاء الإشعار العائم عند النقر عليه
-            if (floatingNotification) {
-                floatingNotification.addEventListener('click', function() {
-                    this.classList.add('hidden');
-                });
-            }
-            
-            // تفعيل عناصر القائمة الجانبية
-            sidebarItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    sidebarItems.forEach(i => i.classList.remove('active'));
-                    this.classList.add('active');
-                });
-            });
-            
-            // تأثير الكتابة في العنوان
-            const typingElement = document.querySelector('.typing-animation');
-            if (typingElement) {
-                // إعادة تشغيل تأثير الكتابة عند ظهور العنصر في الشاشة
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            typingElement.style.animation = 'none';
-                            setTimeout(() => {
-                                typingElement.style.animation = 'typing 3.5s steps(40, end), blink-caret .75s step-end infinite';
-                            }, 100);
-                        }
-                    });
-                });
-                
-                observer.observe(typingElement);
             }
         });
 
@@ -1074,12 +1034,10 @@
             // تطبيق الوضع الداكن
             if (preferences.darkMode) {
                 document.documentElement.classList.add('dark');
-                themeToggle.querySelector('i').className = 'fas fa-sun text-xl';
-                themeToggleSidebar.querySelector('i').className = 'fas fa-sun text-white text-sm';
+                if (darkModeSwitch) darkModeSwitch.checked = true;
             } else {
                 document.documentElement.classList.remove('dark');
-                themeToggle.querySelector('i').className = 'fas fa-moon text-xl';
-                themeToggleSidebar.querySelector('i').className = 'fas fa-moon text-white text-sm';
+                if (darkModeSwitch) darkModeSwitch.checked = false;
             }
         }
 
@@ -1091,34 +1049,11 @@
 
         // تبديل الشريط الجانبي على الجوال
         function toggleMobileSidebar() {
-            sidebar.style.transform = 'translateX(0)';
+            mobileSidebar.classList.remove('hidden');
         }
 
         function closeMobileSidebar() {
-            sidebar.style.transform = 'translateX(100%)';
-        }
-
-        // تبديل الوضع الداكن
-        function toggleDarkMode() {
-            const isDark = document.documentElement.classList.toggle('dark');
-            
-            // تحديث الأيقونة
-            const icon = themeToggle.querySelector('i');
-            const sidebarIcon = themeToggleSidebar.querySelector('i');
-            
-            if (isDark) {
-                icon.className = 'fas fa-sun text-xl';
-                sidebarIcon.className = 'fas fa-sun text-white text-sm';
-            } else {
-                icon.className = 'fas fa-moon text-xl';
-                sidebarIcon.className = 'fas fa-moon text-white text-sm';
-            }
-            
-            // حفظ التفضيلات
-            savePreferencesToLocalStorage({
-                theme: document.body.getAttribute('data-theme'),
-                darkMode: isDark
-            });
+            mobileSidebar.classList.add('hidden');
         }
 
         // تغيير لون السمة
@@ -1139,10 +1074,26 @@
             });
         }
 
+        // التبديل بين الوضع الداكن والفاتح
+        function toggleDarkMode() {
+            const isDarkMode = darkModeSwitch.checked;
+            
+            if (isDarkMode) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+            
+            // حفظ التفضيلات
+            savePreferencesToLocalStorage({
+                theme: document.body.getAttribute('data-theme'),
+                darkMode: isDarkMode
+            });
+        }
+
         // إظهار نافذة الثيمات
         function showThemesModal() {
             themesModal.classList.remove('hidden');
-            closeMobileSidebar();
         }
 
         // إخفاء نافذة الثيمات
