@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Skillzoy Academy - منصة التعليم الالكتروني</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         /* ===== متغيرات التصميم ===== */
@@ -1525,32 +1526,11 @@
                 <!-- سيتم ملؤها ديناميكياً -->
             </div>
             
-            <!-- ===== قسم تتبع التقدم في الدورة ===== -->
-            <div class="progress-section" id="course-progress-section" style="display: none;">
-                <h3>تقدمي في الدورة</h3>
-                <div class="progress-card">
-                    <div class="progress-header">
-                        <div class="progress-title">معدل الإكمال</div>
-                        <div class="progress-percentage" id="course-progress-percentage">0%</div>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="course-progress-fill" style="width: 0%"></div>
-                    </div>
-                    <div class="progress-details">
-                        <span id="completed-videos-count">0</span> / <span id="total-videos-count">0</span> فيديو مكتمل
-                    </div>
-                </div>
-                
-                <div id="course-videos-progress">
-                    <!-- سيتم ملؤها ديناميكياً -->
-                </div>
-            </div>
-            
             <!-- ===== قسم التواصل بعد إكمال الدورة ===== -->
-            <div class="contact-section" id="course-completion-section" style="display: none;">
+            <div class="contact-section">
                 <h2>مبروك! لقد أكملت الدورة</h2>
                 <p>للحصول على شهادتك المعتمدة، يرجى التواصل معنا عبر الواتساب</p>
-                <a href="https://wa.me/1234567890" class="whatsapp-btn" target="_blank">
+                <a href="https://wa.me/0924299798" class="whatsapp-btn" target="_blank">
                     <i class="fab fa-whatsapp"></i> تواصل معنا على الواتساب
                 </a>
             </div>
@@ -1607,7 +1587,7 @@
             <div class="footer-section">
                 <h3>تواصل معنا</h3>
                 <ul class="footer-links">
-                    <li><a href="tel:+1234567890"><i class="fas fa-phone"></i> +249 924 299 798</a></li>
+                    <li><a href="tel:+249924299798"><i class="fas fa-phone"></i> +249 924 299 798</a></li>
                     <li><a href="mailto:info@skillzoy.com"><i class="fas fa-envelope"></i> info@skillzoy.com</a></li>
                     <li><a href="https://wa.me/0924299798" target="_blank"><i class="fab fa-whatsapp"></i> واتساب</a></li>
                     <li><a href="#"><i class="fas fa-map-marker-alt"></i> العنوان: مدينة المعرفة، الرياض</a></li>
@@ -1622,8 +1602,8 @@
 
     <script>
         // 🔧 ===== تكوين Supabase =====
-        const SUPABASE_URL = 'https://sjipwstkvvrautexigmt.supabase.co'; // استبدل برابط مشروعك
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNqaXB3c3RrdnZyYXV0ZXhpZ210Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MTE5MDcsImV4cCI6MjA3NDQ4NzkwN30.FSh2yIdZdvdNvtWxK5JB02PIdWOG3707qO-F0c84PnY'; // استبدل بمفتاحك
+        const SUPABASE_URL = 'https://sjipwstkvvrautexigmt.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNqaXB3c3RrdnZyYXV0ZXhpZ210Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MTE5MDcsImV4cCI6MjA3NDQ4NzkwN30.FSh2yIdZdvdNvtWxK5JB02PIdWOG3707qO-F0c84PnY';
         
         let supabase;
         try {
@@ -1869,7 +1849,7 @@
         };
 
         // ===== YouTube API Integration =====
-        const YOUTUBE_API_KEY = "AIzaSyBdEIVHCYgh3Z7CVfPPzdn18Ic8EJOBBTE#eaeaff33"; // يجب استبداله بمفتاح حقيقي
+        const YOUTUBE_API_KEY = "AIzaSyBdEIVHCYgh3Z7CVfPPzdn18Ic8EJOBBTE#eaeaff33";
         
         // وظيفة لجلب فيديوهات قائمة التشغيل من YouTube
         async function fetchPlaylistVideos(playlistId) {
@@ -1893,7 +1873,7 @@
                     id: item.snippet.resourceId.videoId,
                     title: item.snippet.title,
                     youtubeId: item.snippet.resourceId.videoId,
-                    duration: "10:00" // يمكن إضافة مدة الفيديو إذا كان متاحاً
+                    duration: "10:00"
                 }));
             } catch (error) {
                 console.error("Error fetching playlist videos:", error);
@@ -1951,7 +1931,7 @@
                         }
                     }, 400);
                 }
-            }, 5000); // زيادة مدة الإشعار إلى 5 ثواني
+            }, 5000);
         }
 
         // ===== وظائف الأمان =====
@@ -2045,23 +2025,6 @@
         function markVideoAsCompleted(courseId, videoId) {
             updateVideoProgress(courseId, videoId, true);
             showNotification('تم التحديث', 'تم تحديث تقدمك في الدورة', 'success');
-            
-            // تحديث واجهة المستخدم
-            const progressPercentage = calculateProgressPercentage(courseId);
-            document.getElementById('course-progress-percentage').textContent = `${progressPercentage}%`;
-            document.getElementById('course-progress-fill').style.width = `${progressPercentage}%`;
-            document.getElementById('completed-videos-count').textContent = getCourseProgress(courseId).completedVideos.length;
-            
-            // تحديث حالة الفيديو في القائمة
-            const videoElement = document.querySelector(`.video-progress[data-video-id="${videoId}"]`);
-            if (videoElement) {
-                videoElement.classList.add('completed');
-            }
-            
-            // إذا اكتملت الدورة، عرض قسم التواصل
-            if (progressPercentage === 100) {
-                document.getElementById('course-completion-section').style.display = 'block';
-            }
         }
 
         // ===== وظائف العرض =====
@@ -2263,8 +2226,6 @@
             if (!course) return;
             
             const videos = await fetchPlaylistVideos(course.playlist_id);
-            const progress = getCourseProgress(courseId);
-            const progressPercentage = calculateProgressPercentage(courseId);
             
             // تحديث عدد الفيديوهات الإجمالي
             supabaseMock.setTotalVideos(courseId, videos.length);
@@ -2284,7 +2245,7 @@
             
             let videosHTML = '';
             videos.forEach((video, index) => {
-                const isCompleted = progress.completedVideos.includes(video.id);
+                const isCompleted = getCourseProgress(courseId).completedVideos.includes(video.id);
                 const safeVideoTitle = escapeHtml(video.title);
                 
                 videosHTML += `
@@ -2314,50 +2275,6 @@
             
             videosContainer.innerHTML = videosHTML;
             setupVideoEventListeners();
-            
-            // عرض قسم التقدم
-            document.getElementById('course-progress-section').style.display = 'block';
-            document.getElementById('course-progress-percentage').textContent = `${progressPercentage}%`;
-            document.getElementById('course-progress-fill').style.width = `${progressPercentage}%`;
-            document.getElementById('completed-videos-count').textContent = progress.completedVideos.length;
-            document.getElementById('total-videos-count').textContent = videos.length;
-            
-            // عرض قائمة الفيديوهات مع التقدم
-            const videosProgressContainer = document.getElementById('course-videos-progress');
-            let videosProgressHTML = '';
-            
-            videos.forEach((video, index) => {
-                const isCompleted = progress.completedVideos.includes(video.id);
-                const safeVideoTitle = escapeHtml(video.title);
-                
-                videosProgressHTML += `
-                <div class="video-progress ${isCompleted ? 'completed' : ''}" data-video-id="${video.id}">
-                    <div class="video-number">${index + 1}</div>
-                    <div class="video-title-progress">${safeVideoTitle}</div>
-                    ${isCompleted ? '<div class="video-check"><i class="fas fa-check"></i></div>' : ''}
-                </div>
-                `;
-            });
-            
-            videosProgressContainer.innerHTML = videosProgressHTML;
-            
-            // إضافة مستمعي الأحداث للفيديوهات في قسم التقدم
-            document.querySelectorAll('.video-progress').forEach(videoProgress => {
-                videoProgress.addEventListener('click', (e) => {
-                    const videoId = e.currentTarget.getAttribute('data-video-id');
-                    const video = videos.find(v => v.id === videoId);
-                    if (video) {
-                        openVideoPlayer(video.youtubeId, video.title);
-                    }
-                });
-            });
-            
-            // عرض قسم التواصل إذا اكتملت الدورة
-            if (progressPercentage === 100) {
-                document.getElementById('course-completion-section').style.display = 'block';
-            } else {
-                document.getElementById('course-completion-section').style.display = 'none';
-            }
             
             document.querySelector('.home-page').style.display = 'none';
             document.querySelector('.my-courses-page').style.display = 'none';
@@ -2709,7 +2626,7 @@
         // ===== تهيئة التطبيق =====
         document.addEventListener('DOMContentLoaded', () => {
             loadTheme();
-            createCategoryFilters(); // استبدال renderCourses بـ createCategoryFilters
+            createCategoryFilters();
             renderCourses();
             setupStatsAnimation();
             
