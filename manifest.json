@@ -7,12 +7,14 @@
   "theme_color": "#1e3a8a",
   "icons": [
     {
-      "src": "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f4bb.png",
+      "src": "
+Picsart_25-09-27_12-30-45-516.jpg",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f4f1.png",
+      "src": "
+Picsart_25-09-27_12-30-45-516.jpg",
       "sizes": "512x512",
       "type": "image/png"
     }
