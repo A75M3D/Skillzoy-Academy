@@ -7,7 +7,9 @@
     <meta name="description" content="منصة تعليمية تقدم شهادات معتمدة و كورسات مجانية لتعلم البرمجة خطوة بخطوة.">
     <meta name="keywords" content="التطوير المهني ,افضل شهادات مجانية, تعلم البرمجة, تعليم اونلاين, HTML, CSS, JavaScript, Skillzoy Academy">
     <title>Skillzoy Academy - منصة التعلم الإلكتروني</title>
-    
+    <!-- PWA Manifest -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1e3a8a">
     <!-- إضافة Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -341,6 +343,7 @@
     </style>
 </head>
 <body class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-950 dark:to-gray-900 theme-transition" data-theme="blue">
+   <button id="installBtn" hidden>📥 تثبيت التطبيق</button>
     <!-- تأثيرات الخلفية -->
     <ul class="bg-bubbles">
         <li></li>
@@ -1101,5 +1104,33 @@
             themesModal.classList.add('hidden');
         }
     </script>
+    
+    <script>
+  // تسجيل Service Worker
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js')
+      .then(() => console.log('✅ تم تسجيل الـ Service Worker'))
+      .catch(err => console.log('❌ خطأ في SW:', err));
+  }
+
+  // منطق زر التثبيت
+  let deferredPrompt;
+  const installBtn = document.getElementById('installBtn');
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    installBtn.hidden = false;
+  });
+
+  installBtn.addEventListener('click', async () => {
+    installBtn.hidden = true;
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+      deferredPrompt = null;
+    }
+  });
+      </script>
 </body>
 </html>
