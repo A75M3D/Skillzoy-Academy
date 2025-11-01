@@ -31,7 +31,6 @@
             --success: #10b981;
             --warning: #f59e0b;
             --error: #ef4444;
-            --gold: #FFD700;
         }
 
         /* الثيم الفاتح (وضع النهار) */
@@ -43,7 +42,7 @@
             --light: #0f172a;
             --dark: #f1f5f9;
             --text: #334155;
-            --text-light: #64748b;
+            --text-light: #64748b; /* تم التصحيح هنا */
             --background: linear-gradient(135deg, #f8fafc, #e2e8f0, #cbd5e1);
             --card-bg: rgba(255, 255, 255, 0.9);
             --glass-bg: rgba(255, 255, 255, 0.8);
@@ -54,7 +53,6 @@
             --success: #10b981;
             --warning: #f59e0b;
             --error: #ef4444;
-            --gold: #FFD700;
         }
 
         /* ===== إعدادات عامة ===== */
@@ -215,7 +213,7 @@
         .nav-section-title {
             padding: 0 20px 10px;
             font-size: 0.85rem;
-            color: #ffffff;
+            color: #94a3b8;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
@@ -229,7 +227,7 @@
             align-items: center;
             gap: 12px;
             padding: 12px 20px;
-            color: #ffffff;
+            color: #cbd5e1;
             text-decoration: none;
             transition: var(--transition);
             border-right: 3px solid transparent;
@@ -281,7 +279,7 @@
 
         .user-info p {
             font-size: 0.8rem;
-            color: #ffffff;
+            color: #94a3b8;
         }
 
         /* زر تغيير الثيم */
@@ -290,7 +288,7 @@
             align-items: center;
             justify-content: space-between;
             padding: 12px 20px;
-            color: #ffffff;
+            color: #cbd5e1;
             cursor: pointer;
             transition: var(--transition);
             border-right: 3px solid transparent;
@@ -494,36 +492,6 @@
             display: flex;
             align-items: center;
             gap: 5px;
-        }
-
-        /* النجوم الذهبية */
-        .course-rating {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .star {
-            color: var(--gold);
-        }
-
-        .course-stats {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-            font-size: 0.9rem;
-        }
-
-        .stat-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            color: var(--text-light);
-        }
-
-        .stat-item i {
-            color: var(--accent);
         }
 
         .course-actions {
@@ -877,7 +845,6 @@
             margin-top: 60px;
             border-radius: var(--border-radius) var(--border-radius) 0 0;
             box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
-            color: white;
         }
 
         .footer-content {
@@ -895,7 +862,7 @@
         }
 
         .footer-section p {
-            color: #ffffff;
+            color: var(--text-light);
             margin-bottom: 15px;
             line-height: 1.6;
         }
@@ -909,7 +876,7 @@
         }
 
         .footer-links a {
-            color: #ffffff;
+            color: var(--text-light);
             text-decoration: none;
             transition: var(--transition);
             display: flex;
@@ -951,7 +918,7 @@
             padding-top: 30px;
             margin-top: 30px;
             border-top: 1px solid var(--glass-border);
-            color: #ffffff;
+            color: var(--text-light);
             font-size: 0.9rem;
         }
 
@@ -1054,7 +1021,7 @@
             display: none;
             background: none;
             border: none;
-            color: white;
+            color: var(--light);
             font-size: 1.5rem;
             cursor: pointer;
             position: fixed;
@@ -1184,12 +1151,12 @@
     <div class="notification-container" id="notification-container"></div>
 
     <!-- ===== زر القائمة المتنقلة ===== -->
-    <button class="mobile-menu-btn" id="mobile-menu-btn">
+    <button class="mobile-menu-btn">
         <i class="fas fa-bars"></i>
     </button>
 
     <!-- ===== الشريط الجانبي ===== -->
-    <aside class="sidebar" id="sidebar">
+    <aside class="sidebar">
         <div class="sidebar-header">
             <a href="#" class="logo">
                 <div class="logo-icon">
@@ -1213,6 +1180,8 @@
             <div class="nav-section">
                 <h3 class="nav-section-title">المحتوى التعليمي</h3>
                 <ul class="nav-links">
+                    <li><a href="#" class="nav-link"><i class="fas fa-play-circle"></i> الفيديوهات</a></li>
+                    <li><a href="#" class="nav-link"><i class="fas fa-file-alt"></i> المواد الدراسية</a></li>
                     <li><a href="#" class="nav-link"><i class="fas fa-tasks"></i> الواجبات</a></li>
                     <li><a href="#" class="nav-link"><i class="fas fa-question-circle"></i> الاختبارات</a></li>
                 </ul>
@@ -1221,10 +1190,11 @@
             <div class="nav-section">
                 <h3 class="nav-section-title">الحساب والإعدادات</h3>
                 <ul class="nav-links">
+                    <li><a href="profiles.html" class="nav-link"><i class="fas fa-user"></i> الملف الشخصي</a></li>
                     <li><a href="#" class="nav-link"><i class="fas fa-cog"></i> الإعدادات</a></li>
                     <li><a href="#" class="nav-link"><i class="fas fa-question"></i> المساعدة</a></li>
                     <li><a href="#" onclick="logout()" class="nav-link"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</a></li>
-                </ul>
+                </ul> 
             </div>
             
             <!-- زر تغيير الثيم -->
@@ -1360,7 +1330,7 @@
             <div class="contact-section">
                 <h2>مبروك! لقد أكملت الدورة</h2>
                 <p>للحصول على شهادتك المعتمدة، يرجى التواصل معنا عبر الواتساب</p>
-                <a href="https://wa.me/0924299798" class="whatsapp-btn" target="_blank">
+                <a href="https://wa.me/1234567890" class="whatsapp-btn" target="_blank">
                     <i class="fab fa-whatsapp"></i> تواصل معنا على الواتساب
                 </a>
             </div>
@@ -1417,7 +1387,7 @@
             <div class="footer-section">
                 <h3>تواصل معنا</h3>
                 <ul class="footer-links">
-                    <li><a href="tel:+249924299798"><i class="fas fa-phone"></i> +249 924 299 798</a></li>
+                    <li><a href="tel:+1234567890"><i class="fas fa-phone"></i> +249 924 299 798</a></li>
                     <li><a href="mailto:info@skillzoy.com"><i class="fas fa-envelope"></i> info@skillzoy.com</a></li>
                     <li><a href="https://wa.me/0924299798" target="_blank"><i class="fab fa-whatsapp"></i> واتساب</a></li>
                     <li><a href="#"><i class="fas fa-map-marker-alt"></i> العنوان: مدينة المعرفة، الرياض</a></li>
@@ -1431,94 +1401,129 @@
     </footer>
 
     <script>
-        // ===== إعداد Supabase =====
-        // استبدل هذه القيم بمعلومات مشروعك الفعلية
-        const SUPABASE_URL = 'https://sjipwstkvvrautexigmt.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNqaXB3c3RrdnZyYXV0ZXhpZ210Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MTE5MDcsImV4cCI6MjA3NDQ4NzkwN30.FSh2yIdZdvdNvtWxK5JB02PIdWOG3707qO-F0c84PnY';
+        // 🔧 ===== تكوين Supabase =====
+        const SUPABASE_URL = 'https://sjipwstkvvrautexigmt.supabase.co'; // استبدل برابط مشروعك
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNqaXB3c3RrdnZyYXV0ZXhpZ210Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MTE5MDcsImV4cCI6MjA3NDQ4NzkwN30.FSh2yIdZdvdNvtWxK5JB02PIdWOG3707qO-F0c84PnY'; // استبدل بمفتاحك
         
-        // إنشاء عميل Supabase
         let supabase;
         try {
-            supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-            console.log('✅ Supabase client initialized');
+            if (SUPABASE_URL && SUPABASE_ANON_KEY && SUPABASE_URL !== 'https://your-project.supabase.co') {
+                supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                console.log('✅ Supabase initialized successfully');
+            } else {
+                console.log('⚠️ Using fallback data - Supabase not configured');
+            }
         } catch (error) {
             console.error('❌ Error initializing Supabase:', error);
-            // سنستخدم البيانات الافتراضية في حالة فشل الاتصال
         }
 
-        // ===== بيانات الدورات (البديل في حالة فشل الاتصال) =====
-        const defaultCoursesData = [
+        // ===== بيانات الدورات الاحتياطية =====
+        const backupCoursesData = [
             {
                 id: 1,
                 title: "Google Cybersecurity",
                 category: "programming",
-                instructor: "Skillzoy Academy",
-                instructorAvatar: "https://randomuser.me/api/portraits/men/32.jpg",
-                playlistId: "PL590L5WQmH8d68VyR6RjhgldHMxMJ5B5z",
+                provider: "Skillzoy Academy",
+                playlist_id: "PL590L5WQmH8d68VyR6RjhgldHMxMJ5B5z",
                 duration: "35 ساعة",
                 level: "متقدم",
                 description: "دورة الامن السيبراني من google تدريب مكثف",
-                students_count: 12555,
-                rating: 4.8,
-                reviews: 3421
+                rating: 5,
+                students: "1250"
             },
             {
                 id: 2,
                 title: "دورة اختبار الاختراق تدريب عملي CTF",
                 category: "programming",
-                instructor: "Skillzoy Academy",
-                instructorAvatar: "https://randomuser.me/api/portraits/women/44.jpg",
-                playlistId: "PLyWDBIDk-uYlJ4Yn6vtjAjN1fpnJi2AXA",
+                provider: "Skillzoy Academy",
+                playlist_id: "PLyWDBIDk-uYlJ4Yn6vtjAjN1fpnJi2AXA",
                 duration: "28 ساعة",
                 level: "متوسط",
                 description: "تعلم تصميم واجهات المستخدم وتجربة المستخدم باستخدام أحدث الأدوات والتقنيات مع مشاريع عملية",
-                students_count: 8543,
-                rating: 4.7,
-                reviews: 2156
+                rating: 4,
+                students: "890"
             },
             {
                 id: 3,
                 title: "دورة إدارة المشاريع الاحترافية - PMP و Agile",
                 category: "business",
-                instructor: "Skillzoy Academy",
-                instructorAvatar: "https://randomuser.me/api/portraits/men/67.jpg",
-                playlistId: "PLdPyS-4BsX-aNIxjgTAdM-6ZUHT2AYPyg",
+                provider: "Skillzoy Academy",
+                playlist_id: "PLdPyS-4BsX-aNIxjgTAdM-6ZUHT2AYPyg",
                 duration: "32 ساعة",
                 level: "متقدم",
                 description: "تعلم كيفية إدارة المشاريع باحترافية باستخدام منهجيات PMP و Agile مع دراسات حالة عملية",
-                students_count: 9678,
-                rating: 4.9,
-                reviews: 2890
+                rating: 5,
+                students: "1100"
             },
             {
                 id: 4,
                 title: "دورة تعلم اللغة الإنجليزية - المحادثة والكتابة",
                 category: "language",
-                instructor: "Skillzoy Academy",
-                instructorAvatar: "https://randomuser.me/api/portraits/women/68.jpg",
-                playlistId: "PL_Zjf61X10RJETKdhjfVLe4yL94morKRX",
+                provider: "Skillzoy Academy",
+                playlist_id: "PL_Zjf61X10RJETKdhjfVLe4yL94morKRX",
                 duration: "40 ساعة",
                 level: "مبتدئ",
                 description: "تعلم اللغة الإنجليزية من الصفر حتى الاحتراف مع تمارين تفاعلية ونطق صحيح ومحادثة يومية",
-                students_count: 15678,
-                rating: 4.6,
-                reviews: 4321
+                rating: 4,
+                students: "2100"
             },
             {
                 id: 5,
-                title: "دورة الذكاء الاصطناعي والتعلم الآلي",
+                title: "دورة الذكاء الاصطناعي وتعلم الآلة",
                 category: "ai",
-                instructor: "Skillzoy Academy",
-                instructorAvatar: "https://randomuser.me/api/portraits/men/75.jpg",
-                playlistId: "PL9ooVrP1hQOHUfd-g8GUpKI3hHOwM_9Dn",
+                provider: "Skillzoy Academy",
+                playlist_id: "PL9ooVrP1hQOHUfd-g8GUpKI3hHOwM_9Dn",
                 duration: "45 ساعة",
                 level: "متقدم",
-                description: "تعلم أساسيات الذكاء الاصطناعي والتعلم الآلي باستخدام Python والمكتبات المتخصصة",
-                students_count: 7432,
-                rating: 4.8,
-                reviews: 1876
+                description: "تعلم أساسيات الذكاء الاصطناعي وتعلم الآلة باستخدام Python والمكتبات المتخصصة",
+                rating: 5,
+                students: "750"
+            },
+            {
+                id: 6,
+                title: "دورة التسويق الرقمي والمحتوى",
+                category: "marketing",
+                provider: "Skillzoy Academy",
+                playlist_id: "PL9ooVrP1hQOHUfd-g8GUpKI3hHOwM_9Dn",
+                duration: "30 ساعة",
+                level: "متوسط",
+                description: "تعلم استراتيجيات التسويق الرقمي وإدارة المحتوى لتحقيق نتائج مذهلة في عالم الأعمال",
+                rating: 4,
+                students: "1350"
             }
         ];
+
+        // ===== جلب الدورات من Supabase =====
+        async function fetchCoursesFromSupabase() {
+            try {
+                if (!supabase) {
+                    throw new Error('Supabase not configured');
+                }
+
+                const { data, error } = await supabase
+                    .from('courses')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (error) {
+                    console.error('❌ Error fetching courses from Supabase:', error);
+                    showNotification('تحذير', 'تم تحميل البيانات الاحتياطية بسبب مشكلة في الاتصال', 'warning');
+                    return backupCoursesData;
+                }
+
+                if (!data || data.length === 0) {
+                    console.log('📝 No courses found in Supabase, using backup data');
+                    return backupCoursesData;
+                }
+
+                console.log('✅ Courses loaded successfully from Supabase:', data.length);
+                return data;
+            } catch (error) {
+                console.error('❌ Error connecting to Supabase:', error);
+                showNotification('تحذير', 'تم تحميل البيانات الاحتياطية بسبب مشكلة في الاتصال', 'warning');
+                return backupCoursesData;
+            }
+        }
 
         // ===== إعداد Supabase (محاكاة) =====
         const supabaseMock = {
@@ -1585,34 +1590,8 @@
             avatar: "https://ui-avatars.com/api/?name=نشط+الان&background=3b82f6&color=fff"
         };
 
-        // ===== جلب البيانات من Supabase =====
-        async function fetchCoursesFromSupabase() {
-            try {
-                if (!supabase) {
-                    console.log('⚠️ Using default courses data (Supabase not configured)');
-                    return defaultCoursesData;
-                }
-                
-                const { data, error } = await supabase
-                    .from('courses')
-                    .select('*')
-                    .order('created_at', { ascending: false });
-                
-                if (error) {
-                    console.error('❌ Error fetching courses from Supabase:', error);
-                    return defaultCoursesData;
-                }
-                
-                console.log('✅ Courses fetched from Supabase:', data);
-                return data || defaultCoursesData;
-            } catch (error) {
-                console.error('❌ Exception fetching courses:', error);
-                return defaultCoursesData;
-            }
-        }
-
         // ===== YouTube API Integration =====
-        const YOUTUBE_API_KEY = "AIzaSyBdEIVHCYgh3Z7CVfPPzdn18Ic8EJOBBTE#eaeaff33"; // ضع مفتاح YouTube API هنا
+        const YOUTUBE_API_KEY = "AIzaSyBdEIVHCYgh3Z7CVfPPzdn18Ic8EJOBBTE#eaeaff33"; // يجب استبداله بمفتاح حقيقي
         
         // وظيفة لجلب فيديوهات قائمة التشغيل من YouTube
         async function fetchPlaylistVideos(playlistId) {
@@ -1636,7 +1615,7 @@
                     id: item.snippet.resourceId.videoId,
                     title: item.snippet.title,
                     youtubeId: item.snippet.resourceId.videoId,
-                    duration: "10:00"
+                    duration: "10:00" // يمكن إضافة مدة الفيديو إذا كان متاحاً
                 }));
             } catch (error) {
                 console.error("Error fetching playlist videos:", error);
@@ -1644,10 +1623,11 @@
             }
         }
 
-        // ===== نظام الإشعارات =====
+        // ===== نظام الإشعارات - محسن =====
         function showNotification(title, message, type = 'success') {
             const notificationContainer = document.getElementById('notification-container');
             const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
             
             const icon = type === 'success' ? 'fas fa-check-circle' : 
                          type === 'error' ? 'fas fa-exclamation-circle' : 
@@ -1693,7 +1673,7 @@
                         }
                     }, 400);
                 }
-            }, 5000);
+            }, 5000); // زيادة مدة الإشعار إلى 5 ثواني
         }
 
         // ===== وظائف الأمان =====
@@ -1715,6 +1695,14 @@
         }
 
         function enrollUserInCourse(courseId) {
+            // محاكاة مشكلة في الشبكة بنسبة 20%
+            const isOffline = Math.random() < 0.2;
+            
+            if (isOffline) {
+                showNotification('مشكلة في الاتصال', 'تعذر التسجيل في الدورة بسبب مشكلة في الاتصال بالإنترنت. يرجى التحقق من اتصالك والمحاولة مرة أخرى.', 'error');
+                return false;
+            }
+            
             const result = supabaseMock.enrollUserInCourse(currentUser.id, courseId);
             
             if (result.success) {
@@ -1727,6 +1715,14 @@
         }
 
         function unenrollUserFromCourse(courseId) {
+            // محاكاة مشكلة في الشبكة بنسبة 20%
+            const isOffline = Math.random() < 0.2;
+            
+            if (isOffline) {
+                showNotification('مشكلة في الاتصال', 'تعذر إلغاء التسجيل بسبب مشكلة في الاتصال بالإنترنت. يرجى التحقق من اتصالك والمحاولة مرة أخرى.', 'error');
+                return false;
+            }
+            
             const result = supabaseMock.unenrollUserFromCourse(currentUser.id, courseId);
             
             if (result.success) {
@@ -1746,7 +1742,7 @@
                 'language': 'لغات',
                 'ai': 'ذكاء اصطناعي',
                 'marketing': 'تسويق',
-                'mobile': 'تطبيقات الجوال',
+                'cybersecurity': 'أمن سيبراني',
                 'data_science': 'علم البيانات'
             };
             return categories[category] || category;
@@ -1754,8 +1750,9 @@
 
         // ===== وظائف العرض =====
         // إنشاء أزرار التصنيفات ديناميكياً
-        function createCategoryFilters(courses) {
+        async function createCategoryFilters() {
             const categoriesContainer = document.getElementById('category-filters');
+            const courses = await fetchCoursesFromSupabase();
             
             // استخراج التصنيفات الفريدة من بيانات الدورات
             const uniqueCategories = [...new Set(courses.map(course => course.category))];
@@ -1774,42 +1771,26 @@
             });
             
             // إعداد مستمعي الأحداث للتصنيفات الجديدة
-            setupCategoryFilters(courses);
-        }
-
-        // إنشاء النجوم للتقييم
-        function createRatingStars(rating) {
-            const fullStars = Math.floor(rating);
-            const hasHalfStar = rating % 1 >= 0.5;
-            let starsHTML = '';
-            
-            for (let i = 1; i <= 5; i++) {
-                if (i <= fullStars) {
-                    starsHTML += '<i class="fas fa-star star"></i>';
-                } else if (i === fullStars + 1 && hasHalfStar) {
-                    starsHTML += '<i class="fas fa-star-half-alt star"></i>';
-                } else {
-                    starsHTML += '<i class="far fa-star star"></i>';
-                }
-            }
-            
-            return starsHTML;
+            setupCategoryFilters();
         }
 
         // عرض الدورات في الصفحة الرئيسية
-        async function renderCourses(courses, category = 'all') {
+        async function renderCourses(category = 'all') {
             const container = document.getElementById('courses-container');
-            const filteredCourses = category === 'all' 
-                ? courses 
-                : courses.filter(course => course.category === category);
             
             // عرض حالة التحميل
             container.innerHTML = '<div class="loading"><i class="fas fa-spinner"></i> جاري تحميل الدورات...</div>';
             
+            // جلب البيانات من Supabase أو البيانات الاحتياطية
+            const coursesData = await fetchCoursesFromSupabase();
+            const filteredCourses = category === 'all' 
+                ? coursesData 
+                : coursesData.filter(course => course.category === category);
+            
             let coursesHTML = '';
             
             for (const course of filteredCourses) {
-                const videos = await fetchPlaylistVideos(course.playlistId);
+                const videos = await fetchPlaylistVideos(course.playlist_id);
                 const firstVideo = videos[0]; // نأخذ الفيديو الأول فقط
                 
                 if (!firstVideo) continue;
@@ -1817,11 +1798,9 @@
                 const isEnrolled = isUserEnrolled(course.id);
                 
                 const safeTitle = escapeHtml(course.title);
-                const safeInstructor = escapeHtml(course.instructor);
+                const safeInstructor = escapeHtml(course.provider || "Skillzoy Academy");
                 const safeDescription = escapeHtml(course.description);
-                
-                // تنسيق عدد الطلاب بفواصل
-                const formattedStudents = course.students_count.toLocaleString();
+                const instructorAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(course.provider || "Instructor")}&background=3b82f6&color=fff`;
                 
                 coursesHTML += `
                 <div class="course-card" data-course-id="${course.id}">
@@ -1837,27 +1816,14 @@
                         <span class="course-category">${getCategoryName(course.category)}</span>
                         <h3 class="course-title">${safeTitle}</h3>
                         <div class="course-instructor">
-                            <img src="${course.instructorAvatar}" alt="${safeInstructor}" class="instructor-avatar">
+                            <img src="${instructorAvatar}" alt="${safeInstructor}" class="instructor-avatar">
                             <span class="instructor-name">${safeInstructor}</span>
                         </div>
-                        
-                        <!-- إحصائيات الدورة -->
-                        <div class="course-stats">
-                            <div class="stat-item">
-                                <i class="fas fa-user-graduate"></i>
-                                <span>${formattedStudents} طالب</span>
-                            </div>
-                            <div class="course-rating">
-                                ${createRatingStars(course.rating)}
-                                <span>${course.rating}</span>
-                            </div>
-                        </div>
-                        
                         <div class="course-meta">
                             <span><i class="far fa-clock"></i> ${course.duration}</span>
                             <span><i class="fas fa-signal"></i> ${course.level}</span>
+                            ${course.rating ? `<span><i class="fas fa-star"></i> ${course.rating}/5</span>` : ''}
                         </div>
-                        
                         <div class="course-actions">
                             ${isEnrolled ? 
                                 `<button class="btn btn-success view-course-details" data-course-id="${course.id}">
@@ -1878,14 +1844,18 @@
             
             container.innerHTML = coursesHTML;
             setupCourseEventListeners();
+            
+            // تحديث إحصائيات الدورات
+            document.getElementById('courses-count').textContent = coursesData.length;
         }
 
         // عرض الدورات المسجلة في صفحة "دوراتي"
-        async function renderMyCourses(courses) {
+        async function renderMyCourses() {
             const container = document.getElementById('my-courses-container');
             const emptyState = document.getElementById('empty-my-courses');
             
-            const enrolledCourses = courses.filter(course => 
+            const coursesData = await fetchCoursesFromSupabase();
+            const enrolledCourses = coursesData.filter(course => 
                 isUserEnrolled(course.id)
             );
             
@@ -1900,14 +1870,14 @@
             let coursesHTML = '';
             
             for (const course of enrolledCourses) {
-                const videos = await fetchPlaylistVideos(course.playlistId);
+                const videos = await fetchPlaylistVideos(course.playlist_id);
                 const firstVideo = videos[0];
                 
                 if (!firstVideo) continue;
                 
                 const safeTitle = escapeHtml(course.title);
-                const safeInstructor = escapeHtml(course.instructor);
-                const formattedStudents = course.students_count.toLocaleString();
+                const safeInstructor = escapeHtml(course.provider || "Skillzoy Academy");
+                const instructorAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(course.provider || "Instructor")}&background=3b82f6&color=fff`;
                 
                 coursesHTML += `
                 <div class="course-card" data-course-id="${course.id}">
@@ -1923,22 +1893,9 @@
                         <span class="course-category">${getCategoryName(course.category)}</span>
                         <h3 class="course-title">${safeTitle}</h3>
                         <div class="course-instructor">
-                            <img src="${course.instructorAvatar}" alt="${safeInstructor}" class="instructor-avatar">
+                            <img src="${instructorAvatar}" alt="${safeInstructor}" class="instructor-avatar">
                             <span class="instructor-name">${safeInstructor}</span>
                         </div>
-                        
-                        <!-- إحصائيات الدورة -->
-                        <div class="course-stats">
-                            <div class="stat-item">
-                                <i class="fas fa-user-graduate"></i>
-                                <span>${formattedStudents} طالب</span>
-                            </div>
-                            <div class="course-rating">
-                                ${createRatingStars(course.rating)}
-                                <span>${course.rating}</span>
-                            </div>
-                        </div>
-                        
                         <div class="course-meta">
                             <span><i class="far fa-clock"></i> ${course.duration}</span>
                             <span><i class="fas fa-signal"></i> ${course.level}</span>
@@ -1961,15 +1918,16 @@
         }
 
         // عرض صفحة تفاصيل الدورة
-        async function renderCourseDetails(courseId, courses) {
-            const course = courses.find(c => c.id === courseId);
+        async function renderCourseDetails(courseId) {
+            const coursesData = await fetchCoursesFromSupabase();
+            const course = coursesData.find(c => c.id === courseId);
             if (!course) return;
             
-            const videos = await fetchPlaylistVideos(course.playlistId);
+            const videos = await fetchPlaylistVideos(course.playlist_id);
             
             const safeTitle = escapeHtml(course.title);
             const safeDescription = escapeHtml(course.description);
-            const safeInstructor = escapeHtml(course.instructor);
+            const safeInstructor = escapeHtml(course.provider || "Skillzoy Academy");
             
             document.getElementById('course-details-title').textContent = safeTitle;
             document.getElementById('course-details-description').textContent = safeDescription;
@@ -2052,11 +2010,11 @@
             document.getElementById('course-details').style.display = 'none';
         }
 
-        function showMyCoursesPage(courses) {
+        function showMyCoursesPage() {
             document.querySelector('.home-page').style.display = 'none';
             document.querySelector('.my-courses-page').style.display = 'block';
             document.getElementById('course-details').style.display = 'none';
-            renderMyCourses(courses);
+            renderMyCourses();
         }
 
         // ===== إدارة الفيديو =====
@@ -2086,8 +2044,7 @@
                 button.addEventListener('click', (e) => {
                     const courseId = parseInt(e.target.getAttribute('data-course-id'));
                     if (enrollUserInCourse(courseId)) {
-                        // إعادة تحميل الدورات
-                        initializeApp();
+                        renderCourses();
                     }
                 });
             });
@@ -2096,8 +2053,8 @@
                 button.addEventListener('click', (e) => {
                     const courseId = parseInt(e.target.getAttribute('data-course-id'));
                     if (unenrollUserFromCourse(courseId)) {
-                        // إعادة تحميل الدورات
-                        initializeApp();
+                        renderMyCourses();
+                        renderCourses();
                     }
                 });
             });
@@ -2105,9 +2062,7 @@
             document.querySelectorAll('.view-course-details').forEach(button => {
                 button.addEventListener('click', (e) => {
                     const courseId = parseInt(e.target.getAttribute('data-course-id'));
-                    // سنحتاج إلى تمرير courses هنا
-                    const courses = window.currentCourses || defaultCoursesData;
-                    renderCourseDetails(courseId, courses);
+                    renderCourseDetails(courseId);
                 });
             });
 
@@ -2141,7 +2096,7 @@
             });
         }
 
-        function setupCategoryFilters(courses) {
+        function setupCategoryFilters() {
             document.querySelectorAll('.category-filter').forEach(filter => {
                 filter.addEventListener('click', (e) => {
                     document.querySelectorAll('.category-filter').forEach(f => {
@@ -2151,22 +2106,21 @@
                     e.target.classList.add('active');
                     
                     const category = e.target.getAttribute('data-category');
-                    renderCourses(courses, category);
+                    renderCourses(category);
                 });
             });
         }
 
-        function setupStatsAnimation(courses) {
+        function setupStatsAnimation() {
             const studentsCount = document.getElementById('students-count');
             const coursesCount = document.getElementById('courses-count');
             const certificatesCount = document.getElementById('certificates-count');
             const instructorsCount = document.getElementById('instructors-count');
             
-            // حساب الإحصائيات من بيانات الدورات
-            const totalStudents = courses.reduce((sum, course) => sum + course.students_count, 0);
-            const totalCourses = courses.length;
-            const totalCertificates = Math.floor(totalStudents * 0.7); // 70% من الطلاب حصلوا على شهادات
-            const totalInstructors = new Set(courses.map(course => course.instructor)).size;
+            const targetStudents = 12500;
+            const targetCourses = 4; // سيتم تحديثها ديناميكياً
+            const targetCertificates = 8500;
+            const targetInstructors = 24;
             
             let currentStudents = 0;
             let currentCourses = 0;
@@ -2177,68 +2131,49 @@
             const interval = 20;
             const steps = duration / interval;
             
-            const studentsStep = totalStudents / steps;
-            const coursesStep = totalCourses / steps;
-            const certificatesStep = totalCertificates / steps;
-            const instructorsStep = totalInstructors / steps;
+            const studentsStep = targetStudents / steps;
+            const certificatesStep = targetCertificates / steps;
+            const instructorsStep = targetInstructors / steps;
             
             const timer = setInterval(() => {
                 currentStudents += studentsStep;
-                currentCourses += coursesStep;
                 currentCertificates += certificatesStep;
                 currentInstructors += instructorsStep;
                 
-                if (currentStudents >= totalStudents) {
-                    currentStudents = totalStudents;
-                    currentCourses = totalCourses;
-                    currentCertificates = totalCertificates;
-                    currentInstructors = totalInstructors;
+                if (currentStudents >= targetStudents) {
+                    currentStudents = targetStudents;
+                    currentCertificates = targetCertificates;
+                    currentInstructors = targetInstructors;
                     clearInterval(timer);
                 }
                 
-                // استخدام toLocaleString لإضافة فواصل للآلاف
                 studentsCount.textContent = Math.floor(currentStudents).toLocaleString();
-                coursesCount.textContent = Math.floor(currentCourses).toLocaleString();
                 certificatesCount.textContent = Math.floor(currentCertificates).toLocaleString();
                 instructorsCount.textContent = Math.floor(currentInstructors);
             }, interval);
         }
 
-        // ===== تهيئة التطبيق =====
-        async function initializeApp() {
-            try {
-                console.log('🚀 جاري تحميل البيانات من Supabase...');
-                const courses = await fetchCoursesFromSupabase();
+        // ===== وظيفة تسجيل الخروج =====
+        function logout() {
+            if(confirm('هل تريد تسجيل الخروج؟')) {
+                // مسح بيانات الجلسة
+                localStorage.removeItem('token');
+                sessionStorage.clear();
                 
-                // حفظ الدورات في نطاق عام للوصول إليها من دوال أخرى
-                window.currentCourses = courses;
-                
-                console.log('✅ تم تحميل الدورات:', courses);
-                
-                loadTheme();
-                createCategoryFilters(courses);
-                renderCourses(courses);
-                setupStatsAnimation(courses);
-                
-                console.log('✅ Skillzoy Academy System Initialized Successfully');
-            } catch (error) {
-                console.error('❌ Error initializing app:', error);
-                showNotification('خطأ في التحميل', 'حدث خطأ أثناء تحميل البيانات. جاري استخدام البيانات الافتراضية.', 'error');
-                
-                // استخدام البيانات الافتراضية في حالة الخطأ
-                window.currentCourses = defaultCoursesData;
-                loadTheme();
-                createCategoryFilters(defaultCoursesData);
-                renderCourses(defaultCoursesData);
-                setupStatsAnimation(defaultCoursesData);
+                // التوجيه لصفحة تسجيل الخروج
+                window.location.href = 'https://skillzoy-academy.vercel.app/dashboard/logout.html';
             }
         }
 
+        // ===== تهيئة التطبيق =====
         document.addEventListener('DOMContentLoaded', () => {
-            initializeApp();
+            loadTheme();
+            createCategoryFilters(); // استبدال renderCourses بـ createCategoryFilters
+            renderCourses();
+            setupStatsAnimation();
             
-            document.getElementById('mobile-menu-btn').addEventListener('click', () => {
-                document.getElementById('sidebar').classList.toggle('active');
+            document.querySelector('.mobile-menu-btn').addEventListener('click', () => {
+                document.querySelector('.sidebar').classList.toggle('active');
             });
             
             document.getElementById('close-video').addEventListener('click', closeVideoPlayer);
@@ -2252,8 +2187,8 @@
             document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
 
             document.addEventListener('click', (e) => {
-                const sidebar = document.getElementById('sidebar');
-                const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+                const sidebar = document.querySelector('.sidebar');
+                const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
                 
                 if (window.innerWidth <= 992 && 
                     !sidebar.contains(e.target) && 
@@ -2277,12 +2212,11 @@
                     if (page === 'home') {
                         showHomePage();
                     } else if (page === 'my-courses') {
-                        const courses = window.currentCourses || defaultCoursesData;
-                        showMyCoursesPage(courses);
+                        showMyCoursesPage();
                     }
                     
                     if (window.innerWidth <= 992) {
-                        document.getElementById('sidebar').classList.remove('active');
+                        document.querySelector('.sidebar').classList.remove('active');
                     }
                 });
             });
@@ -2294,15 +2228,10 @@
                 });
                 document.querySelector('[data-page="home"]').classList.add('active');
             });
-
-            // دالة تسجيل الخروج
-            window.logout = function() {
-                if(confirm('هل تريد تسجيل الخروج؟')) {
-                    localStorage.removeItem('token');
-                    sessionStorage.clear();
-                    window.location.href = 'https://skillzoy-academy.vercel.app/dashboard/logout.html';
-                }
-            };
+            
+            console.log('✅ Skillzoy Academy System Initialized Successfully');
+            console.log('📊 Courses will be loaded from Supabase or fallback data');
+            console.log('👤 Current User:', currentUser);
         });
     </script>
 </body>
