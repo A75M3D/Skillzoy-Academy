@@ -1330,6 +1330,40 @@
         .light-theme footer .footer-links a:hover {
             color: var(--accent) !important;
         }
+
+        /* زر بدء الاختبار */
+        .btn-test {
+            background: #8b5cf6;
+            color: white;
+        }
+
+        .btn-test:hover {
+            background: #7c3aed;
+            transform: translateY(-2px);
+        }
+
+        /* قسم الاختبارات */
+        .test-completion-section {
+            background: var(--glass-bg);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            text-align: center;
+            margin-top: 40px;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+        }
+
+        .test-completion-section h2 {
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+
+        .test-completion-section p {
+            color: var(--text);
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
     </style>
 </head>
 <body>
@@ -1359,7 +1393,7 @@
                     <li><a href="#" class="nav-link active" data-page="home"><i class="fas fa-home"></i> الرئيسية</a></li>
                     <li><a href="#" class="nav-link" data-page="my-courses"><i class="fas fa-user-graduate"></i> دوراتي</a></li>
                     <li><a href="#" class="nav-link" data-page="progress"><i class="fas fa-chart-line"></i> التقدم</a></li>
-                    <li><a href="#" class="nav-link"><i class="fas fa-award"></i> الشهادات</a></li>
+                    <li><a href="#" class="nav-link" data-page="tests"><i class="fas fa-question-circle"></i> الاختبارات</a></li>
                 </ul>
             </div>
             
@@ -1368,7 +1402,6 @@
                 <ul class="nav-links">
                     <li><a href="#" class="nav-link"><i class="fas fa-file-alt"></i> المواد الدراسية</a></li>
                     <li><a href="#" class="nav-link"><i class="fas fa-tasks"></i> الواجبات</a></li>
-                    <li><a href="#" class="nav-link"><i class="fas fa-question-circle"></i> الاختبارات</a></li>
                 </ul>
             </div>
             
@@ -1494,6 +1527,48 @@
                 </div>
             </div>
         </div>
+
+        <!-- ===== صفحة الاختبارات ===== -->
+        <div class="tests-page" style="display: none;">
+            <div class="page-title">
+                <h1>الاختبارات</h1>
+                <p>اختبر معرفتك بعد إكمال كل دورة - 30 سؤال لكل اختبار، تحتاج 70% للنجاح</p>
+            </div>
+
+            <!-- فلاتر التصنيفات -->
+            <div class="category-filters-container">
+                <div class="category-filters" id="test-category-filters">
+                    <button class="category-filter active" data-category="all">جميع الاختبارات</button>
+                    <button class="category-filter" data-category="active">الاختبارات النشطة</button>
+                    <button class="category-filter" data-category="completed">الاختبارات المكتملة</button>
+                </div>
+            </div>
+
+            <!-- شبكة الاختبارات -->
+            <div id="testsContainer" class="courses-grid">
+                <!-- سيتم ملؤها ديناميكياً -->
+            </div>
+
+            <!-- قسم الإحصائيات -->
+            <div class="stats-section">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalTests">0</div>
+                    <div class="stat-label">إجمالي الاختبارات</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="completedTests">0</div>
+                    <div class="stat-label">مكتملة</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="activeTests">0</div>
+                    <div class="stat-label">نشطة</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="averageScore">0%</div>
+                    <div class="stat-label">متوسط النتائج</div>
+                </div>
+            </div>
+        </div>
     </main>
 
     <!-- ===== صفحة تفاصيل الدورة ===== -->
@@ -1529,13 +1604,109 @@
                 <!-- سيتم ملؤها ديناميكياً -->
             </div>
             
-            <!-- ===== قسم التواصل بعد إكمال الدورة ===== -->
-            <div class="contact-section">
+            <!-- ===== قسم الاختبار بعد إكمال الدورة ===== -->
+            <div class="test-completion-section" id="test-completion-section" style="display: none;">
                 <h2>مبروك! لقد أكملت الدورة</h2>
+                <p>الآن يمكنك اختبار معرفتك من خلال الاختبار النهائي للدورة</p>
+                <button class="btn btn-test" id="start-test-btn">
+                    <i class="fas fa-play-circle"></i> ابدأ الاختبار
+                </button>
+            </div>
+            
+            <!-- ===== قسم التواصل بعد إكمال الدورة ===== -->
+            <div class="contact-section" id="certificate-section" style="display: none;">
+                <h2>مبروك! لقد نجحت في الاختبار</h2>
                 <p>للحصول على شهادتك المعتمدة، يرجى التواصل معنا عبر الواتساب</p>
                 <a href="https://wa.me/0924299798" class="whatsapp-btn" target="_blank">
                     <i class="fab fa-whatsapp"></i> تواصل معنا على الواتساب
                 </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== نموذج الاختبار ===== -->
+    <div id="testModal" class="video-player-container">
+        <div class="video-player">
+            <button class="close-video" id="close-test">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="course-content-section">
+                <div class="page-title">
+                    <h1 id="test-title">اختبار الدورة</h1>
+                    <p id="test-description">اختبر معرفتك في هذه الدورة</p>
+                </div>
+
+                <!-- شريط التقدم -->
+                <div class="progress-card">
+                    <div class="progress-header">
+                        <div class="progress-title">تقدم الاختبار</div>
+                        <div class="progress-percentage" id="test-progress">0%</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="test-progress-bar" style="width: 0%"></div>
+                    </div>
+                    <div class="progress-details">
+                        <span id="progress-text">السؤال 0 من 0</span>
+                        <span id="test-timer">60:00</span>
+                    </div>
+                </div>
+
+                <!-- منطقة الأسئلة -->
+                <div id="questionsContainer">
+                    <!-- سيتم ملؤها ديناميكياً -->
+                </div>
+
+                <!-- أزرار التنقل -->
+                <div class="course-actions">
+                    <button id="prevBtn" class="btn btn-outline" style="display: none;">
+                        <i class="fas fa-arrow-right"></i> السابق
+                    </button>
+                    <button id="nextBtn" class="btn btn-primary">
+                        التالي <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <button id="submitBtn" class="btn btn-success" style="display: none;">
+                        <i class="fas fa-check"></i> إنهاء الاختبار
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== نتائج الاختبار ===== -->
+    <div id="resultsModal" class="video-player-container">
+        <div class="video-player">
+            <button class="close-video" id="close-results">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="course-content-section text-center">
+                <div id="resultIcon" class="text-6xl mb-4">
+                    <i class="fas fa-trophy text-yellow-400"></i>
+                </div>
+                <h2 id="resultTitle" class="text-2xl lg:text-3xl font-bold text-white mb-4">تهانينا! لقد أكملت الاختبار</h2>
+                <div class="stats-section">
+                    <div class="stat-card">
+                        <div id="finalScore" class="stat-number">0%</div>
+                        <div class="stat-label">نتيجتك</div>
+                    </div>
+                    <div class="stat-card">
+                        <div id="correctAnswers" class="stat-number">0/30</div>
+                        <div class="stat-label">الإجابات الصحيحة</div>
+                    </div>
+                </div>
+                <div id="passingInfo" class="progress-card mb-6">
+                    <p class="text-yellow-300">تحتاج إلى 70% (21 إجابة صحيحة) لاجتياز الاختبار</p>
+                </div>
+                <div class="course-actions">
+                    <button onclick="closeResults()" class="btn btn-outline">
+                        العودة للدورة
+                    </button>
+                    <button onclick="retryTest()" class="btn btn-primary" id="retry-btn">
+                        إعادة الاختبار
+                    </button>
+                    <a href="https://wa.me/0924299798" class="btn btn-success" id="whatsapp-btn" target="_blank" style="display: none;">
+                        <i class="fab fa-whatsapp"></i> تواصل للحصول على الشهادة
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -1625,26 +1796,26 @@
             {
                 id: 1,
                 title: "Google Cybersecurity",
-                category: "programming",
+                category: "cybersecurity",
                 provider: "Skillzoy Academy",
                 playlist_id: "PL590L5WQmH8d68VyR6RjhgldHMxMJ5B5z",
                 duration: "35 ساعة",
                 level: "متقدم",
                 description: "دورة الامن السيبراني من google تدريب مكثف",
                 rating: 5,
-                students: "1,250"
+                students: 1250
             },
             {
                 id: 2,
                 title: "دورة اختبار الاختراق تدريب عملي CTF",
-                category: "programming",
+                category: "cybersecurity",
                 provider: "Skillzoy Academy",
                 playlist_id: "PLyWDBIDk-uYlJ4Yn6vtjAjN1fpnJi2AXA",
                 duration: "28 ساعة",
                 level: "متوسط",
                 description: "تعلم تصميم واجهات المستخدم وتجربة المستخدم باستخدام أحدث الأدوات والتقنيات مع مشاريع عملية",
                 rating: 4,
-                students: "890"
+                students: 890
             },
             {
                 id: 3,
@@ -1656,7 +1827,7 @@
                 level: "متقدم",
                 description: "تعلم كيفية إدارة المشاريع باحترافية باستخدام منهجيات PMP و Agile مع دراسات حالة عملية",
                 rating: 5,
-                students: "1,100"
+                students: 1100
             },
             {
                 id: 4,
@@ -1668,7 +1839,7 @@
                 level: "مبتدئ",
                 description: "تعلم اللغة الإنجليزية من الصفر حتى الاحتراف مع تمارين تفاعلية ونطق صحيح ومحادثة يومية",
                 rating: 4,
-                students: "2,100"
+                students: 2100
             },
             {
                 id: 5,
@@ -1680,7 +1851,7 @@
                 level: "متقدم",
                 description: "تعلم أساسيات الذكاء الاصطناعي وتعلم الآلة باستخدام Python والمكتبات المتخصصة",
                 rating: 5,
-                students: "750"
+                students: 750
             },
             {
                 id: 6,
@@ -1692,7 +1863,7 @@
                 level: "متوسط",
                 description: "تعلم استراتيجيات التسويق الرقمي وإدارة المحتوى لتحقيق نتائج مذهلة في عالم الأعمال",
                 rating: 4,
-                students: "1,350"
+                students: 1350
             }
         ];
 
@@ -1755,6 +1926,10 @@
                 if (!this.progress[courseId].completedVideos.includes(videoId)) {
                     this.progress[courseId].completedVideos.push(videoId);
                     this.saveProgress();
+                    
+                    // التحقق مما إذا كانت الدورة مكتملة
+                    this.checkCourseCompletion(courseId);
+                    
                     return true;
                 }
                 return false;
@@ -1770,6 +1945,30 @@
                 }
                 this.progress[courseId].totalVideos = totalVideos;
                 this.saveProgress();
+                
+                // التحقق مما إذا كانت الدورة مكتملة
+                this.checkCourseCompletion(courseId);
+            }
+
+            // التحقق من اكتمال الدورة
+            checkCourseCompletion(courseId) {
+                const courseProgress = this.progress[courseId];
+                if (!courseProgress || courseProgress.totalVideos === 0) return false;
+                
+                const isCompleted = courseProgress.completedVideos.length === courseProgress.totalVideos;
+                
+                if (isCompleted && !courseProgress.courseCompleted) {
+                    courseProgress.courseCompleted = true;
+                    courseProgress.completedAt = new Date().toISOString();
+                    this.saveProgress();
+                    
+                    // إنشاء اختبار للدورة المكتملة
+                    testManager.createTestForCourse(courseId);
+                    
+                    showNotification('تهانينا!', 'لقد أكملت الدورة بنجاح! يمكنك الآن بدء الاختبار.', 'success');
+                }
+                
+                return isCompleted;
             }
 
             // حساب نسبة التقدم
@@ -1820,10 +2019,414 @@
                     overallProgress
                 };
             }
+
+            // التحقق مما إذا كانت الدورة مكتملة
+            isCourseCompleted(courseId) {
+                const courseProgress = this.progress[courseId];
+                return courseProgress ? courseProgress.courseCompleted : false;
+            }
+        }
+
+        // ===== نظام إدارة الاختبارات =====
+        class TestManager {
+            constructor() {
+                this.tests = this.loadTests();
+                this.testResults = this.loadTestResults();
+                this.testAttempts = this.loadTestAttempts();
+                this.currentTest = null;
+                this.currentQuestionIndex = 0;
+                this.userAnswers = [];
+                this.timer = null;
+                this.timeLeft = 0;
+            }
+
+            loadTests() {
+                return JSON.parse(localStorage.getItem('userTests')) || [];
+            }
+
+            saveTests() {
+                localStorage.setItem('userTests', JSON.stringify(this.tests));
+            }
+
+            loadTestResults() {
+                return JSON.parse(localStorage.getItem('testResults')) || {};
+            }
+
+            saveTestResults() {
+                localStorage.setItem('testResults', JSON.stringify(this.testResults));
+            }
+
+            loadTestAttempts() {
+                return JSON.parse(localStorage.getItem('testAttempts')) || {};
+            }
+
+            saveTestAttempts() {
+                localStorage.setItem('testAttempts', JSON.stringify(this.testAttempts));
+            }
+
+            // إنشاء اختبار للدورة المكتملة
+            createTestForCourse(courseId) {
+                // التحقق إذا كان هناك اختبار موجود مسبقاً لهذه الدورة
+                const existingTest = this.tests.find(test => test.courseId === courseId);
+                
+                if (!existingTest) {
+                    // إنشاء اختبار جديد
+                    const newTest = {
+                        id: Date.now(),
+                        courseId: courseId,
+                        title: `اختبار الدورة`,
+                        description: `اختبار تقييمي للدورة`,
+                        duration: 60, // 60 دقيقة
+                        questions: 30,
+                        totalScore: 100,
+                        passingScore: 70, // 70% للنجاح
+                        questionsList: this.generateQuestions()
+                    };
+                    
+                    this.tests.push(newTest);
+                    this.saveTests();
+                    
+                    // إعادة عرض الاختبارات
+                    if (document.querySelector('.tests-page').style.display === 'block') {
+                        this.renderTests();
+                    }
+                }
+            }
+
+            // توليد أسئلة للاختبار
+            generateQuestions() {
+                const questions = [];
+                for (let i = 1; i <= 30; i++) {
+                    questions.push({
+                        id: i,
+                        question: `سؤال الاختبار رقم ${i}`,
+                        options: [
+                            `الخيار الأول للسؤال ${i}`,
+                            `الخيار الثاني للسؤال ${i}`,
+                            `الخيار الثالث للسؤال ${i}`,
+                            `الخيار الرابع للسؤال ${i}`
+                        ],
+                        correctAnswer: Math.floor(Math.random() * 4)
+                    });
+                }
+                return questions;
+            }
+
+            // التحقق من عدد المحاولات المتاحة
+            getRemainingAttempts(testId) {
+                const today = new Date().toDateString();
+                const testAttempts = this.testAttempts[testId] || {};
+                const todayAttempts = testAttempts[today] || { count: 0 };
+                
+                return Math.max(0, 3 - todayAttempts.count);
+            }
+
+            // تسجيل محاولة اختبار
+            recordTestAttempt(testId) {
+                const today = new Date().toDateString();
+                
+                if (!this.testAttempts[testId]) {
+                    this.testAttempts[testId] = {};
+                }
+                
+                if (!this.testAttempts[testId][today]) {
+                    this.testAttempts[testId][today] = { count: 0 };
+                }
+                
+                this.testAttempts[testId][today].count++;
+                this.saveTestAttempts();
+            }
+
+            // بدء الاختبار
+            startTest(testId) {
+                const test = this.tests.find(t => t.id === testId);
+                if (!test) return false;
+
+                // التحقق من عدد المحاولات
+                const remainingAttempts = this.getRemainingAttempts(testId);
+                if (remainingAttempts <= 0) {
+                    showNotification('انتهت المحاولات', 'لقد استنفذت جميع محاولاتك لهذا اليوم. يرجى المحاولة مرة أخرى غداً.', 'error');
+                    return false;
+                }
+
+                this.currentTest = test;
+                this.currentQuestionIndex = 0;
+                this.userAnswers = new Array(this.currentTest.questionsList.length).fill(null);
+                this.timeLeft = this.currentTest.duration * 60; // تحويل إلى ثواني
+                
+                // تسجيل المحاولة
+                this.recordTestAttempt(testId);
+                
+                this.startTimer();
+                this.displayQuestion();
+                this.updateProgress();
+                
+                return true;
+            }
+
+            // بدء المؤقت
+            startTimer() {
+                if (this.timer) clearInterval(this.timer);
+                
+                this.timer = setInterval(() => {
+                    this.timeLeft--;
+                    this.updateTimerDisplay();
+                    
+                    if (this.timeLeft <= 0) {
+                        this.submitTest();
+                    }
+                }, 1000);
+            }
+
+            // تحديث عرض المؤقت
+            updateTimerDisplay() {
+                const minutes = Math.floor(this.timeLeft / 60);
+                const seconds = this.timeLeft % 60;
+                document.getElementById('test-timer').textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+
+            // عرض السؤال الحالي
+            displayQuestion() {
+                const question = this.currentTest.questionsList[this.currentQuestionIndex];
+                const container = document.getElementById('questionsContainer');
+                
+                container.innerHTML = `
+                    <div class="progress-card">
+                        <h3 class="progress-title">${question.question}</h3>
+                        <div class="videos-grid">
+                            ${question.options.map((option, index) => `
+                                <div class="video-item option-card ${this.userAnswers[this.currentQuestionIndex] === index ? 'option-selected' : ''}" 
+                                     onclick="testManager.selectAnswer(${index})">
+                                    <div class="video-info">
+                                        <div class="video-title">${option}</div>
+                                        <div class="video-meta">
+                                            <span>${String.fromCharCode(65 + index)}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                
+                this.updateNavigationButtons();
+            }
+
+            // اختيار إجابة
+            selectAnswer(answerIndex) {
+                this.userAnswers[this.currentQuestionIndex] = answerIndex;
+                this.displayQuestion();
+            }
+
+            // الانتقال إلى السؤال التالي
+            nextQuestion() {
+                if (this.currentQuestionIndex < this.currentTest.questionsList.length - 1) {
+                    this.currentQuestionIndex++;
+                    this.displayQuestion();
+                    this.updateProgress();
+                }
+            }
+
+            // العودة إلى السؤال السابق
+            previousQuestion() {
+                if (this.currentQuestionIndex > 0) {
+                    this.currentQuestionIndex--;
+                    this.displayQuestion();
+                    this.updateProgress();
+                }
+            }
+
+            // تحديث شريط التقدم
+            updateProgress() {
+                const progress = ((this.currentQuestionIndex + 1) / this.currentTest.questionsList.length) * 100;
+                document.getElementById('test-progress-bar').style.width = `${progress}%`;
+                document.getElementById('test-progress').textContent = `${Math.round(progress)}%`;
+                document.getElementById('progress-text').textContent = 
+                    `السؤال ${this.currentQuestionIndex + 1} من ${this.currentTest.questionsList.length}`;
+            }
+
+            // تحديث أزرار التنقل
+            updateNavigationButtons() {
+                const prevBtn = document.getElementById('prevBtn');
+                const nextBtn = document.getElementById('nextBtn');
+                const submitBtn = document.getElementById('submitBtn');
+                
+                prevBtn.style.display = this.currentQuestionIndex > 0 ? 'block' : 'none';
+                nextBtn.style.display = this.currentQuestionIndex < this.currentTest.questionsList.length - 1 ? 'block' : 'none';
+                submitBtn.style.display = this.currentQuestionIndex === this.currentTest.questionsList.length - 1 ? 'block' : 'none';
+            }
+
+            // تقديم الاختبار
+            submitTest() {
+                clearInterval(this.timer);
+                
+                let correctAnswers = 0;
+                this.userAnswers.forEach((answer, index) => {
+                    if (answer === this.currentTest.questionsList[index].correctAnswer) {
+                        correctAnswers++;
+                    }
+                });
+                
+                const score = Math.round((correctAnswers / this.currentTest.questionsList.length) * 100);
+                const passed = score >= this.currentTest.passingScore;
+                
+                // حفظ النتيجة
+                this.testResults[this.currentTest.id] = {
+                    testId: this.currentTest.id,
+                    testTitle: this.currentTest.title,
+                    score: score,
+                    correctAnswers: correctAnswers,
+                    totalQuestions: this.currentTest.questionsList.length,
+                    passed: passed,
+                    completedAt: new Date().toISOString()
+                };
+                
+                this.saveTestResults();
+                this.showResults(score, correctAnswers, this.currentTest.questionsList.length, passed);
+            }
+
+            // عرض النتائج
+            showResults(score, correctAnswers, totalQuestions, passed) {
+                document.getElementById('finalScore').textContent = `${score}%`;
+                document.getElementById('correctAnswers').textContent = `${correctAnswers}/${totalQuestions}`;
+                
+                const resultIcon = document.getElementById('resultIcon');
+                const resultTitle = document.getElementById('resultTitle');
+                const retryBtn = document.getElementById('retry-btn');
+                const whatsappBtn = document.getElementById('whatsapp-btn');
+                
+                if (passed) {
+                    resultIcon.innerHTML = '<i class="fas fa-trophy text-yellow-400"></i>';
+                    resultTitle.textContent = 'تهانينا! لقد نجحت في الاختبار';
+                    retryBtn.style.display = 'none';
+                    whatsappBtn.style.display = 'block';
+                    
+                    showNotification('تهانينا!', 'لقد نجحت في الاختبار! تواصل معنا على الواتساب للحصول على شهادتك.', 'success');
+                } else {
+                    resultIcon.innerHTML = '<i class="fas fa-redo text-orange-400"></i>';
+                    resultTitle.textContent = 'لم تحقق النسبة المطلوبة للنجاح';
+                    retryBtn.style.display = 'block';
+                    whatsappBtn.style.display = 'none';
+                    
+                    const remainingAttempts = this.getRemainingAttempts(this.currentTest.id);
+                    showNotification('لم تنجح', `لم تحقق النسبة المطلوبة. لديك ${remainingAttempts} محاولة/محاولات متبقية لهذا اليوم.`, 'warning');
+                }
+                
+                document.getElementById('resultsModal').style.display = 'flex';
+                document.getElementById('testModal').style.display = 'none';
+                
+                // تحديث الإحصائيات
+                this.updateStatistics();
+            }
+
+            // تحديث الإحصائيات
+            updateStatistics() {
+                const results = this.testResults;
+                const testIds = Object.keys(results);
+                
+                document.getElementById('totalTests').textContent = this.tests.length;
+                document.getElementById('completedTests').textContent = testIds.length;
+                document.getElementById('activeTests').textContent = this.tests.length - testIds.length;
+                
+                if (testIds.length > 0) {
+                    const totalScore = testIds.reduce((sum, id) => sum + results[id].score, 0);
+                    const averageScore = Math.round(totalScore / testIds.length);
+                    document.getElementById('averageScore').textContent = `${averageScore}%`;
+                }
+            }
+
+            // عرض الاختبارات
+            renderTests(filter = 'all') {
+                const container = document.getElementById('testsContainer');
+                let filteredTests = this.tests;
+                
+                if (filter === 'completed') {
+                    filteredTests = this.tests.filter(test => this.testResults[test.id]);
+                } else if (filter === 'active') {
+                    filteredTests = this.tests.filter(test => !this.testResults[test.id]);
+                }
+                
+                if (filteredTests.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-clipboard-list"></i>
+                            <h3>لا توجد اختبارات متاحة</h3>
+                            <p>سيتم إنشاء اختبارات تلقائيًا عند إكمال الدورات</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                container.innerHTML = filteredTests.map(test => {
+                    const result = this.testResults[test.id];
+                    const isCompleted = !!result;
+                    const passed = result?.passed;
+                    const remainingAttempts = this.getRemainingAttempts(test.id);
+                    
+                    return `
+                        <div class="course-card">
+                            <div class="course-content">
+                                <span class="course-category">اختبار</span>
+                                <h3 class="course-title">${test.title}</h3>
+                                <p class="course-description">${test.description}</p>
+                                <div class="course-meta">
+                                    <span><i class="far fa-clock"></i> ${test.duration} دقيقة</span>
+                                    <span><i class="fas fa-question-circle"></i> ${test.questions} أسئلة</span>
+                                    <span><i class="fas fa-percentage"></i> ${test.passingScore}% للناجح</span>
+                                </div>
+                                ${isCompleted ? `
+                                    <div class="progress-bar" style="margin-top: 10px;">
+                                        <div class="progress-fill" style="width: ${result.score}%"></div>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-top: 5px; color: var(--text-light);">
+                                        <span>${result.score}%</span>
+                                        <span>${passed ? 'ناجح' : 'راسب'}</span>
+                                    </div>
+                                ` : `
+                                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-top: 5px; color: var(--text-light);">
+                                        <span>المحاولات المتبقية: ${remainingAttempts}/3</span>
+                                    </div>
+                                `}
+                                <div class="course-actions">
+                                    <button class="btn ${isCompleted ? (passed ? 'btn-success' : 'btn-danger') : 'btn-primary'} start-test-btn" 
+                                            data-test-id="${test.id}">
+                                        <i class="fas fa-play"></i> ${isCompleted ? (passed ? 'عرض النتائج' : 'إعادة المحاولة') : 'بدء الاختبار'}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                
+                // إضافة مستمعي الأحداث لأزرار البدء
+                document.querySelectorAll('.start-test-btn').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const testId = parseInt(e.target.getAttribute('data-test-id'));
+                        this.openTest(testId);
+                    });
+                });
+                
+                this.updateStatistics();
+            }
+
+            // فتح اختبار
+            openTest(testId) {
+                const test = this.tests.find(t => t.id === testId);
+                if (!test) return;
+                
+                document.getElementById('test-title').textContent = test.title;
+                document.getElementById('test-description').textContent = test.description;
+                
+                if (this.startTest(testId)) {
+                    document.getElementById('testModal').style.display = 'flex';
+                }
+            }
         }
 
         // ===== تهيئة النظام =====
         const progressSystem = new ProgressSystem();
+        const testManager = new TestManager();
         let currentUser = {
             id: 1,
             name: "نشط الان",
@@ -1957,6 +2560,11 @@
             return text.replace(/[&<>"']/g, function(m) { return map[m]; });
         }
 
+        // ===== دالة تنسيق الأرقام بالفاصلة =====
+        function formatNumber(number) {
+            return Number(number).toLocaleString();
+        }
+
         // ===== إدارة الدورات =====
         function getCategoryName(category) {
             const categories = {
@@ -2022,11 +2630,15 @@
                 const isEnrolled = userManager.isEnrolled(course.id);
                 const progressPercentage = progressSystem.getProgressPercentage(course.id);
                 const courseProgress = progressSystem.getCourseProgress(course.id);
+                const isCourseCompleted = progressSystem.isCourseCompleted(course.id);
                 
                 const safeTitle = escapeHtml(course.title);
                 const safeInstructor = escapeHtml(course.provider || "Skillzoy Academy");
                 const safeDescription = escapeHtml(course.description);
                 const instructorAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(course.provider || "Instructor")}&background=3b82f6&color=fff`;
+                
+                // تنسيق عدد الطلاب بالفاصلة
+                const formattedStudents = formatNumber(course.students);
                 
                 coursesHTML += `
                 <div class="course-card" data-course-id="${course.id}">
@@ -2048,7 +2660,7 @@
                         <div class="course-meta">
                             <span><i class="far fa-clock"></i> ${course.duration}</span>
                             <span><i class="fas fa-signal"></i> ${course.level}</span>
-                            <span><i class="fas fa-user-graduate"></i> ${course.students}</span>
+                            <span><i class="fas fa-user-graduate"></i> ${formattedStudents}</span>
                             ${course.rating ? `<span><i class="fas fa-star" style="color: #ffc107;"></i> ${course.rating}/5</span>` : ''}
                         </div>
                         ${isEnrolled && progressPercentage > 0 ? `
@@ -2058,6 +2670,14 @@
                         <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-top: 5px; color: var(--text-light);">
                             <span>${progressPercentage}% مكتمل</span>
                             <span>${courseProgress.completedVideos.length}/${courseProgress.totalVideos} فيديو</span>
+                        </div>
+                        ` : ''}
+                        ${isCourseCompleted ? `
+                        <div style="background: rgba(16, 185, 129, 0.1); padding: 10px; border-radius: 8px; margin-top: 10px; border: 1px solid var(--success);">
+                            <div style="display: flex; align-items: center; gap: 8px; color: var(--success);">
+                                <i class="fas fa-check-circle"></i>
+                                <span>مكتملة - جاهز للاختبار</span>
+                            </div>
                         </div>
                         ` : ''}
                         <div class="course-actions">
@@ -2082,7 +2702,7 @@
             setupCourseEventListeners();
             
             // تحديث إحصائيات الدورات
-            document.getElementById('courses-count').textContent = coursesData.length.toLocaleString();
+            document.getElementById('courses-count').textContent = formatNumber(coursesData.length);
         }
 
         // عرض الدورات المسجلة في صفحة "دوراتي"
@@ -2113,10 +2733,14 @@
                 
                 const progressPercentage = progressSystem.getProgressPercentage(course.id);
                 const courseProgress = progressSystem.getCourseProgress(course.id);
+                const isCourseCompleted = progressSystem.isCourseCompleted(course.id);
                 
                 const safeTitle = escapeHtml(course.title);
                 const safeInstructor = escapeHtml(course.provider || "Skillzoy Academy");
                 const instructorAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(course.provider || "Instructor")}&background=3b82f6&color=fff`;
+                
+                // تنسيق عدد الطلاب بالفاصلة
+                const formattedStudents = formatNumber(course.students);
                 
                 coursesHTML += `
                 <div class="course-card" data-course-id="${course.id}">
@@ -2138,7 +2762,7 @@
                         <div class="course-meta">
                             <span><i class="far fa-clock"></i> ${course.duration}</span>
                             <span><i class="fas fa-signal"></i> ${course.level}</span>
-                            <span><i class="fas fa-user-graduate"></i> ${course.students}</span>
+                            <span><i class="fas fa-user-graduate"></i> ${formattedStudents}</span>
                         </div>
                         <div class="progress-bar" style="margin-top: 10px;">
                             <div class="progress-fill" style="width: ${progressPercentage}%"></div>
@@ -2147,6 +2771,14 @@
                             <span>${progressPercentage}% مكتمل</span>
                             <span>${courseProgress.completedVideos.length}/${courseProgress.totalVideos} فيديو</span>
                         </div>
+                        ${isCourseCompleted ? `
+                        <div style="background: rgba(16, 185, 129, 0.1); padding: 10px; border-radius: 8px; margin-top: 10px; border: 1px solid var(--success);">
+                            <div style="display: flex; align-items: center; gap: 8px; color: var(--success);">
+                                <i class="fas fa-check-circle"></i>
+                                <span>مكتملة - جاهز للاختبار</span>
+                            </div>
+                        </div>
+                        ` : ''}
                         <div class="course-actions">
                             <button class="btn btn-success view-course-details" data-course-id="${course.id}">
                                 <i class="fas fa-play"></i> ${progressPercentage > 0 ? 'استمر في التعلم' : 'ابدأ التعلم'}
@@ -2222,9 +2854,53 @@
             videosContainer.innerHTML = videosHTML;
             setupVideoEventListeners();
             
+            // التحقق مما إذا كانت الدورة مكتملة وعرض قسم الاختبار
+            const isCourseCompleted = progressSystem.isCourseCompleted(courseId);
+            const testCompletionSection = document.getElementById('test-completion-section');
+            const certificateSection = document.getElementById('certificate-section');
+            
+            if (isCourseCompleted) {
+                // التحقق مما إذا كان هناك اختبار للدورة
+                const testForCourse = testManager.tests.find(test => test.courseId === courseId);
+                const testResult = testManager.testResults[testForCourse?.id];
+                
+                if (testResult) {
+                    if (testResult.passed) {
+                        certificateSection.style.display = 'block';
+                        testCompletionSection.style.display = 'none';
+                    } else {
+                        testCompletionSection.style.display = 'block';
+                        certificateSection.style.display = 'none';
+                        
+                        // تحديث زر بدء الاختبار
+                        const startTestBtn = document.getElementById('start-test-btn');
+                        startTestBtn.onclick = () => {
+                            testManager.openTest(testForCourse.id);
+                        };
+                    }
+                } else {
+                    testCompletionSection.style.display = 'block';
+                    certificateSection.style.display = 'none';
+                    
+                    // تحديث زر بدء الاختبار
+                    const startTestBtn = document.getElementById('start-test-btn');
+                    startTestBtn.onclick = () => {
+                        if (testForCourse) {
+                            testManager.openTest(testForCourse.id);
+                        } else {
+                            showNotification('معلومة', 'سيتم إنشاء الاختبار قريباً. يرجى المحاولة لاحقاً.', 'info');
+                        }
+                    };
+                }
+            } else {
+                testCompletionSection.style.display = 'none';
+                certificateSection.style.display = 'none';
+            }
+            
             document.querySelector('.home-page').style.display = 'none';
             document.querySelector('.my-courses-page').style.display = 'none';
             document.querySelector('.progress-page').style.display = 'none';
+            document.querySelector('.tests-page').style.display = 'none';
             document.getElementById('course-details').style.display = 'block';
         }
 
@@ -2277,6 +2953,7 @@
             enrolledCourses.forEach(course => {
                 const progressPercentage = progressSystem.getProgressPercentage(course.id);
                 const courseProgress = progressSystem.getCourseProgress(course.id);
+                const isCourseCompleted = progressSystem.isCourseCompleted(course.id);
                 
                 coursesHTML += `
                 <div class="progress-course-card">
@@ -2286,12 +2963,18 @@
                     </div>
                     <div class="progress-course-percentage">
                         ${progressPercentage}% مكتمل (${courseProgress.completedVideos.length}/${courseProgress.totalVideos} فيديو)
+                        ${isCourseCompleted ? ' - <span style="color: var(--success);">مكتملة</span>' : ''}
                     </div>
                 </div>
                 `;
             });
             
             coursesContainer.innerHTML = coursesHTML;
+        }
+
+        // عرض صفحة الاختبارات
+        function renderTestsPage() {
+            testManager.renderTests();
         }
 
         // ===== إدارة الثيم =====
@@ -2328,6 +3011,7 @@
             document.querySelector('.home-page').style.display = 'block';
             document.querySelector('.my-courses-page').style.display = 'none';
             document.querySelector('.progress-page').style.display = 'none';
+            document.querySelector('.tests-page').style.display = 'none';
             document.getElementById('course-details').style.display = 'none';
         }
 
@@ -2335,6 +3019,7 @@
             document.querySelector('.home-page').style.display = 'none';
             document.querySelector('.my-courses-page').style.display = 'block';
             document.querySelector('.progress-page').style.display = 'none';
+            document.querySelector('.tests-page').style.display = 'none';
             document.getElementById('course-details').style.display = 'none';
             renderMyCourses();
         }
@@ -2343,8 +3028,18 @@
             document.querySelector('.home-page').style.display = 'none';
             document.querySelector('.my-courses-page').style.display = 'none';
             document.querySelector('.progress-page').style.display = 'block';
+            document.querySelector('.tests-page').style.display = 'none';
             document.getElementById('course-details').style.display = 'none';
             renderProgressPage();
+        }
+
+        function showTestsPage() {
+            document.querySelector('.home-page').style.display = 'none';
+            document.querySelector('.my-courses-page').style.display = 'none';
+            document.querySelector('.progress-page').style.display = 'none';
+            document.querySelector('.tests-page').style.display = 'block';
+            document.getElementById('course-details').style.display = 'none';
+            renderTestsPage();
         }
 
         // ===== إدارة الفيديو =====
@@ -2366,6 +3061,30 @@
             videoFrame.src = '';
             
             document.body.style.overflow = 'auto';
+        }
+
+        // ===== إدارة الاختبارات =====
+        function closeTest() {
+            document.getElementById('testModal').style.display = 'none';
+            if (testManager.timer) {
+                clearInterval(testManager.timer);
+            }
+        }
+
+        function closeResults() {
+            document.getElementById('resultsModal').style.display = 'none';
+            // العودة إلى صفحة تفاصيل الدورة
+            if (testManager.currentTest) {
+                const courseId = testManager.currentTest.courseId;
+                renderCourseDetails(courseId);
+            }
+        }
+
+        function retryTest() {
+            document.getElementById('resultsModal').style.display = 'none';
+            if (testManager.currentTest) {
+                testManager.openTest(testManager.currentTest.id);
+            }
         }
 
         // ===== إعداد مستمعي الأحداث =====
@@ -2435,6 +3154,14 @@
                             if (document.querySelector('.my-courses-page').style.display === 'block') {
                                 renderMyCourses();
                             }
+                            
+                            // التحقق مما إذا كانت الدورة اكتملت
+                            if (progressSystem.isCourseCompleted(courseId)) {
+                                // تحديث صفحة تفاصيل الدورة إذا كانت مفتوحة
+                                if (document.getElementById('course-details').style.display === 'block') {
+                                    renderCourseDetails(courseId);
+                                }
+                            }
                         }
                     };
                     
@@ -2480,6 +3207,20 @@
                     renderCourses(category);
                 });
             });
+            
+            // إعداد فلاتر الاختبارات
+            document.querySelectorAll('#test-category-filters .category-filter').forEach(filter => {
+                filter.addEventListener('click', (e) => {
+                    document.querySelectorAll('#test-category-filters .category-filter').forEach(f => {
+                        f.classList.remove('active');
+                    });
+                    
+                    e.target.classList.add('active');
+                    
+                    const category = e.target.getAttribute('data-category');
+                    testManager.renderTests(category);
+                });
+            });
         }
 
         function setupStatsAnimation() {
@@ -2518,9 +3259,9 @@
                     clearInterval(timer);
                 }
                 
-                studentsCount.textContent = Math.floor(currentStudents).toLocaleString();
-                certificatesCount.textContent = Math.floor(currentCertificates).toLocaleString();
-                instructorsCount.textContent = Math.floor(currentInstructors).toLocaleString();
+                studentsCount.textContent = formatNumber(Math.floor(currentStudents));
+                certificatesCount.textContent = formatNumber(Math.floor(currentCertificates));
+                instructorsCount.textContent = formatNumber(Math.floor(currentInstructors));
             }, interval);
         }
 
@@ -2548,6 +3289,8 @@
             });
             
             document.getElementById('close-video').addEventListener('click', closeVideoPlayer);
+            document.getElementById('close-test').addEventListener('click', closeTest);
+            document.getElementById('close-results').addEventListener('click', closeResults);
             
             document.getElementById('video-player').addEventListener('click', (e) => {
                 if (e.target.id === 'video-player') {
@@ -2556,6 +3299,19 @@
             });
 
             document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+
+            // أزرار التنقل في الاختبار
+            document.getElementById('prevBtn').addEventListener('click', () => {
+                testManager.previousQuestion();
+            });
+            
+            document.getElementById('nextBtn').addEventListener('click', () => {
+                testManager.nextQuestion();
+            });
+            
+            document.getElementById('submitBtn').addEventListener('click', () => {
+                testManager.submitTest();
+            });
 
             document.addEventListener('click', (e) => {
                 const sidebar = document.querySelector('.sidebar');
@@ -2586,6 +3342,8 @@
                         showMyCoursesPage();
                     } else if (page === 'progress') {
                         showProgressPage();
+                    } else if (page === 'tests') {
+                        showTestsPage();
                     }
                     
                     if (window.innerWidth <= 992) {
@@ -2605,6 +3363,7 @@
             console.log('✅ Skillzoy Academy System Initialized Successfully');
             console.log('📊 Courses will be loaded from Supabase or fallback data');
             console.log('👤 Current User:', currentUser);
+            console.log('📝 Test Manager:', testManager);
         });
     </script>
 </body>
