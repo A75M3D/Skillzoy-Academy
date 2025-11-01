@@ -1022,7 +1022,7 @@
             display: none;
             background: none;
             border: none;
-            color: var(--light);
+            color: white;
             font-size: 1.5rem;
             cursor: pointer;
             position: fixed;
@@ -1152,12 +1152,12 @@
     <div class="notification-container" id="notification-container"></div>
 
     <!-- ===== زر القائمة المتنقلة ===== -->
-    <button class="mobile-menu-btn">
+    <button class="mobile-menu-btn" id="mobile-menu-btn">
         <i class="fas fa-bars"></i>
     </button>
 
     <!-- ===== الشريط الجانبي ===== -->
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <a href="#" class="logo">
                 <div class="logo-icon">
@@ -1400,28 +1400,29 @@
 
     <script>
         // ===== إعداد Supabase =====
-        const SUPABASE_URL = 'https://sjipwstkvvrautexigmt.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNqaXB3c3RrdnZyYXV0ZXhpZ210Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MTE5MDcsImV4cCI6MjA3NDQ4NzkwN30.FSh2yIdZdvdNvtWxK5JB02PIdWOG3707qO-F0c84PnY';
+        const SUPABASE_URL = 'https://sjipwstkvvrautexigmt.supabase.co'; // استبدل برابط مشروعك
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNqaXB3c3RrdnZyYXV0ZXhpZ210Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MTE5MDcsImV4cCI6MjA3NDQ4NzkwN30.FSh2yIdZdvdNvtWxK5JB02PIdWOG3707qO-F0c84PnY'; // استبدل بمفتاح المشروع
         
-        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        // إنشاء عميل Supabase
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         // ===== بيانات التطبيق =====
-        // بيانات الدورات
+        // بيانات الدورات (كبديل في حال فشل الاتصال بـ Supabase)
         const coursesData = [
             {
                 id: 1,
-                title: "Google Sybersecurity ",
+                title: "Google Cybersecurity",
                 category: "programming",
                 instructor: "Skillzoy Academy",
                 instructorAvatar: "https://randomuser.me/api/portraits/men/32.jpg",
                 playlistId: "PL590L5WQmH8d68VyR6RjhgldHMxMJ5B5z",
                 duration: "35 ساعة",
                 level: "متقدم",
-                description:" دورة الامن السيبراني من google تدريب مكثف "
+                description: "دورة الامن السيبراني من google تدريب مكثف"
             },
             {
                 id: 2,
-                title: "  دورة اختبار الاختراق تدريب عملي  CTF",
+                title: "دورة اختبار الاختراق تدريب عملي CTF",
                 category: "programming",
                 instructor: "Skillzoy Academy",
                 instructorAvatar: "https://randomuser.me/api/portraits/women/44.jpg",
@@ -1440,83 +1441,6 @@
                 duration: "32 ساعة",
                 level: "متقدم",
                 description: "تعلم كيفية إدارة المشاريع باحترافية باستخدام منهجيات PMP و Agile مع دراسات حالة عملية"
-            },
-            {
-                id: 4,
-                title: "دورة تعلم اللغة الإنجليزية - المحادثة والكتابة",
-                category: "language",
-                instructor: "Skillzoy Academy",
-                instructorAvatar: "https://randomuser.me/api/portraits/women/68.jpg",
-                playlistId: "PL_Zjf61X10RJETKdhjfVLe4yL94morKRX",
-                duration: "40 ساعة",
-                level: "مبتدئ",
-                description: "تعلم اللغة الإنجليزية من الصفر حتى الاحتراف مع تمارين تفاعلية ونطق صحيح ومحادثة يومية"
-            },
-            {
-                id: 5,
-                title: "دورة الذكاء الاصطناعي والتعلم الآلي",
-                category: "ai",
-                instructor: "Skillzoy Academy",
-                instructorAvatar: "https://randomuser.me/api/portraits/men/75.jpg",
-                playlistId: "PL9ooVrP1hQOHUfd-g8GUpKI3hHOwM_9Dn",
-                duration: "45 ساعة",
-                level: "متقدم",
-                description: "تعلم أساسيات الذكاء الاصطناعي والتعلم الآلي باستخدام Python والمكتبات المتخصصة"
-            },
-            {
-                id: 6,
-                title: "دورة التسويق الرقمي والمحتوى",
-                category: "marketing",
-                instructor: "Skillzoy Academy",
-                instructorAvatar: "https://randomuser.me/api/portraits/women/22.jpg",
-                playlistId: "PL9ooVrP1hQOHUfd-g8GUpKI3hHOwM_9Dn",
-                duration: "30 ساعة",
-                level: "متوسط",
-                description: "تعلم استراتيجيات التسويق الرقمي وإدارة المحتوى لتحقيق نتائج مذهلة في عالم الأعمال"
-            },
-            {
-                id: 7,
-                title: "دورة التصميم الجرافيكي والإبداع",
-                category: "design",
-                instructor: "Skillzoy Academy",
-                instructorAvatar: "https://randomuser.me/api/portraits/men/45.jpg",
-                playlistId: "PL9ooVrP1hQOHUfd-g8GUpKI3hHOwM_9Dn",
-                duration: "25 ساعة",
-                level: "مبتدئ",
-                description: "تعلم أساسيات التصميم الجرافيكي واستخدام برامج Adobe المختلفة لإنشاء تصاميم مذهلة"
-            },
-            {
-                id: 8,
-                title: "دورة تطوير تطبيقات الجوال",
-                category: "mobile",
-                instructor: "Skillzoy Academy",
-                instructorAvatar: "https://randomuser.me/api/portraits/women/33.jpg",
-                playlistId: "PL9ooVrP1hQOHUfd-g8GUpKI3hHOwM_9Dn",
-                duration: "38 ساعة",
-                level: "متوسط",
-                description: "تعلم تطوير تطبيقات الجوال باستخدام React Native و Flutter لإنشاء تطبيقات متعددة المنصات"
-            },
-            {
-                id: 9,
-                title: "دورة إدارة الأعمال والمشاريع الناشئة",
-                category: "business",
-                instructor: "Skillzoy Academy",
-                instructorAvatar: "https://randomuser.me/api/portraits/men/50.jpg",
-                playlistId: "PL9ooVrP1hQOHUfd-g8GUpKI3hHOwM_9Dn",
-                duration: "28 ساعة",
-                level: "مبتدئ",
-                description: "تعلم أساسيات إدارة الأعمال والمشاريع الناشئة وكيفية تحويل الأفكار إلى مشاريع ناجحة"
-            },
-            {
-                id: 10,
-                title: "دورة تحليل البيانات والإحصائيات",
-                category: "data_science",
-                instructor: "Skillzoy Academy",
-                instructorAvatar: "https://randomuser.me/api/portraits/women/55.jpg",
-                playlistId: "PL9ooVrP1hQOHUfd-g8GUpKI3hHOwM_9Dn",
-                duration: "42 ساعة",
-                level: "متقدم",
-                description: "تعلم تحليل البيانات باستخدام Python و R واستخراج رؤى قيمة لاتخاذ قرارات أفضل"
             }
         ];
 
@@ -1586,7 +1510,7 @@
         };
 
         // ===== YouTube API Integration =====
-        const YOUTUBE_API_KEY = "AIzaSyBdEIVHCYgh3Z7CVfPPzdn18Ic8EJOBBTE#eaeaff33"; // يجب استبداله بمفتاح حقيقي
+        const YOUTUBE_API_KEY = "AIzaSyBdEIVHCYgh3Z7CVfPPzdn18Ic8EJOBBTE#eaeaff33"; // ضع مفتاح YouTube API هنا
         
         // وظيفة لجلب فيديوهات قائمة التشغيل من YouTube
         async function fetchPlaylistVideos(playlistId) {
@@ -1610,7 +1534,7 @@
                     id: item.snippet.resourceId.videoId,
                     title: item.snippet.title,
                     youtubeId: item.snippet.resourceId.videoId,
-                    duration: "10:00" // يمكن إضافة مدة الفيديو إذا كان متاحاً
+                    duration: "10:00"
                 }));
             } catch (error) {
                 console.error("Error fetching playlist videos:", error);
@@ -1702,14 +1626,6 @@
         }
 
         function unenrollUserFromCourse(courseId) {
-            // محاكاة فشل الاتصال بالإنترنت بنسبة 30%
-            const isOffline = Math.random() < 0.3;
-            
-            if (isOffline) {
-                showNotification('خطأ في الشبكة', 'تعذر إلغاء التسجيل بسبب مشكلة في الاتصال بالإنترنت. يرجى التحقق من اتصالك والمحاولة مرة أخرى.', 'error');
-                return false;
-            }
-            
             const result = supabaseMock.unenrollUserFromCourse(currentUser.id, courseId);
             
             if (result.success) {
@@ -1740,15 +1656,13 @@
         function createCategoryFilters() {
             const categoriesContainer = document.getElementById('category-filters');
             
-            // استخراج التصنيفات الفريدة من بيانات الدورات
-            const uniqueCategories = [...new Set(coursesData.map(course => course.category))];
-            
             // إضافة زر "جميع الدورات" أولاً
             categoriesContainer.innerHTML = `
                 <button class="category-filter active" data-category="all">جميع الدورات</button>
             `;
             
             // إضافة أزرار التصنيفات الأخرى
+            const uniqueCategories = [...new Set(coursesData.map(course => course.category))];
             uniqueCategories.forEach(category => {
                 const categoryName = getCategoryName(category);
                 categoriesContainer.innerHTML += `
@@ -1774,7 +1688,7 @@
             
             for (const course of filteredCourses) {
                 const videos = await fetchPlaylistVideos(course.playlistId);
-                const firstVideo = videos[0]; // نأخذ الفيديو الأول فقط
+                const firstVideo = videos[0];
                 
                 if (!firstVideo) continue;
                 
@@ -2138,8 +2052,9 @@
             renderCourses();
             setupStatsAnimation();
             
-            document.querySelector('.mobile-menu-btn').addEventListener('click', () => {
-                document.querySelector('.sidebar').classList.toggle('active');
+            // إصلاح زر القائمة المتنقلة
+            document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+                document.getElementById('sidebar').classList.toggle('active');
             });
             
             document.getElementById('close-video').addEventListener('click', closeVideoPlayer);
@@ -2153,8 +2068,8 @@
             document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
 
             document.addEventListener('click', (e) => {
-                const sidebar = document.querySelector('.sidebar');
-                const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+                const sidebar = document.getElementById('sidebar');
+                const mobileMenuBtn = document.getElementById('mobile-menu-btn');
                 
                 if (window.innerWidth <= 992 && 
                     !sidebar.contains(e.target) && 
@@ -2182,7 +2097,7 @@
                     }
                     
                     if (window.innerWidth <= 992) {
-                        document.querySelector('.sidebar').classList.remove('active');
+                        document.getElementById('sidebar').classList.remove('active');
                     }
                 });
             });
@@ -2198,18 +2113,13 @@
             // دالة تسجيل الخروج
             window.logout = function() {
                 if(confirm('هل تريد تسجيل الخروج؟')) {
-                    // مسح بيانات الجلسة
                     localStorage.removeItem('token');
                     sessionStorage.clear();
-                    
-                    // التوجيه لصفحة تسجيل الخروج
                     window.location.href = 'https://skillzoy-academy.vercel.app/dashboard/logout.html';
                 }
             };
             
             console.log('✅ Skillzoy Academy System Initialized Successfully');
-            console.log('📊 Courses Data:', coursesData);
-            console.log('👤 Current User:', currentUser);
         });
     </script>
 </body>
