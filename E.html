@@ -1905,6 +1905,25 @@ async function testGeminiAPI() {
             })
         });
 
+        // كود تشخيصي إضافي
+async function diagnoseAPI() {
+    console.log('🔍 تشخيص المشكلة:');
+    console.log('1. المفتاح:', GEMINI_API_KEY ? 'موجود' : 'مفقود');
+    console.log('2. الـ URL:', GEMINI_API_URL);
+    
+    try {
+        const test = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=' + GEMINI_API_KEY, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({contents: [{parts: [{text: "test"}]}]})
+        });
+        console.log('3. حالة الرد:', test.status, test.statusText);
+    } catch (e) {
+        console.log('3. خطأ في الشبكة:', e.message);
+    }
+}
+diagnoseAPI();
+
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
