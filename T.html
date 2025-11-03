@@ -1798,7 +1798,7 @@
                 title: "Google Cybersecurity",
                 category: "cybersecurity",
                 provider: "Skillzoy Academy",
-                playlist_id: "PL590L5WQmH8d68VyR6RjhgldHMxMJ5B5z",
+                playlist_id: "PL0vfts4VzfNgNVZIPX7VIS4w2dhuwCXbN",
                 duration: "35 ساعة",
                 level: "متقدم",
                 description: "دورة الامن السيبراني من google تدريب مكثف",
@@ -1810,7 +1810,7 @@
                 title: "دورة اختبار الاختراق تدريب عملي CTF",
                 category: "cybersecurity",
                 provider: "Skillzoy Academy",
-                playlist_id: "PLyWDBIDk-uYlJ4Yn6vtjAjN1fpnJi2AXA",
+                playlist_id: "PLVD3APpfd1tvnDW3VSqUKVvBezqQc2xmG",
                 duration: "28 ساعة",
                 level: "متوسط",
                 description: "تعلم تصميم واجهات المستخدم وتجربة المستخدم باستخدام أحدث الأدوات والتقنيات مع مشاريع عملية",
@@ -2466,11 +2466,11 @@
         };
 
         // ===== YouTube API Integration =====
-        const YOUTUBE_API_KEY = "AIzaSyBdEIVHCYgh3Z7CVfPPzdn18Ic8EJOBBTE#eaeaff33";
-        
+        const YOUTUBE_API_KEY = "AIzaSyBdEIVHCYgh3Z7CVfPPzdn18Ic8EJOBBTE";
+
         // ذاكرة التخزين المؤقت للفيديوهات
         const playlistCache = new Map();
-        
+
         // وظيفة محسنة لجلب فيديوهات قائمة التشغيل من YouTube
         async function fetchPlaylistVideos(playlistId) {
             try {
@@ -2479,8 +2479,8 @@
                     console.log(`📺 Returning cached videos for playlist: ${playlistId}`);
                     return playlistCache.get(playlistId);
                 }
-                
-                // محاكاة للبيانات في حالة عدم وجود API key
+
+                // إذا لم يكن هناك API key، نستخدم بيانات تجريبية
                 if (!YOUTUBE_API_KEY || YOUTUBE_API_KEY.includes('YOUR_API_KEY')) {
                     console.log('📺 Using fallback video data (no API key)');
                     const fallbackVideos = [
@@ -2493,15 +2493,19 @@
                     playlistCache.set(playlistId, fallbackVideos);
                     return fallbackVideos;
                 }
+
+                console.log(`🎯 Fetching ALL videos for playlist: ${playlistId}`);
                 
-                console.log(`📺 Fetching videos for playlist: ${playlistId}`);
                 let allVideos = [];
                 let nextPageToken = null;
                 let pageCount = 0;
-                const maxPages = 10; // حد أقصى للصفحات لتجنب الحلقات اللانهائية
-                
+                let totalVideosFetched = 0;
+
                 do {
                     pageCount++;
+                    console.log(`📄 Fetching page ${pageCount} for playlist ${playlistId}`);
+                    
+                    // بناء رابط الطلب مع pageToken إذا موجود
                     let url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${playlistId}&key=${YOUTUBE_API_KEY}`;
                     
                     if (nextPageToken) {
@@ -2525,19 +2529,22 @@
                         }));
                         
                         allVideos = [...allVideos, ...pageVideos];
-                        console.log(`📺 Page ${pageCount}: Loaded ${pageVideos.length} videos (Total: ${allVideos.length})`);
+                        totalVideosFetched += pageVideos.length;
+                        console.log(`✅ Page ${pageCount}: Loaded ${pageVideos.length} videos (Total: ${totalVideosFetched})`);
+                    } else {
+                        console.log(`❌ No videos found on page ${pageCount}`);
                     }
                     
                     nextPageToken = data.nextPageToken;
                     
                     // إضافة تأخير لتجنب تجاوز حدود API
-                    if (nextPageToken && pageCount < maxPages) {
+                    if (nextPageToken) {
                         await new Promise(resolve => setTimeout(resolve, 100));
                     }
                     
-                } while (nextPageToken && pageCount < maxPages);
+                } while (nextPageToken);
                 
-                console.log(`✅ Successfully loaded ${allVideos.length} videos from playlist ${playlistId}`);
+                console.log(`🎉 Successfully loaded ${allVideos.length} videos from playlist ${playlistId}`);
                 
                 // تخزين النتائج في الذاكرة المؤقتة
                 playlistCache.set(playlistId, allVideos);
