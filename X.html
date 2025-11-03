@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skillzoy Academy - منصة التعليم الالكتروني</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        /* ===== متغيرات التصميم ===== */
+        :root {
+            --primary: #0f172a;
+            --primary-dark: #0a0f1c;
+            --primary-light: #1e293b;
+            --accent: #3b82f6;
+            --light: #f8fafc;
+            --dark: #020617;
+            --text: #e2e8f0;
+            --text-light: #cbd5e1;
+            --background: linear-gradient(135deg, #0f172a, #1e293b, #334155);
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --glass-bg: rgba(30, 41, 59, 0.8);
+            --glass-border: rgba(55, 65, 81, 0.5);
+            --sidebar-bg: #1e3a8a;
+            --sidebar-hover: #1e40af;
+            --sidebar-active: #3b82f6;
+            --sidebar-width: 280px;
+            --border-radius: 12px;
+            --box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --transition: all 0.3s ease;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+        }
+
+        .light-theme {
+            --primary: #f8fafc;
+            --primary-dark: #e2e8f0;
+            --primary-light: #ffffff;
+            --accent: #3b82f6;
+            --light: #0f172a;
+            --dark: #f1f5f9;
+            --text: #334155;
+            --text-light: #64748b;
+            --background: linear-gradient(135deg, #f8fafc, #e2e8f0, #cbd5e1);
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --glass-bg: rgba(255, 255, 255, 0.8);
+            --glass-border: rgba(226, 232, 240, 0.7);
+            --sidebar-bg: #1e3a8a;
+            --sidebar-hover: #2563eb;
+            --sidebar-active: #1d4ed8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: var(--background);
+            color: var(--text);
+            min-height: 100vh;
+            direction: rtl;
+            overflow-x: hidden;
+            line-height: 1.6;
+            transition: var(--transition);
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--sidebar-bg);
+            transition: var(--transition);
+            position: fixed;
+            right: 0;
+            top: 0;
+            height: 100vh;
+            z-index: 1000;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-content {
+            margin-right: var(--sidebar-width);
+            padding: 20px;
+            min-height: 100vh;
+            transition: var(--transition);
+        }
+
+        @media (max-width: 992px) {
+            .sidebar {
+                right: -100%;
+            }
+            .sidebar.active {
+                right: 0;
+            }
+            .main-content {
+                margin-right: 0;
+            }
+        }
+
+        .course-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+        }
+
+        .video-player-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .notification {
+            padding: 16px 20px;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            max-width: 350px;
+            transform: translateX(-100%);
+            opacity: 0;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .notification.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .notification.success {
+            background: rgba(16, 185, 129, 0.9);
+        }
+
+        .notification.error {
+            background: rgba(239, 68, 68, 0.9);
+        }
+
+        .notification.warning {
+            background: rgba(245, 158, 11, 0.9);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+            background: var(--accent);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 992px) {
+            .mobile-menu-btn {
+                display: flex;
+            }
+        }
+
+        .category-filters {
+            display: flex;
+            gap: 15px;
+            padding: 10px 5px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+        }
+
+        .category-filter {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text);
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .category-filter:hover, .category-filter.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .btn {
+            padding: 10px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: var(--error);
+            color: white;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        .option-card {
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .option-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .option-selected {
+            border-color: var(--accent);
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .lang-btn.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-slate-200">
+    <!-- نظام الإشعارات -->
+    <div class="notification-container" id="notification-container"></div>
+
+    <!-- زر القائمة المتنقلة -->
+    <button class="mobile-menu-btn">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- الشريط الجانبي -->
+    <aside class="sidebar">
+        <div class="sidebar-header p-6 border-b border-white/10 flex items-center gap-3">
+            <a href="#" class="logo flex items-center text-white no-underline text-xl font-bold">
+                <div class="logo-icon w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center text-white ml-2.5">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <span>Skillzoy</span>
+            </a>
+        </div>
+        
+        <nav class="sidebar-nav flex-1 py-5">
+            <div class="nav-section mb-6">
+                <h3 class="nav-section-title px-5 pb-2.5 text-sm text-slate-400 uppercase tracking-wider">القائمة الرئيسية</h3>
+                <ul class="nav-links">
+                    <li><a href="#" class="nav-link active flex items-center gap-3 px-5 py-3 text-slate-300 no-underline transition-all border-r-3 border-transparent hover:bg-blue-700 hover:text-white border-r-blue-500" data-page="home"><i class="fas fa-home w-5 text-center"></i> الرئيسية</a></li>
+                    <li><a href="#" class="nav-link flex items-center gap-3 px-5 py-3 text-slate-300 no-underline transition-all border-r-3 border-transparent hover:bg-blue-700 hover:text-white" data-page="my-courses"><i class="fas fa-user-graduate w-5 text-center"></i> دوراتي</a></li>
+                    <li><a href="#" class="nav-link flex items-center gap-3 px-5 py-3 text-slate-300 no-underline transition-all border-r-3 border-transparent hover:bg-blue-700 hover:text-white" data-page="progress"><i class="fas fa-chart-line w-5 text-center"></i> التقدم</a></li>
+                    <li><a href="#" class="nav-link flex items-center gap-3 px-5 py-3 text-slate-300 no-underline transition-all border-r-3 border-transparent hover:bg-blue-700 hover:text-white" data-page="tests"><i class="fas fa-question-circle w-5 text-center"></i> الاختبارات</a></li>
+                </ul>
+            </div>
+            
+            <div class="theme-toggle flex items-center justify-between px-5 py-3 text-slate-300 cursor-pointer transition-all border-r-3 border-transparent hover:bg-blue-700 hover:text-white" id="theme-toggle">
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-sun w-5 text-center"></i>
+                    <span>وضع النهار</span>
+                </div>
+                <i class="fas fa-toggle-off" id="theme-icon"></i>
+            </div>
+        </nav>
+        
+        <div class="sidebar-footer p-5 border-t border-white/10">
+            <div class="user-profile flex items-center gap-3">
+                <img src="https://ui-avatars.com/api/?name=نشط+الان&background=3b82f6&color=fff" alt="صورة المستخدم" class="user-avatar w-11 h-11 rounded-full object-cover border-2 border-blue-500">
+                <div class="user-info">
+                    <h4 class="text-white text-sm mb-1">نشط الان 🟢</h4>
+                    <p class="text-slate-400 text-xs">👨‍🎓طالب</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- مشغل الفيديو -->
+    <div class="video-player-container" id="video-player">
+        <div class="video-player w-4/5 max-w-4xl bg-black rounded-xl overflow-hidden relative">
+            <button class="close-video absolute top-4 left-4 bg-black/70 text-white border-none w-10 h-10 rounded-full flex items-center justify-center cursor-pointer text-xl z-10">
+                <i class="fas fa-times"></i>
+            </button>
+            <iframe id="video-frame" class="w-full h-[500px] border-none" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="main-content">
+        <!-- الصفحة الرئيسية -->
+        <div class="home-page">
+            <div class="page-title bg-white/10 backdrop-blur-md p-8 rounded-2xl shadow-2xl border border-white/20 text-center mb-10">
+                <h1 class="text-4xl font-bold text-white mb-4">Skillzoy Academy-منصة رائدة في التعليم الالكتروني</h1>
+                <p class="text-xl text-slate-300 max-w-2xl mx-auto">أفضل الدورات التعليمية لتطوير مهاراتك ومعرفتك في مختلف المجالات</p>
+            </div>
+            
+            <!-- فلاتر التصنيفات -->
+            <div class="category-filters-container mb-8 overflow-hidden py-2.5">
+                <div class="category-filters" id="category-filters">
+                    <!-- سيتم ملؤها ديناميكياً -->
+                </div>
+            </div>
+            
+            <!-- شبكة الدورات -->
+            <div class="courses-grid grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-12" id="courses-container">
+                <!-- سيتم ملؤها ديناميكياً -->
+            </div>
+
+            <!-- قسم الإحصائيات -->
+            <div class="stats-section grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-16 mb-10">
+                <div class="stat-card bg-white/10 backdrop-blur-md rounded-2xl p-6 text-center border border-white/20 transition-all hover:translate-y-[-5px] hover:shadow-2xl">
+                    <div class="stat-number text-4xl font-bold text-blue-500 mb-2.5" id="students-count">0</div>
+                    <div class="stat-label text-lg text-slate-300">طالب مسجل</div>
+                </div>
+                <div class="stat-card bg-white/10 backdrop-blur-md rounded-2xl p-6 text-center border border-white/20 transition-all hover:translate-y-[-5px] hover:shadow-2xl">
+                    <div class="stat-number text-4xl font-bold text-blue-500 mb-2.5" id="courses-count">0</div>
+                    <div class="stat-label text-lg text-slate-300">دورة متاحة</div>
+                </div>
+                <div class="stat-card bg-white/10 backdrop-blur-md rounded-2xl p-6 text-center border border-white/20 transition-all hover:translate-y-[-5px] hover:shadow-2xl">
+                    <div class="stat-number text-4xl font-bold text-blue-500 mb-2.5" id="certificates-count">0</div>
+                    <div class="stat-label text-lg text-slate-300">شهادة معتمدة</div>
+                </div>
+                <div class="stat-card bg-white/10 backdrop-blur-md rounded-2xl p-6 text-center border border-white/20 transition-all hover:translate-y-[-5px] hover:shadow-2xl">
+                    <div class="stat-number text-4xl font-bold text-blue-500 mb-2.5" id="instructors-count">0</div>
+                    <div class="stat-label text-lg text-slate-300">مدرب محترف</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- صفحة الاختبارات -->
+        <div class="tests-page hidden">
+            <div class="page-title bg-white/10 backdrop-blur-md p-8 rounded-2xl shadow-2xl border border-white/20 text-center mb-10">
+                <h1 class="text-4xl font-bold text-white mb-4">الاختبارات</h1>
+                <p class="text-xl text-slate-300 max-w-2xl mx-auto">اختبر معرفتك بعد إكمال كل دورة - 30 سؤال لكل اختبار، تحتاج 70% للنجاح</p>
+            </div>
+
+            <!-- فلاتر التصنيفات -->
+            <div class="category-filters-container mb-8 overflow-hidden py-2.5">
+                <div class="category-filters" id="test-category-filters">
+                    <button class="category-filter active" data-category="all">جميع الاختبارات</button>
+                    <button class="category-filter" data-category="active">الاختبارات النشطة</button>
+                    <button class="category-filter" data-category="completed">الاختبارات المكتملة</button>
+                </div>
+            </div>
+
+            <!-- شبكة الاختبارات -->
+            <div id="testsContainer" class="courses-grid grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                <!-- سيتم ملؤها ديناميكياً -->
+            </div>
+
+            <!-- قسم الإحصائيات -->
+            <div class="stats-section grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-16">
+                <div class="stat-card bg-white/10 backdrop-blur-md rounded-2xl p-6 text-center border border-white/20">
+                    <div class="stat-number text-4xl font-bold text-blue-500 mb-2.5" id="totalTests">0</div>
+                    <div class="stat-label text-lg text-slate-300">إجمالي الاختبارات</div>
+                </div>
+                <div class="stat-card bg-white/10 backdrop-blur-md rounded-2xl p-6 text-center border border-white/20">
+                    <div class="stat-number text-4xl font-bold text-blue-500 mb-2.5" id="completedTests">0</div>
+                    <div class="stat-label text-lg text-slate-300">مكتملة</div>
+                </div>
+                <div class="stat-card bg-white/10 backdrop-blur-md rounded-2xl p-6 text-center border border-white/20">
+                    <div class="stat-number text-4xl font-bold text-blue-500 mb-2.5" id="activeTests">0</div>
+                    <div class="stat-label text-lg text-slate-300">نشطة</div>
+                </div>
+                <div class="stat-card bg-white/10 backdrop-blur-md rounded-2xl p-6 text-center border border-white/20">
+                    <div class="stat-number text-4xl font-bold text-blue-500 mb-2.5" id="averageScore">0%</div>
+                    <div class="stat-label text-lg text-slate-300">متوسط النتائج</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- نموذج الاختبار -->
+    <div id="testModal" class="video-player-container">
+        <div class="video-player w-4/5 max-w-4xl bg-slate-800 rounded-xl overflow-hidden relative">
+            <button class="close-video absolute top-4 left-4 bg-black/70 text-white border-none w-10 h-10 rounded-full flex items-center justify-center cursor-pointer text-xl z-10">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="course-content-section p-8">
+                <div class="page-title bg-white/10 backdrop-blur-md p-8 rounded-2xl shadow-2xl border border-white/20 text-center mb-6">
+                    <h1 class="text-3xl font-bold text-white mb-2" id="test-title">اختبار الدورة</h1>
+                    <p class="text-lg text-slate-300" id="test-description">اختبر معرفتك في هذه الدورة</p>
+                </div>
+
+                <!-- شريط التقدم -->
+                <div class="progress-card bg-white/10 backdrop-blur-md rounded-2xl p-6 mb-5 border border-white/20">
+                    <div class="progress-header flex justify-between items-center mb-4">
+                        <div class="progress-title text-xl font-semibold text-white">تقدم الاختبار</div>
+                        <div class="progress-percentage text-2xl font-bold text-blue-500" id="test-progress">0%</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="test-progress-bar" style="width: 0%"></div>
+                    </div>
+                    <div class="progress-details flex justify-between text-slate-400 text-sm mt-2">
+                        <span id="progress-text">السؤال 0 من 0</span>
+                        <span id="test-timer">60:00</span>
+                    </div>
+                </div>
+
+                <!-- أدوات الترجمة -->
+                <div class="translation-controls text-left mb-5 flex justify-between items-center">
+                    <div class="language-toggle flex gap-2.5">
+                        <button id="lang-ar" class="lang-btn active px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-slate-300 cursor-pointer transition-all" data-lang="ar">العربية</button>
+                        <button id="lang-en" class="lang-btn px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-slate-300 cursor-pointer transition-all" data-lang="en">English</button>
+                    </div>
+                    <div id="translation-status" class="text-slate-400 text-sm"></div>
+                </div>
+
+                <!-- منطقة الأسئلة -->
+                <div id="questionsContainer">
+                    <!-- سيتم ملؤها ديناميكياً -->
+                </div>
+
+                <!-- أزرار التنقل -->
+                <div class="course-actions flex gap-2.5 mt-6">
+                    <button id="prevBtn" class="btn bg-transparent text-blue-500 border border-blue-500 hover:bg-blue-500/10 hidden">
+                        <i class="fas fa-arrow-right"></i> السابق
+                    </button>
+                    <button id="nextBtn" class="btn bg-blue-500 text-white hover:bg-blue-600">
+                        التالي <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <button id="submitBtn" class="btn bg-green-500 text-white hover:bg-green-600 hidden">
+                        <i class="fas fa-check"></i> إنهاء الاختبار
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- نتائج الاختبار -->
+    <div id="resultsModal" class="video-player-container">
+        <div class="video-player w-4/5 max-w-4xl bg-slate-800 rounded-xl overflow-hidden relative">
+            <button class="close-video absolute top-4 left-4 bg-black/70 text-white border-none w-10 h-10 rounded-full flex items-center justify-center cursor-pointer text-xl z-10">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="course-content-section p-8 text-center">
+                <div id="resultIcon" class="text-6xl mb-4">
+                    <i class="fas fa-trophy text-yellow-400"></i>
+                </div>
+                <h2 id="resultTitle" class="text-3xl font-bold text-white mb-4">تهانينا! لقد أكملت الاختبار</h2>
+                <div class="stats-section grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
+                    <div class="stat-card bg-white/10 backdrop-blur-md rounded-2xl p-6 text-center border border-white/20">
+                        <div id="finalScore" class="stat-number text-4xl font-bold text-blue-500 mb-2.5">0%</div>
+                        <div class="stat-label text-lg text-slate-300">نتيجتك</div>
+                    </div>
+                    <div class="stat-card bg-white/10 backdrop-blur-md rounded-2xl p-6 text-center border border-white/20">
+                        <div id="correctAnswers" class="stat-number text-4xl font-bold text-blue-500 mb-2.5">0/30</div>
+                        <div class="stat-label text-lg text-slate-300">الإجابات الصحيحة</div>
+                    </div>
+                </div>
+                <div id="passingInfo" class="progress-card bg-yellow-500/10 backdrop-blur-md rounded-2xl p-6 mb-6 border border-yellow-500/20">
+                    <p class="text-yellow-300">تحتاج إلى 70% (21 إجابة صحيحة) لاجتياز الاختبار</p>
+                </div>
+                <div class="course-actions flex gap-2.5 justify-center">
+                    <button onclick="closeResults()" class="btn bg-transparent text-blue-500 border border-blue-500 hover:bg-blue-500/10">
+                        العودة للدورة
+                    </button>
+                    <button onclick="retryTest()" class="btn bg-blue-500 text-white hover:bg-blue-600" id="retry-btn">
+                        إعادة الاختبار
+                    </button>
+                    <a href="https://wa.me/0924299798" class="btn bg-green-500 text-white hover:bg-green-600 hidden" id="whatsapp-btn" target="_blank">
+                        <i class="fab fa-whatsapp"></i> تواصل للحصول على الشهادة
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 🔧 تكوين APIs
+        const SUPABASE_URL = 'https://sjipwstkvvrautexigmt.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNqaXB3c3RrdnZyYXV0ZXhpZ210Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MTE5MDcsImV4cCI6MjA3NDQ4NzkwN30.FSh2yIdZdvdNvtWxK5JB02PIdWOG3707qO-F0c84PnY';
+        
+        // 🔑 Gemini API - ضع مفتاحك هنا
+        const GEMINI_API_KEY = 'AIzaSyAbfvSeMZerBBpuuM3SLuonrPK-C2jKbdk'; // استبدل بمفتاح Gemini API صالح
+        const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
+        
+        const YOUTUBE_API_KEY = "AIzaSyAbfvSeMZerBBpuuM3SLuonrPK-C2jKbdk";
+
+        // بيانات الدورات الاحتياطية
+        const backupCoursesData = [
+            {
+                id: 1,
+                title: "Google Cybersecurity",
+                category: "cybersecurity",
+                provider: "Skillzoy Academy",
+                playlist_id: "PL590L5WQmH8d68VyR6RjhgldHMxMJ5B5z",
+                duration: "35 ساعة",
+                level: "متقدم",
+                description: "دورة الامن السيبراني من google تدريب مكثف",
+                rating: 5,
+                students: 1250
+            },
+            {
+                id: 2,
+                title: "دورة اختبار الاختراق تدريب عملي CTF",
+                category: "cybersecurity", 
+                provider: "Skillzoy Academy",
+                playlist_id: "PLyWDBIDk-uYlJ4Yn6vtjAjN1fpnJi2AXA",
+                duration: "28 ساعة",
+                level: "متوسط",
+                description: "تعلم تصميم واجهات المستخدم وتجربة المستخدم باستخدام أحدث الأدوات والتقنيات",
+                rating: 4,
+                students: 890
+            }
+        ];
+
+        // 🔧 نظام الاختبارات التلقائي المحسن
+        class AutoTestManager {
+            constructor() {
+                this.tests = this.loadTests();
+                this.testResults = this.loadTestResults();
+                this.currentTest = null;
+                this.currentQuestionIndex = 0;
+                this.userAnswers = [];
+                this.timer = null;
+                this.timeLeft = 0;
+                this.currentLanguage = 'ar';
+                this.translatedQuestions = {};
+            }
+
+            loadTests() {
+                return JSON.parse(localStorage.getItem('userTests')) || [];
+            }
+
+            saveTests() {
+                localStorage.setItem('userTests', JSON.stringify(this.tests));
+            }
+
+            loadTestResults() {
+                return JSON.parse(localStorage.getItem('testResults')) || {};
+            }
+
+            saveTestResults() {
+                localStorage.setItem('testResults', JSON.stringify(this.testResults));
+            }
+
+            // إنشاء اختبار تلقائي باستخدام Gemini API
+            async createTestForCourse(courseId) {
+                const existingTest = this.tests.find(test => test.courseId === courseId);
+                if (!existingTest) {
+                    console.log(`🔄 إنشاء اختبار تلقائي للدورة ${courseId}`);
+                    
+                    const questionsList = await this.generateCourseTest(courseId);
+                    
+                    const newTest = {
+                        id: Date.now(),
+                        courseId: courseId,
+                        title: `اختبار الدورة`,
+                        description: `اختبار تقييمي للدورة`,
+                        duration: 60,
+                        questions: questionsList.length,
+                        totalScore: 100,
+                        passingScore: 70,
+                        questionsList: questionsList
+                    };
+                    
+                    this.tests.push(newTest);
+                    this.saveTests();
+                    console.log('✅ تم إنشاء اختبار جديد:', newTest);
+                    
+                    // تحديث الواجهة
+                    if (document.querySelector('.tests-page').style.display !== 'none') {
+                        this.renderTests();
+                    }
+                    
+                    return newTest;
+                }
+                return existingTest;
+            }
+
+            // توليد أسئلة مخصصة بناءً على محتوى الدورة
+            async generateCourseTest(courseId) {
+                try {
+                    const coursesData = await fetchCoursesFromSupabase();
+                    const course = coursesData.find(c => c.id === courseId);
+                    if (!course) throw new Error('الدورة غير موجودة');
+
+                    const videos = await fetchPlaylistVideos(course.playlist_id);
+                    if (videos.length === 0) throw new Error('لا توجد فيديوهات للدورة');
+
+                    // بناء وصف تفصيلي للدورة
+                    const courseDescription = `
+                        الدورة: ${course.title}
+                        الوصف: ${course.description}
+                        المستوى: ${course.level}
+                        الفيديوهات: ${videos.map(v => v.title).join(' - ')}
+                    `;
+
+                    // طلب من Gemini API إنشاء أسئلة مخصصة
+                    const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({
+                            contents: [{
+                                parts: [{
+                                    text: `أنشئ اختباراً تعليمياً باللغة العربية مكون من 10 أسئلة متعددة الخيارات (4 خيارات لكل سؤال) بناءً على محتوى الدورة التالية:
+
+${courseDescription}
+
+المتطلبات:
+- الأسئلة يجب أن تكون محددة وتغطي محتوى الدورة
+- كل سؤال يجب أن يكون واضحاً ومباشراً
+- الخيارات يجب أن تكون متنوعة ومتميزة
+- حدد الإجابة الصحيحة كرقم (0-3)
+
+التنسيق المطلوب (JSON):
+{
+    "questions": [
+        {
+            "id": 1,
+            "question": "نص السؤال هنا",
+            "options": ["الخيار 1", "الخيار 2", "الخيار 3", "الخيار 4"],
+            "correctAnswer": 0
+        }
+    ]
+}`
+                                }]
+                            }]
+                        })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`خطأ في API: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    const responseText = data.candidates[0].content.parts[0].text;
+                    
+                    // استخراج JSON من الرد
+                    const jsonMatch = responseText.match(/\{[\s\S]*\}/);
+                    if (jsonMatch) {
+                        const questionsData = JSON.parse(jsonMatch[0]);
+                        console.log('✅ تم توليد الأسئلة بنجاح:', questionsData.questions);
+                        return questionsData.questions || this.generateBackupQuestions();
+                    } else {
+                        throw new Error('تنسيق الرد غير صحيح');
+                    }
+                } catch (error) {
+                    console.error('❌ خطأ في توليد الاختبار:', error);
+                    return this.generateBackupQuestions();
+                }
+            }
+
+            // أسئلة احتياطية في حالة فشل API
+            generateBackupQuestions() {
+                console.log('🔄 استخدام الأسئلة الاحتياطية');
+                return [
+                    {
+                        id: 1,
+                        question: "ما هو الهدف الرئيسي من هذه الدورة؟",
+                        options: [
+                            "تنمية المهارات الأساسية في المجال",
+                            "الحصول على شهادة فقط",
+                            "تعلم مصطلحات جديدة",
+                            "لا أعرف"
+                        ],
+                        correctAnswer: 0
+                    },
+                    {
+                        id: 2,
+                        question: "ما هي المهارة الأكثر أهمية التي يجب تطويرها؟",
+                        options: [
+                            "الفهم العميق للمفاهيم",
+                            "الحفظ عن ظهر قلب",
+                            "سرعة الإنجاز",
+                            "التركيز على التفاصيل الصغيرة"
+                        ],
+                        correctAnswer: 0
+                    }
+                    // يمكن إضافة المزيد من الأسئلة الاحتياطية
+                ];
+            }
+
+            // بدء الاختبار
+            startTest(testId) {
+                const test = this.tests.find(t => t.id === testId);
+                if (!test) return false;
+
+                this.currentTest = test;
+                this.currentQuestionIndex = 0;
+                this.userAnswers = new Array(test.questionsList.length).fill(null);
+                this.timeLeft = test.duration * 60;
+                this.currentLanguage = 'ar';
+
+                this.startTimer();
+                this.displayQuestion();
+                this.updateProgress();
+                
+                return true;
+            }
+
+            // عرض السؤال الحالي
+            displayQuestion() {
+                const question = this.currentTest.questionsList[this.currentQuestionIndex];
+                const container = document.getElementById('questionsContainer');
+                
+                container.innerHTML = `
+                    <div class="progress-card bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
+                        <h3 class="progress-title text-xl font-semibold text-white mb-4">
+                            <span class="question-number inline-block bg-blue-500 text-white w-8 h-8 rounded-full text-center leading-8 ml-2.5">${this.currentQuestionIndex + 1}</span>
+                            ${question.question}
+                        </h3>
+                        <div class="videos-grid grid grid-cols-1 gap-3">
+                            ${question.options.map((option, index) => `
+                                <div class="video-item option-card bg-white/5 rounded-xl p-4 border border-white/10 transition-all cursor-pointer ${this.userAnswers[this.currentQuestionIndex] === index ? 'option-selected' : ''}" 
+                                     onclick="testManager.selectAnswer(${index})">
+                                    <div class="video-info">
+                                        <div class="video-title text-lg text-white mb-1">${option}</div>
+                                        <div class="video-meta flex justify-between items-center text-slate-400 text-sm">
+                                            <span>${String.fromCharCode(65 + index)}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                
+                this.updateNavigationButtons();
+            }
+
+            selectAnswer(answerIndex) {
+                this.userAnswers[this.currentQuestionIndex] = answerIndex;
+                this.displayQuestion();
+            }
+
+            nextQuestion() {
+                if (this.currentQuestionIndex < this.currentTest.questionsList.length - 1) {
+                    this.currentQuestionIndex++;
+                    this.displayQuestion();
+                    this.updateProgress();
+                }
+            }
+
+            previousQuestion() {
+                if (this.currentQuestionIndex > 0) {
+                    this.currentQuestionIndex--;
+                    this.displayQuestion();
+                    this.updateProgress();
+                }
+            }
+
+            startTimer() {
+                if (this.timer) clearInterval(this.timer);
+                this.timer = setInterval(() => {
+                    this.timeLeft--;
+                    this.updateTimerDisplay();
+                    if (this.timeLeft <= 0) this.submitTest();
+                }, 1000);
+            }
+
+            updateTimerDisplay() {
+                const minutes = Math.floor(this.timeLeft / 60);
+                const seconds = this.timeLeft % 60;
+                document.getElementById('test-timer').textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+
+            updateProgress() {
+                const progress = ((this.currentQuestionIndex + 1) / this.currentTest.questionsList.length) * 100;
+                document.getElementById('test-progress-bar').style.width = `${progress}%`;
+                document.getElementById('test-progress').textContent = `${Math.round(progress)}%`;
+                document.getElementById('progress-text').textContent = 
+                    `السؤال ${this.currentQuestionIndex + 1} من ${this.currentTest.questionsList.length}`;
+            }
+
+            updateNavigationButtons() {
+                const prevBtn = document.getElementById('prevBtn');
+                const nextBtn = document.getElementById('nextBtn');
+                const submitBtn = document.getElementById('submitBtn');
+                
+                prevBtn.classList.toggle('hidden', this.currentQuestionIndex === 0);
+                nextBtn.classList.toggle('hidden', this.currentQuestionIndex === this.currentTest.questionsList.length - 1);
+                submitBtn.classList.toggle('hidden', this.currentQuestionIndex !== this.currentTest.questionsList.length - 1);
+            }
+
+            submitTest() {
+                clearInterval(this.timer);
+                
+                let correctAnswers = 0;
+                this.userAnswers.forEach((answer, index) => {
+                    if (answer === this.currentTest.questionsList[index].correctAnswer) {
+                        correctAnswers++;
+                    }
+                });
+                
+                const score = Math.round((correctAnswers / this.currentTest.questionsList.length) * 100);
+                const passed = score >= this.currentTest.passingScore;
+                
+                // حفظ النتيجة
+                this.testResults[this.currentTest.id] = {
+                    testId: this.currentTest.id,
+                    score: score,
+                    correctAnswers: correctAnswers,
+                    totalQuestions: this.currentTest.questionsList.length,
+                    passed: passed,
+                    completedAt: new Date().toISOString()
+                };
+                
+                this.saveTestResults();
+                this.showResults(score, correctAnswers, passed);
+            }
+
+            showResults(score, correctAnswers, passed) {
+                document.getElementById('finalScore').textContent = `${score}%`;
+                document.getElementById('correctAnswers').textContent = `${correctAnswers}/${this.currentTest.questionsList.length}`;
+                
+                const resultIcon = document.getElementById('resultIcon');
+                const resultTitle = document.getElementById('resultTitle');
+                const retryBtn = document.getElementById('retry-btn');
+                const whatsappBtn = document.getElementById('whatsapp-btn');
+                
+                if (passed) {
+                    resultIcon.innerHTML = '<i class="fas fa-trophy text-yellow-400"></i>';
+                    resultTitle.textContent = 'تهانينا! لقد نجحت في الاختبار';
+                    retryBtn.classList.add('hidden');
+                    whatsappBtn.classList.remove('hidden');
+                    showNotification('نجاح', 'لقد نجحت في الاختبار! تواصل للحصول على شهادتك.', 'success');
+                } else {
+                    resultIcon.innerHTML = '<i class="fas fa-redo text-orange-400"></i>';
+                    resultTitle.textContent = 'لم تحقق النسبة المطلوبة للنجاح';
+                    retryBtn.classList.remove('hidden');
+                    whatsappBtn.classList.add('hidden');
+                    showNotification('تحذير', `لم تحقق النسبة المطلوبة. يمكنك إعادة المحاولة.`, 'warning');
+                }
+                
+                document.getElementById('resultsModal').style.display = 'flex';
+                document.getElementById('testModal').style.display = 'none';
+                this.updateStatistics();
+            }
+
+            updateStatistics() {
+                const results = this.testResults;
+                const testIds = Object.keys(results);
+                
+                document.getElementById('totalTests').textContent = this.tests.length;
+                document.getElementById('completedTests').textContent = testIds.length;
+                document.getElementById('activeTests').textContent = this.tests.length - testIds.length;
+                
+                if (testIds.length > 0) {
+                    const totalScore = testIds.reduce((sum, id) => sum + results[id].score, 0);
+                    const averageScore = Math.round(totalScore / testIds.length);
+                    document.getElementById('averageScore').textContent = `${averageScore}%`;
+                }
+            }
+
+            renderTests(filter = 'all') {
+                const container = document.getElementById('testsContainer');
+                let filteredTests = this.tests;
+                
+                if (filter === 'completed') {
+                    filteredTests = this.tests.filter(test => this.testResults[test.id]);
+                } else if (filter === 'active') {
+                    filteredTests = this.tests.filter(test => !this.testResults[test.id]);
+                }
+                
+                if (filteredTests.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state text-center py-16 px-5 text-slate-400 col-span-3">
+                            <i class="fas fa-clipboard-list text-6xl mb-5 text-blue-500"></i>
+                            <h3 class="text-2xl mb-2.5 text-slate-300">لا توجد اختبارات متاحة</h3>
+                            <p class="max-w-md mx-auto mb-5">سيتم إنشاء اختبارات تلقائيًا عند إكمال الدورات</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                container.innerHTML = filteredTests.map(test => {
+                    const result = this.testResults[test.id];
+                    const isCompleted = !!result;
+                    const passed = result?.passed;
+                    
+                    return `
+                        <div class="course-card">
+                            <div class="course-content p-6">
+                                <span class="course-category inline-block bg-blue-500/20 text-blue-500 px-3 py-1.5 rounded-2xl text-xs font-semibold mb-3">اختبار</span>
+                                <h3 class="course-title text-xl font-semibold text-white mb-2">${test.title}</h3>
+                                <p class="course-description text-slate-300 mb-4">${test.description}</p>
+                                <div class="course-meta flex gap-4 mb-4 text-slate-400 text-sm">
+                                    <span><i class="far fa-clock ml-1"></i> ${test.duration} دقيقة</span>
+                                    <span><i class="fas fa-question-circle ml-1"></i> ${test.questions} أسئلة</span>
+                                    <span><i class="fas fa-percentage ml-1"></i> ${test.passingScore}% للناجح</span>
+                                </div>
+                                ${isCompleted ? `
+                                    <div class="progress-bar mt-2.5">
+                                        <div class="progress-fill" style="width: ${result.score}%"></div>
+                                    </div>
+                                    <div class="flex justify-between text-xs mt-1 text-slate-400">
+                                        <span>${result.score}%</span>
+                                        <span class="${passed ? 'text-green-500' : 'text-red-500'}">${passed ? 'ناجح' : 'راسب'}</span>
+                                    </div>
+                                ` : ''}
+                                <div class="course-actions flex gap-2.5 mt-5">
+                                    <button class="btn ${isCompleted ? (passed ? 'bg-green-500 hover:bg-green-600' : 'bg-red-500 hover:bg-red-600') : 'bg-blue-500 hover:bg-blue-600'} text-white start-test-btn" 
+                                            data-test-id="${test.id}">
+                                        <i class="fas fa-play ml-1"></i> ${isCompleted ? (passed ? 'عرض النتائج' : 'إعادة المحاولة') : 'بدء الاختبار'}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                
+                document.querySelectorAll('.start-test-btn').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const testId = parseInt(e.target.getAttribute('data-test-id'));
+                        this.openTest(testId);
+                    });
+                });
+                
+                this.updateStatistics();
+            }
+
+            openTest(testId) {
+                const test = this.tests.find(t => t.id === testId);
+                if (!test) return;
+                
+                document.getElementById('test-title').textContent = test.title;
+                document.getElementById('test-description').textContent = test.description;
+                
+                if (this.startTest(testId)) {
+                    document.getElementById('testModal').style.display = 'flex';
+                }
+            }
+        }
+
+        // 🔧 الأنظمة المساعدة
+        const testManager = new AutoTestManager();
+        let currentUser = { id: 1, name: "نشط الان" };
+
+        class ProgressSystem {
+            constructor() {
+                this.progress = this.loadProgress();
+            }
+
+            loadProgress() {
+                return JSON.parse(localStorage.getItem('userProgress')) || {};
+            }
+
+            saveProgress() {
+                localStorage.setItem('userProgress', JSON.stringify(this.progress));
+            }
+
+            markVideoCompleted(courseId, videoId) {
+                if (!this.progress[courseId]) {
+                    this.progress[courseId] = { completedVideos: [], totalVideos: 0 };
+                }
+
+                if (!this.progress[courseId].completedVideos.includes(videoId)) {
+                    this.progress[courseId].completedVideos.push(videoId);
+                    this.saveProgress();
+                    
+                    // 🔥 هذا هو المفتاح: إنشاء اختبار تلقائي عند اكتمال الدورة
+                    if (this.checkCourseCompletion(courseId)) {
+                        console.log(`🎉 اكتملت الدورة ${courseId}، جاري إنشاء اختبار تلقائي...`);
+                        testManager.createTestForCourse(courseId);
+                        showNotification('تهانينا!', 'لقد أكملت الدورة! تم إنشاء اختبار تلقائي.', 'success');
+                    }
+                    
+                    return true;
+                }
+                return false;
+            }
+
+            checkCourseCompletion(courseId) {
+                const courseProgress = this.progress[courseId];
+                if (!courseProgress || courseProgress.totalVideos === 0) return false;
+                
+                const isCompleted = courseProgress.completedVideos.length === courseProgress.totalVideos;
+                return isCompleted;
+            }
+
+            setTotalVideos(courseId, totalVideos) {
+                if (!this.progress[courseId]) {
+                    this.progress[courseId] = { completedVideos: [], totalVideos: 0 };
+                }
+                this.progress[courseId].totalVideos = totalVideos;
+                this.saveProgress();
+            }
+        }
+
+        const progressSystem = new ProgressSystem();
+
+        // 🔧 الوظائف الأساسية
+        async function fetchCoursesFromSupabase() {
+            try {
+                return backupCoursesData;
+            } catch (error) {
+                console.error('خطأ في جلب الدورات:', error);
+                return backupCoursesData;
+            }
+        }
+
+        async function fetchPlaylistVideos(playlistId) {
+            try {
+                return [
+                    { id: "video1", title: "مقدمة الدورة", youtubeId: "dQw4w9WgXcQ", duration: "10:00" },
+                    { id: "video2", title: "الدرس الأول", youtubeId: "dQw4w9WgXcQ", duration: "15:30" },
+                    { id: "video3", title: "الدرس الثاني", youtubeId: "dQw4w9WgXcQ", duration: "12:45" }
+                ];
+            } catch (error) {
+                console.error("خطأ في جلب الفيديوهات:", error);
+                return [];
+            }
+        }
+
+        function showNotification(title, message, type = 'success') {
+            const notificationContainer = document.getElementById('notification-container');
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            
+            const icon = type === 'success' ? 'fas fa-check-circle' : 
+                         type === 'error' ? 'fas fa-exclamation-circle' : 
+                         'fas fa-exclamation-triangle';
+            
+            notification.innerHTML = `
+                <div class="notification-icon"><i class="${icon}"></i></div>
+                <div class="notification-content">
+                    <div class="notification-title font-semibold mb-1">${title}</div>
+                    <div class="notification-message text-sm opacity-90">${message}</div>
+                </div>
+                <button class="notification-close bg-transparent border-none text-white text-base cursor-pointer opacity-70 hover:opacity-100 transition-opacity">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            notificationContainer.appendChild(notification);
+            
+            setTimeout(() => notification.classList.add('show'), 100);
+            
+            notification.querySelector('.notification-close').addEventListener('click', () => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 400);
+            });
+            
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.classList.remove('show');
+                    setTimeout(() => notification.remove(), 400);
+                }
+            }, 5000);
+        }
+
+        function openVideoPlayer(youtubeId, videoTitle) {
+            const videoPlayer = document.getElementById('video-player');
+            const videoFrame = document.getElementById('video-frame');
+            
+            videoFrame.src = `https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0&modestbranding=1`;
+            videoPlayer.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeVideoPlayer() {
+            const videoPlayer = document.getElementById('video-player');
+            const videoFrame = document.getElementById('video-frame');
+            
+            videoPlayer.style.display = 'none';
+            videoFrame.src = '';
+            document.body.style.overflow = 'auto';
+        }
+
+        function closeTest() {
+            document.getElementById('testModal').style.display = 'none';
+            if (testManager.timer) clearInterval(testManager.timer);
+        }
+
+        function closeResults() {
+            document.getElementById('resultsModal').style.display = 'none';
+        }
+
+        function retryTest() {
+            document.getElementById('resultsModal').style.display = 'none';
+            if (testManager.currentTest) {
+                testManager.openTest(testManager.currentTest.id);
+            }
+        }
+
+        // 🔧 التهيئة والتشغيل
+        document.addEventListener('DOMContentLoaded', function() {
+            // إعداد واجهة المستخدم
+            setupCourseEventListeners();
+            setupCategoryFilters();
+            renderCourses();
+            setupStatsAnimation();
+            
+            // إعداد مستمعي الأحداث
+            document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+                document.querySelector('.sidebar').classList.toggle('active');
+            });
+            
+            document.getElementById('close-video').addEventListener('click', closeVideoPlayer);
+            document.getElementById('close-test').addEventListener('click', closeTest);
+            document.getElementById('close-results').addEventListener('click', closeResults);
+            
+            document.getElementById('video-player').addEventListener('click', function(e) {
+                if (e.target.id === 'video-player') closeVideoPlayer();
+            });
+
+            document.getElementById('theme-toggle').addEventListener('click', function() {
+                document.body.classList.toggle('light-theme');
+                document.getElementById('theme-icon').classList.toggle('fa-toggle-on');
+                document.getElementById('theme-icon').classList.toggle('fa-toggle-off');
+            });
+
+            // التنقل بين الصفحات
+            document.querySelectorAll('.sidebar-nav .nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelectorAll('.sidebar-nav .nav-link').forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const page = this.getAttribute('data-page');
+                    document.querySelectorAll('.home-page, .tests-page').forEach(p => p.classList.add('hidden'));
+                    
+                    if (page === 'home') {
+                        document.querySelector('.home-page').classList.remove('hidden');
+                    } else if (page === 'tests') {
+                        document.querySelector('.tests-page').classList.remove('hidden');
+                        testManager.renderTests();
+                    }
+                    
+                    if (window.innerWidth <= 992) {
+                        document.querySelector('.sidebar').classList.remove('active');
+                    }
+                });
+            });
+
+            // أزرار الاختبار
+            document.getElementById('prevBtn').addEventListener('click', () => testManager.previousQuestion());
+            document.getElementById('nextBtn').addEventListener('click', () => testManager.nextQuestion());
+            document.getElementById('submitBtn').addEventListener('click', () => testManager.submitTest());
+
+            console.log('✅ نظام Skillzoy Academy جاهز للعمل!');
+        });
+
+        // وظائف العرض
+        async function renderCourses() {
+            const container = document.getElementById('courses-container');
+            const coursesData = await fetchCoursesFromSupabase();
+            
+            container.innerHTML = coursesData.map(course => `
+                <div class="course-card">
+                    <div class="course-video-container h-56 relative overflow-hidden">
+                        <div class="video-wrapper relative w-full pb-[56.25%]">
+                            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&modestbranding=1" 
+                                    class="absolute top-0 left-0 w-full h-full border-none"
+                                    title="${course.title}"
+                                    allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                    <div class="course-content p-6">
+                        <span class="course-category inline-block bg-blue-500/20 text-blue-500 px-3 py-1.5 rounded-2xl text-xs font-semibold mb-3">${course.category}</span>
+                        <h3 class="course-title text-xl font-semibold text-white mb-3">${course.title}</h3>
+                        <div class="course-instructor flex items-center gap-2.5 mb-4">
+                            <img src="https://ui-avatars.com/api/?name=${course.provider}&background=3b82f6&color=fff" 
+                                 alt="${course.provider}" class="instructor-avatar w-9 h-9 rounded-full object-cover border-2 border-blue-500">
+                            <span class="instructor-name text-slate-300">${course.provider}</span>
+                        </div>
+                        <div class="course-meta flex gap-4 mb-4 text-slate-400 text-sm">
+                            <span><i class="far fa-clock ml-1"></i> ${course.duration}</span>
+                            <span><i class="fas fa-signal ml-1"></i> ${course.level}</span>
+                            <span><i class="fas fa-user-graduate ml-1"></i> ${course.students}</span>
+                        </div>
+                        <div class="course-actions flex gap-2.5">
+                            <button class="btn bg-blue-500 text-white hover:bg-blue-600 enroll-course" data-course-id="${course.id}">
+                                <i class="fas fa-user-plus ml-1"></i> التسجيل في الدورة
+                            </button>
+                            <button class="btn bg-transparent text-blue-500 border border-blue-500 hover:bg-blue-500/10 watch-trailer" data-youtube-id="dQw4w9WgXcQ">
+                                <i class="fas fa-eye ml-1"></i> مشاهدة المقدمة
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            document.getElementById('courses-count').textContent = coursesData.length;
+        }
+
+        function setupCourseEventListeners() {
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('enroll-course')) {
+                    const courseId = parseInt(e.target.getAttribute('data-course-id'));
+                    showNotification('نجاح', 'تم التسجيل في الدورة بنجاح!', 'success');
+                }
+                
+                if (e.target.classList.contains('watch-trailer')) {
+                    const youtubeId = e.target.getAttribute('data-youtube-id');
+                    openVideoPlayer(youtubeId, 'مقدمة الدورة');
+                }
+            });
+        }
+
+        function setupCategoryFilters() {
+            const categories = ['all', 'cybersecurity', 'programming', 'design'];
+            const container = document.getElementById('category-filters');
+            
+            container.innerHTML = categories.map(cat => `
+                <button class="category-filter ${cat === 'all' ? 'active' : ''}" data-category="${cat}">
+                    ${cat === 'all' ? 'جميع الدورات' : cat}
+                </button>
+            `).join('');
+        }
+
+        function setupStatsAnimation() {
+            const counters = {
+                students: 12500,
+                courses: 6,
+                certificates: 8500,
+                instructors: 24
+            };
+            
+            Object.keys(counters).forEach(key => {
+                let current = 0;
+                const target = counters[key];
+                const element = document.getElementById(`${key}-count`);
+                const duration = 2000;
+                const step = target / (duration / 16);
+                
+                const timer = setInterval(() => {
+                    current += step;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    element.textContent = Math.floor(current).toLocaleString();
+                }, 16);
+            });
+        }
+    </script>
+</body>
+</html>
