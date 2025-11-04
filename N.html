@@ -239,6 +239,7 @@
             border-radius: 8px;
             margin: 15px 0;
             border: 1px solid #f5c6cb;
+            text-align: center;
         }
         
         .success-message {
@@ -257,6 +258,11 @@
             border-radius: 8px;
             margin: 15px 0;
             border: 1px solid #ffeaa7;
+        }
+        
+        .retry-section {
+            text-align: center;
+            margin-top: 20px;
         }
         
         @keyframes fadeIn {
@@ -344,8 +350,22 @@
                 </div>
             </div>
             
+            <!-- قسم الخطأ -->
+            <div id="error-section" class="section">
+                <div class="error-message">
+                    <h3>⚠️ حدث خطأ في إنشاء الأسئلة</h3>
+                    <p id="error-details">تعذر إنشاء الأسئلة باستخدام الذكاء الاصطناعي</p>
+                    <div class="retry-section">
+                        <button class="btn" onclick="retryWithAI()">المحاولة مرة أخرى باستخدام الذكاء الاصطناعي</button>
+                        <button class="btn btn-secondary" onclick="useDefaultQuestions()">استخدام الأسئلة الافتراضية</button>
+                        <button class="btn btn-danger" onclick="goToCourses()">العودة لاختيار الدورة</button>
+                    </div>
+                </div>
+            </div>
+            
             <!-- قسم الاختبار -->
             <div id="quiz-section" class="section">
+                <div id="quiz-header"></div>
                 <div class="progress-bar">
                     <div class="progress" id="progress"></div>
                 </div>
@@ -379,30 +399,35 @@
         let state = {
             apiKey: null,
             currentCourse: null,
+            currentTopic: '',
             currentQuestions: [],
             currentAnswers: [],
             currentQuestionIndex: 0,
             isInitialized: false,
-            apiStatus: 'loading' // loading, success, error
+            apiStatus: 'loading', // loading, success, error, demo
+            lastError: null
         };
 
-        // الأسئلة الافتراضية
+        // الأسئلة الافتراضية المحسنة
         const defaultQuestions = {
             programming: [
                 {
                     question: "ما هي لغة البرمجة التي تُستخدم لإنشاء صفحات الويب التفاعلية؟",
                     options: ["بايثون", "جافا سكريبت", "سي بلس بلس", "جافا"],
-                    correct: 1
+                    correct: 1,
+                    explanation: "جافا سكريبت هي اللغة الأساسية لإنشاء صفحات ويب تفاعلية وتضيف ديناميكية للمواقع."
                 },
                 {
                     question: "ما هو نوع البيانات المستخدم لتخزين القيم المنطقية (صحيح/خطأ)؟",
                     options: ["String", "Number", "Boolean", "Array"],
-                    correct: 2
+                    correct: 2,
+                    explanation: "Boolean هو نوع البيانات المستخدم لتخزين القيم المنطقية true أو false."
                 },
                 {
                     question: "أي من هذه العبارات يستخدم لإنشاء دالة في JavaScript؟",
                     options: ["function", "method", "def", "create"],
-                    correct: 0
+                    correct: 0,
+                    explanation: "كلمة function تستخدم لتعريف الدوال في JavaScript."
                 },
                 {
                     question: "ما هو الـ API؟",
@@ -412,12 +437,14 @@
                         "نظام تشغيل",
                         "مكتبة برمجية"
                     ],
-                    correct: 1
+                    correct: 1,
+                    explanation: "API هي واجهة برمجة التطبيقات تسمح للتطبيقات بالتواصل مع بعضها."
                 },
                 {
                     question: "ما هي بنية البيانات التي تخزن العناصر بمفتاح وقيمة؟",
                     options: ["Array", "Object", "String", "Number"],
-                    correct: 1
+                    correct: 1,
+                    explanation: "Object في JavaScript يستخدم لتخزين البيانات في أزواج مفتاح/قيمة."
                 }
             ],
             marketing: [
@@ -429,12 +456,14 @@
                         "استراتيجية التسويق عبر البريد الإلكتروني",
                         "تحليل البيانات"
                     ],
-                    correct: 0
+                    correct: 0,
+                    explanation: "SEO يعني تحسين محركات البحث لتحسين ظهور الموقع في نتائج البحث."
                 },
                 {
                     question: "أي منصة تعتبر الأفضل للتسويق عبر الفيديو؟",
                     options: ["فيسبوك", "تويتر", "يوتيوب", "لينكد إن"],
-                    correct: 2
+                    correct: 2,
+                    explanation: "يوتيوب هو المنصة الرائدة للتسويق عبر الفيديو بحجم جمهور كبير وميزات متقدمة."
                 },
                 {
                     question: "ما هو الـ KPI في التسويق؟",
@@ -444,7 +473,8 @@
                         "منصة تسويقية",
                         "استراتيجية تسعير"
                     ],
-                    correct: 0
+                    correct: 0,
+                    explanation: "KPI هي مؤشرات الأداء الرئيسية التي تقيس نجاح الحملات التسويقية."
                 },
                 {
                     question: "ما هو الهدف الأساسي من التسويق بالمحتوى؟",
@@ -454,7 +484,8 @@
                         "زيادة متابعي وسائل التواصل الاجتماعي",
                         "تحسين ترتيب الموقع في محركات البحث"
                     ],
-                    correct: 1
+                    correct: 1,
+                    explanation: "التسويق بالمحتوى يهدف إلى جذب العملاء وبناء الثقة من خلال تقديم قيمة حقيقية."
                 },
                 {
                     question: "ما هو الفرق بين التسويق التقليدي والتسويق الرقمي؟",
@@ -464,14 +495,16 @@
                         "التسويق الرقمي يمكن قياسه وتحليله بسهولة",
                         "التسويق التقليدي أكثر فعالية"
                     ],
-                    correct: 2
+                    correct: 2,
+                    explanation: "التسويق الرقمي يمكن تتبعه وتحليله بدقة أكبر من التسويق التقليدي."
                 }
             ],
             design: [
                 {
                     question: "ما هو البرنامج الأكثر استخداماً في تصميم الجرافيك؟",
                     options: ["فوتوشوب", "إكسل", "وورد", "باوربوينت"],
-                    correct: 0
+                    correct: 0,
+                    explanation: "فوتوشوب من أدوبي هو البرنامج الأكثر شيوعاً لتصميم الجرافيك ومعالجة الصور."
                 },
                 {
                     question: "ما هي نظرية الألوان؟",
@@ -481,7 +514,8 @@
                         "قائمة بالألوان الأساسية",
                         "نظام ترميز الألوان"
                     ],
-                    correct: 0
+                    correct: 0,
+                    explanation: "نظرية الألوان تدرس كيفية تفاعل الألوان وتأثيرها على التصميم والإدراك البصري."
                 },
                 {
                     question: "ما هو الـ Vector Graphic؟",
@@ -491,7 +525,8 @@
                         "صورة مضغوطة",
                         "صورة متحركة"
                     ],
-                    correct: 1
+                    correct: 1,
+                    explanation: "الرسوم المتجهة تعتمد على معادلات رياضية ويمكن تكبيرها دون فقدان الجودة."
                 },
                 {
                     question: "ما هو مبدأ التصميم 'التقارب' (Proximity)؟",
@@ -501,7 +536,8 @@
                         "جعل التصميم بسيطاً",
                         "إضافة مسافات بين العناصر"
                     ],
-                    correct: 0
+                    correct: 0,
+                    explanation: "مبدأ التقارب يعني تجميع العناصر المرتبطة معاً لإنشاء علاقة بصرية بينها."
                 },
                 {
                     question: "ما هو الفرق بين RGB و CMYK؟",
@@ -511,7 +547,8 @@
                         "لا يوجد فرق",
                         "RGB للألوان الدافئة وCMYK للألوان الباردة"
                     ],
-                    correct: 1
+                    correct: 1,
+                    explanation: "RGB للألوان على الشاشات (ضوء) وCMYK للألوان في الطباعة (حبر)."
                 }
             ]
         };
@@ -522,7 +559,16 @@
                 console.log('جاري جلب API Key من الخادم...');
                 
                 // استخدام المسار النسبي للـ API endpoint
-                const response = await fetch('/api/get-api-key');
+                const apiUrl = window.location.hostname === 'localhost' 
+                    ? 'http://localhost:3000/api/get-api-key'
+                    : '/api/get-api-key';
+                
+                const response = await fetch(apiUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
                 
                 if (!response.ok) {
                     throw new Error(`خطأ في الخادم: ${response.status}`);
@@ -538,12 +584,13 @@
                     updateApiStatusMessage();
                     showSection('course-selection');
                 } else {
-                    throw new Error('لم يتم استلام API Key من الخادم');
+                    throw new Error('لم يتم استلال API Key من الخادم');
                 }
                 
             } catch (error) {
                 console.error('فشل في التهيئة:', error);
                 state.apiStatus = 'error';
+                state.lastError = error.message;
                 
                 // استخدام وضع التطوير مع API Key محلي (للاختبار فقط)
                 const localApiKey = localStorage.getItem('dev_openai_api_key');
@@ -587,7 +634,7 @@
                     className = 'info-message';
                     break;
                 case 'error':
-                    message = '⚠️ فشل في الاتصال بالخادم - النظام يعمل في الوضع التجريبي';
+                    message = `⚠️ فشل في الاتصال بالخادم - ${state.lastError || 'النظام يعمل في الوضع التجريبي'}`;
                     className = 'error-message';
                     break;
                 default:
@@ -615,6 +662,7 @@
                 }
             }
             
+            state.currentTopic = topic;
             showSection('loading-section');
             
             try {
@@ -626,40 +674,78 @@
                 
                 if (state.apiKey) {
                     state.currentQuestions = await generateQuestionsWithAPI(courseType, topic);
+                    showQuizSection('تم إنشاء الاختبار باستخدام الذكاء الاصطناعي');
                 } else {
                     state.currentQuestions = await generateDefaultQuestions(courseType, topic);
+                    showQuizSection('الوضع التجريبي - الأسئلة الافتراضية');
                 }
                 
-                state.currentAnswers = new Array(state.currentQuestions.length).fill(null);
-                state.currentQuestionIndex = 0;
-                
-                displayQuestions();
-                showSection('quiz-section');
-                updateProgress();
             } catch (error) {
                 console.error('Error generating questions:', error);
-                
-                // استخدام الأسئلة الافتراضية في حالة الخطأ
-                document.getElementById('loading-title').textContent = 'جاري تحميل الأسئلة الافتراضية...';
-                document.getElementById('loading-message').textContent = 'تم استخدام الأسئلة الافتراضية بسبب مشكلة في الاتصال';
-                
-                state.currentQuestions = await generateDefaultQuestions(courseType, topic);
-                state.currentAnswers = new Array(state.currentQuestions.length).fill(null);
-                state.currentQuestionIndex = 0;
-                
-                displayQuestions();
-                showSection('quiz-section');
-                updateProgress();
-                
-                // عرض رسالة تنبيه
-                const container = document.getElementById('questions-container');
-                const errorDiv = document.createElement('div');
-                errorDiv.className = 'info-message';
-                errorDiv.innerHTML = `
-                    <h4>ملاحظة: تم استخدام الأسئلة الافتراضية</h4>
-                    <p>حدث خطأ في الاتصال بالذكاء الاصطناعي. النظام يستخدم الأسئلة الافتراضية.</p>
-                `;
-                container.parentNode.insertBefore(errorDiv, container);
+                state.lastError = error.message;
+                showErrorSection(error.message);
+            }
+        }
+
+        // عرض قسم الاختبار
+        function showQuizSection(message) {
+            state.currentAnswers = new Array(state.currentQuestions.length).fill(null);
+            state.currentQuestionIndex = 0;
+            
+            // إضافة رسالة في رأس الاختبار
+            const quizHeader = document.getElementById('quiz-header');
+            if (message) {
+                quizHeader.innerHTML = `<div class="info-message">${message}</div>`;
+            } else {
+                quizHeader.innerHTML = '';
+            }
+            
+            displayQuestions();
+            showSection('quiz-section');
+            updateProgress();
+        }
+
+        // عرض قسم الخطأ
+        function showErrorSection(errorMessage) {
+            const errorDetails = document.getElementById('error-details');
+            errorDetails.textContent = errorMessage || 'تعذر إنشاء الأسئلة باستخدام الذكاء الاصطناعي';
+            showSection('error-section');
+        }
+
+        // المحاولة مرة أخرى باستخدام الذكاء الاصطناعي
+        async function retryWithAI() {
+            if (!state.apiKey) {
+                alert('لا يتوفر مفتاح API للمحاولة مرة أخرى');
+                return;
+            }
+            
+            showSection('loading-section');
+            document.getElementById('loading-title').textContent = 'جاري إعادة إنشاء الاختبار...';
+            document.getElementById('loading-message').textContent = 'نظام الذكاء الاصطناعي يحاول مرة أخرى';
+            
+            try {
+                state.currentQuestions = await generateQuestionsWithAPI(state.currentCourse, state.currentTopic);
+                showQuizSection('تم إنشاء الاختبار باستخدام الذكاء الاصطناعي');
+            } catch (error) {
+                console.error('Error retrying with AI:', error);
+                state.lastError = error.message;
+                showErrorSection(error.message);
+            }
+        }
+
+        // استخدام الأسئلة الافتراضية
+        async function useDefaultQuestions() {
+            showSection('loading-section');
+            document.getElementById('loading-title').textContent = 'جاري تحميل الأسئلة الافتراضية...';
+            document.getElementById('loading-message').textContent = 'يتم تحميل الأسئلة الافتراضية';
+            
+            try {
+                state.currentQuestions = await generateDefaultQuestions(state.currentCourse, state.currentTopic);
+                showQuizSection('الوضع التجريبي - الأسئلة الافتراضية');
+            } catch (error) {
+                console.error('Error loading default questions:', error);
+                state.lastError = error.message;
+                showErrorSection('حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى.');
             }
         }
 
@@ -681,6 +767,7 @@
             - كل سؤال يجب أن يكون من نوع اختيار من متعدد
             - 4 خيارات لكل سؤال
             - حدد الإجابة الصحيحة لكل سؤال
+            - أضف شرحاً قصيراً للإجابة الصحيحة
             - الأسئلة يجب أن تكون متنوعة وتغطي جوانب مختلفة من الموضوع
             - الإجابة يجب أن تكون في صيغة JSON فقط
             
@@ -689,7 +776,8 @@
                 {
                     "question": "نص السؤال",
                     "options": ["الخيار 1", "الخيار 2", "الخيار 3", "الخيار 4"],
-                    "correct": 0
+                    "correct": 0,
+                    "explanation": "شرح الإجابة الصحيحة"
                 }
             ]
             
@@ -730,16 +818,25 @@
             // استخراج JSON من النص
             const jsonMatch = content.match(/\[[\s\S]*\]/);
             if (jsonMatch) {
-                return JSON.parse(jsonMatch[0]);
+                const questions = JSON.parse(jsonMatch[0]);
+                
+                // التأكد من أن كل سؤال يحتوي على explanation
+                questions.forEach(q => {
+                    if (!q.explanation) {
+                        q.explanation = 'الإجابة الصحيحة: ' + q.options[q.correct];
+                    }
+                });
+                
+                return questions;
             } else {
-                throw new Error('لم يتم العثور على JSON في الرد');
+                throw new Error('لم يتم العثور على JSON في الرد من الذكاء الاصطناعي');
             }
         }
 
         // توليد الأسئلة الافتراضية
         async function generateDefaultQuestions(courseType, customTopic = '') {
             // إرجاع الأسئلة الافتراضية مع إضافة سؤال عن الموضوع المخصص إذا كان موجوداً
-            let questions = [...defaultQuestions[courseType] || defaultQuestions.programming];
+            let questions = [];
             
             if (customTopic && courseType === 'custom') {
                 questions = [
@@ -751,7 +848,8 @@
                             "الأدوات المستخدمة",
                             "كل ما سبق"
                         ],
-                        correct: 3
+                        correct: 3,
+                        explanation: `لموضوع ${customTopic}، من المهم فهم المفاهيم الأساسية والتطبيقات العملية والأدوات المستخدمة.`
                     },
                     {
                         question: `أي من هذه العبارات تنطبق على ${customTopic}؟`,
@@ -761,7 +859,8 @@
                             "يحتاج إلى أدوات معقدة",
                             "جميع ما سبق"
                         ],
-                        correct: 0
+                        correct: 0,
+                        explanation: `عادة ما يتطلب ${customTopic} مهارات متخصصة ومعرفة متقدمة.`
                     },
                     {
                         question: `ما هو التحدي الرئيسي في تعلم ${customTopic}؟`,
@@ -771,7 +870,8 @@
                             "التكلفة العالية",
                             "الوقت المطلوب"
                         ],
-                        correct: 1
+                        correct: 1,
+                        explanation: `غالباً ما تكون صعوبة المفاهيم هي التحدي الرئيسي في تعلم ${customTopic}.`
                     },
                     {
                         question: `كيف يمكن تطبيق ${customTopic} في الحياة العملية؟`,
@@ -781,7 +881,8 @@
                             "في البحث العلمي",
                             "جميع ما سبق"
                         ],
-                        correct: 3
+                        correct: 3,
+                        explanation: `يمكن تطبيق ${customTopic} في مختلف المجالات بما في ذلك المشاريع الصغيرة والشركات الكبيرة والبحث العلمي.`
                     },
                     {
                         question: `ما هو المستقبل المتوقع لـ ${customTopic}؟`,
@@ -791,15 +892,18 @@
                             "سيبقى كما هو",
                             "لا يمكن التكهن"
                         ],
-                        correct: 0
+                        correct: 0,
+                        explanation: `من المتوقع أن يصبح ${customTopic} أكثر أهمية في المستقبل مع تطور التكنولوجيا.`
                     }
                 ];
+            } else {
+                questions = [...defaultQuestions[courseType] || defaultQuestions.programming];
             }
             
             return questions;
         }
 
-        // عرض الأسئلة
+        // باقي الدوال بدون تغيير
         function displayQuestions() {
             const container = document.getElementById('questions-container');
             container.innerHTML = '';
@@ -826,13 +930,11 @@
             updateNavigation();
         }
 
-        // اختيار إجابة
         function selectAnswer(answerIndex) {
             state.currentAnswers[state.currentQuestionIndex] = answerIndex;
             displayQuestions();
         }
 
-        // تحديث أزرار التنقل
         function updateNavigation() {
             const prevBtn = document.getElementById('prev-btn');
             const nextBtn = document.getElementById('next-btn');
@@ -849,7 +951,6 @@
             }
         }
 
-        // السؤال التالي
         function nextQuestion() {
             if (state.currentQuestionIndex < state.currentQuestions.length - 1) {
                 state.currentQuestionIndex++;
@@ -858,7 +959,6 @@
             }
         }
 
-        // السؤال السابق
         function prevQuestion() {
             if (state.currentQuestionIndex > 0) {
                 state.currentQuestionIndex--;
@@ -867,20 +967,17 @@
             }
         }
 
-        // تحديث شريط التقدم
         function updateProgress() {
             const progress = document.getElementById('progress');
             const percentage = ((state.currentQuestionIndex + 1) / state.currentQuestions.length) * 100;
             progress.style.width = `${percentage}%`;
         }
 
-        // إرسال الاختبار
-        async function submitQuiz() {
+        function submitQuiz() {
             showSection('loading-section');
             document.getElementById('loading-title').textContent = 'جاري تصحيح الاختبار...';
             document.getElementById('loading-message').textContent = 'يتم تقييم إجاباتك وعرض النتائج';
             
-            // استخدام وقت بسيط لمحاكاة التصحيح
             setTimeout(() => {
                 const results = evaluateAnswersLocally();
                 displayResults(results);
@@ -888,7 +985,6 @@
             }, 1500);
         }
 
-        // تصحيح الإجابات محلياً
         function evaluateAnswersLocally() {
             let correctCount = 0;
             const results = state.currentQuestions.map((question, index) => {
@@ -900,7 +996,7 @@
                     userAnswer: question.options[state.currentAnswers[index]] || 'لم يتم الإجابة',
                     correctAnswer: question.options[question.correct],
                     isCorrect: isCorrect,
-                    explanation: getExplanation(question, isCorrect)
+                    explanation: question.explanation || getExplanation(question, isCorrect)
                 };
             });
 
@@ -913,7 +1009,6 @@
             };
         }
 
-        // الحصول على تعليق للنتيجة
         function getExplanation(question, isCorrect) {
             if (isCorrect) {
                 return 'إجابة صحيحة! ' + question.options[question.correct] + ' هو الخيار الصحيح.';
@@ -922,7 +1017,6 @@
             }
         }
 
-        // الحصول على ملاحظات عامة
         function getFeedback(score) {
             if (score >= 90) {
                 return 'ممتاز! أداء رائع، لديك فهم قوي للموضوع.';
@@ -937,7 +1031,6 @@
             }
         }
 
-        // عرض النتائج
         function displayResults(results) {
             document.getElementById('score').textContent = `${results.score}%`;
             
@@ -957,7 +1050,6 @@
                 container.appendChild(resultDiv);
             });
             
-            // إضافة الملاحظات العامة
             const feedbackDiv = document.createElement('div');
             feedbackDiv.className = 'result-item';
             feedbackDiv.style.background = '#e8f5e8';
@@ -965,7 +1057,6 @@
             container.appendChild(feedbackDiv);
         }
 
-        // إعادة الاختبار
         function restartQuiz() {
             state.currentAnswers = new Array(state.currentQuestions.length).fill(null);
             state.currentQuestionIndex = 0;
@@ -974,12 +1065,10 @@
             updateProgress();
         }
 
-        // العودة لاختيار الدورة
         function goToCourses() {
             showSection('course-selection');
         }
 
-        // عرض قسم معين وإخفاء الآخرين
         function showSection(sectionId) {
             document.querySelectorAll('.section').forEach(section => {
                 section.classList.remove('active');
