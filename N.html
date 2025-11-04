@@ -232,21 +232,22 @@
             margin: 0 auto 20px;
         }
         
-        .api-key-section {
-            background: #fff3cd;
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
             padding: 15px;
-            border-radius: 10px;
-            margin: 20px 0;
-            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 1px solid #f5c6cb;
         }
         
-        .api-key-section input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
+        .demo-notice {
+            background: #d1ecf1;
+            color: #0c5460;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 1px solid #bee5eb;
         }
         
         @keyframes fadeIn {
@@ -287,21 +288,13 @@
         </header>
         
         <div class="content">
-            <!-- قسم إدخال API Key -->
-            <div id="api-key-section" class="section active">
-                <div class="api-key-section">
-                    <h2>إعدادات النظام</h2>
-                    <p>لبدء استخدام النظام، يرجى إدخال مفتاح OpenAI API الخاص بك:</p>
-                    <input type="password" id="api-key-input" placeholder="sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" />
-                    <button class="btn" onclick="saveApiKey()">حفظ المفتاح</button>
-                    <p style="font-size: 0.9rem; margin-top: 10px; color: #666;">
-                        ملاحظة: المفتاح يتم تخزينه محلياً في متصفحك فقط ولن يتم إرساله لأي مكان آخر.
-                    </p>
-                </div>
-            </div>
-            
             <!-- قسم اختيار الدورة -->
-            <div id="course-selection" class="section">
+            <div id="course-selection" class="section active">
+                <div class="demo-notice">
+                    <h3>💡 نظام تجريبي</h3>
+                    <p>هذا النظام يستخدم نموذج تجريبي. لإصدار كامل، يرجى إضافة مفتاح OpenAI API الخاص بك.</p>
+                </div>
+                
                 <h2>اختر الدورة التدريبية</h2>
                 <p>اختر الدورة التي ترغب في اختبار معرفتك بها</p>
                 
@@ -369,32 +362,93 @@
     <script>
         // حالة التطبيق
         let state = {
-            apiKey: localStorage.getItem('openai_api_key'),
+            // يمكنك إضافة API Key هنا مباشرة إذا أردت
+             apiKey: "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",
+            apiKey: null, // سنستخدم النموذج التجريبي بدلاً من API
             currentCourse: null,
             currentQuestions: [],
             currentAnswers: [],
             currentQuestionIndex: 0
         };
 
+        // قائمة الأسئلة الافتراضية (كبديل عندما لا يعمل API)
+        const defaultQuestions = {
+            programming: [
+                {
+                    question: "ما هي لغة البرمجة التي تُستخدم لإنشاء صفحات الويب التفاعلية؟",
+                    options: ["بايثون", "جافا سكريبت", "سي بلس بلس", "جافا"],
+                    correct: 1
+                },
+                {
+                    question: "ما هو نوع البيانات المستخدم لتخزين القيم المنطقية (صحيح/خطأ)؟",
+                    options: ["String", "Number", "Boolean", "Array"],
+                    correct: 2
+                },
+                {
+                    question: "أي من هذه العبارات يستخدم لإنشاء دالة في JavaScript؟",
+                    options: ["function", "method", "def", "create"],
+                    correct: 0
+                }
+            ],
+            marketing: [
+                {
+                    question: "ما هو الـ SEO؟",
+                    options: [
+                        "تحسين محركات البحث",
+                        "نظام إدارة المحتوى",
+                        "استراتيجية التسويق عبر البريد الإلكتروني",
+                        "تحليل البيانات"
+                    ],
+                    correct: 0
+                },
+                {
+                    question: "أي منصة تعتبر الأفضل للتسويق عبر الفيديو؟",
+                    options: ["فيسبوك", "تويتر", "يوتيوب", "لينكد إن"],
+                    correct: 2
+                },
+                {
+                    question: "ما هو الـ KPI في التسويق؟",
+                    options: [
+                        "مؤشر أداء رئيسي",
+                        "كلمة مرور مهمة",
+                        "منصة تسويقية",
+                        "استراتيجية تسعير"
+                    ],
+                    correct: 0
+                }
+            ],
+            design: [
+                {
+                    question: "ما هو البرنامج الأكثر استخداماً في تصميم الجرافيك؟",
+                    options: ["فوتوشوب", "إكسل", "وورد", "باوربوينت"],
+                    correct: 0
+                },
+                {
+                    question: "ما هي نظرية الألوان؟",
+                    options: [
+                        "دراسة كيفية تفاعل الألوان مع بعضها",
+                        "طريقة لخلط الألوان",
+                        "قائمة بالألوان الأساسية",
+                        "نظام ترميز الألوان"
+                    ],
+                    correct: 0
+                },
+                {
+                    question: "ما هو الـ Vector Graphic؟",
+                    options: [
+                        "صورة مكونة من نقاط البكسل",
+                        "صورة مكونة من خطوط ومنحنيات رياضية",
+                        "صورة مضغوطة",
+                        "صورة متحركة"
+                    ],
+                    correct: 1
+                }
+            ]
+        };
+
         // تهيئة التطبيق
         function initApp() {
-            if (state.apiKey) {
-                showSection('course-selection');
-            } else {
-                showSection('api-key-section');
-            }
-        }
-
-        // حفظ API Key
-        function saveApiKey() {
-            const apiKey = document.getElementById('api-key-input').value.trim();
-            if (apiKey && apiKey.startsWith('sk-')) {
-                state.apiKey = apiKey;
-                localStorage.setItem('openai_api_key', apiKey);
-                showSection('course-selection');
-            } else {
-                alert('يرجى إدخال مفتاح API صحيح');
-            }
+            showSection('course-selection');
         }
 
         // اختيار الدورة
@@ -413,8 +467,14 @@
             showSection('loading-section');
             
             try {
-                // إنشاء الأسئلة باستخدام الذكاء الاصطناعي
-                state.currentQuestions = await generateQuestions(courseType, topic);
+                // محاولة إنشاء الأسئلة باستخدام API
+                if (state.apiKey) {
+                    state.currentQuestions = await generateQuestionsWithAPI(courseType, topic);
+                } else {
+                    // استخدام الأسئلة الافتراضية إذا لم يكن هناك API Key
+                    state.currentQuestions = await generateDefaultQuestions(courseType, topic);
+                }
+                
                 state.currentAnswers = new Array(state.currentQuestions.length).fill(null);
                 state.currentQuestionIndex = 0;
                 
@@ -423,13 +483,30 @@
                 updateProgress();
             } catch (error) {
                 console.error('Error generating questions:', error);
-                alert('حدث خطأ في إنشاء الأسئلة. يرجى المحاولة مرة أخرى.');
-                showSection('course-selection');
+                
+                // استخدام الأسئلة الافتراضية في حالة الخطأ
+                state.currentQuestions = await generateDefaultQuestions(courseType, topic);
+                state.currentAnswers = new Array(state.currentQuestions.length).fill(null);
+                state.currentQuestionIndex = 0;
+                
+                displayQuestions();
+                showSection('quiz-section');
+                updateProgress();
+                
+                // عرض رسالة تنبيه
+                const container = document.getElementById('questions-container');
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'error-message';
+                errorDiv.innerHTML = `
+                    <h4>ملاحظة: النظام يعمل في الوضع التجريبي</h4>
+                    <p>يتم استخدام أسئلة افتراضية. لإضافة أسئلة ذكية، يرجى إضافة مفتاح OpenAI API.</p>
+                `;
+                container.parentNode.insertBefore(errorDiv, container);
             }
         }
 
-        // توليد الأسئلة باستخدام OpenAI API
-        async function generateQuestions(courseType, customTopic = '') {
+        // توليد الأسئلة باستخدام API
+        async function generateQuestionsWithAPI(courseType, customTopic = '') {
             const topics = {
                 programming: 'مقدمة في البرمجة وتعلم أساسيات البرمجة والمفاهيم الأساسية للغات البرمجة',
                 marketing: 'التسويق الرقمي واستراتيجيات التسويق عبر الإنترنت ووسائل التواصل الاجتماعي',
@@ -485,7 +562,7 @@
             });
 
             if (!response.ok) {
-                throw new Error('فشل في الاتصال بـ OpenAI API');
+                throw new Error(`فشل في الاتصال بـ API: ${response.status}`);
             }
 
             const data = await response.json();
@@ -498,6 +575,27 @@
             } else {
                 throw new Error('لم يتم العثور على JSON في الرد');
             }
+        }
+
+        // توليد الأسئلة الافتراضية
+        async function generateDefaultQuestions(courseType, customTopic = '') {
+            // إرجاع الأسئلة الافتراضية مع إضافة سؤال عن الموضوع المخصص إذا كان موجوداً
+            let questions = [...defaultQuestions[courseType] || defaultQuestions.programming];
+            
+            if (customTopic) {
+                questions.push({
+                    question: `ما هو أهم شيء يجب معرفته عن ${customTopic}؟`,
+                    options: [
+                        "المفاهيم الأساسية",
+                        "التطبيقات العملية", 
+                        "الأدوات المستخدمة",
+                        "كل ما سبق"
+                    ],
+                    correct: 3
+                });
+            }
+            
+            return questions;
         }
 
         // عرض الأسئلة
@@ -580,8 +678,8 @@
             showSection('loading-section');
             
             try {
-                // تصحيح الإجابات باستخدام الذكاء الاصطناعي
-                const results = await evaluateAnswers();
+                // تصحيح الإجابات
+                const results = evaluateAnswersLocally();
                 displayResults(results);
                 showSection('results-section');
             } catch (error) {
@@ -593,80 +691,7 @@
             }
         }
 
-        // تصحيح الإجابات باستخدام الذكاء الاصطناعي
-        async function evaluateAnswers() {
-            const evaluationData = {
-                questions: state.currentQuestions,
-                user_answers: state.currentAnswers
-            };
-
-            const prompt = `
-            قم بتصحيح الاختبار التالي وأعطِ تقييماً مفصلاً:
-            
-            ${JSON.stringify(evaluationData, null, 2)}
-            
-            المتطلبات:
-            - احسب النسبة المئوية للدرجة
-            - لكل سؤال، حدد إذا كانت الإجابة صحيحة أم خاطئة
-            - اشرح الإجابة الصحيحة بإيجاز
-            - قدم ملاحظات عامة
-            - الرد يجب أن يكون بصيغة JSON
-            
-            الصيغة المطلوبة:
-            {
-                "score": 80,
-                "results": [
-                    {
-                        "question": "نص السؤال",
-                        "userAnswer": "الإجابة التي اختارها المستخدم",
-                        "correctAnswer": "الإجابة الصحيحة", 
-                        "isCorrect": true,
-                        "explanation": "شرح موجز للإجابة الصحيحة"
-                    }
-                ],
-                "feedback": "ملاحظات عامة على أداء المستخدم"
-            }
-            `;
-
-            const response = await fetch('https://api.openai.com/v1/chat/completions', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${state.apiKey}`
-                },
-                body: JSON.stringify({
-                    model: 'gpt-3.5-turbo',
-                    messages: [
-                        {
-                            role: 'system',
-                            content: 'أنت مصحح اختبارات تعليمية. يجب أن ترد بصيغة JSON فقط.'
-                        },
-                        {
-                            role: 'user',
-                            content: prompt
-                        }
-                    ],
-                    temperature: 0.5,
-                    max_tokens: 2000
-                })
-            });
-
-            if (!response.ok) {
-                throw new Error('فشل في تصحيح الاختبار');
-            }
-
-            const data = await response.json();
-            const content = data.choices[0].message.content;
-            
-            const jsonMatch = content.match(/{[\s\S]*}/);
-            if (jsonMatch) {
-                return JSON.parse(jsonMatch[0]);
-            } else {
-                throw new Error('لم يتم العثور على JSON في الرد');
-            }
-        }
-
-        // تصحيح الإجابات محلياً (بديل)
+        // تصحيح الإجابات محلياً
         function evaluateAnswersLocally() {
             let correctCount = 0;
             const results = state.currentQuestions.map((question, index) => {
