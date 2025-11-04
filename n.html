@@ -6,10 +6,6 @@
     <title>Skillzoy Academy - منصة التعليم الالكتروني</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <!-- مكتبة لتحويل HTML إلى صورة -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <!-- مكتبة لإنشاء PDF -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         /* ===== متغيرات التصميم ===== */
         :root {
@@ -423,6 +419,12 @@
             height: 220px;
             position: relative;
             overflow: hidden;
+        }
+
+        .course-video-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .video-wrapper {
@@ -1985,11 +1987,10 @@
             }
         }
 
-        // ===== نظام تتبع التقدم المحسن =====
+        // ===== نظام تتبع التقدم المبسط =====
         class ProgressSystem {
             constructor() {
                 this.progress = this.loadProgress();
-                this.videoTimers = {}; // لتتبع وقت مشاهدة كل فيديو
             }
 
             loadProgress() {
@@ -1999,33 +2000,6 @@
 
             saveProgress() {
                 localStorage.setItem('userProgress', JSON.stringify(this.progress));
-            }
-
-            // بدء تتبع مشاهدة الفيديو
-            startVideoTracking(courseId, videoId) {
-                const key = `${courseId}_${videoId}`;
-                this.videoTimers[key] = {
-                    startTime: Date.now(),
-                    watchedSeconds: 0,
-                    interval: setInterval(() => {
-                        this.videoTimers[key].watchedSeconds += 1;
-                        
-                        // إذا تمت مشاهدة 10 ثوانٍ على الأقل من نهاية الفيديو
-                        if (this.videoTimers[key].watchedSeconds >= 10) {
-                            this.markVideoCompleted(courseId, videoId);
-                            this.stopVideoTracking(courseId, videoId);
-                        }
-                    }, 1000)
-                };
-            }
-
-            // إيقاف تتبع مشاهدة الفيديو
-            stopVideoTracking(courseId, videoId) {
-                const key = `${courseId}_${videoId}`;
-                if (this.videoTimers[key]) {
-                    clearInterval(this.videoTimers[key].interval);
-                    delete this.videoTimers[key];
-                }
             }
 
             // تسجيل فيديو كمكتمل
@@ -2205,11 +2179,34 @@
                 document.getElementById('certificate-container').style.display = 'flex';
             }
 
+            // تحميل مكتبات الشهادات عند الحاجة
+            async loadCertificateLibraries() {
+                if (typeof html2canvas === 'undefined') {
+                    await this.loadScript('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js');
+                }
+                
+                if (typeof jspdf === 'undefined') {
+                    await this.loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
+                }
+            }
+
+            // تحميل سكريبت ديناميكي
+            loadScript(url) {
+                return new Promise((resolve, reject) => {
+                    const script = document.createElement('script');
+                    script.src = url;
+                    script.onload = resolve;
+                    script.onerror = reject;
+                    document.head.appendChild(script);
+                });
+            }
+
             // تحميل الشهادة كصورة
             async downloadAsImage() {
-                const certificateElement = document.getElementById('certificate-template');
-                
                 try {
+                    await this.loadCertificateLibraries();
+                    
+                    const certificateElement = document.getElementById('certificate-template');
                     const canvas = await html2canvas(certificateElement, {
                         scale: 2,
                         useCORS: true,
@@ -2230,10 +2227,10 @@
 
             // تحميل الشهادة كPDF
             async downloadAsPDF() {
-                const { jsPDF } = window.jspdf;
-                const certificateElement = document.getElementById('certificate-template');
-                
                 try {
+                    await this.loadCertificateLibraries();
+                    
+                    const certificateElement = document.getElementById('certificate-template');
                     const canvas = await html2canvas(certificateElement, {
                         scale: 2,
                         useCORS: true,
@@ -2241,7 +2238,7 @@
                     });
                     
                     const imgData = canvas.toDataURL('image/png');
-                    const pdf = new jsPDF('l', 'mm', 'a4');
+                    const pdf = new jspdf.jsPDF('l', 'mm', 'a4');
                     const pdfWidth = pdf.internal.pageSize.getWidth();
                     const pdfHeight = pdf.internal.pageSize.getHeight();
                     const imgWidth = canvas.width;
@@ -2257,53 +2254,6 @@
                 } catch (error) {
                     console.error('Error generating certificate PDF:', error);
                     showNotification('خطأ', 'حدث خطأ أثناء تحميل الشهادة', 'error');
-                }
-            }
-
-            // رفع الشهادة إلى Supabase Storage
-            async uploadCertificateToStorage(certificate) {
-                try {
-                    if (!supabase) {
-                        console.log('Supabase not configured, skipping upload');
-                        return null;
-                    }
-
-                    // إنشاء صورة الشهادة
-                    const certificateElement = document.getElementById('certificate-template');
-                    const canvas = await html2canvas(certificateElement, {
-                        scale: 2,
-                        useCORS: true,
-                        allowTaint: true
-                    });
-                    
-                    const imageBlob = await new Promise(resolve => {
-                        canvas.toBlob(resolve, 'image/png');
-                    });
-                    
-                    // رفع الصورة إلى Supabase Storage
-                    const fileName = `certificates/${certificate.id}.png`;
-                    const { data, error } = await supabase.storage
-                        .from('certificates')
-                        .upload(fileName, imageBlob, {
-                            contentType: 'image/png',
-                            upsert: true
-                        });
-                    
-                    if (error) {
-                        console.error('Error uploading certificate to storage:', error);
-                        return null;
-                    }
-                    
-                    // الحصول على رابط التحميل العام
-                    const { data: publicUrlData } = supabase.storage
-                        .from('certificates')
-                        .getPublicUrl(fileName);
-                    
-                    console.log('✅ Certificate uploaded successfully:', publicUrlData.publicUrl);
-                    return publicUrlData.publicUrl;
-                } catch (error) {
-                    console.error('Error in certificate upload process:', error);
-                    return null;
                 }
             }
         }
@@ -2378,62 +2328,37 @@
                     return fallbackVideos;
                 }
 
-                console.log(`🎯 Fetching ALL videos for playlist: ${playlistId}`);
+                console.log(`🎯 Fetching videos for playlist: ${playlistId}`);
                 
-                let allVideos = [];
-                let nextPageToken = null;
-                let pageCount = 0;
-                let totalVideosFetched = 0;
-
-                do {
-                    pageCount++;
-                    console.log(`📄 Fetching page ${pageCount} for playlist ${playlistId}`);
-                    
-                    // بناء رابط الطلب مع pageToken إذا موجود
-                    let url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${playlistId}&key=${YOUTUBE_API_KEY}`;
-                    
-                    if (nextPageToken) {
-                        url += `&pageToken=${nextPageToken}`;
-                    }
-                    
-                    const response = await fetch(url);
-                    
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    
-                    const data = await response.json();
-                    
-                    if (data.items && data.items.length > 0) {
-                        const pageVideos = data.items.map(item => ({
-                            id: item.snippet.resourceId.videoId,
-                            title: item.snippet.title,
-                            youtubeId: item.snippet.resourceId.videoId,
-                            duration: "10:00" // ستحتاج API إضافية للحصول على المدة الفعلية
-                        }));
-                        
-                        allVideos = [...allVideos, ...pageVideos];
-                        totalVideosFetched += pageVideos.length;
-                        console.log(`✅ Page ${pageCount}: Loaded ${pageVideos.length} videos (Total: ${totalVideosFetched})`);
-                    } else {
-                        console.log(`❌ No videos found on page ${pageCount}`);
-                    }
-                    
-                    nextPageToken = data.nextPageToken;
-                    
-                    // إضافة تأخير لتجنب تجاوز حدود API
-                    if (nextPageToken) {
-                        await new Promise(resolve => setTimeout(resolve, 100));
-                    }
-                    
-                } while (nextPageToken);
+                // نأخذ أول 10 فيديوهات فقط لتحسين الأداء
+                const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=10&playlistId=${playlistId}&key=${YOUTUBE_API_KEY}`;
                 
-                console.log(`🎉 Successfully loaded ${allVideos.length} videos from playlist ${playlistId}`);
+                const response = await fetch(url);
                 
-                // تخزين النتائج في الذاكرة المؤقتة
-                playlistCache.set(playlistId, allVideos);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
                 
-                return allVideos;
+                const data = await response.json();
+                
+                if (data.items && data.items.length > 0) {
+                    const videos = data.items.map(item => ({
+                        id: item.snippet.resourceId.videoId,
+                        title: item.snippet.title,
+                        youtubeId: item.snippet.resourceId.videoId,
+                        duration: "10:00"
+                    }));
+                    
+                    console.log(`✅ Loaded ${videos.length} videos from playlist ${playlistId}`);
+                    
+                    // تخزين النتائج في الذاكرة المؤقتة
+                    playlistCache.set(playlistId, videos);
+                    
+                    return videos;
+                } else {
+                    console.log(`❌ No videos found for playlist ${playlistId}`);
+                    return [];
+                }
             } catch (error) {
                 console.error("❌ Error fetching playlist videos:", error);
                 
@@ -2575,11 +2500,7 @@
             let coursesHTML = '';
             
             for (const course of filteredCourses) {
-                const videos = await fetchPlaylistVideos(course.playlist_id);
-                const firstVideo = videos[0]; // نأخذ الفيديو الأول فقط
-                
-                if (!firstVideo) continue;
-                
+                // استخدام صورة ثابتة بدلاً من iframe لتحسين الأداء
                 const isEnrolled = userManager.isEnrolled(course.id);
                 const progressPercentage = progressSystem.getProgressPercentage(course.id);
                 const courseProgress = progressSystem.getCourseProgress(course.id);
@@ -2596,12 +2517,7 @@
                 coursesHTML += `
                 <div class="course-card" data-course-id="${course.id}">
                     <div class="course-video-container">
-                        <div class="video-wrapper">
-                            <iframe src="https://www.youtube.com/embed/${firstVideo.youtubeId}?rel=0&modestbranding=1" 
-                                    title="${safeTitle}"
-                                    allowfullscreen>
-                            </iframe>
-                        </div>
+                        <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg" alt="${safeTitle}">
                     </div>
                     <div class="course-content">
                         <span class="course-category">${getCategoryName(course.category)}</span>
@@ -2642,7 +2558,7 @@
                                     <i class="fas fa-user-plus"></i> التسجيل في الدورة
                                 </button>`
                             }
-                            <button class="btn btn-outline watch-trailer" data-youtube-id="${firstVideo.youtubeId}">
+                            <button class="btn btn-outline watch-trailer" data-youtube-id="dQw4w9WgXcQ">
                                 <i class="fas fa-eye"></i> مشاهدة المقدمة
                             </button>
                         </div>
@@ -2679,11 +2595,6 @@
             let coursesHTML = '';
             
             for (const course of enrolledCourses) {
-                const videos = await fetchPlaylistVideos(course.playlist_id);
-                const firstVideo = videos[0];
-                
-                if (!firstVideo) continue;
-                
                 const progressPercentage = progressSystem.getProgressPercentage(course.id);
                 const courseProgress = progressSystem.getCourseProgress(course.id);
                 const isCourseCompleted = progressSystem.isCourseCompleted(course.id);
@@ -2698,12 +2609,7 @@
                 coursesHTML += `
                 <div class="course-card" data-course-id="${course.id}">
                     <div class="course-video-container">
-                        <div class="video-wrapper">
-                            <iframe src="https://www.youtube.com/embed/${firstVideo.youtubeId}?rel=0&modestbranding=1" 
-                                    title="${safeTitle}"
-                                    allowfullscreen>
-                            </iframe>
-                        </div>
+                        <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg" alt="${safeTitle}">
                     </div>
                     <div class="course-content">
                         <span class="course-category">${getCategoryName(course.category)}</span>
@@ -2749,11 +2655,20 @@
             setupCourseEventListeners();
         }
 
-        // عرض صفحة تفاصيل الدورة
+        // عرض صفحة تفاصيل الدورة - محسنة
         async function renderCourseDetails(courseId) {
+            console.log('renderCourseDetails called with courseId:', courseId);
+            
             const coursesData = await fetchCoursesFromSupabase();
             const course = coursesData.find(c => c.id === courseId);
-            if (!course) return;
+            
+            if (!course) {
+                console.error('Course not found:', courseId);
+                showNotification('خطأ', 'لم يتم العثور على الدورة', 'error');
+                return;
+            }
+            
+            console.log('Found course:', course);
             
             const videos = await fetchPlaylistVideos(course.playlist_id);
             
@@ -2822,6 +2737,15 @@
             } else {
                 certificateSection.style.display = 'none';
             }
+            
+            // إظهار صفحة التفاصيل وإخفاء الآخرين
+            document.querySelector('.home-page').style.display = 'none';
+            document.querySelector('.my-courses-page').style.display = 'none';
+            document.querySelector('.progress-page').style.display = 'none';
+            document.querySelector('.certificates-page').style.display = 'none';
+            document.getElementById('course-details').style.display = 'block';
+            
+            console.log('Course details page rendered successfully');
         }
 
         // عرض صفحة التقدم
@@ -3079,12 +3003,6 @@
             // إنشاء الشهادة
             const certificate = certificateManager.createCertificate(courseId, courseTitle, studentName);
             
-            // رفع الشهادة إلى Supabase Storage
-            const storageUrl = await certificateManager.uploadCertificateToStorage(certificate);
-            if (storageUrl) {
-                console.log('Certificate uploaded to:', storageUrl);
-            }
-            
             // عرض الشهادة
             certificateManager.displayCertificate(certificate);
             
@@ -3149,22 +3067,47 @@
                     
                     openVideoPlayer(youtubeId, videoTitle);
                     
-                    // بدء تتبع مشاهدة الفيديو
-                    progressSystem.startVideoTracking(courseId, videoId);
+                    // عند إغلاق الفيديو، تسجيله كمكتمل
+                    const markAsCompleted = () => {
+                        if (progressSystem.markVideoCompleted(courseId, videoId)) {
+                            showNotification('تم تحديث التقدم', 'تم تسجيل الفيديو كمكتمل', 'success');
+                            
+                            // تحديث الواجهة
+                            button.innerHTML = '<i class="fas fa-check"></i> تم المشاهدة';
+                            button.classList.remove('btn-primary');
+                            button.classList.add('btn-success');
+                            
+                            // إعادة تحميل صفحات التقدم إذا كانت مفتوحة
+                            if (document.querySelector('.progress-page').style.display === 'block') {
+                                renderProgressPage();
+                            }
+                            if (document.querySelector('.my-courses-page').style.display === 'block') {
+                                renderMyCourses();
+                            }
+                            
+                            // التحقق مما إذا كانت الدورة اكتملت
+                            if (progressSystem.isCourseCompleted(courseId)) {
+                                // تحديث صفحة تفاصيل الدورة إذا كانت مفتوحة
+                                if (document.getElementById('course-details').style.display === 'block') {
+                                    renderCourseDetails(courseId);
+                                }
+                            }
+                        }
+                    };
                     
-                    // عند إغلاق الفيديو، إيقاف التتبع
+                    // إضافة مستمع حدث لإغلاق الفيديو
                     const closeVideo = document.getElementById('close-video');
                     const videoPlayer = document.getElementById('video-player');
                     
                     const closeHandler = () => {
-                        progressSystem.stopVideoTracking(courseId, videoId);
+                        markAsCompleted();
                         closeVideo.removeEventListener('click', closeHandler);
                         videoPlayer.removeEventListener('click', outsideHandler);
                     };
                     
                     const outsideHandler = (e) => {
                         if (e.target.id === 'video-player') {
-                            progressSystem.stopVideoTracking(courseId, videoId);
+                            markAsCompleted();
                             closeVideo.removeEventListener('click', closeHandler);
                             videoPlayer.removeEventListener('click', outsideHandler);
                         }
@@ -3280,11 +3223,6 @@
             });
             document.getElementById('download-certificate-pdf').addEventListener('click', () => {
                 certificateManager.downloadAsPDF();
-            });
-            document.getElementById('create-certificate-btn').addEventListener('click', (e) => {
-                const courseId = document.querySelector('.course-details').dataset.courseId;
-                const courseTitle = document.getElementById('course-details-title').textContent;
-                showCertificateForm(courseId, courseTitle);
             });
 
             document.addEventListener('click', (e) => {
