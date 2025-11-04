@@ -241,13 +241,22 @@
             border: 1px solid #f5c6cb;
         }
         
-        .demo-notice {
-            background: #d1ecf1;
+        .success-message {
+            background: #d1edff;
             color: #0c5460;
             padding: 15px;
             border-radius: 8px;
             margin: 15px 0;
             border: 1px solid #bee5eb;
+        }
+        
+        .info-message {
+            background: #fff3cd;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 1px solid #ffeaa7;
         }
         
         @keyframes fadeIn {
@@ -288,12 +297,18 @@
         </header>
         
         <div class="content">
-            <!-- قسم اختيار الدورة -->
-            <div id="course-selection" class="section active">
-                <div class="demo-notice">
-                    <h3>💡 نظام تجريبي</h3>
-                    <p>هذا النظام يستخدم نموذج تجريبي. لإصدار كامل، يرجى إضافة مفتاح OpenAI API الخاص بك.</p>
+            <!-- قسم التهيئة -->
+            <div id="init-section" class="section active">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <h3>جاري تهيئة النظام...</h3>
+                    <p>يتم تحميل إعدادات الذكاء الاصطناعي من الخادم</p>
                 </div>
+            </div>
+            
+            <!-- قسم اختيار الدورة -->
+            <div id="course-selection" class="section">
+                <div id="api-status"></div>
                 
                 <h2>اختر الدورة التدريبية</h2>
                 <p>اختر الدورة التي ترغب في اختبار معرفتك بها</p>
@@ -324,8 +339,8 @@
             <div id="loading-section" class="section">
                 <div class="loading">
                     <div class="spinner"></div>
-                    <h3>جاري إنشاء الاختبار...</h3>
-                    <p>نظام الذكاء الاصطناعي يجهز أسئلة الاختبار الخاصة بك</p>
+                    <h3 id="loading-title">جاري إنشاء الاختبار...</h3>
+                    <p id="loading-message">نظام الذكاء الاصطناعي يجهز أسئلة الاختبار الخاصة بك</p>
                 </div>
             </div>
             
@@ -362,16 +377,16 @@
     <script>
         // حالة التطبيق
         let state = {
-            // يمكنك إضافة API Key هنا مباشرة إذا أردت
-             apiKey: "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",
-            apiKey: null, // سنستخدم النموذج التجريبي بدلاً من API
+            apiKey: null,
             currentCourse: null,
             currentQuestions: [],
             currentAnswers: [],
-            currentQuestionIndex: 0
+            currentQuestionIndex: 0,
+            isInitialized: false,
+            apiStatus: 'loading' // loading, success, error
         };
 
-        // قائمة الأسئلة الافتراضية (كبديل عندما لا يعمل API)
+        // الأسئلة الافتراضية
         const defaultQuestions = {
             programming: [
                 {
@@ -388,6 +403,21 @@
                     question: "أي من هذه العبارات يستخدم لإنشاء دالة في JavaScript؟",
                     options: ["function", "method", "def", "create"],
                     correct: 0
+                },
+                {
+                    question: "ما هو الـ API؟",
+                    options: [
+                        "لغة برمجة",
+                        "واجهة برمجة التطبيقات",
+                        "نظام تشغيل",
+                        "مكتبة برمجية"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "ما هي بنية البيانات التي تخزن العناصر بمفتاح وقيمة؟",
+                    options: ["Array", "Object", "String", "Number"],
+                    correct: 1
                 }
             ],
             marketing: [
@@ -415,6 +445,26 @@
                         "استراتيجية تسعير"
                     ],
                     correct: 0
+                },
+                {
+                    question: "ما هو الهدف الأساسي من التسويق بالمحتوى؟",
+                    options: [
+                        "بيع المنتجات مباشرة",
+                        "جذب العملاء المحتملين وبناء الثقة",
+                        "زيادة متابعي وسائل التواصل الاجتماعي",
+                        "تحسين ترتيب الموقع في محركات البحث"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "ما هو الفرق بين التسويق التقليدي والتسويق الرقمي؟",
+                    options: [
+                        "لا يوجد فرق",
+                        "التسويق الرقمي أكثر تكلفة",
+                        "التسويق الرقمي يمكن قياسه وتحليله بسهولة",
+                        "التسويق التقليدي أكثر فعالية"
+                    ],
+                    correct: 2
                 }
             ],
             design: [
@@ -442,17 +492,118 @@
                         "صورة متحركة"
                     ],
                     correct: 1
+                },
+                {
+                    question: "ما هو مبدأ التصميم 'التقارب' (Proximity)؟",
+                    options: [
+                        "وضع العناصر المتشابهة بالقرب من بعضها",
+                        "استخدام الألوان المتشابهة",
+                        "جعل التصميم بسيطاً",
+                        "إضافة مسافات بين العناصر"
+                    ],
+                    correct: 0
+                },
+                {
+                    question: "ما هو الفرق بين RGB و CMYK؟",
+                    options: [
+                        "RGB للطباعة وCMYK للشاشات",
+                        "RGB للشاشات وCMYK للطباعة",
+                        "لا يوجد فرق",
+                        "RGB للألوان الدافئة وCMYK للألوان الباردة"
+                    ],
+                    correct: 1
                 }
             ]
         };
 
-        // تهيئة التطبيق
-        function initApp() {
-            showSection('course-selection');
+        // تهيئة التطبيق - جلب API Key من Vercel
+        async function initApp() {
+            try {
+                console.log('جاري جلب API Key من الخادم...');
+                
+                // استخدام المسار النسبي للـ API endpoint
+                const response = await fetch('/api/get-api-key');
+                
+                if (!response.ok) {
+                    throw new Error(`خطأ في الخادم: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.apiKey) {
+                    state.apiKey = data.apiKey;
+                    state.isInitialized = true;
+                    state.apiStatus = 'success';
+                    console.log('تم تهيئة النظام بنجاح مع API Key من الخادم');
+                    updateApiStatusMessage();
+                    showSection('course-selection');
+                } else {
+                    throw new Error('لم يتم استلام API Key من الخادم');
+                }
+                
+            } catch (error) {
+                console.error('فشل في التهيئة:', error);
+                state.apiStatus = 'error';
+                
+                // استخدام وضع التطوير مع API Key محلي (للاختبار فقط)
+                const localApiKey = localStorage.getItem('dev_openai_api_key');
+                if (localApiKey) {
+                    state.apiKey = localApiKey;
+                    state.isInitialized = true;
+                    state.apiStatus = 'local';
+                    console.log('تم استخدام API Key محلي للتطوير');
+                    updateApiStatusMessage();
+                    showSection('course-selection');
+                } else {
+                    // إذا فشل كل شيء، استخدم الوضع بدون API
+                    state.isInitialized = true;
+                    state.apiStatus = 'demo';
+                    console.log('النظام يعمل في الوضع التجريبي');
+                    updateApiStatusMessage();
+                    showSection('course-selection');
+                }
+            }
+        }
+
+        // تحديث رسالة حالة الـ API
+        function updateApiStatusMessage() {
+            const statusContainer = document.getElementById('api-status');
+            if (!statusContainer) return;
+            
+            let message = '';
+            let className = '';
+            
+            switch(state.apiStatus) {
+                case 'success':
+                    message = '✅ النظام يعمل مع الذكاء الاصطناعي - جاهز لإنشاء اختبارات ذكية';
+                    className = 'success-message';
+                    break;
+                case 'local':
+                    message = '🔧 النظام يعمل مع مفتاح API محلي - وضع التطوير';
+                    className = 'info-message';
+                    break;
+                case 'demo':
+                    message = '💡 النظام يعمل في الوضع التجريبي - باستخدام الأسئلة الافتراضية';
+                    className = 'info-message';
+                    break;
+                case 'error':
+                    message = '⚠️ فشل في الاتصال بالخادم - النظام يعمل في الوضع التجريبي';
+                    className = 'error-message';
+                    break;
+                default:
+                    return;
+            }
+            
+            statusContainer.innerHTML = `<div class="${className}">${message}</div>`;
         }
 
         // اختيار الدورة
         async function selectCourse(courseType) {
+            if (!state.isInitialized) {
+                alert('النظام لم يتم تهيئته بعد. يرجى الانتظار...');
+                return;
+            }
+
             state.currentCourse = courseType;
             
             let topic = '';
@@ -467,11 +618,15 @@
             showSection('loading-section');
             
             try {
-                // محاولة إنشاء الأسئلة باستخدام API
+                // تحديث رسالة التحميل
+                document.getElementById('loading-title').textContent = 'جاري إنشاء الاختبار...';
+                document.getElementById('loading-message').textContent = state.apiKey 
+                    ? 'نظام الذكاء الاصطناعي يجهز أسئلة الاختبار الخاصة بك' 
+                    : 'جاري تحميل الأسئلة الافتراضية';
+                
                 if (state.apiKey) {
                     state.currentQuestions = await generateQuestionsWithAPI(courseType, topic);
                 } else {
-                    // استخدام الأسئلة الافتراضية إذا لم يكن هناك API Key
                     state.currentQuestions = await generateDefaultQuestions(courseType, topic);
                 }
                 
@@ -485,6 +640,9 @@
                 console.error('Error generating questions:', error);
                 
                 // استخدام الأسئلة الافتراضية في حالة الخطأ
+                document.getElementById('loading-title').textContent = 'جاري تحميل الأسئلة الافتراضية...';
+                document.getElementById('loading-message').textContent = 'تم استخدام الأسئلة الافتراضية بسبب مشكلة في الاتصال';
+                
                 state.currentQuestions = await generateDefaultQuestions(courseType, topic);
                 state.currentAnswers = new Array(state.currentQuestions.length).fill(null);
                 state.currentQuestionIndex = 0;
@@ -496,10 +654,10 @@
                 // عرض رسالة تنبيه
                 const container = document.getElementById('questions-container');
                 const errorDiv = document.createElement('div');
-                errorDiv.className = 'error-message';
+                errorDiv.className = 'info-message';
                 errorDiv.innerHTML = `
-                    <h4>ملاحظة: النظام يعمل في الوضع التجريبي</h4>
-                    <p>يتم استخدام أسئلة افتراضية. لإضافة أسئلة ذكية، يرجى إضافة مفتاح OpenAI API.</p>
+                    <h4>ملاحظة: تم استخدام الأسئلة الافتراضية</h4>
+                    <p>حدث خطأ في الاتصال بالذكاء الاصطناعي. النظام يستخدم الأسئلة الافتراضية.</p>
                 `;
                 container.parentNode.insertBefore(errorDiv, container);
             }
@@ -562,7 +720,8 @@
             });
 
             if (!response.ok) {
-                throw new Error(`فشل في الاتصال بـ API: ${response.status}`);
+                const errorData = await response.json();
+                throw new Error(`فشل في الاتصال بـ API: ${errorData.error?.message || response.status}`);
             }
 
             const data = await response.json();
@@ -582,17 +741,59 @@
             // إرجاع الأسئلة الافتراضية مع إضافة سؤال عن الموضوع المخصص إذا كان موجوداً
             let questions = [...defaultQuestions[courseType] || defaultQuestions.programming];
             
-            if (customTopic) {
-                questions.push({
-                    question: `ما هو أهم شيء يجب معرفته عن ${customTopic}؟`,
-                    options: [
-                        "المفاهيم الأساسية",
-                        "التطبيقات العملية", 
-                        "الأدوات المستخدمة",
-                        "كل ما سبق"
-                    ],
-                    correct: 3
-                });
+            if (customTopic && courseType === 'custom') {
+                questions = [
+                    {
+                        question: `ما هو أهم شيء يجب معرفته عن ${customTopic}؟`,
+                        options: [
+                            "المفاهيم الأساسية",
+                            "التطبيقات العملية", 
+                            "الأدوات المستخدمة",
+                            "كل ما سبق"
+                        ],
+                        correct: 3
+                    },
+                    {
+                        question: `أي من هذه العبارات تنطبق على ${customTopic}؟`,
+                        options: [
+                            "يتطلب مهارات متخصصة",
+                            "سهل التعلم للمبتدئين",
+                            "يحتاج إلى أدوات معقدة",
+                            "جميع ما سبق"
+                        ],
+                        correct: 0
+                    },
+                    {
+                        question: `ما هو التحدي الرئيسي في تعلم ${customTopic}؟`,
+                        options: [
+                            "قلة المصادر التعليمية",
+                            "صعوبة المفاهيم",
+                            "التكلفة العالية",
+                            "الوقت المطلوب"
+                        ],
+                        correct: 1
+                    },
+                    {
+                        question: `كيف يمكن تطبيق ${customTopic} في الحياة العملية؟`,
+                        options: [
+                            "في المشاريع الصغيرة",
+                            "في الشركات الكبيرة",
+                            "في البحث العلمي",
+                            "جميع ما سبق"
+                        ],
+                        correct: 3
+                    },
+                    {
+                        question: `ما هو المستقبل المتوقع لـ ${customTopic}؟`,
+                        options: [
+                            "سيصبح أكثر أهمية",
+                            "سيتم استبداله بتقنيات جديدة",
+                            "سيبقى كما هو",
+                            "لا يمكن التكهن"
+                        ],
+                        correct: 0
+                    }
+                ];
             }
             
             return questions;
@@ -676,19 +877,15 @@
         // إرسال الاختبار
         async function submitQuiz() {
             showSection('loading-section');
+            document.getElementById('loading-title').textContent = 'جاري تصحيح الاختبار...';
+            document.getElementById('loading-message').textContent = 'يتم تقييم إجاباتك وعرض النتائج';
             
-            try {
-                // تصحيح الإجابات
+            // استخدام وقت بسيط لمحاكاة التصحيح
+            setTimeout(() => {
                 const results = evaluateAnswersLocally();
                 displayResults(results);
                 showSection('results-section');
-            } catch (error) {
-                console.error('Error evaluating answers:', error);
-                // استخدام التصحيح المحلي كبديل
-                const localResults = evaluateAnswersLocally();
-                displayResults(localResults);
-                showSection('results-section');
-            }
+            }, 1500);
         }
 
         // تصحيح الإجابات محلياً
@@ -703,7 +900,7 @@
                     userAnswer: question.options[state.currentAnswers[index]] || 'لم يتم الإجابة',
                     correctAnswer: question.options[question.correct],
                     isCorrect: isCorrect,
-                    explanation: 'الإجابة الصحيحة: ' + question.options[question.correct]
+                    explanation: getExplanation(question, isCorrect)
                 };
             });
 
@@ -712,10 +909,32 @@
             return {
                 score: score,
                 results: results,
-                feedback: score >= 80 ? 'ممتاز! أداء رائع.' : 
-                         score >= 60 ? 'جيد، ولكن هناك مجال للتحسين.' : 
-                         'يحتاج إلى مزيد من الدراسة والممارسة.'
+                feedback: getFeedback(score)
             };
+        }
+
+        // الحصول على تعليق للنتيجة
+        function getExplanation(question, isCorrect) {
+            if (isCorrect) {
+                return 'إجابة صحيحة! ' + question.options[question.correct] + ' هو الخيار الصحيح.';
+            } else {
+                return 'الإجابة الصحيحة هي: ' + question.options[question.correct];
+            }
+        }
+
+        // الحصول على ملاحظات عامة
+        function getFeedback(score) {
+            if (score >= 90) {
+                return 'ممتاز! أداء رائع، لديك فهم قوي للموضوع.';
+            } else if (score >= 80) {
+                return 'جيد جداً! لديك معرفة جيدة ولكن يمكنك التحسين أكثر.';
+            } else if (score >= 70) {
+                return 'جيد! لديك فهم أساسي ولكن تحتاج إلى مزيد من الدراسة.';
+            } else if (score >= 60) {
+                return 'مقبول! تحتاج إلى مراجعة المواد الدراسية.';
+            } else {
+                return 'يحتاج إلى تحسين! ننصحك بمراجعة شاملة للموضوع.';
+            }
         }
 
         // عرض النتائج
@@ -741,6 +960,7 @@
             // إضافة الملاحظات العامة
             const feedbackDiv = document.createElement('div');
             feedbackDiv.className = 'result-item';
+            feedbackDiv.style.background = '#e8f5e8';
             feedbackDiv.innerHTML = `<h4>ملاحظات عامة</h4><p>${results.feedback}</p>`;
             container.appendChild(feedbackDiv);
         }
@@ -767,8 +987,10 @@
             document.getElementById(sectionId).classList.add('active');
         }
 
-        // تهيئة التطبيق عند التحميل
-        document.addEventListener('DOMContentLoaded', initApp);
+        // بدء التطبيق عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            initApp();
+        });
     </script>
 </body>
 </html>
