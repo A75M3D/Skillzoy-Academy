@@ -6,9 +6,6 @@
     <title>Skillzoy Academy - منصة التعليم الالكتروني</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         /* ===== متغيرات التصميم ===== */
         :root {
@@ -1467,17 +1464,6 @@
             font-family: 'Cairo', 'Poppins', sans-serif;
         }
 
-        .certificate-professional::before {
-            content: '';
-            position: absolute;
-            top: 40px;
-            left: 40px;
-            right: 40px;
-            bottom: 40px;
-            border: 10px solid #3b82f6;
-            pointer-events: none;
-        }
-
         .certificate-header {
             margin-bottom: 60px;
         }
@@ -1587,14 +1573,6 @@
                 min-height: 80vh;
                 padding: 20px;
                 border-width: 20px;
-            }
-
-            .certificate-professional::before {
-                top: 20px;
-                left: 20px;
-                right: 20px;
-                bottom: 20px;
-                border-width: 5px;
             }
 
             .certificate-title {
@@ -2077,6 +2055,16 @@
             </div>
         </div>
         <div class="course-content-section">
+            <!-- ===== تنبيه الشهادة ===== -->
+            <div class="certificate-notice" style="margin-bottom: 30px;">
+                <div class="certificate-notice-content">
+                    <i class="fas fa-info-circle"></i>
+                    <div>
+                        <strong>ملاحظة هامة:</strong> الشهادة المجانية والمدفوعة ستظهر بعد إكمال جميع فيديوهات الدورة بنجاح.
+                    </div>
+                </div>
+            </div>
+            
             <h3>فيديوهات الدورة</h3>
             <div class="videos-grid" id="course-videos-container">
                 <!-- سيتم ملؤها ديناميكياً -->
@@ -2084,16 +2072,6 @@
             
             <!-- ===== قسم الشهادة بعد إكمال الدورة ===== -->
             <div class="certificate-section" id="certificate-section" style="display: none;">
-                <!-- ملاحظة حول الشهادة المجانية -->
-                <div class="certificate-notice">
-                    <div class="certificate-notice-content">
-                        <i class="fas fa-info-circle"></i>
-                        <div>
-                            <strong>ملاحظة هامة:</strong> الشهادة المجانية ستظهر تلقائيًا بعد إكمال جميع فيديوهات الدورة بنجاح.
-                        </div>
-                    </div>
-                </div>
-                
                 <h2>مبروك! لقد أكملت الدورة بنجاح</h2>
                 <p>يمكنك الآن الحصول على شهادتك المعتمدة من الأكاديمية</p>
                 
@@ -2429,6 +2407,9 @@
                     // عرض قسم الشهادة في صفحة تفاصيل الدورة
                     if (document.getElementById('course-details').style.display === 'block') {
                         document.getElementById('certificate-section').style.display = 'block';
+                        
+                        // تحديث زر الشهادة إذا كان المستخدم لديه شهادة بالفعل
+                        updateCertificateButton(courseId);
                     }
                 }
                 
@@ -2559,6 +2540,11 @@
             // التحقق مما إذا كان المستخدم لديه شهادة للدورة
             hasCertificateForCourse(courseId) {
                 return this.certificates.some(cert => cert.courseId === courseId);
+            }
+
+            // الحصول على شهادة الدورة
+            getCertificateForCourse(courseId) {
+                return this.certificates.find(cert => cert.courseId === courseId);
             }
 
             // عرض الشهادة
@@ -2870,6 +2856,27 @@
             return categories[category] || category;
         }
 
+        // ===== تحديث زر الشهادة =====
+        function updateCertificateButton(courseId) {
+            const getFreeCertificateBtn = document.getElementById('get-free-certificate-btn');
+            const hasCertificate = certificateManager.hasCertificateForCourse(courseId);
+            
+            if (hasCertificate) {
+                getFreeCertificateBtn.innerHTML = '<i class="fas fa-eye"></i> عرض الشهادة';
+                getFreeCertificateBtn.onclick = () => {
+                    const certificate = certificateManager.getCertificateForCourse(courseId);
+                    if (certificate) {
+                        certificateManager.displayCertificate(certificate);
+                    }
+                };
+            } else {
+                getFreeCertificateBtn.innerHTML = '<i class="fas fa-certificate"></i> احصل على شهادة مجانية';
+                getFreeCertificateBtn.onclick = () => {
+                    showCertificateForm(courseId, document.getElementById('course-details-title').textContent);
+                };
+            }
+        }
+
         // ===== وظائف العرض =====
         // إنشاء أزرار التصنيفات ديناميكياً
         async function createCategoryFilters() {
@@ -3168,29 +3175,13 @@
             
             // التحقق مما إذا كانت الدورة مكتملة وعرض قسم الشهادة
             const isCourseCompleted = progressSystem.isCourseCompleted(courseId);
-            const hasCertificate = certificateManager.hasCertificateForCourse(courseId);
             const certificateSection = document.getElementById('certificate-section');
             
             if (isCourseCompleted) {
                 certificateSection.style.display = 'block';
                 
                 // تحديث زر الحصول على الشهادة المجانية
-                const getFreeCertificateBtn = document.getElementById('get-free-certificate-btn');
-                
-                if (hasCertificate) {
-                    getFreeCertificateBtn.innerHTML = '<i class="fas fa-certificate"></i> عرض الشهادة';
-                    getFreeCertificateBtn.onclick = () => {
-                        const certificate = certificateManager.getUserCertificates().find(cert => cert.courseId === courseId);
-                        if (certificate) {
-                            certificateManager.displayCertificate(certificate);
-                        }
-                    };
-                } else {
-                    getFreeCertificateBtn.innerHTML = '<i class="fas fa-certificate"></i> احصل على شهادة مجانية';
-                    getFreeCertificateBtn.onclick = () => {
-                        showCertificateForm(courseId, course.title);
-                    };
-                }
+                updateCertificateButton(courseId);
             } else {
                 certificateSection.style.display = 'none';
             }
@@ -3460,13 +3451,18 @@
             // إنشاء الشهادة
             const certificate = certificateManager.createCertificate(courseId, courseTitle, studentName);
             
-            // عرض الشهادة
-            certificateManager.displayCertificate(certificate);
-            
             // إغلاق نموذج الإدخال
             closeCertificateForm();
             
-            showNotification('مبروك!', 'تم إنشاء شهادتك بنجاح', 'success');
+            // إذا كانت الشهادة موجودة مسبقاً، عرضها مباشرة
+            if (certificate) {
+                certificateManager.displayCertificate(certificate);
+                showNotification('تم فتح الشهادة', 'تم فتح شهادتك الموجودة مسبقاً', 'info');
+            } else {
+                // عرض الشهادة الجديدة
+                certificateManager.displayCertificate(certificate);
+                showNotification('مبروك!', 'تم إنشاء شهادتك بنجاح', 'success');
+            }
             
             // تحديث صفحة الشهادات إذا كانت مفتوحة
             if (document.querySelector('.certificates-page').style.display === 'block') {
@@ -3475,7 +3471,7 @@
             
             // تحديث صفحة تفاصيل الدورة إذا كانت مفتوحة
             if (document.getElementById('course-details').style.display === 'block') {
-                renderCourseDetails(courseId);
+                updateCertificateButton(courseId);
             }
         }
 
