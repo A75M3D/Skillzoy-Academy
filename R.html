@@ -1940,6 +1940,255 @@
                 font-size: 1.1rem;
             }
         }
+        
+        /* ===== تصميم الشهادة المربع المتجاوب ===== */
+        .certificate-square {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            width: 100%;
+            position: relative;
+            border: 15px solid #1e3a8a;
+            background: linear-gradient(135deg, #fefefe, #f8fafc);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .certificate-square::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            border: 2px solid #3b82f6;
+            pointer-events: none;
+        }
+
+        .certificate-square-header {
+            border-bottom: 3px solid #3b82f6;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            position: relative;
+            text-align: center;
+        }
+
+        .certificate-square-header h1 {
+            color: #1e3a8a;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .certificate-square-header h2 {
+            color: #3b82f6;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .certificate-square-body {
+            flex: 1;
+            display: flex;
+            gap: 30px;
+            margin: 20px 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .certificate-content {
+            flex: 1;
+            text-align: right;
+            padding-left: 20px;
+        }
+
+        .certificate-seal-container {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 180px;
+        }
+
+        .seal-image-square {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 3px solid #3b82f6;
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1rem;
+            text-align: center;
+            line-height: 1.2;
+            padding: 10px;
+        }
+
+        .certificate-content h3 {
+            font-size: 1.8rem;
+            color: #1e293b;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .certificate-content p {
+            font-size: 1.2rem;
+            color: #64748b;
+            margin-bottom: 5px;
+        }
+
+        .student-name-square {
+            font-size: 2.2rem !important;
+            color: #0f172a !important;
+            font-weight: bold;
+            margin: 20px 0 !important;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .certificate-square-footer {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            border-top: 2px solid #e2e8f0;
+            padding-top: 20px;
+            position: relative;
+        }
+
+        .certificate-square-id {
+            font-size: 0.9rem;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        .certificate-square-date {
+            font-size: 0.9rem;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        .ceo-signature-square {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+        }
+
+        .signature-line-square {
+            width: 200px;
+            height: 2px;
+            background: #1e293b;
+            margin: 5px auto;
+        }
+
+        .ceo-name-square {
+            font-weight: bold;
+            color: #1e293b;
+            font-size: 1.1rem;
+        }
+
+        .ceo-title-square {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .certificate-square-actions {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+            .certificate-square {
+                padding: 20px;
+                border-width: 10px;
+            }
+            
+            .certificate-square-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .certificate-content h3 {
+                font-size: 1.4rem;
+            }
+            
+            .student-name-square {
+                font-size: 1.8rem !important;
+            }
+            
+            .certificate-square-body {
+                flex-direction: column-reverse;
+                gap: 20px;
+            }
+            
+            .certificate-content {
+                padding-left: 0;
+                text-align: center;
+            }
+            
+            .certificate-seal-container {
+                width: 100%;
+            }
+            
+            .seal-image-square {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .certificate-square-footer {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .certificate-square-actions {
+                flex-direction: column;
+            }
+            
+            .ceo-signature-square {
+                position: relative;
+                bottom: auto;
+                left: auto;
+                transform: none;
+                margin-top: 15px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .certificate-square {
+                padding: 15px;
+                border-width: 5px;
+            }
+            
+            .certificate-square-header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .certificate-content h3 {
+                font-size: 1.2rem;
+            }
+            
+            .student-name-square {
+                font-size: 1.5rem !important;
+            }
+            
+            .certificate-content p {
+                font-size: 1rem;
+            }
+            
+            .seal-image-square {
+                width: 100px;
+                height: 100px;
+                font-size: 0.8rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -2027,68 +2276,70 @@
     <!-- ===== نموذج إدخال بيانات الشهادة ===== -->
     <div class="certificate-form-container" id="certificate-form-container">
         <div class="certificate-form">
-            <h2>Congratulations! You've Completed the Course</h2>
-            <p>Enter your full name to get your certificate:</p>
+            <h2>مبروك! لقد أكملت الدورة بنجاح</h2>
+            <p>أدخل اسمك الكامل للحصول على شهادتك:</p>
             
             <div class="form-group">
-                <label for="student-name">Full Name</label>
-                <input type="text" id="student-name" placeholder="Enter your full name">
+                <label for="student-name">الاسم الكامل</label>
+                <input type="text" id="student-name" placeholder="أدخل اسمك الكامل">
             </div>
             
             <div class="form-actions">
-                <button class="btn btn-outline" id="cancel-certificate">Cancel</button>
-                <button class="btn btn-primary" id="generate-certificate">Get Your Certificate</button>
+                <button class="btn btn-outline" id="cancel-certificate">إلغاء</button>
+                <button class="btn btn-primary" id="generate-certificate">احصل على شهادتك</button>
             </div>
         </div>
     </div>
 
-    <!-- ===== عرض الشهادة الإنجليزية ===== -->
+    <!-- ===== عرض الشهادة المربعة المتجاوبة ===== -->
     <div class="certificate-container" id="certificate-container">
-        <div class="certificate-en" id="certificate-template">
-            <div class="certificate-en-header">
-                <h1>CERTIFICATE OF COMPLETION</h1>
+        <div class="certificate-square" id="certificate-template">
+            <div class="certificate-square-header">
+                <h1>شهادة إتمام الدورة</h1>
                 <h2>Skillzoy Academy</h2>
             </div>
             
-            <div class="certificate-en-body">
-                <p>This certificate is proudly presented to</p>
-                <p class="student-name-en" id="certificate-student-name">Student Name</p>
-                <p>for successfully completing the course</p>
-                <h3 id="certificate-course-name">Course Name</h3>
-                <p>on <span id="certificate-date">January 1, 2025</span></p>
-            </div>
-            
-            <div class="certificate-en-footer">
-                <div class="certificate-en-id">
-                    Certificate ID: <span id="certificate-id">SKZ-2025-00001</span>
+            <div class="certificate-square-body">
+                <div class="certificate-content">
+                    <p>تمنح هذه الشهادة إلى</p>
+                    <p class="student-name-square" id="certificate-student-name">اسم الطالب</p>
+                    <p>لإتمامه بنجاح دورة</p>
+                    <h3 id="certificate-course-name">اسم الدورة</h3>
+                    <p>بتاريخ <span id="certificate-date">١ يناير ٢٠٢٥</span></p>
                 </div>
                 
-                <div class="certificate-en-seal">
-                    <div class="seal-image-en">
-                        SKILLZOY<br>ACADEMY
+                <div class="certificate-seal-container">
+                    <div class="seal-image-square">
+                        Skillzoy<br>Academy
                     </div>
                 </div>
+            </div>
+            
+            <div class="certificate-square-footer">
+                <div class="certificate-square-id">
+                    رقم الشهادة: <span id="certificate-id">SKZ-2025-00001</span>
+                </div>
                 
-                <div class="certificate-en-date">
-                    Issue Date: <span id="certificate-issue-date">January 1, 2025</span>
+                <div class="certificate-square-date">
+                    تاريخ الإصدار: <span id="certificate-issue-date">١ يناير ٢٠٢٥</span>
                 </div>
             </div>
 
-            <div class="ceo-signature-en">
-                <div class="signature-line-en"></div>
-                <div class="ceo-name-en">Ahmed.M.Abdoelkreem</div>
-                <div class="ceo-title-en">Chief Executive Officer</div>
-                <div class="ceo-title-en">Skillzoy Academy</div>
+            <div class="ceo-signature-square">
+                <div class="signature-line-square"></div>
+                <div class="ceo-name-square">أحمد.م.عبدالكريم</div>
+                <div class="ceo-title-square">المدير التنفيذي</div>
+                <div class="ceo-title-square">أكاديمية سكيل زوي</div>
             </div>
         </div>
         
-        <div class="certificate-en-actions">
-            <button class="btn btn-outline" id="close-certificate">Close</button>
+        <div class="certificate-square-actions">
+            <button class="btn btn-outline" id="close-certificate">إغلاق</button>
             <button class="btn btn-success" id="download-certificate-png">
-                <i class="fas fa-download"></i> Download as Image
+                <i class="fas fa-download"></i> تحميل كصورة
             </button>
             <button class="btn btn-primary" id="download-certificate-pdf">
-                <i class="fas fa-file-pdf"></i> Download as PDF
+                <i class="fas fa-file-pdf"></i> تحميل كPDF
             </button>
         </div>
     </div>
@@ -2098,8 +2349,8 @@
         <!-- ===== الصفحة الرئيسية ===== -->
         <div class="home-page">
             <div class="page-title">
-                <h1>Skillzoy Academy - Leading E-Learning Platform</h1>
-                <p>Best educational courses to develop your skills and knowledge in various fields</p>
+                <h1>Skillzoy Academy - منصة التعليم الالكتروني الرائدة</h1>
+                <p>أفضل الدورات التعليمية لتطوير مهاراتك ومعرفتك في مختلف المجالات</p>
             </div>
             
             <!-- ===== فلاتر التصنيفات - محسنة ===== -->
@@ -2118,19 +2369,19 @@
             <div class="stats-section">
                 <div class="stat-card">
                     <div class="stat-number" id="students-count">0</div>
-                    <div class="stat-label">Registered Students</div>
+                    <div class="stat-label">طالب مسجل</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number" id="courses-count">0</div>
-                    <div class="stat-label">Available Courses</div>
+                    <div class="stat-label">دورة متاحة</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number" id="certificates-count">0</div>
-                    <div class="stat-label">Certified Certificates</div>
+                    <div class="stat-label">شهادة معتمدة</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number" id="instructors-count">0</div>
-                    <div class="stat-label">Professional Instructors</div>
+                    <div class="stat-label">مدرب محترف</div>
                 </div>
             </div>
         </div>
@@ -2138,8 +2389,8 @@
         <!-- ===== صفحة دوراتي ===== -->
         <div class="my-courses-page">
             <div class="page-title">
-                <h1>My Courses</h1>
-                <p>Courses you have enrolled in and can follow</p>
+                <h1>دوراتي</h1>
+                <p>الدورات التي سجلت فيها ويمكنك متابعتها</p>
             </div>
             
             <div class="courses-grid" id="my-courses-container">
@@ -2148,17 +2399,17 @@
             
             <div class="empty-state" id="empty-my-courses" style="display: none;">
                 <i class="fas fa-book-open"></i>
-                <h3>No Enrolled Courses</h3>
-                <p>You haven't enrolled in any courses yet. Browse available courses and enroll in the course that interests you.</p>
-                <button class="btn btn-primary" id="browse-courses-btn">Browse Courses</button>
+                <h3>لا توجد دورات مسجلة</h3>
+                <p>لم تسجل في أي دورة بعد. تصفح الدورات المتاحة وسجل في الدورة التي تهمك.</p>
+                <button class="btn btn-primary" id="browse-courses-btn">تصفح الدورات</button>
             </div>
         </div>
 
         <!-- ===== صفحة التقدم ===== -->
         <div class="progress-page">
             <div class="page-title">
-                <h1>My Learning Progress</h1>
-                <p>Track your progress in all enrolled courses</p>
+                <h1>تقدمي التعليمي</h1>
+                <p>تابع تقدمك في جميع الدورات المسجلة</p>
             </div>
             
             <div class="progress-stats" id="progress-stats">
@@ -2166,7 +2417,7 @@
             </div>
             
             <div class="progress-section">
-                <h2 style="margin-bottom: 20px; color: var(--light);">My Course Progress</h2>
+                <h2 style="margin-bottom: 20px; color: var(--light);">تقدم دوراتي</h2>
                 <div class="progress-courses" id="progress-courses-container">
                     <!-- سيتم ملؤها ديناميكياً -->
                 </div>
@@ -2176,8 +2427,8 @@
         <!-- ===== صفحة الشهادات ===== -->
         <div class="certificates-page" style="display: none;">
             <div class="page-title">
-                <h1>My Certificates</h1>
-                <p>Certificates you have earned from completed courses</p>
+                <h1>شهاداتي</h1>
+                <p>الشهادات التي حصلت عليها من الدورات المكتملة</p>
             </div>
             
             <div class="courses-grid" id="certificates-container">
@@ -2186,9 +2437,9 @@
             
             <div class="empty-state" id="empty-certificates" style="display: none;">
                 <i class="fas fa-certificate"></i>
-                <h3>No Certificates Yet</h3>
-                <p>You haven't completed any courses yet. Complete enrolled courses to get certified certificates.</p>
-                <button class="btn btn-primary" id="browse-my-courses-btn">Browse My Courses</button>
+                <h3>لا توجد شهادات بعد</h3>
+                <p>لم تكمل أي دورة بعد. أكمل الدورات المسجلة للحصول على شهادات معتمدة.</p>
+                <button class="btn btn-primary" id="browse-my-courses-btn">تصفح دوراتي</button>
             </div>
         </div>
     </main>
@@ -2197,18 +2448,18 @@
     <div class="course-details" id="course-details">
         <div class="course-header">
             <a href="#" class="back-to-courses" id="back-to-courses">
-                <i class="fas fa-arrow-right"></i> Back to Courses
+                <i class="fas fa-arrow-right"></i> العودة للدورات
             </a>
-            <h1 id="course-details-title">Web Development Master Course</h1>
-            <p id="course-details-description">Learn web development from beginner to professional using HTML, CSS, JavaScript and modern web technologies</p>
+            <h1 id="course-details-title">دورة تطوير الويب الشاملة</h1>
+            <p id="course-details-description">تعلم تطوير الويب من المبتدئ إلى المحترف باستخدام HTML، CSS، JavaScript وتقنيات الويب الحديثة</p>
             <div class="course-meta-details">
                 <div class="meta-item">
                     <i class="far fa-clock"></i>
-                    <span id="course-total-duration">35 hours</span>
+                    <span id="course-total-duration">35 ساعة</span>
                 </div>
                 <div class="meta-item">
                     <i class="fas fa-signal"></i>
-                    <span id="course-level">Advanced</span>
+                    <span id="course-level">متقدم</span>
                 </div>
                 <div class="meta-item">
                     <i class="fas fa-user-tie"></i>
@@ -2216,62 +2467,62 @@
                 </div>
                 <div class="meta-item">
                     <i class="fas fa-play-circle"></i>
-                    <span id="course-videos-count">5 videos</span>
+                    <span id="course-videos-count">5 فيديوهات</span>
                 </div>
             </div>
         </div>
         <div class="course-content-section">
-            <h3>Course Videos</h3>
+            <h3>فيديوهات الدورة</h3>
             <div class="videos-grid" id="course-videos-container">
                 <!-- سيتم ملؤها ديناميكياً -->
             </div>
             
             <!-- ===== قسم الشهادة بعد إكمال الدورة ===== -->
             <div class="certificate-section" id="certificate-section" style="display: none;">
-                <h2>Congratulations! You've Completed the Course</h2>
-                <p>You can now get your certified certificate from the academy</p>
+                <h2>مبروك! لقد أكملت الدورة بنجاح</h2>
+                <p>يمكنك الآن الحصول على شهادتك المعتمدة من الأكاديمية</p>
                 
                 <div class="certificate-types">
                     <div class="certificate-type">
-                        <h3>Free Certificate</h3>
+                        <h3>شهادة مجانية</h3>
                         <ul>
-                            <li>Digital certificate in English</li>
-                            <li>Official academy seal</li>
-                            <li>CEO signature</li>
-                            <li>Unique certificate ID</li>
-                            <li>Download as PDF/Image</li>
+                            <li>شهادة رقمية باللغة الإنجليزية</li>
+                            <li>ختم الأكاديمية الرسمي</li>
+                            <li>توقيع المدير التنفيذي</li>
+                            <li>رقم شهادة فريد</li>
+                            <li>تحميل كPDF/صورة</li>
                         </ul>
                         <button class="btn btn-success" id="get-free-certificate-btn">
-                            <i class="fas fa-certificate"></i> Get Free Certificate
+                            <i class="fas fa-certificate"></i> احصل على شهادة مجانية
                         </button>
                     </div>
                     
                     <div class="certificate-type premium">
-                        <h3>Premium Certificate</h3>
+                        <h3>شهادة مميزة</h3>
                         <ul>
-                            <li>All features of free certificate</li>
-                            <li>Premium design with gold accents</li>
-                            <li>Official embossed seal</li>
-                            <li>Verification QR code</li>
-                            <li>Physical copy delivery</li>
-                            <li>Lifetime verification</li>
+                            <li>جميع ميزات الشهادة المجانية</li>
+                            <li>تصميم مميز بلمسات ذهبية</li>
+                            <li>ختم مطبوع رسمي</li>
+                            <li>رمز QR للتحقق</li>
+                            <li>نسخة ورقية مطبوعة</li>
+                            <li>تحقق مدى الحياة</li>
                         </ul>
                         
                         <div class="premium-certificate-preview">
-                            <img src="https://i.imgur.com/5XJ7Z9A.jpg" alt="Premium Certificate" class="premium-certificate-image">
+                            <img src="https://i.ibb.co/PvLgGpF4/Blue-Grey-Modern-Gradient-Certificate-of-Completion-20250927-110652.png" alt="الشهادة المميزة" class="premium-certificate-image">
                             <div class="premium-features">
-                                <h4>Additional Premium Features:</h4>
+                                <h4>الميزات الإضافية للشهادة المميزة:</h4>
                                 <ul>
-                                    <li>Luxury design with golden accents</li>
-                                    <li>High-quality printing on premium paper</li>
-                                    <li>International recognition</li>
-                                    <li>Framing option available</li>
+                                    <li>تصميم فاخر بلمسات ذهبية</li>
+                                    <li>طباعة عالية الجودة على ورق مميز</li>
+                                    <li>اعتراف دولي</li>
+                                    <li>خيار التأطير متاح</li>
                                 </ul>
                             </div>
                         </div>
                         
                         <a href="https://wa.me/0924299798" class="btn btn-primary" target="_blank">
-                            <i class="fab fa-whatsapp"></i> Contact for Premium Certificate
+                            <i class="fab fa-whatsapp"></i> تواصل للحصول على الشهادة المميزة
                         </a>
                     </div>
                 </div>
@@ -2284,7 +2535,7 @@
         <div class="footer-content">
             <div class="footer-section">
                 <h3>Skillzoy Academy</h3>
-                <p>Leading learning platform in providing high-quality educational courses in various fields. We aim to empower individuals through the knowledge and skills they need to achieve their goals.</p>
+                <p>منصة تعليمية رائدة في تقديم الدورات التعليمية عالية الجودة في مختلف المجالات. نهدف إلى تمكين الأفراد من خلال المعرفة والمهارات التي يحتاجونها لتحقيق أهدافهم.</p>
                 <div class="social-links">
                     <a href="#" class="social-link">
                         <i class="fab fa-facebook-f"></i>
@@ -2305,40 +2556,40 @@
             </div>
             
             <div class="footer-section">
-                <h3>Quick Links</h3>
+                <h3>روابط سريعة</h3>
                 <ul class="footer-links">
-                    <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
-                    <li><a href="#"><i class="fas fa-book"></i> All Courses</a></li>
-                    <li><a href="#"><i class="fas fa-chalkboard-teacher"></i> Instructors</a></li>
-                    <li><a href="#"><i class="fas fa-certificate"></i> Certificates</a></li>
-                    <li><a href="#"><i class="fas fa-info-circle"></i> About Academy</a></li>
+                    <li><a href="#"><i class="fas fa-home"></i> الرئيسية</a></li>
+                    <li><a href="#"><i class="fas fa-book"></i> جميع الدورات</a></li>
+                    <li><a href="#"><i class="fas fa-chalkboard-teacher"></i> المدربين</a></li>
+                    <li><a href="#"><i class="fas fa-certificate"></i> الشهادات</a></li>
+                    <li><a href="#"><i class="fas fa-info-circle"></i> عن الأكاديمية</a></li>
                 </ul>
             </div>
             
             <div class="footer-section">
-                <h3>Learner Support Center</h3>
+                <h3>مركز دعم المتعلم</h3>
                 <ul class="footer-links">
-                    <li><a href="#"><i class="fas fa-question-circle"></i> FAQ</a></li>
-                    <li><a href="#"><i class="fas fa-headset"></i> Technical Support</a></li>
-                    <li><a href="#"><i class="fas fa-comments"></i> Contact Us</a></li>
-                    <li><a href="#"><i class="fas fa-file-alt"></i> Privacy Policy</a></li>
-                    <li><a href="#"><i class="fas fa-file-contract"></i> Terms of Use</a></li>
+                    <li><a href="#"><i class="fas fa-question-circle"></i> الأسئلة الشائعة</a></li>
+                    <li><a href="#"><i class="fas fa-headset"></i> الدعم الفني</a></li>
+                    <li><a href="#"><i class="fas fa-comments"></i> اتصل بنا</a></li>
+                    <li><a href="#"><i class="fas fa-file-alt"></i> سياسة الخصوصية</a></li>
+                    <li><a href="#"><i class="fas fa-file-contract"></i> شروط الاستخدام</a></li>
                 </ul>
             </div>
             
             <div class="footer-section">
-                <h3>Contact Us</h3>
+                <h3>اتصل بنا</h3>
                 <ul class="footer-links">
-                    <li><a href="tel:+249924299798"><i class="fas fa-phone"></i> +249 924 299 798</a></li>
+                    <li><a href="tel:+249924299798"><i class="fas fa-phone"></i> 249 924 299 798+</a></li>
                     <li><a href="mailto:info@skillzoy.com"><i class="fas fa-envelope"></i> info@skillzoy.com</a></li>
-                    <li><a href="https://wa.me/0924299798" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a></li>
-                    <li><a href="#"><i class="fas fa-map-marker-alt"></i> Address: Knowledge City, Riyadh</a></li>
+                    <li><a href="https://wa.me/0924299798" target="_blank"><i class="fab fa-whatsapp"></i> واتساب</a></li>
+                    <li><a href="#"><i class="fas fa-map-marker-alt"></i> العنوان: مدينة المعرفة، الرياض</a></li>
                 </ul>
             </div>
         </div>
         
         <div class="copyright">
-            <p>All rights reserved &copy; 2025 Skillzoy Academy</p>
+            <p>جميع الحقوق محفوظة &copy; 2025 Skillzoy Academy</p>
         </div>
     </footer>
 
@@ -2363,73 +2614,73 @@
         const backupCoursesData = [
             {
                 id: 1,
-                title: "Google Cybersecurity",
+                title: "أمن المعلومات من جوجل",
                 category: "cybersecurity",
                 provider: "Skillzoy Academy",
                 playlist_id: "PL0vfts4VzfNgNVZIPX7VIS4w2dhuwCXbN",
-                duration: "35 hours",
-                level: "Advanced",
-                description: "Google Cybersecurity Professional Certificate - Intensive training",
+                duration: "35 ساعة",
+                level: "متقدم",
+                description: "شهادة محترف أمن المعلومات من جوجل - تدريب مكثف",
                 rating: 5,
                 students: 1250
             },
             {
                 id: 2,
-                title: "Penetration Testing Practical Training CTF",
+                title: "تدريب عملي على اختبار الاختراق CTF",
                 category: "cybersecurity",
                 provider: "Skillzoy Academy",
                 playlist_id: "PLVD3APpfd1tvnDW3VSqUKVvBezqQc2xmG",
-                duration: "28 hours",
-                level: "Intermediate",
-                description: "Learn user interface and user experience design using the latest tools and techniques with practical projects",
+                duration: "28 ساعة",
+                level: "متوسط",
+                description: "تعلم تصميم واجهة المستخدم وتجربة المستخدم باستخدام أحدث الأدوات والتقنيات مع مشاريع عملية",
                 rating: 4,
                 students: 890
             },
             {
                 id: 3,
-                title: "Professional Project Management - PMP and Agile",
+                title: "إدارة المشاريع الاحترافية - PMP و Agile",
                 category: "business",
                 provider: "Skillzoy Academy",
                 playlist_id: "PLdPyS-4BsX-aNIxjgTAdM-6ZUHT2AYPyg",
-                duration: "32 hours",
-                level: "Advanced",
-                description: "Learn how to manage projects professionally using PMP and Agile methodologies with practical case studies",
+                duration: "32 ساعة",
+                level: "متقدم",
+                description: "تعلم كيفية إدارة المشاريع باحترافية باستخدام منهجيات PMP و Agile مع دراسات حالة عملية",
                 rating: 5,
                 students: 1100
             },
             {
                 id: 4,
-                title: "English Language Learning - Conversation and Writing",
+                title: "تعلم اللغة الإنجليزية - المحادثة والكتابة",
                 category: "language",
                 provider: "Skillzoy Academy",
                 playlist_id: "PL_Zjf61X10RJETKdhjfVLe4yL94morKRX",
-                duration: "40 hours",
-                level: "Beginner",
-                description: "Learn English from scratch to professional with interactive exercises, correct pronunciation and daily conversation",
+                duration: "40 ساعة",
+                level: "مبتدئ",
+                description: "تعلم الإنجليزية من الصفر إلى الاحتراف مع تمارين تفاعلية ونطق صحيح ومحادثة يومية",
                 rating: 4,
                 students: 2100
             },
             {
                 id: 5,
-                title: "Artificial Intelligence and Machine Learning",
+                title: "الذكاء الاصطناعي وتعلم الآلة",
                 category: "ai",
                 provider: "Skillzoy Academy",
                 playlist_id: "PL9ooVrP1hQOHUfd-g8GUpKI3hHOwM_9Dn",
-                duration: "45 hours",
-                level: "Advanced",
-                description: "Learn the basics of artificial intelligence and machine learning using Python and specialized libraries",
+                duration: "45 ساعة",
+                level: "متقدم",
+                description: "تعلم أساسيات الذكاء الاصطناعي وتعلم الآلة باستخدام Python والمكتبات المتخصصة",
                 rating: 5,
                 students: 750
             },
             {
                 id: 6,
-                title: "Digital Marketing and Content",
+                title: "التسويق الرقمي والمحتوى",
                 category: "marketing",
                 provider: "Skillzoy Academy",
                 playlist_id: "PL9ooVrP1hQOHUfd-g8GUpKI3hHOwM_9Dn",
-                duration: "30 hours",
-                level: "Intermediate",
-                description: "Learn digital marketing strategies and content management to achieve amazing results in the business world",
+                duration: "30 ساعة",
+                level: "متوسط",
+                description: "تعلم استراتيجيات التسويق الرقمي وإدارة المحتوى لتحقيق نتائج مذهلة في عالم الأعمال",
                 rating: 4,
                 students: 1350
             }
@@ -2449,7 +2700,7 @@
 
                 if (error) {
                     console.error('❌ Error fetching courses from Supabase:', error);
-                    showNotification('Warning', 'Backup data loaded due to connection issue', 'warning');
+                    showNotification('تحذير', 'تم تحميل بيانات احتياطية بسبب مشكلة في الاتصال', 'warning');
                     return backupCoursesData;
                 }
 
@@ -2462,7 +2713,7 @@
                 return data;
             } catch (error) {
                 console.error('❌ Error connecting to Supabase:', error);
-                showNotification('Warning', 'Backup data loaded due to connection issue', 'warning');
+                showNotification('تحذير', 'تم تحميل بيانات احتياطية بسبب مشكلة في الاتصال', 'warning');
                 return backupCoursesData;
             }
         }
@@ -2558,7 +2809,7 @@
                     courseProgress.completedAt = new Date().toISOString();
                     this.saveProgress();
                     
-                    showNotification('Congratulations!', 'You have successfully completed the course! You can now get your certificate.', 'success');
+                    showNotification('مبروك!', 'لقد أكملت الدورة بنجاح! يمكنك الآن الحصول على شهادتك.', 'success');
                     
                     // عرض قسم الشهادة في صفحة تفاصيل الدورة
                     if (document.getElementById('course-details').style.display === 'block') {
@@ -2641,8 +2892,18 @@
 
             // إنشاء شهادة جديدة
             createCertificate(courseId, courseTitle, studentName) {
+                // التحقق مما إذا كان المستخدم لديه شهادة لهذه الدورة بالفعل
+                const existingCertificate = this.certificates.find(cert => 
+                    cert.courseId === courseId
+                );
+                
+                if (existingCertificate) {
+                    showNotification('تنبيه', 'لديك بالفعل شهادة لهذه الدورة', 'warning');
+                    return existingCertificate;
+                }
+                
                 const certificateId = this.generateCertificateId();
-                const issueDate = new Date().toLocaleDateString('en-US', { 
+                const issueDate = new Date().toLocaleDateString('ar-EG', { 
                     year: 'numeric', 
                     month: 'long', 
                     day: 'numeric' 
@@ -2680,6 +2941,11 @@
                 return this.certificates.find(cert => cert.id === certificateId);
             }
 
+            // التحقق مما إذا كان المستخدم لديه شهادة للدورة
+            hasCertificateForCourse(courseId) {
+                return this.certificates.some(cert => cert.courseId === courseId);
+            }
+
             // عرض الشهادة
             displayCertificate(certificate) {
                 document.getElementById('certificate-student-name').textContent = certificate.studentName;
@@ -2702,14 +2968,14 @@
                     });
                     
                     const link = document.createElement('a');
-                    link.download = `Certificate-${document.getElementById('certificate-student-name').textContent}.png`;
+                    link.download = `شهادة-${document.getElementById('certificate-student-name').textContent}.png`;
                     link.href = canvas.toDataURL('image/png');
                     link.click();
                     
-                    showNotification('Download Complete', 'Certificate downloaded as image successfully', 'success');
+                    showNotification('تم التحميل', 'تم تحميل الشهادة كصورة بنجاح', 'success');
                 } catch (error) {
                     console.error('Error generating certificate image:', error);
-                    showNotification('Error', 'Error occurred while downloading certificate', 'error');
+                    showNotification('خطأ', 'حدث خطأ أثناء تحميل الشهادة', 'error');
                 }
             }
 
@@ -2734,12 +3000,12 @@
                     const imgY = (pdfHeight - imgHeight * ratio) / 2;
                     
                     pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
-                    pdf.save(`Certificate-${document.getElementById('certificate-student-name').textContent}.pdf`);
+                    pdf.save(`شهادة-${document.getElementById('certificate-student-name').textContent}.pdf`);
                     
-                    showNotification('Download Complete', 'Certificate downloaded as PDF successfully', 'success');
+                    showNotification('تم التحميل', 'تم تحميل الشهادة كPDF بنجاح', 'success');
                 } catch (error) {
                     console.error('Error generating certificate PDF:', error);
-                    showNotification('Error', 'Error occurred while downloading certificate', 'error');
+                    showNotification('خطأ', 'حدث خطأ أثناء تحميل الشهادة', 'error');
                 }
             }
         }
@@ -2749,8 +3015,8 @@
         const certificateManager = new CertificateManager();
         let currentUser = {
             id: 1,
-            name: "Active Now",
-            avatar: "https://ui-avatars.com/api/?name=Active+Now&background=3b82f6&color=fff"
+            name: "نشط الان",
+            avatar: "https://ui-avatars.com/api/?name=نشط+الان&background=3b82f6&color=fff"
         };
 
         // ===== إدارة المستخدم =====
@@ -2812,11 +3078,11 @@
                 if (!YOUTUBE_API_KEY || YOUTUBE_API_KEY.includes('YOUR_API_KEY')) {
                     console.log('📺 Using fallback video data (no API key)');
                     const fallbackVideos = [
-                        { id: "video1", title: "Course Introduction", youtubeId: "dQw4w9WgXcQ", duration: "10:00" },
-                        { id: "video2", title: "Lesson 1", youtubeId: "dQw4w9WgXcQ", duration: "15:30" },
-                        { id: "video3", title: "Lesson 2", youtubeId: "dQw4w9WgXcQ", duration: "12:45" },
-                        { id: "video4", title: "Lesson 3", youtubeId: "dQw4w9WgXcQ", duration: "18:20" },
-                        { id: "video5", title: "Final Project", youtubeId: "dQw4w9WgXcQ", duration: "22:10" }
+                        { id: "video1", title: "مقدمة الدورة", youtubeId: "dQw4w9WgXcQ", duration: "10:00" },
+                        { id: "video2", title: "الدرس الأول", youtubeId: "dQw4w9WgXcQ", duration: "15:30" },
+                        { id: "video3", title: "الدرس الثاني", youtubeId: "dQw4w9WgXcQ", duration: "12:45" },
+                        { id: "video4", title: "الدرس الثالث", youtubeId: "dQw4w9WgXcQ", duration: "18:20" },
+                        { id: "video5", title: "المشروع النهائي", youtubeId: "dQw4w9WgXcQ", duration: "22:10" }
                     ];
                     playlistCache.set(playlistId, fallbackVideos);
                     return fallbackVideos;
@@ -2883,11 +3149,11 @@
                 
                 // استخدام بيانات احتياطية في حالة الفشل
                 const fallbackVideos = [
-                    { id: "video1", title: "Course Introduction", youtubeId: "dQw4w9WgXcQ", duration: "10:00" },
-                    { id: "video2", title: "Lesson 1", youtubeId: "dQw4w9WgXcQ", duration: "15:30" },
-                    { id: "video3", title: "Lesson 2", youtubeId: "dQw4w9WgXcQ", duration: "12:45" },
-                    { id: "video4", title: "Lesson 3", youtubeId: "dQw4w9WgXcQ", duration: "18:20" },
-                    { id: "video5", title: "Final Project", youtubeId: "dQw4w9WgXcQ", duration: "22:10" }
+                    { id: "video1", title: "مقدمة الدورة", youtubeId: "dQw4w9WgXcQ", duration: "10:00" },
+                    { id: "video2", title: "الدرس الأول", youtubeId: "dQw4w9WgXcQ", duration: "15:30" },
+                    { id: "video3", title: "الدرس الثاني", youtubeId: "dQw4w9WgXcQ", duration: "12:45" },
+                    { id: "video4", title: "الدرس الثالث", youtubeId: "dQw4w9WgXcQ", duration: "18:20" },
+                    { id: "video5", title: "المشروع النهائي", youtubeId: "dQw4w9WgXcQ", duration: "22:10" }
                 ];
                 
                 playlistCache.set(playlistId, fallbackVideos);
@@ -2965,14 +3231,14 @@
         // ===== إدارة الدورات =====
         function getCategoryName(category) {
             const categories = {
-                'programming': 'Programming',
-                'design': 'Design',
-                'business': 'Business',
-                'language': 'Languages',
-                'ai': 'Artificial Intelligence',
-                'marketing': 'Marketing',
-                'cybersecurity': 'Cybersecurity',
-                'data_science': 'Data Science'
+                'programming': 'برمجة',
+                'design': 'تصميم',
+                'business': 'أعمال',
+                'language': 'لغات',
+                'ai': 'ذكاء اصطناعي',
+                'marketing': 'تسويق',
+                'cybersecurity': 'أمن المعلومات',
+                'data_science': 'علوم البيانات'
             };
             return categories[category] || category;
         }
@@ -2988,7 +3254,7 @@
             
             // إضافة زر "جميع الدورات" أولاً
             categoriesContainer.innerHTML = `
-                <button class="category-filter active" data-category="all">All Courses</button>
+                <button class="category-filter active" data-category="all">جميع الدورات</button>
             `;
             
             // إضافة أزرار التصنيفات الأخرى
@@ -3008,7 +3274,7 @@
             const container = document.getElementById('courses-container');
             
             // عرض حالة التحميل
-            container.innerHTML = '<div class="loading"><i class="fas fa-spinner"></i> Loading courses...</div>';
+            container.innerHTML = '<div class="loading"><i class="fas fa-spinner"></i> جاري تحميل الدورات...</div>';
             
             // جلب البيانات من Supabase أو البيانات الاحتياطية
             const coursesData = await fetchCoursesFromSupabase();
@@ -3028,11 +3294,12 @@
                 const progressPercentage = progressSystem.getProgressPercentage(course.id);
                 const courseProgress = progressSystem.getCourseProgress(course.id);
                 const isCourseCompleted = progressSystem.isCourseCompleted(course.id);
+                const hasCertificate = certificateManager.hasCertificateForCourse(course.id);
                 
                 const safeTitle = escapeHtml(course.title);
                 const safeInstructor = escapeHtml(course.provider || "Skillzoy Academy");
                 const safeDescription = escapeHtml(course.description);
-                const instructorAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(course.provider || "Instructor")}&background=3b82f6&color=fff`;
+                const instructorAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(course.provider || "المدرب")}&background=3b82f6&color=fff`;
                 
                 // تنسيق عدد الطلاب بالفاصلة
                 const formattedStudents = formatNumber(course.students);
@@ -3060,29 +3327,37 @@
                             <div class="progress-fill" style="width: ${progressPercentage}%"></div>
                         </div>
                         <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-top: 5px; color: var(--text-light);">
-                            <span>${progressPercentage}% completed</span>
-                            <span>${courseProgress.completedVideos.length}/${courseProgress.totalVideos} videos</span>
+                            <span>${progressPercentage}% مكتمل</span>
+                            <span>${courseProgress.completedVideos.length}/${courseProgress.totalVideos} فيديو</span>
                         </div>
                         ` : ''}
                         ${isCourseCompleted ? `
                         <div style="background: rgba(16, 185, 129, 0.1); padding: 10px; border-radius: 8px; margin-top: 10px; border: 1px solid var(--success);">
                             <div style="display: flex; align-items: center; gap: 8px; color: var(--success);">
                                 <i class="fas fa-check-circle"></i>
-                                <span>Completed - Ready for Certificate</span>
+                                <span>مكتملة - جاهزة للشهادة</span>
+                            </div>
+                        </div>
+                        ` : ''}
+                        ${hasCertificate ? `
+                        <div style="background: rgba(59, 130, 246, 0.1); padding: 10px; border-radius: 8px; margin-top: 10px; border: 1px solid var(--accent);">
+                            <div style="display: flex; align-items: center; gap: 8px; color: var(--accent);">
+                                <i class="fas fa-certificate"></i>
+                                <span>لديك شهادة لهذه الدورة</span>
                             </div>
                         </div>
                         ` : ''}
                         <div class="course-actions">
                             ${isEnrolled ? 
                                 `<button class="btn btn-success view-course-details" data-course-id="${course.id}">
-                                    <i class="fas fa-play"></i> ${progressPercentage > 0 ? 'Continue Learning' : 'Start Learning'}
+                                    <i class="fas fa-play"></i> ${progressPercentage > 0 ? 'واصل التعلم' : 'ابدأ التعلم'}
                                 </button>` :
                                 `<button class="btn btn-primary enroll-course" data-course-id="${course.id}">
-                                    <i class="fas fa-user-plus"></i> Enroll in Course
+                                    <i class="fas fa-user-plus"></i> سجل في الدورة
                                 </button>`
                             }
                             <button class="btn btn-outline watch-trailer" data-youtube-id="${firstVideo.youtubeId}">
-                                <i class="fas fa-eye"></i> Watch Trailer
+                                <i class="fas fa-eye"></i> شاهد المقدمة
                             </button>
                         </div>
                     </div>
@@ -3126,10 +3401,11 @@
                 const progressPercentage = progressSystem.getProgressPercentage(course.id);
                 const courseProgress = progressSystem.getCourseProgress(course.id);
                 const isCourseCompleted = progressSystem.isCourseCompleted(course.id);
+                const hasCertificate = certificateManager.hasCertificateForCourse(course.id);
                 
                 const safeTitle = escapeHtml(course.title);
                 const safeInstructor = escapeHtml(course.provider || "Skillzoy Academy");
-                const instructorAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(course.provider || "Instructor")}&background=3b82f6&color=fff`;
+                const instructorAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(course.provider || "المدرب")}&background=3b82f6&color=fff`;
                 
                 // تنسيق عدد الطلاب بالفاصلة
                 const formattedStudents = formatNumber(course.students);
@@ -3155,23 +3431,31 @@
                             <div class="progress-fill" style="width: ${progressPercentage}%"></div>
                         </div>
                         <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-top: 5px; color: var(--text-light);">
-                            <span>${progressPercentage}% completed</span>
-                            <span>${courseProgress.completedVideos.length}/${courseProgress.totalVideos} videos</span>
+                            <span>${progressPercentage}% مكتمل</span>
+                            <span>${courseProgress.completedVideos.length}/${courseProgress.totalVideos} فيديو</span>
                         </div>
                         ${isCourseCompleted ? `
                         <div style="background: rgba(16, 185, 129, 0.1); padding: 10px; border-radius: 8px; margin-top: 10px; border: 1px solid var(--success);">
                             <div style="display: flex; align-items: center; gap: 8px; color: var(--success);">
                                 <i class="fas fa-check-circle"></i>
-                                <span>Completed - Ready for Certificate</span>
+                                <span>مكتملة - جاهزة للشهادة</span>
+                            </div>
+                        </div>
+                        ` : ''}
+                        ${hasCertificate ? `
+                        <div style="background: rgba(59, 130, 246, 0.1); padding: 10px; border-radius: 8px; margin-top: 10px; border: 1px solid var(--accent);">
+                            <div style="display: flex; align-items: center; gap: 8px; color: var(--accent);">
+                                <i class="fas fa-certificate"></i>
+                                <span>لديك شهادة لهذه الدورة</span>
                             </div>
                         </div>
                         ` : ''}
                         <div class="course-actions">
                             <button class="btn btn-success view-course-details" data-course-id="${course.id}">
-                                <i class="fas fa-play"></i> ${progressPercentage > 0 ? 'Continue Learning' : 'Start Learning'}
+                                <i class="fas fa-play"></i> ${progressPercentage > 0 ? 'واصل التعلم' : 'ابدأ التعلم'}
                             </button>
                             <button class="btn btn-danger unenroll-course" data-course-id="${course.id}">
-                                <i class="fas fa-times"></i> Unenroll
+                                <i class="fas fa-times"></i> إلغاء التسجيل
                             </button>
                         </div>
                     </div>
@@ -3192,7 +3476,7 @@
             
             if (!course) {
                 console.error('Course not found:', courseId);
-                showNotification('Error', 'Course not found', 'error');
+                showNotification('خطأ', 'الدورة غير موجودة', 'error');
                 return;
             }
             
@@ -3212,7 +3496,7 @@
             document.getElementById('course-total-duration').textContent = course.duration;
             document.getElementById('course-level').textContent = course.level;
             document.getElementById('course-instructor').textContent = safeInstructor;
-            document.getElementById('course-videos-count').textContent = `${videos.length} videos`;
+            document.getElementById('course-videos-count').textContent = `${videos.length} فيديو`;
 
             const videosContainer = document.getElementById('course-videos-container');
             
@@ -3233,13 +3517,13 @@
                     <div class="video-info">
                         <div class="video-title">${safeVideoTitle}</div>
                         <div class="video-meta">
-                            <span>Video Duration: ${video.duration}</span>
+                            <span>مدة الفيديو: ${video.duration}</span>
                             <button class="btn ${isCompleted ? 'btn-success' : 'btn-primary'} watch-video-btn" 
                                     data-youtube-id="${video.youtubeId}" 
                                     data-video-id="${video.id}"
                                     data-video-title="${safeVideoTitle}"
                                     data-course-id="${courseId}">
-                                <i class="fas ${isCompleted ? 'fa-check' : 'fa-play'}"></i> ${isCompleted ? 'Watched' : 'Watch'}
+                                <i class="fas ${isCompleted ? 'fa-check' : 'fa-play'}"></i> ${isCompleted ? 'تم المشاهدة' : 'شاهد'}
                             </button>
                         </div>
                     </div>
@@ -3252,6 +3536,7 @@
             
             // التحقق مما إذا كانت الدورة مكتملة وعرض قسم الشهادة
             const isCourseCompleted = progressSystem.isCourseCompleted(courseId);
+            const hasCertificate = certificateManager.hasCertificateForCourse(courseId);
             const certificateSection = document.getElementById('certificate-section');
             
             if (isCourseCompleted) {
@@ -3259,9 +3544,21 @@
                 
                 // تحديث زر الحصول على الشهادة المجانية
                 const getFreeCertificateBtn = document.getElementById('get-free-certificate-btn');
-                getFreeCertificateBtn.onclick = () => {
-                    showCertificateForm(courseId, course.title);
-                };
+                
+                if (hasCertificate) {
+                    getFreeCertificateBtn.innerHTML = '<i class="fas fa-certificate"></i> عرض الشهادة';
+                    getFreeCertificateBtn.onclick = () => {
+                        const certificate = certificateManager.getUserCertificates().find(cert => cert.courseId === courseId);
+                        if (certificate) {
+                            certificateManager.displayCertificate(certificate);
+                        }
+                    };
+                } else {
+                    getFreeCertificateBtn.innerHTML = '<i class="fas fa-certificate"></i> احصل على شهادة مجانية';
+                    getFreeCertificateBtn.onclick = () => {
+                        showCertificateForm(courseId, course.title);
+                    };
+                }
             } else {
                 certificateSection.style.display = 'none';
             }
@@ -3294,28 +3591,28 @@
                         <i class="fas fa-trophy"></i>
                     </div>
                     <div class="progress-stat-number">${stats.overallProgress}%</div>
-                    <div class="progress-stat-label">Overall Progress</div>
+                    <div class="progress-stat-label">التقدم الإجمالي</div>
                 </div>
                 <div class="progress-stat-card">
                     <div class="progress-stat-icon">
                         <i class="fas fa-book"></i>
                     </div>
                     <div class="progress-stat-number">${stats.totalCourses}</div>
-                    <div class="progress-stat-label">Enrolled Courses</div>
+                    <div class="progress-stat-label">الدورات المسجلة</div>
                 </div>
                 <div class="progress-stat-card">
                     <div class="progress-stat-icon">
                         <i class="fas fa-check-circle"></i>
                     </div>
                     <div class="progress-stat-number">${stats.completedCourses}</div>
-                    <div class="progress-stat-label">Completed Courses</div>
+                    <div class="progress-stat-label">الدورات المكتملة</div>
                 </div>
                 <div class="progress-stat-card">
                     <div class="progress-stat-icon">
                         <i class="fas fa-play-circle"></i>
                     </div>
                     <div class="progress-stat-number">${stats.completedVideos}/${stats.totalVideos}</div>
-                    <div class="progress-stat-label">Watched Videos</div>
+                    <div class="progress-stat-label">الفيديوهات المشاهدة</div>
                 </div>
             `;
             
@@ -3334,8 +3631,8 @@
                         <div class="progress-course-fill" style="width: ${progressPercentage}%"></div>
                     </div>
                     <div class="progress-course-percentage">
-                        ${progressPercentage}% completed (${courseProgress.completedVideos.length}/${courseProgress.totalVideos} videos)
-                        ${isCourseCompleted ? ' - <span style="color: var(--success);">Completed</span>' : ''}
+                        ${progressPercentage}% مكتمل (${courseProgress.completedVideos.length}/${courseProgress.totalVideos} فيديو)
+                        ${isCourseCompleted ? ' - <span style="color: var(--success);">مكتملة</span>' : ''}
                     </div>
                 </div>
                 `;
@@ -3365,7 +3662,7 @@
                 certificatesHTML += `
                 <div class="course-card">
                     <div class="course-content">
-                        <span class="course-category">Certificate</span>
+                        <span class="course-category">شهادة</span>
                         <h3 class="course-title">${escapeHtml(certificate.courseTitle)}</h3>
                         <div class="course-instructor">
                             <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(certificate.studentName)}&background=3b82f6&color=fff" 
@@ -3378,10 +3675,10 @@
                         </div>
                         <div class="course-actions">
                             <button class="btn btn-success view-certificate" data-certificate-id="${certificate.id}">
-                                <i class="fas fa-eye"></i> View Certificate
+                                <i class="fas fa-eye"></i> عرض الشهادة
                             </button>
                             <button class="btn btn-primary download-certificate" data-certificate-id="${certificate.id}">
-                                <i class="fas fa-download"></i> Download
+                                <i class="fas fa-download"></i> تحميل
                             </button>
                         </div>
                     </div>
@@ -3424,13 +3721,13 @@
                 themeIcon.classList.remove('fa-toggle-on');
                 themeIcon.classList.add('fa-toggle-off');
                 localStorage.setItem('theme', 'dark');
-                showNotification('Theme Changed', 'Dark mode activated', 'info');
+                showNotification('تم تغيير الثيم', 'تم تفعيل الوضع الليلي', 'info');
             } else {
                 body.classList.add('light-theme');
                 themeIcon.classList.remove('fa-toggle-off');
                 themeIcon.classList.add('fa-toggle-on');
                 localStorage.setItem('theme', 'light');
-                showNotification('Theme Changed', 'Light mode activated', 'info');
+                showNotification('تم تغيير الثيم', 'تم تفعيل وضع النهار', 'info');
             }
         }
 
@@ -3524,7 +3821,7 @@
             const courseTitle = document.getElementById('certificate-form-container').dataset.courseTitle;
             
             if (!studentName) {
-                showNotification('Error', 'Please enter your full name', 'error');
+                showNotification('خطأ', 'يرجى إدخال اسمك الكامل', 'error');
                 return;
             }
             
@@ -3537,11 +3834,16 @@
             // إغلاق نموذج الإدخال
             closeCertificateForm();
             
-            showNotification('Congratulations!', 'Your certificate has been created successfully', 'success');
+            showNotification('مبروك!', 'تم إنشاء شهادتك بنجاح', 'success');
             
             // تحديث صفحة الشهادات إذا كانت مفتوحة
             if (document.querySelector('.certificates-page').style.display === 'block') {
                 renderCertificatesPage();
+            }
+            
+            // تحديث صفحة تفاصيل الدورة إذا كانت مفتوحة
+            if (document.getElementById('course-details').style.display === 'block') {
+                renderCourseDetails(courseId);
             }
         }
 
@@ -3551,10 +3853,10 @@
                 button.addEventListener('click', (e) => {
                     const courseId = parseInt(e.target.getAttribute('data-course-id'));
                     if (userManager.enrollInCourse(courseId)) {
-                        showNotification('Enrollment Successful', 'You have been enrolled in the course successfully!', 'success');
+                        showNotification('تم التسجيل بنجاح', 'تم تسجيلك في الدورة بنجاح!', 'success');
                         renderCourses();
                     } else {
-                        showNotification('Information', 'You are already enrolled in this course.', 'warning');
+                        showNotification('معلومة', 'أنت مسجل بالفعل في هذه الدورة.', 'warning');
                     }
                 });
             });
@@ -3563,7 +3865,7 @@
                 button.addEventListener('click', (e) => {
                     const courseId = parseInt(e.target.getAttribute('data-course-id'));
                     if (userManager.unenrollFromCourse(courseId)) {
-                        showNotification('Unenrollment Successful', 'You have been unenrolled from the course.', 'info');
+                        showNotification('تم إلغاء التسجيل', 'تم إلغاء تسجيلك من الدورة.', 'info');
                         renderMyCourses();
                         renderCourses();
                     }
@@ -3580,7 +3882,7 @@
             document.querySelectorAll('.watch-trailer').forEach(button => {
                 button.addEventListener('click', (e) => {
                     const youtubeId = e.target.getAttribute('data-youtube-id');
-                    openVideoPlayer(youtubeId, 'Course Trailer');
+                    openVideoPlayer(youtubeId, 'مقدمة الدورة');
                 });
             });
         }
@@ -3609,7 +3911,7 @@
                         // تحديث الواجهة
                         const watchBtn = document.querySelector(`.watch-video-btn[data-video-id="${videoId}"]`);
                         if (watchBtn) {
-                            watchBtn.innerHTML = '<i class="fas fa-check"></i> Watched';
+                            watchBtn.innerHTML = '<i class="fas fa-check"></i> تم المشاهدة';
                             watchBtn.classList.remove('btn-primary');
                             watchBtn.classList.add('btn-success');
                         }
@@ -3642,7 +3944,7 @@
                             // تحديث الواجهة
                             const watchBtn = document.querySelector(`.watch-video-btn[data-video-id="${videoId}"]`);
                             if (watchBtn) {
-                                watchBtn.innerHTML = '<i class="fas fa-check"></i> Watched';
+                                watchBtn.innerHTML = '<i class="fas fa-check"></i> تم المشاهدة';
                                 watchBtn.classList.remove('btn-primary');
                                 watchBtn.classList.add('btn-success');
                             }
@@ -3738,7 +4040,7 @@
 
         // ===== وظيفة تسجيل الخروج =====
         function logout() {
-            if(confirm('Do you want to log out?')) {
+            if(confirm('هل تريد تسجيل الخروج؟')) {
                 // مسح بيانات الجلسة
                 localStorage.removeItem('token');
                 sessionStorage.clear();
