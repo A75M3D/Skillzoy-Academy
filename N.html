@@ -1,1085 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام الاختبارات الذكي - منصة التعلم</title>
-    <style>
-        :root {
-            --primary: #4361ee;
-            --secondary: #3a0ca3;
-            --success: #4cc9f0;
-            --danger: #f72585;
-            --warning: #f8961e;
-            --light: #f8f9fa;
-            --dark: #212529;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
-            padding: 20px;
-            color: var(--dark);
-        }
-        
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-        
-        header {
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            color: white;
-            padding: 25px;
-            text-align: center;
-        }
-        
-        header h1 {
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-        }
-        
-        header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-        
-        .content {
-            padding: 30px;
-        }
-        
-        .section {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-        
-        .active {
-            display: block;
-        }
-        
-        .course-selection {
-            text-align: center;
-        }
-        
-        .course-card {
-            background: var(--light);
-            border-radius: 10px;
-            padding: 20px;
-            margin: 15px 0;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-        
-        .course-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .course-card h3 {
-            color: var(--secondary);
-            margin-bottom: 10px;
-        }
-        
-        .question {
-            background: var(--light);
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-        
-        .question h3 {
-            color: var(--secondary);
-            margin-bottom: 15px;
-            font-size: 1.2rem;
-        }
-        
-        .options {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        
-        .option {
-            display: flex;
-            align-items: center;
-            padding: 12px 15px;
-            background: white;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border: 1px solid #ddd;
-        }
-        
-        .option:hover {
-            background: #e9ecef;
-        }
-        
-        .option.selected {
-            background: #e7f1ff;
-            border-color: var(--primary);
-        }
-        
-        .option input {
-            margin-left: 10px;
-        }
-        
-        .btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: inline-block;
-            margin: 10px 5px;
-        }
-        
-        .btn:hover {
-            background: var(--secondary);
-            transform: translateY(-2px);
-        }
-        
-        .btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-        }
-        
-        .btn-secondary {
-            background: var(--warning);
-        }
-        
-        .btn-success {
-            background: var(--success);
-        }
-        
-        .btn-danger {
-            background: var(--danger);
-        }
-        
-        .navigation {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
-        }
-        
-        .progress-bar {
-            height: 8px;
-            background: #e9ecef;
-            border-radius: 4px;
-            margin: 20px 0;
-            overflow: hidden;
-        }
-        
-        .progress {
-            height: 100%;
-            background: var(--primary);
-            width: 0%;
-            transition: width 0.5s ease;
-        }
-        
-        .result-item {
-            background: var(--light);
-            border-radius: 10px;
-            padding: 15px;
-            margin: 15px 0;
-        }
-        
-        .correct {
-            border-right: 5px solid var(--success);
-        }
-        
-        .incorrect {
-            border-right: 5px solid var(--danger);
-        }
-        
-        .score {
-            text-align: center;
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: var(--primary);
-            margin: 20px 0;
-        }
-        
-        .loading {
-            text-align: center;
-            padding: 40px;
-        }
-        
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid var(--primary);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-        
-        .error-message {
-            background: #f8d7da;
-            color: #721c24;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 15px 0;
-            border: 1px solid #f5c6cb;
-            text-align: center;
-        }
-        
-        .success-message {
-            background: #d1edff;
-            color: #0c5460;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 15px 0;
-            border: 1px solid #bee5eb;
-        }
-        
-        .info-message {
-            background: #fff3cd;
-            color: #856404;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 15px 0;
-            border: 1px solid #ffeaa7;
-        }
-        
-        .retry-section {
-            text-align: center;
-            margin-top: 20px;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        @media (max-width: 768px) {
-            .container {
-                border-radius: 0;
-            }
-            
-            .content {
-                padding: 20px;
-            }
-            
-            .navigation {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .btn {
-                width: 100%;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1>نظام الاختبارات الذكي</h1>
-            <p>اختر دورة، اختبر معرفتك، واحصل على تقييم فوري</p>
-        </header>
-        
-        <div class="content">
-            <!-- قسم التهيئة -->
-            <div id="init-section" class="section active">
-                <div class="loading">
-                    <div class="spinner"></div>
-                    <h3>جاري تهيئة النظام...</h3>
-                    <p>يتم تحميل إعدادات الذكاء الاصطناعي من الخادم</p>
-                </div>
-            </div>
-            
-            <!-- قسم اختيار الدورة -->
-            <div id="course-selection" class="section">
-                <div id="api-status"></div>
-                
-                <h2>اختر الدورة التدريبية</h2>
-                <p>اختر الدورة التي ترغب في اختبار معرفتك بها</p>
-                
-                <div class="course-card" onclick="selectCourse('programming')">
-                    <h3>مقدمة في البرمجة</h3>
-                    <p>تعلم أساسيات البرمجة والمفاهيم الأساسية للغات البرمجة</p>
-                </div>
-                
-                <div class="course-card" onclick="selectCourse('marketing')">
-                    <h3>التسويق الرقمي</h3>
-                    <p>استراتيجيات التسويق عبر الإنترنت ووسائل التواصل الاجتماعي</p>
-                </div>
-                
-                <div class="course-card" onclick="selectCourse('design')">
-                    <h3>تصميم الجرافيك</h3>
-                    <p>مبادئ التصميم الجرافيكي وأدوات التصميم الأساسية</p>
-                </div>
-                
-                <div class="course-card" onclick="selectCourse('custom')">
-                    <h3>موضوع مخصص</h3>
-                    <p>أدخل موضوعاً مخصصاً لإنشاء اختبار حوله</p>
-                    <input type="text" id="custom-topic" placeholder="أدخل الموضوع المطلوب" style="width: 100%; padding: 8px; margin-top: 10px; border: 1px solid #ddd; border-radius: 5px;" />
-                </div>
-            </div>
-            
-            <!-- قسم التحميل -->
-            <div id="loading-section" class="section">
-                <div class="loading">
-                    <div class="spinner"></div>
-                    <h3 id="loading-title">جاري إنشاء الاختبار...</h3>
-                    <p id="loading-message">نظام الذكاء الاصطناعي يجهز أسئلة الاختبار الخاصة بك</p>
-                </div>
-            </div>
-            
-            <!-- قسم الخطأ -->
-            <div id="error-section" class="section">
-                <div class="error-message">
-                    <h3>⚠️ حدث خطأ في إنشاء الأسئلة</h3>
-                    <p id="error-details">تعذر إنشاء الأسئلة باستخدام الذكاء الاصطناعي</p>
-                    <div class="retry-section">
-                        <button class="btn" onclick="retryWithAI()">المحاولة مرة أخرى باستخدام الذكاء الاصطناعي</button>
-                        <button class="btn btn-secondary" onclick="useDefaultQuestions()">استخدام الأسئلة الافتراضية</button>
-                        <button class="btn btn-danger" onclick="goToCourses()">العودة لاختيار الدورة</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- قسم الاختبار -->
-            <div id="quiz-section" class="section">
-                <div id="quiz-header"></div>
-                <div class="progress-bar">
-                    <div class="progress" id="progress"></div>
-                </div>
-                
-                <div id="questions-container"></div>
-                
-                <div class="navigation">
-                    <button class="btn btn-secondary" id="prev-btn" onclick="prevQuestion()">السابق</button>
-                    <button class="btn" id="next-btn" onclick="nextQuestion()">التالي</button>
-                    <button class="btn btn-success" id="submit-btn" onclick="submitQuiz()" style="display:none;">إنهاء الاختبار</button>
-                </div>
-            </div>
-            
-            <!-- قسم النتائج -->
-            <div id="results-section" class="section">
-                <h2>نتيجة الاختبار</h2>
-                <div class="score" id="score">0%</div>
-                
-                <div id="results-container"></div>
-                
-                <div style="text-align: center; margin-top: 30px;">
-                    <button class="btn" onclick="restartQuiz()">إعادة الاختبار</button>
-                    <button class="btn btn-secondary" onclick="goToCourses()">اختيار دورة أخرى</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // حالة التطبيق
-        let state = {
-            apiKey: null,
-            currentCourse: null,
-            currentTopic: '',
-            currentQuestions: [],
-            currentAnswers: [],
-            currentQuestionIndex: 0,
-            isInitialized: false,
-            apiStatus: 'loading', // loading, success, error, demo
-            lastError: null
-        };
-
-        // الأسئلة الافتراضية المحسنة
-        const defaultQuestions = {
-            programming: [
-                {
-                    question: "ما هي لغة البرمجة التي تُستخدم لإنشاء صفحات الويب التفاعلية؟",
-                    options: ["بايثون", "جافا سكريبت", "سي بلس بلس", "جافا"],
-                    correct: 1,
-                    explanation: "جافا سكريبت هي اللغة الأساسية لإنشاء صفحات ويب تفاعلية وتضيف ديناميكية للمواقع."
-                },
-                {
-                    question: "ما هو نوع البيانات المستخدم لتخزين القيم المنطقية (صحيح/خطأ)؟",
-                    options: ["String", "Number", "Boolean", "Array"],
-                    correct: 2,
-                    explanation: "Boolean هو نوع البيانات المستخدم لتخزين القيم المنطقية true أو false."
-                },
-                {
-                    question: "أي من هذه العبارات يستخدم لإنشاء دالة في JavaScript؟",
-                    options: ["function", "method", "def", "create"],
-                    correct: 0,
-                    explanation: "كلمة function تستخدم لتعريف الدوال في JavaScript."
-                },
-                {
-                    question: "ما هو الـ API؟",
-                    options: [
-                        "لغة برمجة",
-                        "واجهة برمجة التطبيقات",
-                        "نظام تشغيل",
-                        "مكتبة برمجية"
-                    ],
-                    correct: 1,
-                    explanation: "API هي واجهة برمجة التطبيقات تسمح للتطبيقات بالتواصل مع بعضها."
-                },
-                {
-                    question: "ما هي بنية البيانات التي تخزن العناصر بمفتاح وقيمة؟",
-                    options: ["Array", "Object", "String", "Number"],
-                    correct: 1,
-                    explanation: "Object في JavaScript يستخدم لتخزين البيانات في أزواج مفتاح/قيمة."
-                }
-            ],
-            marketing: [
-                {
-                    question: "ما هو الـ SEO؟",
-                    options: [
-                        "تحسين محركات البحث",
-                        "نظام إدارة المحتوى",
-                        "استراتيجية التسويق عبر البريد الإلكتروني",
-                        "تحليل البيانات"
-                    ],
-                    correct: 0,
-                    explanation: "SEO يعني تحسين محركات البحث لتحسين ظهور الموقع في نتائج البحث."
-                },
-                {
-                    question: "أي منصة تعتبر الأفضل للتسويق عبر الفيديو؟",
-                    options: ["فيسبوك", "تويتر", "يوتيوب", "لينكد إن"],
-                    correct: 2,
-                    explanation: "يوتيوب هو المنصة الرائدة للتسويق عبر الفيديو بحجم جمهور كبير وميزات متقدمة."
-                },
-                {
-                    question: "ما هو الـ KPI في التسويق؟",
-                    options: [
-                        "مؤشر أداء رئيسي",
-                        "كلمة مرور مهمة",
-                        "منصة تسويقية",
-                        "استراتيجية تسعير"
-                    ],
-                    correct: 0,
-                    explanation: "KPI هي مؤشرات الأداء الرئيسية التي تقيس نجاح الحملات التسويقية."
-                },
-                {
-                    question: "ما هو الهدف الأساسي من التسويق بالمحتوى؟",
-                    options: [
-                        "بيع المنتجات مباشرة",
-                        "جذب العملاء المحتملين وبناء الثقة",
-                        "زيادة متابعي وسائل التواصل الاجتماعي",
-                        "تحسين ترتيب الموقع في محركات البحث"
-                    ],
-                    correct: 1,
-                    explanation: "التسويق بالمحتوى يهدف إلى جذب العملاء وبناء الثقة من خلال تقديم قيمة حقيقية."
-                },
-                {
-                    question: "ما هو الفرق بين التسويق التقليدي والتسويق الرقمي؟",
-                    options: [
-                        "لا يوجد فرق",
-                        "التسويق الرقمي أكثر تكلفة",
-                        "التسويق الرقمي يمكن قياسه وتحليله بسهولة",
-                        "التسويق التقليدي أكثر فعالية"
-                    ],
-                    correct: 2,
-                    explanation: "التسويق الرقمي يمكن تتبعه وتحليله بدقة أكبر من التسويق التقليدي."
-                }
-            ],
-            design: [
-                {
-                    question: "ما هو البرنامج الأكثر استخداماً في تصميم الجرافيك؟",
-                    options: ["فوتوشوب", "إكسل", "وورد", "باوربوينت"],
-                    correct: 0,
-                    explanation: "فوتوشوب من أدوبي هو البرنامج الأكثر شيوعاً لتصميم الجرافيك ومعالجة الصور."
-                },
-                {
-                    question: "ما هي نظرية الألوان؟",
-                    options: [
-                        "دراسة كيفية تفاعل الألوان مع بعضها",
-                        "طريقة لخلط الألوان",
-                        "قائمة بالألوان الأساسية",
-                        "نظام ترميز الألوان"
-                    ],
-                    correct: 0,
-                    explanation: "نظرية الألوان تدرس كيفية تفاعل الألوان وتأثيرها على التصميم والإدراك البصري."
-                },
-                {
-                    question: "ما هو الـ Vector Graphic؟",
-                    options: [
-                        "صورة مكونة من نقاط البكسل",
-                        "صورة مكونة من خطوط ومنحنيات رياضية",
-                        "صورة مضغوطة",
-                        "صورة متحركة"
-                    ],
-                    correct: 1,
-                    explanation: "الرسوم المتجهة تعتمد على معادلات رياضية ويمكن تكبيرها دون فقدان الجودة."
-                },
-                {
-                    question: "ما هو مبدأ التصميم 'التقارب' (Proximity)؟",
-                    options: [
-                        "وضع العناصر المتشابهة بالقرب من بعضها",
-                        "استخدام الألوان المتشابهة",
-                        "جعل التصميم بسيطاً",
-                        "إضافة مسافات بين العناصر"
-                    ],
-                    correct: 0,
-                    explanation: "مبدأ التقارب يعني تجميع العناصر المرتبطة معاً لإنشاء علاقة بصرية بينها."
-                },
-                {
-                    question: "ما هو الفرق بين RGB و CMYK؟",
-                    options: [
-                        "RGB للطباعة وCMYK للشاشات",
-                        "RGB للشاشات وCMYK للطباعة",
-                        "لا يوجد فرق",
-                        "RGB للألوان الدافئة وCMYK للألوان الباردة"
-                    ],
-                    correct: 1,
-                    explanation: "RGB للألوان على الشاشات (ضوء) وCMYK للألوان في الطباعة (حبر)."
-                }
-            ]
-        };
-
-        // تهيئة التطبيق - جلب API Key من Vercel
-        async function initApp() {
-            try {
-                console.log('جاري جلب API Key من الخادم...');
-                
-                // استخدام المسار النسبي للـ API endpoint
-                const apiUrl = window.location.hostname === 'localhost' 
-                    ? 'http://localhost:3000/api/get-api-key'
-                    : '/api/get-api-key';
-                
-                const response = await fetch(apiUrl, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                });
-                
-                if (!response.ok) {
-                    throw new Error(`خطأ في الخادم: ${response.status}`);
-                }
-                
-                const data = await response.json();
-                
-                if (data.apiKey) {
-                    state.apiKey = data.apiKey;
-                    state.isInitialized = true;
-                    state.apiStatus = 'success';
-                    console.log('تم تهيئة النظام بنجاح مع API Key من الخادم');
-                    updateApiStatusMessage();
-                    showSection('course-selection');
-                } else {
-                    throw new Error('لم يتم استلال API Key من الخادم');
-                }
-                
-            } catch (error) {
-                console.error('فشل في التهيئة:', error);
-                state.apiStatus = 'error';
-                state.lastError = error.message;
-                
-                // استخدام وضع التطوير مع API Key محلي (للاختبار فقط)
-                const localApiKey = localStorage.getItem('dev_openai_api_key');
-                if (localApiKey) {
-                    state.apiKey = localApiKey;
-                    state.isInitialized = true;
-                    state.apiStatus = 'local';
-                    console.log('تم استخدام API Key محلي للتطوير');
-                    updateApiStatusMessage();
-                    showSection('course-selection');
-                } else {
-                    // إذا فشل كل شيء، استخدم الوضع بدون API
-                    state.isInitialized = true;
-                    state.apiStatus = 'demo';
-                    console.log('النظام يعمل في الوضع التجريبي');
-                    updateApiStatusMessage();
-                    showSection('course-selection');
-                }
-            }
-        }
-
-        // تحديث رسالة حالة الـ API
-        function updateApiStatusMessage() {
-            const statusContainer = document.getElementById('api-status');
-            if (!statusContainer) return;
-            
-            let message = '';
-            let className = '';
-            
-            switch(state.apiStatus) {
-                case 'success':
-                    message = '✅ النظام يعمل مع الذكاء الاصطناعي - جاهز لإنشاء اختبارات ذكية';
-                    className = 'success-message';
-                    break;
-                case 'local':
-                    message = '🔧 النظام يعمل مع مفتاح API محلي - وضع التطوير';
-                    className = 'info-message';
-                    break;
-                case 'demo':
-                    message = '💡 النظام يعمل في الوضع التجريبي - باستخدام الأسئلة الافتراضية';
-                    className = 'info-message';
-                    break;
-                case 'error':
-                    message = `⚠️ فشل في الاتصال بالخادم - ${state.lastError || 'النظام يعمل في الوضع التجريبي'}`;
-                    className = 'error-message';
-                    break;
-                default:
-                    return;
-            }
-            
-            statusContainer.innerHTML = `<div class="${className}">${message}</div>`;
-        }
-
-        // اختيار الدورة
-        async function selectCourse(courseType) {
-            if (!state.isInitialized) {
-                alert('النظام لم يتم تهيئته بعد. يرجى الانتظار...');
-                return;
-            }
-
-            state.currentCourse = courseType;
-            
-            let topic = '';
-            if (courseType === 'custom') {
-                topic = document.getElementById('custom-topic').value.trim();
-                if (!topic) {
-                    alert('يرجى إدخال موضوع للاختبار');
-                    return;
-                }
-            }
-            
-            state.currentTopic = topic;
-            showSection('loading-section');
-            
-            try {
-                // تحديث رسالة التحميل
-                document.getElementById('loading-title').textContent = 'جاري إنشاء الاختبار...';
-                document.getElementById('loading-message').textContent = state.apiKey 
-                    ? 'نظام الذكاء الاصطناعي يجهز أسئلة الاختبار الخاصة بك' 
-                    : 'جاري تحميل الأسئلة الافتراضية';
-                
-                if (state.apiKey) {
-                    state.currentQuestions = await generateQuestionsWithAPI(courseType, topic);
-                    showQuizSection('تم إنشاء الاختبار باستخدام الذكاء الاصطناعي');
-                } else {
-                    state.currentQuestions = await generateDefaultQuestions(courseType, topic);
-                    showQuizSection('الوضع التجريبي - الأسئلة الافتراضية');
-                }
-                
-            } catch (error) {
-                console.error('Error generating questions:', error);
-                state.lastError = error.message;
-                showErrorSection(error.message);
-            }
-        }
-
-        // عرض قسم الاختبار
-        function showQuizSection(message) {
-            state.currentAnswers = new Array(state.currentQuestions.length).fill(null);
-            state.currentQuestionIndex = 0;
-            
-            // إضافة رسالة في رأس الاختبار
-            const quizHeader = document.getElementById('quiz-header');
-            if (message) {
-                quizHeader.innerHTML = `<div class="info-message">${message}</div>`;
-            } else {
-                quizHeader.innerHTML = '';
-            }
-            
-            displayQuestions();
-            showSection('quiz-section');
-            updateProgress();
-        }
-
-        // عرض قسم الخطأ
-        function showErrorSection(errorMessage) {
-            const errorDetails = document.getElementById('error-details');
-            errorDetails.textContent = errorMessage || 'تعذر إنشاء الأسئلة باستخدام الذكاء الاصطناعي';
-            showSection('error-section');
-        }
-
-        // المحاولة مرة أخرى باستخدام الذكاء الاصطناعي
-        async function retryWithAI() {
-            if (!state.apiKey) {
-                alert('لا يتوفر مفتاح API للمحاولة مرة أخرى');
-                return;
-            }
-            
-            showSection('loading-section');
-            document.getElementById('loading-title').textContent = 'جاري إعادة إنشاء الاختبار...';
-            document.getElementById('loading-message').textContent = 'نظام الذكاء الاصطناعي يحاول مرة أخرى';
-            
-            try {
-                state.currentQuestions = await generateQuestionsWithAPI(state.currentCourse, state.currentTopic);
-                showQuizSection('تم إنشاء الاختبار باستخدام الذكاء الاصطناعي');
-            } catch (error) {
-                console.error('Error retrying with AI:', error);
-                state.lastError = error.message;
-                showErrorSection(error.message);
-            }
-        }
-
-        // استخدام الأسئلة الافتراضية
-        async function useDefaultQuestions() {
-            showSection('loading-section');
-            document.getElementById('loading-title').textContent = 'جاري تحميل الأسئلة الافتراضية...';
-            document.getElementById('loading-message').textContent = 'يتم تحميل الأسئلة الافتراضية';
-            
-            try {
-                state.currentQuestions = await generateDefaultQuestions(state.currentCourse, state.currentTopic);
-                showQuizSection('الوضع التجريبي - الأسئلة الافتراضية');
-            } catch (error) {
-                console.error('Error loading default questions:', error);
-                state.lastError = error.message;
-                showErrorSection('حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى.');
-            }
-        }
-
-        // توليد الأسئلة باستخدام API
-        async function generateQuestionsWithAPI(courseType, customTopic = '') {
-            const topics = {
-                programming: 'مقدمة في البرمجة وتعلم أساسيات البرمجة والمفاهيم الأساسية للغات البرمجة',
-                marketing: 'التسويق الرقمي واستراتيجيات التسويق عبر الإنترنت ووسائل التواصل الاجتماعي',
-                design: 'تصميم الجرافيك ومبادئ التصميم الجرافيكي وأدوات التصميم الأساسية'
-            };
-            
-            const topic = customTopic || topics[courseType];
-            
-            const prompt = `
-            أنشئ اختباراً تعليمياً باللغة العربية حول موضوع: "${topic}"
-            
-            المتطلبات:
-            - 5 أسئلة فقط
-            - كل سؤال يجب أن يكون من نوع اختيار من متعدد
-            - 4 خيارات لكل سؤال
-            - حدد الإجابة الصحيحة لكل سؤال
-            - أضف شرحاً قصيراً للإجابة الصحيحة
-            - الأسئلة يجب أن تكون متنوعة وتغطي جوانب مختلفة من الموضوع
-            - الإجابة يجب أن تكون في صيغة JSON فقط
-            
-            الصيغة المطلوبة:
-            [
-                {
-                    "question": "نص السؤال",
-                    "options": ["الخيار 1", "الخيار 2", "الخيار 3", "الخيار 4"],
-                    "correct": 0,
-                    "explanation": "شرح الإجابة الصحيحة"
-                }
-            ]
-            
-            حيث correct هو index الإجابة الصحيحة (0 إلى 3)
-            `;
-
-            const response = await fetch('https://api.openai.com/v1/chat/completions', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${state.apiKey}`
-                },
-                body: JSON.stringify({
-                    model: 'gpt-3.5-turbo',
-                    messages: [
-                        {
-                            role: 'system',
-                            content: 'أنت مساعد لإنشاء اختبارات تعليمية. يجب أن ترد بصيغة JSON فقط بدون أي نص إضافي.'
-                        },
-                        {
-                            role: 'user',
-                            content: prompt
-                        }
-                    ],
-                    temperature: 0.7,
-                    max_tokens: 2000
-                })
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(`فشل في الاتصال بـ API: ${errorData.error?.message || response.status}`);
-            }
-
-            const data = await response.json();
-            const content = data.choices[0].message.content;
-            
-            // استخراج JSON من النص
-            const jsonMatch = content.match(/\[[\s\S]*\]/);
-            if (jsonMatch) {
-                const questions = JSON.parse(jsonMatch[0]);
-                
-                // التأكد من أن كل سؤال يحتوي على explanation
-                questions.forEach(q => {
-                    if (!q.explanation) {
-                        q.explanation = 'الإجابة الصحيحة: ' + q.options[q.correct];
-                    }
-                });
-                
-                return questions;
-            } else {
-                throw new Error('لم يتم العثور على JSON في الرد من الذكاء الاصطناعي');
-            }
-        }
-
-        // توليد الأسئلة الافتراضية
-        async function generateDefaultQuestions(courseType, customTopic = '') {
-            // إرجاع الأسئلة الافتراضية مع إضافة سؤال عن الموضوع المخصص إذا كان موجوداً
-            let questions = [];
-            
-            if (customTopic && courseType === 'custom') {
-                questions = [
-                    {
-                        question: `ما هو أهم شيء يجب معرفته عن ${customTopic}؟`,
-                        options: [
-                            "المفاهيم الأساسية",
-                            "التطبيقات العملية", 
-                            "الأدوات المستخدمة",
-                            "كل ما سبق"
-                        ],
-                        correct: 3,
-                        explanation: `لموضوع ${customTopic}، من المهم فهم المفاهيم الأساسية والتطبيقات العملية والأدوات المستخدمة.`
-                    },
-                    {
-                        question: `أي من هذه العبارات تنطبق على ${customTopic}؟`,
-                        options: [
-                            "يتطلب مهارات متخصصة",
-                            "سهل التعلم للمبتدئين",
-                            "يحتاج إلى أدوات معقدة",
-                            "جميع ما سبق"
-                        ],
-                        correct: 0,
-                        explanation: `عادة ما يتطلب ${customTopic} مهارات متخصصة ومعرفة متقدمة.`
-                    },
-                    {
-                        question: `ما هو التحدي الرئيسي في تعلم ${customTopic}؟`,
-                        options: [
-                            "قلة المصادر التعليمية",
-                            "صعوبة المفاهيم",
-                            "التكلفة العالية",
-                            "الوقت المطلوب"
-                        ],
-                        correct: 1,
-                        explanation: `غالباً ما تكون صعوبة المفاهيم هي التحدي الرئيسي في تعلم ${customTopic}.`
-                    },
-                    {
-                        question: `كيف يمكن تطبيق ${customTopic} في الحياة العملية؟`,
-                        options: [
-                            "في المشاريع الصغيرة",
-                            "في الشركات الكبيرة",
-                            "في البحث العلمي",
-                            "جميع ما سبق"
-                        ],
-                        correct: 3,
-                        explanation: `يمكن تطبيق ${customTopic} في مختلف المجالات بما في ذلك المشاريع الصغيرة والشركات الكبيرة والبحث العلمي.`
-                    },
-                    {
-                        question: `ما هو المستقبل المتوقع لـ ${customTopic}؟`,
-                        options: [
-                            "سيصبح أكثر أهمية",
-                            "سيتم استبداله بتقنيات جديدة",
-                            "سيبقى كما هو",
-                            "لا يمكن التكهن"
-                        ],
-                        correct: 0,
-                        explanation: `من المتوقع أن يصبح ${customTopic} أكثر أهمية في المستقبل مع تطور التكنولوجيا.`
-                    }
-                ];
-            } else {
-                questions = [...defaultQuestions[courseType] || defaultQuestions.programming];
-            }
-            
-            return questions;
-        }
-
-        // باقي الدوال بدون تغيير
-        function displayQuestions() {
-            const container = document.getElementById('questions-container');
-            container.innerHTML = '';
-            
-            const question = state.currentQuestions[state.currentQuestionIndex];
-            
-            const questionDiv = document.createElement('div');
-            questionDiv.className = 'question';
-            questionDiv.innerHTML = `
-                <h3>السؤال ${state.currentQuestionIndex + 1}: ${question.question}</h3>
-                <div class="options">
-                    ${question.options.map((option, index) => `
-                        <div class="option ${state.currentAnswers[state.currentQuestionIndex] === index ? 'selected' : ''}" 
-                             onclick="selectAnswer(${index})">
-                            <input type="radio" name="question" value="${index}" 
-                                   ${state.currentAnswers[state.currentQuestionIndex] === index ? 'checked' : ''}>
-                            ${option}
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-            
-            container.appendChild(questionDiv);
-            updateNavigation();
-        }
-
-        function selectAnswer(answerIndex) {
-            state.currentAnswers[state.currentQuestionIndex] = answerIndex;
-            displayQuestions();
-        }
-
-        function updateNavigation() {
-            const prevBtn = document.getElementById('prev-btn');
-            const nextBtn = document.getElementById('next-btn');
-            const submitBtn = document.getElementById('submit-btn');
-            
-            prevBtn.style.display = state.currentQuestionIndex > 0 ? 'inline-block' : 'none';
-            
-            if (state.currentQuestionIndex === state.currentQuestions.length - 1) {
-                nextBtn.style.display = 'none';
-                submitBtn.style.display = 'inline-block';
-            } else {
-                nextBtn.style.display = 'inline-block';
-                submitBtn.style.display = 'none';
-            }
-        }
-
-        function nextQuestion() {
-            if (state.currentQuestionIndex < state.currentQuestions.length - 1) {
-                state.currentQuestionIndex++;
-                displayQuestions();
-                updateProgress();
-            }
-        }
-
-        function prevQuestion() {
-            if (state.currentQuestionIndex > 0) {
-                state.currentQuestionIndex--;
-                displayQuestions();
-                updateProgress();
-            }
-        }
-
-        function updateProgress() {
-            const progress = document.getElementById('progress');
-            const percentage = ((state.currentQuestionIndex + 1) / state.currentQuestions.length) * 100;
-            progress.style.width = `${percentage}%`;
-        }
-
-        function submitQuiz() {
-            showSection('loading-section');
-            document.getElementById('loading-title').textContent = 'جاري تصحيح الاختبار...';
-            document.getElementById('loading-message').textContent = 'يتم تقييم إجاباتك وعرض النتائج';
-            
-            setTimeout(() => {
-                const results = evaluateAnswersLocally();
-                displayResults(results);
-                showSection('results-section');
-            }, 1500);
-        }
-
-        function evaluateAnswersLocally() {
-            let correctCount = 0;
-            const results = state.currentQuestions.map((question, index) => {
-                const isCorrect = state.currentAnswers[index] === question.correct;
-                if (isCorrect) correctCount++;
-                
-                return {
-                    question: question.question,
-                    userAnswer: question.options[state.currentAnswers[index]] || 'لم يتم الإجابة',
-                    correctAnswer: question.options[question.correct],
-                    isCorrect: isCorrect,
-                    explanation: question.explanation || getExplanation(question, isCorrect)
-                };
-            });
-
-            const score = Math.round((correctCount / state.currentQuestions.length) * 100);
-            
-            return {
-                score: score,
-                results: results,
-                feedback: getFeedback(score)
-            };
-        }
-
-        function getExplanation(question, isCorrect) {
-            if (isCorrect) {
-                return 'إجابة صحيحة! ' + question.options[question.correct] + ' هو الخيار الصحيح.';
-            } else {
-                return 'الإجابة الصحيحة هي: ' + question.options[question.correct];
-            }
-        }
-
-        function getFeedback(score) {
-            if (score >= 90) {
-                return 'ممتاز! أداء رائع، لديك فهم قوي للموضوع.';
-            } else if (score >= 80) {
-                return 'جيد جداً! لديك معرفة جيدة ولكن يمكنك التحسين أكثر.';
-            } else if (score >= 70) {
-                return 'جيد! لديك فهم أساسي ولكن تحتاج إلى مزيد من الدراسة.';
-            } else if (score >= 60) {
-                return 'مقبول! تحتاج إلى مراجعة المواد الدراسية.';
-            } else {
-                return 'يحتاج إلى تحسين! ننصحك بمراجعة شاملة للموضوع.';
-            }
-        }
-
-        function displayResults(results) {
-            document.getElementById('score').textContent = `${results.score}%`;
-            
-            const container = document.getElementById('results-container');
-            container.innerHTML = '';
-            
-            results.results.forEach((result, index) => {
-                const resultDiv = document.createElement('div');
-                resultDiv.className = `result-item ${result.isCorrect ? 'correct' : 'incorrect'}`;
-                resultDiv.innerHTML = `
-                    <h4>السؤال ${index + 1}: ${result.question}</h4>
-                    <p><strong>إجابتك:</strong> ${result.userAnswer}</p>
-                    <p><strong>الإجابة الصحيحة:</strong> ${result.correctAnswer}</p>
-                    <p><strong>التعليل:</strong> ${result.explanation}</p>
-                    <p><strong>الحالة:</strong> ${result.isCorrect ? '✓ صحيح' : '✗ خاطئ'}</p>
-                `;
-                container.appendChild(resultDiv);
-            });
-            
-            const feedbackDiv = document.createElement('div');
-            feedbackDiv.className = 'result-item';
-            feedbackDiv.style.background = '#e8f5e8';
-            feedbackDiv.innerHTML = `<h4>ملاحظات عامة</h4><p>${results.feedback}</p>`;
-            container.appendChild(feedbackDiv);
-        }
-
-        function restartQuiz() {
-            state.currentAnswers = new Array(state.currentQuestions.length).fill(null);
-            state.currentQuestionIndex = 0;
-            displayQuestions();
-            showSection('quiz-section');
-            updateProgress();
-        }
-
-        function goToCourses() {
-            showSection('course-selection');
-        }
-
-        function showSection(sectionId) {
-            document.querySelectorAll('.section').forEach(section => {
-                section.classList.remove('active');
-            });
-            document.getElementById(sectionId).classList.add('active');
-        }
-
-        // بدء التطبيق عند تحميل الصفحة
-        document.addEventListener('DOMContentLoaded', function() {
-            initApp();
-        });
-    </script>
-</body>
-</html>
