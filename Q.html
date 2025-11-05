@@ -596,6 +596,40 @@
             z-index: 10;
         }
 
+        /* ===== قسم معلومات الدورة ===== */
+        .course-info-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .info-card {
+            background: var(--glass-bg);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+        }
+
+        .info-card i {
+            color: var(--accent);
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .info-card .number {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--light);
+        }
+
+        .info-card .label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
         /* ===== صفحة تفاصيل الدورة ===== */
         .course-details {
             display: none;
@@ -976,6 +1010,10 @@
             .footer-content {
                 grid-template-columns: 1fr;
             }
+            
+            .course-info-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         @media (max-width: 576px) {
@@ -1006,6 +1044,10 @@
             
             .notification {
                 max-width: 100%;
+            }
+            
+            .course-info-cards {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -1410,11 +1452,11 @@
         .certificate-professional {
             background: white;
             width: 1600px;
-            height: 1424px;
+            height: 1200px;
             max-width: 95vw;
             max-height: 95vh;
             position: relative;
-            border: 20px solid #1e3a8a;
+            border: 40px solid #1e3a8a;
             box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
             display: flex;
             flex-direction: column;
@@ -1422,6 +1464,7 @@
             align-items: center;
             text-align: center;
             overflow: hidden;
+            font-family: 'Cairo', 'Poppins', sans-serif;
         }
 
         .certificate-professional::before {
@@ -1436,21 +1479,21 @@
         }
 
         .certificate-header {
-            margin-bottom: 80px;
+            margin-bottom: 60px;
         }
 
         .certificate-title {
             color: #1e3a8a;
-            font-size: 4rem;
+            font-size: 42px;
             font-weight: 700;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             text-transform: uppercase;
             letter-spacing: 2px;
         }
 
         .certificate-subtitle {
             color: #3b82f6;
-            font-size: 2.5rem;
+            font-size: 24px;
             font-weight: 600;
         }
 
@@ -1460,25 +1503,25 @@
         }
 
         .certificate-text {
-            color: #64748b;
-            font-size: 2rem;
-            margin-bottom: 40px;
+            color: #6b7280;
+            font-size: 22px;
+            margin-bottom: 30px;
         }
 
         .student-name {
             color: #000;
-            font-size: 3.5rem;
+            font-size: 48px;
             font-weight: 700;
-            margin: 40px 0;
+            margin: 30px 0;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
         .course-name {
             color: #1e293b;
-            font-size: 2.8rem;
+            font-size: 32px;
             font-weight: 600;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .course-name span {
@@ -1486,8 +1529,8 @@
         }
 
         .certificate-date {
-            color: #64748b;
-            font-size: 1.8rem;
+            color: #6b7280;
+            font-size: 20px;
         }
 
         .certificate-footer {
@@ -1501,8 +1544,8 @@
         }
 
         .certificate-issue-date, .certificate-id {
-            color: #94a3b8;
-            font-size: 1.5rem;
+            color: #9ca3af;
+            font-size: 18px;
         }
 
         .certificate-seal {
@@ -1513,8 +1556,8 @@
         }
 
         .seal {
-            width: 200px;
-            height: 200px;
+            width: 180px;
+            height: 180px;
             border-radius: 50%;
             background: linear-gradient(135deg, #1e3a8a, #3b82f6);
             display: flex;
@@ -1522,7 +1565,7 @@
             justify-content: center;
             color: white;
             font-weight: 700;
-            font-size: 1.5rem;
+            font-size: 18px;
             border: 5px solid white;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
@@ -1543,7 +1586,7 @@
                 height: auto;
                 min-height: 80vh;
                 padding: 20px;
-                border-width: 10px;
+                border-width: 20px;
             }
 
             .certificate-professional::before {
@@ -1555,44 +1598,44 @@
             }
 
             .certificate-title {
-                font-size: 2.5rem;
+                font-size: 28px;
             }
 
             .certificate-subtitle {
-                font-size: 1.8rem;
+                font-size: 18px;
             }
 
             .certificate-text {
-                font-size: 1.5rem;
+                font-size: 16px;
             }
 
             .student-name {
-                font-size: 2.5rem;
+                font-size: 32px;
             }
 
             .course-name {
-                font-size: 2rem;
+                font-size: 22px;
             }
 
             .certificate-date {
-                font-size: 1.3rem;
+                font-size: 16px;
             }
 
             .certificate-footer {
                 flex-direction: column;
-                gap: 20px;
+                gap: 15px;
                 text-align: center;
                 padding: 0 20px;
             }
 
             .certificate-issue-date, .certificate-id {
-                font-size: 1.2rem;
+                font-size: 14px;
             }
 
             .seal {
-                width: 150px;
-                height: 150px;
-                font-size: 1.2rem;
+                width: 120px;
+                height: 120px;
+                font-size: 14px;
             }
 
             .certificate-actions {
@@ -1622,6 +1665,25 @@
             color: var(--text);
             margin-bottom: 20px;
             font-size: 1.1rem;
+        }
+
+        .certificate-notice {
+            background: rgba(59, 130, 246, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid var(--accent);
+        }
+
+        .certificate-notice-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--accent);
+        }
+
+        .certificate-notice-content i {
+            font-size: 1.2rem;
         }
 
         .certificate-types {
@@ -1968,6 +2030,31 @@
             <a href="#" class="back-to-courses" id="back-to-courses">
                 <i class="fas fa-arrow-right"></i> العودة للدورات
             </a>
+            
+            <!-- ===== قسم معلومات الدورة ===== -->
+            <div class="course-info-cards">
+                <div class="info-card">
+                    <i class="fas fa-play-circle"></i>
+                    <div class="number" id="course-videos-count">5</div>
+                    <div class="label">فيديوهات</div>
+                </div>
+                <div class="info-card">
+                    <i class="far fa-clock"></i>
+                    <div class="number" id="course-total-hours">35</div>
+                    <div class="label">ساعة تعليمية</div>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-certificate"></i>
+                    <div class="number">شهادة</div>
+                    <div class="label">بعد الإكمال</div>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-signal"></i>
+                    <div class="number" id="course-level">متقدم</div>
+                    <div class="label">المستوى</div>
+                </div>
+            </div>
+            
             <h1 id="course-details-title">دورة تطوير الويب الشاملة</h1>
             <p id="course-details-description">تعلم تطوير الويب من المبتدئ إلى المحترف باستخدام HTML، CSS، JavaScript وتقنيات الويب الحديثة</p>
             <div class="course-meta-details">
@@ -1977,7 +2064,7 @@
                 </div>
                 <div class="meta-item">
                     <i class="fas fa-signal"></i>
-                    <span id="course-level">متقدم</span>
+                    <span id="course-level-text">متقدم</span>
                 </div>
                 <div class="meta-item">
                     <i class="fas fa-user-tie"></i>
@@ -1985,7 +2072,7 @@
                 </div>
                 <div class="meta-item">
                     <i class="fas fa-play-circle"></i>
-                    <span id="course-videos-count">5 فيديوهات</span>
+                    <span id="course-videos-text">5 فيديوهات</span>
                 </div>
             </div>
         </div>
@@ -1997,6 +2084,16 @@
             
             <!-- ===== قسم الشهادة بعد إكمال الدورة ===== -->
             <div class="certificate-section" id="certificate-section" style="display: none;">
+                <!-- ملاحظة حول الشهادة المجانية -->
+                <div class="certificate-notice">
+                    <div class="certificate-notice-content">
+                        <i class="fas fa-info-circle"></i>
+                        <div>
+                            <strong>ملاحظة هامة:</strong> الشهادة المجانية ستظهر تلقائيًا بعد إكمال جميع فيديوهات الدورة بنجاح.
+                        </div>
+                    </div>
+                </div>
+                
                 <h2>مبروك! لقد أكملت الدورة بنجاح</h2>
                 <p>يمكنك الآن الحصول على شهادتك المعتمدة من الأكاديمية</p>
                 
@@ -3024,9 +3121,14 @@
             document.getElementById('course-details-title').textContent = safeTitle;
             document.getElementById('course-details-description').textContent = safeDescription;
             document.getElementById('course-total-duration').textContent = course.duration;
-            document.getElementById('course-level').textContent = course.level;
+            document.getElementById('course-level-text').textContent = course.level;
             document.getElementById('course-instructor').textContent = safeInstructor;
-            document.getElementById('course-videos-count').textContent = `${videos.length} فيديو`;
+            document.getElementById('course-videos-text').textContent = `${videos.length} فيديو`;
+            
+            // تحديث قسم معلومات الدورة
+            document.getElementById('course-videos-count').textContent = videos.length;
+            document.getElementById('course-total-hours').textContent = course.duration.split(' ')[0]; // استخراج عدد الساعات فقط
+            document.getElementById('course-level').textContent = course.level;
 
             const videosContainer = document.getElementById('course-videos-container');
             
