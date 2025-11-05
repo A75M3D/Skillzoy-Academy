@@ -6,7 +6,7 @@
     <title>Skillzoy Academy - منصة التعليم الالكتروني</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- مكتبات التحميل -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
@@ -1448,14 +1448,14 @@
             overflow-y: auto;
         }
 
-        /* شهادة إتمام الدورة الاحترافية */
+        /* شهادة إتمام الدورة الاحترافية باستخدام صورة Canva */
         .certificate-professional {
-            background: white;
+            position: relative;
             width: 1600px;
             height: 1200px;
             max-width: 95vw;
             max-height: 95vh;
-            position: relative;
+            background: white;
             border: 40px solid #1e3a8a;
             box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
             display: flex;
@@ -1467,15 +1467,27 @@
             font-family: 'Cairo', 'Poppins', sans-serif;
         }
 
-        .certificate-professional::before {
-            content: '';
+        .certificate-bg {
             position: absolute;
-            top: 40px;
-            left: 40px;
-            right: 40px;
-            bottom: 40px;
-            border: 10px solid #3b82f6;
-            pointer-events: none;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        .certificate-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 80px;
         }
 
         .certificate-header {
@@ -1580,8 +1592,93 @@
             max-width: 1600px;
         }
 
+        /* نموذج الشهادة مع صورة Canva */
+        .certificate-canva {
+            position: relative;
+            width: 1600px;
+            height: 1200px;
+            max-width: 95vw;
+            max-height: 95vh;
+            background: white;
+            border: 40px solid #1e3a8a;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            font-family: 'Cairo', 'Poppins', sans-serif;
+        }
+
+        .certificate-canva-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        .certificate-canva-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 80px;
+        }
+
+        .certificate-canva .student-name {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #1e3a8a;
+            font-size: 48px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            width: 80%;
+            text-align: center;
+        }
+
+        .certificate-canva .course-name {
+            position: absolute;
+            top: 55%;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #1e293b;
+            font-size: 32px;
+            font-weight: 600;
+            width: 80%;
+            text-align: center;
+        }
+
+        .certificate-canva .certificate-date {
+            position: absolute;
+            top: 65%;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #6b7280;
+            font-size: 20px;
+            width: 80%;
+            text-align: center;
+        }
+
+        .certificate-canva .certificate-id {
+            position: absolute;
+            bottom: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #9ca3af;
+            font-size: 18px;
+            width: 80%;
+            text-align: center;
+        }
+
         @media (max-width: 768px) {
-            .certificate-professional {
+            .certificate-canva {
                 width: 95vw;
                 height: auto;
                 min-height: 80vh;
@@ -1589,53 +1686,24 @@
                 border-width: 20px;
             }
 
-            .certificate-professional::before {
-                top: 20px;
-                left: 20px;
-                right: 20px;
-                bottom: 20px;
-                border-width: 5px;
-            }
-
-            .certificate-title {
-                font-size: 28px;
-            }
-
-            .certificate-subtitle {
-                font-size: 18px;
-            }
-
-            .certificate-text {
-                font-size: 16px;
-            }
-
-            .student-name {
+            .certificate-canva .student-name {
                 font-size: 32px;
+                top: 40%;
             }
 
-            .course-name {
+            .certificate-canva .course-name {
                 font-size: 22px;
+                top: 50%;
             }
 
-            .certificate-date {
+            .certificate-canva .certificate-date {
                 font-size: 16px;
+                top: 60%;
             }
 
-            .certificate-footer {
-                flex-direction: column;
-                gap: 15px;
-                text-align: center;
-                padding: 0 20px;
-            }
-
-            .certificate-issue-date, .certificate-id {
+            .certificate-canva .certificate-id {
                 font-size: 14px;
-            }
-
-            .seal {
-                width: 120px;
-                height: 120px;
-                font-size: 14px;
+                bottom: 20%;
             }
 
             .certificate-actions {
@@ -1887,29 +1955,15 @@
         </div>
     </div>
 
-    <!-- ===== عرض الشهادة الاحترافية ===== -->
+    <!-- ===== عرض الشهادة الاحترافية باستخدام صورة Canva ===== -->
     <div class="certificate-container" id="certificate-container">
-        <div class="certificate-professional" id="certificate-template">
-            <div class="certificate-header">
-                <h1 class="certificate-title">CERTIFICATE OF COMPLETION</h1>
-                <h2 class="certificate-subtitle">Skillzoy Academy</h2>
-            </div>
-            
-            <div class="certificate-body">
-                <p class="certificate-text">تمنح هذه الشهادة بكل فخر إلى</p>
-                <p class="student-name" id="certificate-student-name">اسم الطالب</p>
-                <p class="certificate-text">لإكماله بنجاح دورة</p>
-                <h3 class="course-name" id="certificate-course-name">دورة كاملة <span>Canva</span></h3>
-                <p class="certificate-date" id="certificate-date">في تاريخ November 4, 2025</p>
-            </div>
-            
-            <div class="certificate-footer">
-                <div class="certificate-issue-date" id="certificate-issue-date">تاريخ الإصدار: November 4, 2025</div>
+        <div class="certificate-canva" id="certificate-template">
+            <img src="https://i.ibb.co/PvLgGpF4/Blue-Grey-Modern-Gradient-Certificate-of-Completion-20250927-110652.png" alt="شهادة Canva" class="certificate-canva-bg">
+            <div class="certificate-canva-content">
+                <div class="student-name" id="certificate-student-name">اسم الطالب</div>
+                <div class="course-name" id="certificate-course-name">دورة كاملة <span>Canva</span></div>
+                <div class="certificate-date" id="certificate-date">في تاريخ November 4, 2025</div>
                 <div class="certificate-id" id="certificate-id">رقم الشهادة: SKZ-2025-713885-183</div>
-            </div>
-
-            <div class="certificate-seal">
-                <div class="seal">Skillzoy Academy</div>
             </div>
         </div>
         
@@ -2077,6 +2131,16 @@
             </div>
         </div>
         <div class="course-content-section">
+            <!-- ===== تنبيه الشهادة ===== -->
+            <div class="certificate-notice" style="margin-bottom: 30px;">
+                <div class="certificate-notice-content">
+                    <i class="fas fa-info-circle"></i>
+                    <div>
+                        <strong>ملاحظة هامة:</strong> الشهادة المجانية والمدفوعة ستظهر بعد إكمال جميع فيديوهات الدورة بنجاح.
+                    </div>
+                </div>
+            </div>
+            
             <h3>فيديوهات الدورة</h3>
             <div class="videos-grid" id="course-videos-container">
                 <!-- سيتم ملؤها ديناميكياً -->
@@ -2084,16 +2148,6 @@
             
             <!-- ===== قسم الشهادة بعد إكمال الدورة ===== -->
             <div class="certificate-section" id="certificate-section" style="display: none;">
-                <!-- ملاحظة حول الشهادة المجانية -->
-                <div class="certificate-notice">
-                    <div class="certificate-notice-content">
-                        <i class="fas fa-info-circle"></i>
-                        <div>
-                            <strong>ملاحظة هامة:</strong> الشهادة المجانية ستظهر تلقائيًا بعد إكمال جميع فيديوهات الدورة بنجاح.
-                        </div>
-                    </div>
-                </div>
-                
                 <h2>مبروك! لقد أكملت الدورة بنجاح</h2>
                 <p>يمكنك الآن الحصول على شهادتك المعتمدة من الأكاديمية</p>
                 
@@ -2429,6 +2483,9 @@
                     // عرض قسم الشهادة في صفحة تفاصيل الدورة
                     if (document.getElementById('course-details').style.display === 'block') {
                         document.getElementById('certificate-section').style.display = 'block';
+                        
+                        // تحديث زر الشهادة إذا كان المستخدم لديه شهادة بالفعل
+                        updateCertificateButton(courseId);
                     }
                 }
                 
@@ -2561,6 +2618,11 @@
                 return this.certificates.some(cert => cert.courseId === courseId);
             }
 
+            // الحصول على شهادة الدورة
+            getCertificateForCourse(courseId) {
+                return this.certificates.find(cert => cert.courseId === courseId);
+            }
+
             // عرض الشهادة
             displayCertificate(certificate) {
                 document.getElementById('certificate-student-name').textContent = certificate.studentName;
@@ -2574,7 +2636,6 @@
                 
                 document.getElementById('certificate-date').textContent = `في تاريخ ${issueDate}`;
                 document.getElementById('certificate-id').textContent = `رقم الشهادة: ${certificate.id}`;
-                document.getElementById('certificate-issue-date').textContent = `تاريخ الإصدار: ${issueDate}`;
                 
                 document.getElementById('certificate-container').style.display = 'flex';
                 
@@ -2868,6 +2929,27 @@
                 'data_science': 'علوم البيانات'
             };
             return categories[category] || category;
+        }
+
+        // ===== تحديث زر الشهادة =====
+        function updateCertificateButton(courseId) {
+            const getFreeCertificateBtn = document.getElementById('get-free-certificate-btn');
+            const hasCertificate = certificateManager.hasCertificateForCourse(courseId);
+            
+            if (hasCertificate) {
+                getFreeCertificateBtn.innerHTML = '<i class="fas fa-eye"></i> عرض الشهادة';
+                getFreeCertificateBtn.onclick = () => {
+                    const certificate = certificateManager.getCertificateForCourse(courseId);
+                    if (certificate) {
+                        certificateManager.displayCertificate(certificate);
+                    }
+                };
+            } else {
+                getFreeCertificateBtn.innerHTML = '<i class="fas fa-certificate"></i> احصل على شهادة مجانية';
+                getFreeCertificateBtn.onclick = () => {
+                    showCertificateForm(courseId, document.getElementById('course-details-title').textContent);
+                };
+            }
         }
 
         // ===== وظائف العرض =====
@@ -3168,29 +3250,13 @@
             
             // التحقق مما إذا كانت الدورة مكتملة وعرض قسم الشهادة
             const isCourseCompleted = progressSystem.isCourseCompleted(courseId);
-            const hasCertificate = certificateManager.hasCertificateForCourse(courseId);
             const certificateSection = document.getElementById('certificate-section');
             
             if (isCourseCompleted) {
                 certificateSection.style.display = 'block';
                 
                 // تحديث زر الحصول على الشهادة المجانية
-                const getFreeCertificateBtn = document.getElementById('get-free-certificate-btn');
-                
-                if (hasCertificate) {
-                    getFreeCertificateBtn.innerHTML = '<i class="fas fa-certificate"></i> عرض الشهادة';
-                    getFreeCertificateBtn.onclick = () => {
-                        const certificate = certificateManager.getUserCertificates().find(cert => cert.courseId === courseId);
-                        if (certificate) {
-                            certificateManager.displayCertificate(certificate);
-                        }
-                    };
-                } else {
-                    getFreeCertificateBtn.innerHTML = '<i class="fas fa-certificate"></i> احصل على شهادة مجانية';
-                    getFreeCertificateBtn.onclick = () => {
-                        showCertificateForm(courseId, course.title);
-                    };
-                }
+                updateCertificateButton(courseId);
             } else {
                 certificateSection.style.display = 'none';
             }
@@ -3460,13 +3526,18 @@
             // إنشاء الشهادة
             const certificate = certificateManager.createCertificate(courseId, courseTitle, studentName);
             
-            // عرض الشهادة
-            certificateManager.displayCertificate(certificate);
-            
             // إغلاق نموذج الإدخال
             closeCertificateForm();
             
-            showNotification('مبروك!', 'تم إنشاء شهادتك بنجاح', 'success');
+            // إذا كانت الشهادة موجودة مسبقاً، عرضها مباشرة
+            if (certificate) {
+                certificateManager.displayCertificate(certificate);
+                showNotification('تم فتح الشهادة', 'تم فتح شهادتك الموجودة مسبقاً', 'info');
+            } else {
+                // عرض الشهادة الجديدة
+                certificateManager.displayCertificate(certificate);
+                showNotification('مبروك!', 'تم إنشاء شهادتك بنجاح', 'success');
+            }
             
             // تحديث صفحة الشهادات إذا كانت مفتوحة
             if (document.querySelector('.certificates-page').style.display === 'block') {
@@ -3475,7 +3546,7 @@
             
             // تحديث صفحة تفاصيل الدورة إذا كانت مفتوحة
             if (document.getElementById('course-details').style.display === 'block') {
-                renderCourseDetails(courseId);
+                updateCertificateButton(courseId);
             }
         }
 
