@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Skillzoy Academy - منصة التعليم الالكتروني</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -62,7 +63,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
@@ -1402,152 +1403,202 @@
             align-items: center;
             flex-direction: column;
             padding: 20px;
+            overflow-y: auto;
         }
 
-        .certificate {
+        /* شهادة إتمام الدورة الاحترافية */
+        .certificate-professional {
             background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
-            max-width: 800px;
-            width: 100%;
-            text-align: center;
+            width: 1600px;
+            height: 1424px;
+            max-width: 95vw;
+            max-height: 95vh;
             position: relative;
-            border: 15px solid #1e3a8a;
-            background: linear-gradient(135deg, #fefefe, #f8fafc);
+            border: 20px solid #1e3a8a;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
         }
 
-        .certificate::before {
+        .certificate-professional::before {
             content: '';
             position: absolute;
-            top: 20px;
-            left: 20px;
-            right: 20px;
-            bottom: 20px;
-            border: 2px solid #3b82f6;
+            top: 40px;
+            left: 40px;
+            right: 40px;
+            bottom: 40px;
+            border: 10px solid #3b82f6;
             pointer-events: none;
         }
 
         .certificate-header {
-            border-bottom: 3px solid #3b82f6;
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-            position: relative;
+            margin-bottom: 80px;
         }
 
-        .certificate-header h1 {
+        .certificate-title {
             color: #1e3a8a;
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+            font-size: 4rem;
             font-weight: 700;
-        }
-
-        .certificate-header h2 {
-            color: #3b82f6;
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-
-        .certificate-body {
-            margin: 30px 0;
-            position: relative;
-            z-index: 2;
-        }
-
-        .certificate-body h3 {
-            font-size: 1.8rem;
-            color: #1e293b;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-
-        .certificate-body p {
-            font-size: 1.2rem;
-            color: #64748b;
-            margin-bottom: 5px;
-        }
-
-        .student-name {
-            font-size: 2.2rem !important;
-            color: #0f172a !important;
-            font-weight: bold;
-            margin: 20px 0 !important;
+            margin-bottom: 20px;
             text-transform: uppercase;
             letter-spacing: 2px;
         }
 
-        .certificate-footer {
-            margin-top: 40px;
-            display: flex;
-            justify-content: space-between;
-            border-top: 2px solid #e2e8f0;
-            padding-top: 20px;
-            position: relative;
+        .certificate-subtitle {
+            color: #3b82f6;
+            font-size: 2.5rem;
+            font-weight: 600;
         }
 
-        .certificate-id {
-            font-size: 0.9rem;
+        .certificate-body {
+            margin: 60px 0;
+            width: 80%;
+        }
+
+        .certificate-text {
             color: #64748b;
+            font-size: 2rem;
+            margin-bottom: 40px;
+        }
+
+        .student-name {
+            color: #000;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin: 40px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .course-name {
+            color: #1e293b;
+            font-size: 2.8rem;
             font-weight: 600;
+            margin-bottom: 40px;
+        }
+
+        .course-name span {
+            color: #1e3a8a;
         }
 
         .certificate-date {
-            font-size: 0.9rem;
             color: #64748b;
-            font-weight: 600;
+            font-size: 1.8rem;
+        }
+
+        .certificate-footer {
+            position: absolute;
+            bottom: 80px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 100px;
+        }
+
+        .certificate-issue-date, .certificate-id {
+            color: #94a3b8;
+            font-size: 1.5rem;
         }
 
         .certificate-seal {
             position: absolute;
-            bottom: 20px;
+            bottom: 80px;
             left: 50%;
             transform: translateX(-50%);
-            text-align: center;
         }
 
-        .seal-image {
-            width: 120px;
-            height: 120px;
+        .seal {
+            width: 200px;
+            height: 200px;
             border-radius: 50%;
-            border: 3px solid #3b82f6;
-            margin-bottom: 10px;
             background: linear-gradient(135deg, #1e3a8a, #3b82f6);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-weight: bold;
-            font-size: 0.9rem;
-        }
-
-        .ceo-signature {
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        .signature-line {
-            width: 200px;
-            height: 2px;
-            background: #1e293b;
-            margin: 5px auto;
-        }
-
-        .ceo-name {
-            font-weight: bold;
-            color: #1e293b;
-            font-size: 1.1rem;
-        }
-
-        .ceo-title {
-            color: #64748b;
-            font-size: 0.9rem;
+            font-weight: 700;
+            font-size: 1.5rem;
+            border: 5px solid white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         .certificate-actions {
-            margin-top: 20px;
+            margin-top: 30px;
             display: flex;
-            gap: 10px;
+            gap: 15px;
+            flex-wrap: wrap;
             justify-content: center;
+            width: 100%;
+            max-width: 1600px;
+        }
+
+        @media (max-width: 768px) {
+            .certificate-professional {
+                width: 95vw;
+                height: auto;
+                min-height: 80vh;
+                padding: 20px;
+                border-width: 10px;
+            }
+
+            .certificate-professional::before {
+                top: 20px;
+                left: 20px;
+                right: 20px;
+                bottom: 20px;
+                border-width: 5px;
+            }
+
+            .certificate-title {
+                font-size: 2.5rem;
+            }
+
+            .certificate-subtitle {
+                font-size: 1.8rem;
+            }
+
+            .certificate-text {
+                font-size: 1.5rem;
+            }
+
+            .student-name {
+                font-size: 2.5rem;
+            }
+
+            .course-name {
+                font-size: 2rem;
+            }
+
+            .certificate-date {
+                font-size: 1.3rem;
+            }
+
+            .certificate-footer {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+                padding: 0 20px;
+            }
+
+            .certificate-issue-date, .certificate-id {
+                font-size: 1.2rem;
+            }
+
+            .seal {
+                width: 150px;
+                height: 150px;
+                font-size: 1.2rem;
+            }
+
+            .certificate-actions {
+                flex-direction: column;
+                align-items: center;
+            }
         }
 
         /* ===== قسم الشهادة في صفحة الدورة ===== */
@@ -1633,59 +1684,6 @@
             font-weight: bold;
         }
 
-        /* ===== تحسينات الشهادة للتجاوب ===== */
-        @media (max-width: 768px) {
-            .certificate {
-                padding: 20px;
-                border-width: 10px;
-            }
-            
-            .certificate-header h1 {
-                font-size: 1.8rem;
-            }
-            
-            .certificate-body h3 {
-                font-size: 1.4rem;
-            }
-            
-            .student-name {
-                font-size: 1.8rem !important;
-            }
-            
-            .certificate-footer {
-                flex-direction: column;
-                gap: 15px;
-                text-align: center;
-            }
-            
-            .certificate-actions {
-                flex-direction: column;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .certificate {
-                padding: 15px;
-                border-width: 5px;
-            }
-            
-            .certificate-header h1 {
-                font-size: 1.5rem;
-            }
-            
-            .certificate-body h3 {
-                font-size: 1.2rem;
-            }
-            
-            .student-name {
-                font-size: 1.5rem !important;
-            }
-            
-            .certificate-body p {
-                font-size: 1rem;
-            }
-        }
-
         /* ===== قسم معاينة الشهادة المدفوعة ===== */
         .premium-certificate-preview {
             margin-top: 20px;
@@ -1724,470 +1722,6 @@
             position: absolute;
             right: 0;
             color: gold;
-        }
-
-        /* ===== تصميم الشهادة الإنجليزية المحسن ===== */
-        .certificate-en {
-            background: white;
-            padding: 50px;
-            border-radius: 15px;
-            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
-            max-width: 900px;
-            width: 100%;
-            text-align: center;
-            position: relative;
-            background: linear-gradient(135deg, #fefefe, #f8fafc);
-            border: 20px solid #1e3a8a;
-            font-family: 'Times New Roman', Times, serif;
-        }
-
-        .certificate-en::before {
-            content: '';
-            position: absolute;
-            top: 30px;
-            left: 30px;
-            right: 30px;
-            bottom: 30px;
-            border: 2px solid #3b82f6;
-            pointer-events: none;
-        }
-
-        .certificate-en-header {
-            border-bottom: 3px solid #3b82f6;
-            padding-bottom: 25px;
-            margin-bottom: 35px;
-            position: relative;
-        }
-
-        .certificate-en-header h1 {
-            color: #1e3a8a;
-            font-size: 2.8rem;
-            margin-bottom: 15px;
-            font-weight: 700;
-            letter-spacing: 2px;
-        }
-
-        .certificate-en-header h2 {
-            color: #3b82f6;
-            font-size: 1.8rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-        }
-
-        .certificate-en-body {
-            margin: 40px 0;
-            position: relative;
-            z-index: 2;
-        }
-
-        .certificate-en-body h3 {
-            font-size: 2rem;
-            color: #1e293b;
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
-
-        .certificate-en-body p {
-            font-size: 1.3rem;
-            color: #64748b;
-            margin-bottom: 8px;
-            line-height: 1.6;
-        }
-
-        .student-name-en {
-            font-size: 2.5rem !important;
-            color: #0f172a !important;
-            font-weight: bold;
-            margin: 25px 0 !important;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-        }
-
-        .certificate-en-footer {
-            margin-top: 50px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            border-top: 2px solid #e2e8f0;
-            padding-top: 25px;
-            position: relative;
-        }
-
-        .certificate-en-id {
-            font-size: 1rem;
-            color: #64748b;
-            font-weight: 600;
-            text-align: left;
-        }
-
-        .certificate-en-date {
-            font-size: 1rem;
-            color: #64748b;
-            font-weight: 600;
-            text-align: right;
-        }
-
-        .certificate-en-seal {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            text-align: center;
-        }
-
-        .seal-image-en {
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            border: 3px solid #3b82f6;
-            margin-bottom: 15px;
-            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 1rem;
-        }
-
-        .ceo-signature-en {
-            position: absolute;
-            bottom: 20px;
-            right: 50px;
-            text-align: center;
-        }
-
-        .signature-line-en {
-            width: 180px;
-            height: 2px;
-            background: #1e293b;
-            margin: 8px auto;
-        }
-
-        .ceo-name-en {
-            font-weight: bold;
-            color: #1e293b;
-            font-size: 1.1rem;
-        }
-
-        .ceo-title-en {
-            color: #64748b;
-            font-size: 0.9rem;
-        }
-
-        .certificate-en-actions {
-            margin-top: 25px;
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-        }
-
-        @media (max-width: 768px) {
-            .certificate-en {
-                padding: 30px;
-                border-width: 15px;
-            }
-            
-            .certificate-en-header h1 {
-                font-size: 2.2rem;
-            }
-            
-            .certificate-en-body h3 {
-                font-size: 1.6rem;
-            }
-            
-            .student-name-en {
-                font-size: 2rem !important;
-            }
-            
-            .certificate-en-footer {
-                flex-direction: column;
-                gap: 20px;
-                text-align: center;
-            }
-            
-            .ceo-signature-en {
-                position: relative;
-                bottom: auto;
-                right: auto;
-                margin-top: 20px;
-            }
-            
-            .certificate-en-actions {
-                flex-direction: column;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .certificate-en {
-                padding: 20px;
-                border-width: 10px;
-            }
-            
-            .certificate-en-header h1 {
-                font-size: 1.8rem;
-            }
-            
-            .certificate-en-body h3 {
-                font-size: 1.4rem;
-            }
-            
-            .student-name-en {
-                font-size: 1.7rem !important;
-            }
-            
-            .certificate-en-body p {
-                font-size: 1.1rem;
-            }
-        }
-        
-        /* ===== تصميم الشهادة المربع المتجاوب ===== */
-        .certificate-square {
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
-            max-width: 800px;
-            width: 100%;
-            position: relative;
-            border: 15px solid #1e3a8a;
-            background: linear-gradient(135deg, #fefefe, #f8fafc);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .certificate-square::before {
-            content: '';
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            right: 20px;
-            bottom: 20px;
-            border: 2px solid #3b82f6;
-            pointer-events: none;
-        }
-
-        .certificate-square-header {
-            border-bottom: 3px solid #3b82f6;
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-            position: relative;
-            text-align: center;
-        }
-
-        .certificate-square-header h1 {
-            color: #1e3a8a;
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-
-        .certificate-square-header h2 {
-            color: #3b82f6;
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-
-        .certificate-square-body {
-            flex: 1;
-            display: flex;
-            gap: 30px;
-            margin: 20px 0;
-            position: relative;
-            z-index: 2;
-        }
-
-        .certificate-content {
-            flex: 1;
-            text-align: right;
-            padding-left: 20px;
-        }
-
-        .certificate-seal-container {
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 180px;
-        }
-
-        .seal-image-square {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            border: 3px solid #3b82f6;
-            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 1rem;
-            text-align: center;
-            line-height: 1.2;
-            padding: 10px;
-        }
-
-        .certificate-content h3 {
-            font-size: 1.8rem;
-            color: #1e293b;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-
-        .certificate-content p {
-            font-size: 1.2rem;
-            color: #64748b;
-            margin-bottom: 5px;
-        }
-
-        .student-name-square {
-            font-size: 2.2rem !important;
-            color: #0f172a !important;
-            font-weight: bold;
-            margin: 20px 0 !important;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .certificate-square-footer {
-            margin-top: 30px;
-            display: flex;
-            justify-content: space-between;
-            border-top: 2px solid #e2e8f0;
-            padding-top: 20px;
-            position: relative;
-        }
-
-        .certificate-square-id {
-            font-size: 0.9rem;
-            color: #64748b;
-            font-weight: 600;
-        }
-
-        .certificate-square-date {
-            font-size: 0.9rem;
-            color: #64748b;
-            font-weight: 600;
-        }
-
-        .ceo-signature-square {
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            text-align: center;
-        }
-
-        .signature-line-square {
-            width: 200px;
-            height: 2px;
-            background: #1e293b;
-            margin: 5px auto;
-        }
-
-        .ceo-name-square {
-            font-weight: bold;
-            color: #1e293b;
-            font-size: 1.1rem;
-        }
-
-        .ceo-title-square {
-            color: #64748b;
-            font-size: 0.9rem;
-        }
-
-        .certificate-square-actions {
-            margin-top: 20px;
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        @media (max-width: 768px) {
-            .certificate-square {
-                padding: 20px;
-                border-width: 10px;
-            }
-            
-            .certificate-square-header h1 {
-                font-size: 1.8rem;
-            }
-            
-            .certificate-content h3 {
-                font-size: 1.4rem;
-            }
-            
-            .student-name-square {
-                font-size: 1.8rem !important;
-            }
-            
-            .certificate-square-body {
-                flex-direction: column-reverse;
-                gap: 20px;
-            }
-            
-            .certificate-content {
-                padding-left: 0;
-                text-align: center;
-            }
-            
-            .certificate-seal-container {
-                width: 100%;
-            }
-            
-            .seal-image-square {
-                width: 120px;
-                height: 120px;
-            }
-            
-            .certificate-square-footer {
-                flex-direction: column;
-                gap: 15px;
-                text-align: center;
-            }
-            
-            .certificate-square-actions {
-                flex-direction: column;
-            }
-            
-            .ceo-signature-square {
-                position: relative;
-                bottom: auto;
-                left: auto;
-                transform: none;
-                margin-top: 15px;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .certificate-square {
-                padding: 15px;
-                border-width: 5px;
-            }
-            
-            .certificate-square-header h1 {
-                font-size: 1.5rem;
-            }
-            
-            .certificate-content h3 {
-                font-size: 1.2rem;
-            }
-            
-            .student-name-square {
-                font-size: 1.5rem !important;
-            }
-            
-            .certificate-content p {
-                font-size: 1rem;
-            }
-            
-            .seal-image-square {
-                width: 100px;
-                height: 100px;
-                font-size: 0.8rem;
-            }
         }
     </style>
 </head>
@@ -2291,49 +1825,33 @@
         </div>
     </div>
 
-    <!-- ===== عرض الشهادة المربعة المتجاوبة ===== -->
+    <!-- ===== عرض الشهادة الاحترافية ===== -->
     <div class="certificate-container" id="certificate-container">
-        <div class="certificate-square" id="certificate-template">
-            <div class="certificate-square-header">
-                <h1>شهادة إتمام الدورة</h1>
-                <h2>Skillzoy Academy</h2>
+        <div class="certificate-professional" id="certificate-template">
+            <div class="certificate-header">
+                <h1 class="certificate-title">CERTIFICATE OF COMPLETION</h1>
+                <h2 class="certificate-subtitle">Skillzoy Academy</h2>
             </div>
             
-            <div class="certificate-square-body">
-                <div class="certificate-content">
-                    <p>تمنح هذه الشهادة إلى</p>
-                    <p class="student-name-square" id="certificate-student-name">اسم الطالب</p>
-                    <p>لإتمامه بنجاح دورة</p>
-                    <h3 id="certificate-course-name">اسم الدورة</h3>
-                    <p>بتاريخ <span id="certificate-date">١ يناير ٢٠٢٥</span></p>
-                </div>
-                
-                <div class="certificate-seal-container">
-                    <div class="seal-image-square">
-                        Skillzoy<br>Academy
-                    </div>
-                </div>
+            <div class="certificate-body">
+                <p class="certificate-text">تمنح هذه الشهادة بكل فخر إلى</p>
+                <p class="student-name" id="certificate-student-name">اسم الطالب</p>
+                <p class="certificate-text">لإكماله بنجاح دورة</p>
+                <h3 class="course-name" id="certificate-course-name">دورة كاملة <span>Canva</span></h3>
+                <p class="certificate-date" id="certificate-date">في تاريخ November 4, 2025</p>
             </div>
             
-            <div class="certificate-square-footer">
-                <div class="certificate-square-id">
-                    رقم الشهادة: <span id="certificate-id">SKZ-2025-00001</span>
-                </div>
-                
-                <div class="certificate-square-date">
-                    تاريخ الإصدار: <span id="certificate-issue-date">١ يناير ٢٠٢٥</span>
-                </div>
+            <div class="certificate-footer">
+                <div class="certificate-issue-date" id="certificate-issue-date">تاريخ الإصدار: November 4, 2025</div>
+                <div class="certificate-id" id="certificate-id">رقم الشهادة: SKZ-2025-713885-183</div>
             </div>
 
-            <div class="ceo-signature-square">
-                <div class="signature-line-square"></div>
-                <div class="ceo-name-square">أحمد.م.عبدالكريم</div>
-                <div class="ceo-title-square">المدير التنفيذي</div>
-                <div class="ceo-title-square">أكاديمية سكيل زوي</div>
+            <div class="certificate-seal">
+                <div class="seal">Skillzoy Academy</div>
             </div>
         </div>
         
-        <div class="certificate-square-actions">
+        <div class="certificate-actions">
             <button class="btn btn-outline" id="close-certificate">إغلاق</button>
             <button class="btn btn-success" id="download-certificate-png">
                 <i class="fas fa-download"></i> تحميل كصورة
@@ -2950,11 +2468,23 @@
             displayCertificate(certificate) {
                 document.getElementById('certificate-student-name').textContent = certificate.studentName;
                 document.getElementById('certificate-course-name').textContent = certificate.courseTitle;
-                document.getElementById('certificate-date').textContent = certificate.issueDate;
-                document.getElementById('certificate-id').textContent = certificate.id;
-                document.getElementById('certificate-issue-date').textContent = certificate.issueDate;
+                
+                const issueDate = new Date().toLocaleDateString('en-US', { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                });
+                
+                document.getElementById('certificate-date').textContent = `في تاريخ ${issueDate}`;
+                document.getElementById('certificate-id').textContent = `رقم الشهادة: ${certificate.id}`;
+                document.getElementById('certificate-issue-date').textContent = `تاريخ الإصدار: ${issueDate}`;
                 
                 document.getElementById('certificate-container').style.display = 'flex';
+                
+                // التمرير إلى الأعلى لضمان ظهور أزرار التحميل على الهواتف
+                setTimeout(() => {
+                    document.getElementById('certificate-container').scrollTop = 0;
+                }, 100);
             }
 
             // تحميل الشهادة كصورة
