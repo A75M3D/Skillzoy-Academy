@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إعدادات المنصة - Skillzoy Academy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        secondary: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        },
+                        // ألوان هادئة إضافية
+                        calm: {
+                            blue: '#1e40af',
+                            teal: '#0f766e',
+                            emerald: '#047857',
+                            violet: '#7c3aed',
+                            rose: '#be123c',
+                            amber: '#d97706',
+                            cyan: '#0891b2',
+                            lime: '#65a30d',
+                            indigo: '#4f46e5',
+                            pink: '#be185d'
+                        }
+                    },
+                    fontFamily: {
+                        'cairo': ['Cairo', 'sans-serif'],
+                        'tajawal': ['Tajawal', 'sans-serif'],
+                        'noto': ['Noto Sans Arabic', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+                        'soft': '0 4px 20px 0 rgba(0, 0, 0, 0.05)'
+                    },
+                    backdropBlur: {
+                        'xs': '2px',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Tajawal:wght@300;400;500;700&display=swap');
+        
+        * {
+            font-family: 'Cairo', 'Tajawal', sans-serif;
+        }
+        
+        /* تأثيرات الزجاجية */
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        
+        .dark .glass-effect {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* تأثيرات انتقالية */
+        .transition-all {
+            transition: all 0.3s ease;
+        }
+        
+        /* تخصيص شريط التمرير */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
+        
+        .dark ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        
+        .dark ::-webkit-scrollbar-thumb {
+            background: #475569;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        
+        /* تأثيرات النص */
+        .text-shadow {
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* تأثيرات البطاقات */
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        /* تأثيرات الأزرار */
+        .btn-primary {
+            background: linear-gradient(135deg, #1e40af 0%, #3730a3 100%);
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #3730a3 0%, #312e81 100%);
+        }
+        
+        /* تأثيرات الإدخال */
+        .input-focus:focus {
+            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.2);
+        }
+        
+        /* تحسينات للوضع الداكن */
+        .dark .input-focus:focus {
+            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
+    <!-- شريط التنقل العلوي -->
+    <nav class="bg-white dark:bg-gray-800 shadow-sm py-4 px-6 flex justify-between items-center sticky top-0 z-10">
+        <div class="flex items-center space-x-4 space-x-reverse">
+            <a href="index.html" class="flex items-center text-primary-700 dark:text-primary-300 hover:text-primary-800 dark:hover:text-primary-200 transition-all">
+                <i class="fas fa-arrow-right ml-2"></i>
+                <span class="hidden sm:inline">العودة للرئيسية</span>
+            </a>
+            <h1 class="text-xl font-bold text-primary-800 dark:text-primary-200 text-shadow">إعدادات المنصة</h1>
+        </div>
+        <div class="flex items-center space-x-4 space-x-reverse">
+            <!-- زر تبديل اللغة -->
+            <button id="languageToggle" class="flex items-center px-3 py-2 rounded-lg bg-primary-50 dark:bg-gray-700 text-primary-700 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-gray-600 transition-all">
+                <i class="fas fa-language ml-2"></i>
+                <span id="languageText">English</span>
+            </button>
+            
+            <!-- زر تبديل الثيم -->
+            <button id="themeToggle" class="flex items-center px-3 py-2 rounded-lg bg-primary-50 dark:bg-gray-700 text-primary-700 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-gray-600 transition-all">
+                <i id="themeIcon" class="fas fa-moon ml-2"></i>
+                <span id="themeText">الوضع الداكن</span>
+            </button>
+            
+            <!-- صورة المستخدم -->
+            <div class="relative">
+                <img src="https://ui-avatars.com/api/?name=نشط+الان&background=1e40af&color=fff" 
+                     alt="صورة المستخدم" class="w-10 h-10 rounded-full border-2 border-primary-500">
+                <span class="absolute bottom-0 left-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- الشريط الجانبي الزجاجي -->
+            <div class="lg:w-1/4">
+                <div class="glass-effect rounded-2xl shadow-soft p-6 sticky top-24">
+                    <div class="flex items-center mb-8 pb-4 border-b border-gray-200 dark:border-gray-700">
+                        <div class="w-12 h-12 bg-gradient-to-br from-primary-600 to-primary-800 rounded-xl flex items-center justify-center text-white font-bold text-lg">
+                            S
+                        </div>
+                        <div class="mr-3">
+                            <h2 class="text-lg font-bold text-primary-800 dark:text-primary-200">Skillzoy Academy</h2>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">منصة التعليم الإلكتروني</p>
+                        </div>
+                    </div>
+                    
+                    <ul class="space-y-2">
+                        <li>
+                            <button class="w-full text-right py-3 px-4 rounded-lg transition-all flex items-center justify-between settings-tab active" data-tab="platform">
+                                <span class="flex items-center">
+                                    <i class="fas fa-cog ml-3 text-primary-600"></i>
+                                    <span class="ar-text">إعدادات المنصة</span>
+                                    <span class="en-text hidden">Platform Settings</span>
+                                </span>
+                                <i class="fas fa-chevron-left text-xs text-primary-500"></i>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="w-full text-right py-3 px-4 rounded-lg transition-all flex items-center justify-between settings-tab" data-tab="branding">
+                                <span class="flex items-center">
+                                    <i class="fas fa-palette ml-3 text-calm-violet"></i>
+                                    <span class="ar-text">الهوية البصرية</span>
+                                    <span class="en-text hidden">Branding</span>
+                                </span>
+                                <i class="fas fa-chevron-left text-xs text-gray-400"></i>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="w-full text-right py-3 px-4 rounded-lg transition-all flex items-center justify-between settings-tab" data-tab="storage">
+                                <span class="flex items-center">
+                                    <i class="fas fa-database ml-3 text-calm-amber"></i>
+                                    <span class="ar-text">إدارة التخزين</span>
+                                    <span class="en-text hidden">Storage Management</span>
+                                </span>
+                                <i class="fas fa-chevron-left text-xs text-gray-400"></i>
+                            </button>
+                        </li>
+                    </ul>
+                    
+                    <!-- ألوان الثيم -->
+                    <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
+                        <h3 class="text-sm font-semibold text-primary-700 dark:text-primary-300 mb-3 ar-text">ألوان الثيم</h3>
+                        <h3 class="text-sm font-semibold text-primary-700 dark:text-primary-300 mb-3 en-text hidden">Theme Colors</h3>
+                        <div class="grid grid-cols-5 gap-2">
+                            <button class="color-option w-8 h-8 rounded-full bg-calm-blue border-2 border-white shadow-sm" data-color="blue"></button>
+                            <button class="color-option w-8 h-8 rounded-full bg-calm-teal border-2 border-white shadow-sm" data-color="teal"></button>
+                            <button class="color-option w-8 h-8 rounded-full bg-calm-emerald border-2 border-white shadow-sm" data-color="emerald"></button>
+                            <button class="color-option w-8 h-8 rounded-full bg-calm-violet border-2 border-white shadow-sm" data-color="violet"></button>
+                            <button class="color-option w-8 h-8 rounded-full bg-calm-rose border-2 border-white shadow-sm" data-color="rose"></button>
+                            <button class="color-option w-8 h-8 rounded-full bg-calm-amber border-2 border-white shadow-sm" data-color="amber"></button>
+                            <button class="color-option w-8 h-8 rounded-full bg-calm-cyan border-2 border-white shadow-sm" data-color="cyan"></button>
+                            <button class="color-option w-8 h-8 rounded-full bg-calm-lime border-2 border-white shadow-sm" data-color="lime"></button>
+                            <button class="color-option w-8 h-8 rounded-full bg-calm-indigo border-2 border-white shadow-sm" data-color="indigo"></button>
+                            <button class="color-option w-8 h-8 rounded-full bg-calm-pink border-2 border-white shadow-sm" data-color="pink"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- المحتوى الرئيسي -->
+            <div class="lg:w-3/4">
+                <!-- قسم إعدادات المنصة -->
+                <div id="platform" class="settings-section active">
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-soft p-6 mb-6 card-hover">
+                        <div class="flex items-center mb-6">
+                            <i class="fas fa-cog text-2xl text-primary-600 ml-3"></i>
+                            <h2 class="text-xl font-bold text-primary-800 dark:text-primary-200 ar-text">إعدادات المنصة</h2>
+                            <h2 class="text-xl font-bold text-primary-800 dark:text-primary-200 en-text hidden">Platform Settings</h2>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- اسم المنصة -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 ar-text">
+                                    اسم المنصة
+                                </label>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 en-text hidden">
+                                    Platform Name
+                                </label>
+                                <input type="text" id="platformName" value="Skillzoy Academy" 
+                                       class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 input-focus transition-all">
+                            </div>
+                            
+                            <!-- البريد الرسمي -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 ar-text">
+                                    البريد الرسمي
+                                </label>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 en-text hidden">
+                                    Support Email
+                                </label>
+                                <input type="email" id="supportEmail" value="info@skillzoy.com" 
+                                       class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 input-focus transition-all">
+                            </div>
+                            
+                            <!-- رقم التواصل -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 ar-text">
+                                    رقم التواصل
+                                </label>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 en-text hidden">
+                                    Contact Number
+                                </label>
+                                <input type="tel" id="contactNumber" value="+249924299798" 
+                                       class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 input-focus transition-all">
+                            </div>
+                            
+                            <!-- خط الواجهة -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 ar-text">
+                                    خط الواجهة
+                                </label>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 en-text hidden">
+                                    Font Family
+                                </label>
+                                <select id="fontFamily" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 input-focus transition-all">
+                                    <option value="cairo" class="ar-text">Cairo</option>
+                                    <option value="cairo" class="en-text hidden">Cairo</option>
+                                    <option value="tajawal" class="ar-text">Tajawal</option>
+                                    <option value="tajawal" class="en-text hidden">Tajawal</option>
+                                    <option value="noto" class="ar-text">Noto Sans Arabic</option>
+                                    <option value="noto" class="en-text hidden">Noto Sans Arabic</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- شعار المنصة -->
+                        <div class="mt-6">
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 ar-text">
+                                شعار المنصة
+                            </label>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 en-text hidden">
+                                Platform Logo
+                            </label>
+                            <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
+                                <div class="w-32 h-32 bg-gradient-to-br from-primary-500 to-primary-700 rounded-2xl flex items-center justify-center text-white text-2xl font-bold shadow-md">
+                                    S
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex flex-col sm:flex-row gap-4">
+                                        <button class="px-4 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-xl transition-all flex items-center justify-center ar-text">
+                                            <i class="fas fa-upload ml-2"></i>
+                                            رفع صورة جديدة
+                                        </button>
+                                        <button class="px-4 py-3 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 rounded-xl transition-all flex items-center justify-center ar-text">
+                                            <i class="fas fa-trash ml-2"></i>
+                                            إزالة الشعار
+                                        </button>
+                                        <button class="px-4 py-3 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 rounded-xl transition-all flex items-center justify-center en-text hidden">
+                                            <i class="fas fa-upload ml-2"></i>
+                                            Upload New Image
+                                        </button>
+                                        <button class="px-4 py-3 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 rounded-xl transition-all flex items-center justify-center en-text hidden">
+                                            <i class="fas fa-trash ml-2"></i>
+                                            Remove Logo
+                                        </button>
+                                    </div>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-3 ar-text">
+                                        الحجم الموصى به: 512x512 بكسل. الأنواع المسموحة: PNG, JPG, SVG
+                                    </p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-3 en-text hidden">
+                                        Recommended size: 512x512 pixels. Allowed types: PNG, JPG, SVG
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- الوصف المختصر -->
+                        <div class="mt-6">
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 ar-text">
+                                الوصف المختصر
+                            </label>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 en-text hidden">
+                                Short Description
+                            </label>
+                            <textarea id="shortDescription" rows="3" 
+                                      class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 input-focus transition-all ar-text">
+منصة تعليمية رائدة في تقديم الدورات التعليمية عالية الجودة في مختلف المجالات. نهدف إلى تمكين الأفراد من خلال المعرفة والمهارات التي يحتاجونها لتحقيق أهدافهم.
+                            </textarea>
+                            <textarea id="shortDescriptionEn" rows="3" 
+                                      class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 input-focus transition-all en-text hidden">
+A leading educational platform that provides high-quality courses in various fields. We aim to empower individuals through the knowledge and skills they need to achieve their goals.
+                            </textarea>
+                        </div>
+                        
+                        <!-- زر الحفظ -->
+                        <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700 flex justify-end">
+                            <button id="savePlatformSettings" class="btn-primary text-white px-6 py-3 rounded-xl font-medium transition-all flex items-center ar-text">
+                                <i class="fas fa-save ml-2"></i>
+                                حفظ الإعدادات
+                            </button>
+                            <button id="savePlatformSettingsEn" class="btn-primary text-white px-6 py-3 rounded-xl font-medium transition-all flex items-center en-text hidden">
+                                <i class="fas fa-save ml-2"></i>
+                                Save Settings
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- قسم الهوية البصرية -->
+                <div id="branding" class="settings-section hidden">
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-soft p-6 mb-6 card-hover">
+                        <div class="flex items-center mb-6">
+                            <i class="fas fa-palette text-2xl text-calm-violet ml-3"></i>
+                            <h2 class="text-xl font-bold text-primary-800 dark:text-primary-200 ar-text">الهوية البصرية</h2>
+                            <h2 class="text-xl font-bold text-primary-800 dark:text-primary-200 en-text hidden">Branding</h2>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- اللون الأساسي -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 ar-text">
+                                    اللون الأساسي
+                                </label>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 en-text hidden">
+                                    Primary Color
+                                </label>
+                                <div class="flex items-center">
+                                    <input type="color" id="primaryColor" value="#1e40af" 
+                                           class="w-12 h-12 rounded-lg border border-gray-300 dark:border-gray-600 cursor-pointer">
+                                    <span class="mr-3 text-gray-600 dark:text-gray-400 ar-text">#1e40af</span>
+                                    <span class="mr-3 text-gray-600 dark:text-gray-400 en-text hidden">#1e40af</span>
+                                </div>
+                            </div>
+                            
+                            <!-- اللون الثانوي -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 ar-text">
+                                    اللون الثانوي
+                                </label>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 en-text hidden">
+                                    Secondary Color
+                                </label>
+                                <div class="flex items-center">
+                                    <input type="color" id="secondaryColor" value="#3b82f6" 
+                                           class="w-12 h-12 rounded-lg border border-gray-300 dark:border-gray-600 cursor-pointer">
+                                    <span class="mr-3 text-gray-600 dark:text-gray-400 ar-text">#3b82f6</span>
+                                    <span class="mr-3 text-gray-600 dark:text-gray-400 en-text hidden">#3b82f6</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- خيارات الخلفية -->
+                        <div class="mt-6">
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3 ar-text">
+                                خيارات الخلفية
+                            </label>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3 en-text hidden">
+                                Background Options
+                            </label>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <div class="bg-gradient-to-br from-primary-500 to-primary-700 h-20 rounded-xl cursor-pointer border-2 border-primary-500 shadow-md"></div>
+                                <div class="bg-gradient-to-br from-calm-teal to-calm-emerald h-20 rounded-xl cursor-pointer border-2 border-transparent hover:border-gray-300 transition-all"></div>
+                                <div class="bg-gradient-to-br from-calm-violet to-calm-pink h-20 rounded-xl cursor-pointer border-2 border-transparent hover:border-gray-300 transition-all"></div>
+                                <div class="bg-gradient-to-br from-calm-amber to-calm-rose h-20 rounded-xl cursor-pointer border-2 border-transparent hover:border-gray-300 transition-all"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- معاينة الثيم -->
+                        <div class="mt-8 p-6 bg-gradient-to-br from-primary-50 to-primary-100 dark:from-gray-800 dark:to-gray-900 rounded-2xl border border-primary-200 dark:border-gray-700">
+                            <h3 class="text-lg font-semibold text-primary-800 dark:text-primary-200 mb-4 ar-text">معاينة الثيم</h3>
+                            <h3 class="text-lg font-semibold text-primary-800 dark:text-primary-200 mb-4 en-text hidden">Theme Preview</h3>
+                            
+                            <div class="flex flex-wrap gap-4">
+                                <div class="px-4 py-2 bg-primary-500 text-white rounded-lg ar-text">زر أساسي</div>
+                                <div class="px-4 py-2 bg-primary-500 text-white rounded-lg en-text hidden">Primary Button</div>
+                                
+                                <div class="px-4 py-2 bg-white dark:bg-gray-700 text-primary-600 dark:text-primary-400 border border-primary-300 dark:border-primary-600 rounded-lg ar-text">زر ثانوي</div>
+                                <div class="px-4 py-2 bg-white dark:bg-gray-700 text-primary-600 dark:text-primary-400 border border-primary-300 dark:border-primary-600 rounded-lg en-text hidden">Secondary Button</div>
+                                
+                                <div class="px-4 py-2 bg-calm-teal text-white rounded-lg ar-text">نجاح</div>
+                                <div class="px-4 py-2 bg-calm-teal text-white rounded-lg en-text hidden">Success</div>
+                                
+                                <div class="px-4 py-2 bg-calm-amber text-white rounded-lg ar-text">تحذير</div>
+                                <div class="px-4 py-2 bg-calm-amber text-white rounded-lg en-text hidden">Warning</div>
+                            </div>
+                        </div>
+                        
+                        <!-- زر التحديث -->
+                        <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700 flex justify-end">
+                            <button id="updateBranding" class="bg-calm-violet hover:bg-purple-700 text-white px-6 py-3 rounded-xl font-medium transition-all flex items-center ar-text">
+                                <i class="fas fa-palette ml-2"></i>
+                                تحديث المظهر
+                            </button>
+                            <button id="updateBrandingEn" class="bg-calm-violet hover:bg-purple-700 text-white px-6 py-3 rounded-xl font-medium transition-all flex items-center en-text hidden">
+                                <i class="fas fa-palette ml-2"></i>
+                                Update Appearance
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- قسم إدارة التخزين -->
+                <div id="storage" class="settings-section hidden">
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-soft p-6 mb-6 card-hover">
+                        <div class="flex items-center mb-6">
+                            <i class="fas fa-database text-2xl text-calm-amber ml-3"></i>
+                            <h2 class="text-xl font-bold text-primary-800 dark:text-primary-200 ar-text">إدارة التخزين</h2>
+                            <h2 class="text-xl font-bold text-primary-800 dark:text-primary-200 en-text hidden">Storage Management</h2>
+                        </div>
+                        
+                        <!-- معلومات التخزين -->
+                        <div class="bg-gradient-to-r from-amber-50 to-amber-100 dark:from-amber-900/20 dark:to-amber-800/20 rounded-2xl p-6 mb-6 border border-amber-200 dark:border-amber-700">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <h3 class="text-lg font-semibold text-amber-800 dark:text-amber-200 ar-text">مساحة التخزين المحلي</h3>
+                                    <h3 class="text-lg font-semibold text-amber-800 dark:text-amber-200 en-text hidden">Local Storage Space</h3>
+                                    <p class="text-amber-600 dark:text-amber-400 ar-text">بيانات التطبيق والإعدادات المخزنة على جهازك</p>
+                                    <p class="text-amber-600 dark:text-amber-400 en-text hidden">App data and settings stored on your device</p>
+                                </div>
+                                <i class="fas fa-database text-3xl text-amber-500"></i>
+                            </div>
+                            
+                            <!-- شريط التقدم -->
+                            <div class="mb-2">
+                                <div class="flex justify-between text-sm text-amber-700 dark:text-amber-300 mb-1">
+                                    <span id="storageUsed" class="ar-text">~2.3 MB مستخدم</span>
+                                    <span id="storageUsedEn" class="en-text hidden">~2.3 MB Used</span>
+                                    <span class="ar-text">5.0 MB الإجمالي</span>
+                                    <span class="en-text hidden">5.0 MB Total</span>
+                                </div>
+                                <div class="w-full bg-amber-200 dark:bg-amber-700 rounded-full h-2.5">
+                                    <div id="storageProgress" class="bg-amber-500 h-2.5 rounded-full" style="width: 46%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- أنواع البيانات المخزنة -->
+                        <div class="mb-6">
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 ar-text">البيانات المخزنة</h3>
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 en-text hidden">Stored Data</h3>
+                            
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-xl">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-user-circle text-primary-500 ml-3 text-xl"></i>
+                                        <div>
+                                            <h4 class="font-medium text-gray-800 dark:text-gray-200 ar-text">بيانات المستخدم</h4>
+                                            <h4 class="font-medium text-gray-800 dark:text-gray-200 en-text hidden">User Data</h4>
+                                            <p class="text-sm text-gray-500 dark:text-gray-400 ar-text">المعلومات الشخصية والإعدادات</p>
+                                            <p class="text-sm text-gray-500 dark:text-gray-400 en-text hidden">Personal information and settings</p>
+                                        </div>
+                                    </div>
+                                    <span class="text-sm text-gray-500 dark:text-gray-400 ar-text">~1.2 MB</span>
+                                    <span class="text-sm text-gray-500 dark:text-gray-400 en-text hidden">~1.2 MB</span>
+                                </div>
+                                
+                                <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-xl">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-book-open text-calm-teal ml-3 text-xl"></i>
+                                        <div>
+                                            <h4 class="font-medium text-gray-800 dark:text-gray-200 ar-text">تقدم الدورات</h4>
+                                            <h4 class="font-medium text-gray-800 dark:text-gray-200 en-text hidden">Course Progress</h4>
+                                            <p class="text-sm text-gray-500 dark:text-gray-400 ar-text">الفيديوهات المشاهدة والتقدم</p>
+                                            <p class="text-sm text-gray-500 dark:text-gray-400 en-text hidden">Watched videos and progress</p>
+                                        </div>
+                                    </div>
+                                    <span class="text-sm text-gray-500 dark:text-gray-400 ar-text">~0.8 MB</span>
+                                    <span class="text-sm text-gray-500 dark:text-gray-400 en-text hidden">~0.8 MB</span>
+                                </div>
+                                
+                                <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-xl">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-certificate text-calm-violet ml-3 text-xl"></i>
+                                        <div>
+                                            <h4 class="font-medium text-gray-800 dark:text-gray-200 ar-text">الشهادات</h4>
+                                            <h4 class="font-medium text-gray-800 dark:text-gray-200 en-text hidden">Certificates</h4>
+                                            <p class="text-sm text-gray-500 dark:text-gray-400 ar-text">الشهادات المحفوظة</p>
+                                            <p class="text-sm text-gray-500 dark:text-gray-400 en-text hidden">Saved certificates</p>
+                                        </div>
+                                    </div>
+                                    <span class="text-sm text-gray-500 dark:text-gray-400 ar-text">~0.3 MB</span>
+                                    <span class="text-sm text-gray-500 dark:text-gray-400 en-text hidden">~0.3 MB</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- أزرار الإدارة -->
+                        <div class="flex flex-col sm:flex-row gap-4 justify-end">
+                            <button id="clearCache" class="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white rounded-xl font-medium transition-all flex items-center justify-center ar-text">
+                                <i class="fas fa-broom ml-2"></i>
+                                مسح الذاكرة المؤقتة
+                            </button>
+                            <button id="clearCacheEn" class="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white rounded-xl font-medium transition-all flex items-center justify-center en-text hidden">
+                                <i class="fas fa-broom ml-2"></i>
+                                Clear Cache
+                            </button>
+                            
+                            <button id="clearAllData" class="px-6 py-3 bg-rose-500 hover:bg-rose-600 text-white rounded-xl font-medium transition-all flex items-center justify-center ar-text">
+                                <i class="fas fa-trash-alt ml-2"></i>
+                                مسح جميع البيانات
+                            </button>
+                            <button id="clearAllDataEn" class="px-6 py-3 bg-rose-500 hover:bg-rose-600 text-white rounded-xl font-medium transition-all flex items-center justify-center en-text hidden">
+                                <i class="fas fa-trash-alt ml-2"></i>
+                                Clear All Data
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة التنبيهات -->
+    <div id="toast" class="fixed top-4 right-4 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4 border-l-4 border-green-500 transform translate-x-full transition-transform duration-300 z-50 max-w-sm">
+        <div class="flex items-center">
+            <i class="fas fa-check-circle text-green-500 text-xl ml-3"></i>
+            <div>
+                <h4 class="font-semibold text-gray-800 dark:text-gray-200" id="toastTitle">تم الحفظ بنجاح</h4>
+                <p class="text-sm text-gray-600 dark:text-gray-400" id="toastMessage">تم حفظ الإعدادات بنجاح</p>
+            </div>
+            <button id="closeToast" class="mr-auto text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // إعدادات اللغة والثيم
+        let currentLanguage = 'ar';
+        let currentTheme = localStorage.getItem('theme') || 'light';
+        
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            initTheme();
+            initLanguage();
+            initTabs();
+            initColorOptions();
+            initStorageManagement();
+            initEventListeners();
+        });
+        
+        // تهيئة الثيم
+        function initTheme() {
+            if (currentTheme === 'dark') {
+                document.documentElement.classList.add('dark');
+                document.getElementById('themeIcon').className = 'fas fa-sun ml-2';
+                document.getElementById('themeText').textContent = 'الوضع الفاتح';
+            } else {
+                document.documentElement.classList.remove('dark');
+                document.getElementById('themeIcon').className = 'fas fa-moon ml-2';
+                document.getElementById('themeText').textContent = 'الوضع الداكن';
+            }
+        }
+        
+        // تهيئة اللغة
+        function initLanguage() {
+            if (currentLanguage === 'ar') {
+                document.body.dir = 'rtl';
+                document.querySelectorAll('.ar-text').forEach(el => el.classList.remove('hidden'));
+                document.querySelectorAll('.en-text').forEach(el => el.classList.add('hidden'));
+                document.getElementById('languageText').textContent = 'English';
+            } else {
+                document.body.dir = 'ltr';
+                document.querySelectorAll('.ar-text').forEach(el => el.classList.add('hidden'));
+                document.querySelectorAll('.en-text').forEach(el => el.classList.remove('hidden'));
+                document.getElementById('languageText').textContent = 'العربية';
+            }
+        }
+        
+        // تهيئة التبويبات
+        function initTabs() {
+            const tabButtons = document.querySelectorAll('.settings-tab');
+            const tabSections = document.querySelectorAll('.settings-section');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const targetTab = this.getAttribute('data-tab');
+                    
+                    // إزالة النشاط من جميع الأزرار
+                    tabButtons.forEach(btn => {
+                        btn.classList.remove('active');
+                        btn.querySelector('.fa-chevron-left').classList.remove('text-primary-500');
+                        btn.querySelector('.fa-chevron-left').classList.add('text-gray-400');
+                    });
+                    
+                    // إضافة النشاط للزر المحدد
+                    this.classList.add('active');
+                    this.querySelector('.fa-chevron-left').classList.add('text-primary-500');
+                    this.querySelector('.fa-chevron-left').classList.remove('text-gray-400');
+                    
+                    // إخفاء جميع الأقسام
+                    tabSections.forEach(section => {
+                        section.classList.add('hidden');
+                        section.classList.remove('active');
+                    });
+                    
+                    // إظهار القسم المحدد
+                    document.getElementById(targetTab).classList.remove('hidden');
+                    document.getElementById(targetTab).classList.add('active');
+                });
+            });
+        }
+        
+        // تهيئة خيارات الألوان
+        function initColorOptions() {
+            const colorOptions = document.querySelectorAll('.color-option');
+            
+            colorOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const color = this.getAttribute('data-color');
+                    applyThemeColor(color);
+                    
+                    // إضافة تأثير النشاط
+                    colorOptions.forEach(opt => opt.classList.remove('border-2', 'border-white', 'ring-2', 'ring-offset-2'));
+                    this.classList.add('border-2', 'border-white', 'ring-2', 'ring-offset-2', 'ring-primary-300');
+                });
+            });
+        }
+        
+        // تطبيق لون الثيم
+        function applyThemeColor(color) {
+            const root = document.documentElement;
+            let primaryColor, secondaryColor;
+            
+            switch(color) {
+                case 'blue':
+                    primaryColor = '#1e40af';
+                    secondaryColor = '#3b82f6';
+                    break;
+                case 'teal':
+                    primaryColor = '#0f766e';
+                    secondaryColor = '#14b8a6';
+                    break;
+                case 'emerald':
+                    primaryColor = '#047857';
+                    secondaryColor = '#10b981';
+                    break;
+                case 'violet':
+                    primaryColor = '#7c3aed';
+                    secondaryColor = '#8b5cf6';
+                    break;
+                case 'rose':
+                    primaryColor = '#be123c';
+                    secondaryColor = '#f43f5e';
+                    break;
+                case 'amber':
+                    primaryColor = '#d97706';
+                    secondaryColor = '#f59e0b';
+                    break;
+                case 'cyan':
+                    primaryColor = '#0891b2';
+                    secondaryColor = '#06b6d4';
+                    break;
+                case 'lime':
+                    primaryColor = '#65a30d';
+                    secondaryColor = '#84cc16';
+                    break;
+                case 'indigo':
+                    primaryColor = '#4f46e5';
+                    secondaryColor = '#6366f1';
+                    break;
+                case 'pink':
+                    primaryColor = '#be185d';
+                    secondaryColor = '#ec4899';
+                    break;
+                default:
+                    primaryColor = '#1e40af';
+                    secondaryColor = '#3b82f6';
+            }
+            
+            // تطبيق الألوان على المتغيرات CSS
+            root.style.setProperty('--color-primary-500', primaryColor);
+            root.style.setProperty('--color-primary-600', shadeColor(primaryColor, -20));
+            root.style.setProperty('--color-primary-700', shadeColor(primaryColor, -40));
+            
+            // حفظ الإعدادات
+            localStorage.setItem('themeColor', color);
+            showToast('تم تغيير لون الثيم', 'تم تطبيق اللون الجديد بنجاح');
+        }
+        
+        // وظيفة مساعدة لتغميق الألوان
+        function shadeColor(color, percent) {
+            let R = parseInt(color.substring(1,3),16);
+            let G = parseInt(color.substring(3,5),16);
+            let B = parseInt(color.substring(5,7),16);
+
+            R = parseInt(R * (100 + percent) / 100);
+            G = parseInt(G * (100 + percent) / 100);
+            B = parseInt(B * (100 + percent) / 100);
+
+            R = (R<255)?R:255;  
+            G = (G<255)?G:255;  
+            B = (B<255)?B:255;  
+
+            R = Math.round(R);
+            G = Math.round(G);
+            B = Math.round(B);
+
+            const RR = ((R.toString(16).length==1)?"0"+R.toString(16):R.toString(16));
+            const GG = ((G.toString(16).length==1)?"0"+G.toString(16):G.toString(16));
+            const BB = ((B.toString(16).length==1)?"0"+B.toString(16):B.toString(16));
+
+            return "#"+RR+GG+BB;
+        }
+        
+        // تهيئة إدارة التخزين
+        function initStorageManagement() {
+            // حساب مساحة التخزين المستخدمة
+            let totalStorage = 0;
+            for (let key in localStorage) {
+                if (localStorage.hasOwnProperty(key)) {
+                    totalStorage += localStorage[key].length;
+                }
+            }
+            
+            const usedMB = (totalStorage / (1024 * 1024)).toFixed(2);
+            const progressPercentage = (usedMB / 5) * 100;
+            
+            document.getElementById('storageUsed').textContent = `~${usedMB} MB مستخدم`;
+            document.getElementById('storageUsedEn').textContent = `~${usedMB} MB Used`;
+            document.getElementById('storageProgress').style.width = `${progressPercentage}%`;
+        }
+        
+        // تهيئة مستمعي الأحداث
+        function initEventListeners() {
+            // تبديل الثيم
+            document.getElementById('themeToggle').addEventListener('click', function() {
+                if (currentTheme === 'light') {
+                    currentTheme = 'dark';
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    currentTheme = 'light';
+                    localStorage.setItem('theme', 'light');
+                }
+                initTheme();
+            });
+            
+            // تبديل اللغة
+            document.getElementById('languageToggle').addEventListener('click', function() {
+                if (currentLanguage === 'ar') {
+                    currentLanguage = 'en';
+                } else {
+                    currentLanguage = 'ar';
+                }
+                initLanguage();
+            });
+            
+            // حفظ إعدادات المنصة
+            document.getElementById('savePlatformSettings').addEventListener('click', savePlatformSettings);
+            document.getElementById('savePlatformSettingsEn').addEventListener('click', savePlatformSettings);
+            
+            // تحديث المظهر
+            document.getElementById('updateBranding').addEventListener('click', updateBranding);
+            document.getElementById('updateBrandingEn').addEventListener('click', updateBranding);
+            
+            // مسح الذاكرة المؤقتة
+            document.getElementById('clearCache').addEventListener('click', clearCache);
+            document.getElementById('clearCacheEn').addEventListener('click', clearCache);
+            
+            // مسح جميع البيانات
+            document.getElementById('clearAllData').addEventListener('click', clearAllData);
+            document.getElementById('clearAllDataEn').addEventListener('click', clearAllData);
+            
+            // إغلاق التنبيه
+            document.getElementById('closeToast').addEventListener('click', function() {
+                document.getElementById('toast').classList.add('translate-x-full');
+            });
+        }
+        
+        // حفظ إعدادات المنصة
+        function savePlatformSettings() {
+            const platformName = document.getElementById('platformName').value;
+            const supportEmail = document.getElementById('supportEmail').value;
+            const contactNumber = document.getElementById('contactNumber').value;
+            const fontFamily = document.getElementById('fontFamily').value;
+            const shortDescription = currentLanguage === 'ar' ? 
+                document.getElementById('shortDescription').value : 
+                document.getElementById('shortDescriptionEn').value;
+            
+            // حفظ في localStorage
+            localStorage.setItem('platformName', platformName);
+            localStorage.setItem('supportEmail', supportEmail);
+            localStorage.setItem('contactNumber', contactNumber);
+            localStorage.setItem('fontFamily', fontFamily);
+            localStorage.setItem('shortDescription', shortDescription);
+            
+            // تطبيق خط الواجهة
+            document.body.style.fontFamily = fontFamily === 'cairo' ? 'Cairo, sans-serif' : 
+                                           fontFamily === 'tajawal' ? 'Tajawal, sans-serif' : 
+                                           'Noto Sans Arabic, sans-serif';
+            
+            showToast('تم الحفظ بنجاح', 'تم حفظ إعدادات المنصة بنجاح');
+        }
+        
+        // تحديث المظهر
+        function updateBranding() {
+            const primaryColor = document.getElementById('primaryColor').value;
+            const secondaryColor = document.getElementById('secondaryColor').value;
+            
+            // تطبيق الألوان
+            document.documentElement.style.setProperty('--color-primary-500', primaryColor);
+            document.documentElement.style.setProperty('--color-primary-600', shadeColor(primaryColor, -20));
+            document.documentElement.style.setProperty('--color-primary-700', shadeColor(primaryColor, -40));
+            
+            // حفظ الإعدادات
+            localStorage.setItem('primaryColor', primaryColor);
+            localStorage.setItem('secondaryColor', secondaryColor);
+            
+            showToast('تم التحديث', 'تم تحديث الهوية البصرية بنجاح');
+        }
+        
+        // مسح الذاكرة المؤقتة
+        function clearCache() {
+            // محاكاة مسح الذاكرة المؤقتة
+            setTimeout(() => {
+                showToast('تم المسح', 'تم مسح الذاكرة المؤقتة بنجاح');
+                initStorageManagement();
+            }, 1000);
+        }
+        
+        // مسح جميع البيانات
+        function clearAllData() {
+            if (confirm(currentLanguage === 'ar' ? 
+                'هل أنت متأكد من مسح جميع البيانات؟ هذا الإجراء لا يمكن التراجع عنه.' : 
+                'Are you sure you want to clear all data? This action cannot be undone.')) {
+                
+                // محاكاة مسح البيانات
+                setTimeout(() => {
+                    localStorage.clear();
+                    showToast('تم المسح', 'تم مسح جميع البيانات بنجاح');
+                    initStorageManagement();
+                }, 1500);
+            }
+        }
+        
+        // عرض التنبيهات
+        function showToast(title, message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastTitle').textContent = title;
+            document.getElementById('toastMessage').textContent = message;
+            
+            toast.classList.remove('translate-x-full');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-x-full');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
