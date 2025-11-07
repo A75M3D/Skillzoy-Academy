@@ -56,6 +56,100 @@
             background: #ef4444;
             color: white;
         }
+
+        /* تنسيق الإشعارات الممتدة */
+        .notification-expanded {
+            max-width: 500px;
+            width: 90%;
+        }
+
+        /* مؤشرات التحميل */
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        .loading-spinner-dark {
+            border: 3px solid rgba(0,0,0,.1);
+            border-top-color: #000;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* تأثيرات التحميل للبطاقات */
+        .loading-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loading-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* تأثيرات الأزرار */
+        .btn-disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-loading {
+            position: relative;
+            color: transparent !important;
+        }
+
+        .btn-loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        /* تأثيرات الظهور */
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* تأثيرات الاهتزاز للخطأ */
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 min-h-screen transition-colors duration-300">
@@ -134,7 +228,7 @@
                     </div>
                     <div class="mr-3">
                         <p class="text-sm text-gray-500 dark:text-gray-400">متوسط التقييم</p>
-                        <h3 class="text-xl font-bold text-gray-800 dark:text-white">4.8/5</h3>
+                        <h3 class="text-xl font-bold text-gray-800 dark:text-white" id="averageRating">0/5</h3>
                     </div>
                 </div>
             </div>
@@ -155,6 +249,12 @@
 
         <!-- قائمة الدورات -->
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
+            <!-- مؤشر تحميل القائمة -->
+            <div id="listLoading" class="hidden p-8 text-center">
+                <div class="loading-spinner loading-spinner-dark mx-auto mb-4"></div>
+                <p class="text-gray-500 dark:text-gray-400">جاري تحميل الدورات...</p>
+            </div>
+            
             <div id="coursesList" class="divide-y divide-gray-200 dark:divide-gray-700">
                 <!-- سيتم ملؤها بالبيانات -->
             </div>
@@ -224,13 +324,15 @@
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <label for="courseRating" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">التقييم</label>
-                        <input type="number" id="courseRating" min="1" max="5" step="0.1" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" placeholder="0-5">
+                        <label for="courseRating" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">التقييم (من 1 إلى 5)</label>
+                        <input type="text" id="courseRating" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" placeholder="مثال: 4.8">
+                        <p class="text-xs text-gray-500 mt-1">يمكنك استخدام الأرقام العشرية مثل 4.8 أو 3.5</p>
                     </div>
                     
                     <div>
                         <label for="courseStudents" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">عدد الطلاب</label>
-                        <input type="number" id="courseStudents" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" placeholder="عدد الطلاب المسجلين">
+                        <input type="text" id="courseStudents" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" placeholder="مثال: 23,355">
+                        <p class="text-xs text-gray-500 mt-1">يمكنك استخدام الفواصل لتنسيق الأرقام</p>
                     </div>
                 </div>
                 
@@ -247,10 +349,18 @@
         </div>
     </div>
 
+    <!-- نافذة التحميل العامة -->
+    <div id="globalLoading" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 flex flex-col items-center">
+            <div class="loading-spinner loading-spinner-dark w-12 h-12 mb-4"></div>
+            <p class="text-gray-700 dark:text-gray-300" id="loadingMessage">جاري المعالجة...</p>
+        </div>
+    </div>
+
     <script>
         // 🔧 تكوين Supabase
-        const SUPABASE_URL = 'https://sjipwstkvvrautexigmt.supabase.co'; // استبدل برابط مشروعك
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNqaXB3c3RrdnZyYXV0ZXhpZ210Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MTE5MDcsImV4cCI6MjA3NDQ4NzkwN30.FSh2yIdZdvdNvtWxK5JB02PIdWOG3707qO-F0c84PnY'; // استبدل بمفتاحك
+        const SUPABASE_URL = 'https://sjipwstkvvrautexigmt.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNqaXB3c3RrdnZyYXV0ZXhpZ210Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MTE5MDcsImV4cCI6MjA3NDQ4NzkwN30.FSh2yIdZdvdNvtWxK5JB02PIdWOG3707qO-F0c84PnY';
         
         let supabase;
         let isConnected = false;
@@ -319,6 +429,7 @@
         // عناصر DOM
         const coursesList = document.getElementById('coursesList');
         const emptyState = document.getElementById('emptyState');
+        const listLoading = document.getElementById('listLoading');
         const courseModal = document.getElementById('courseModal');
         const courseForm = document.getElementById('courseForm');
         const modalTitle = document.getElementById('modalTitle');
@@ -330,6 +441,9 @@
         const themeToggle = document.getElementById('themeToggle');
         const totalCoursesEl = document.getElementById('totalCourses');
         const activeCoursesEl = document.getElementById('activeCourses');
+        const averageRatingEl = document.getElementById('averageRating');
+        const globalLoading = document.getElementById('globalLoading');
+        const loadingMessage = document.getElementById('loadingMessage');
         
         // تهيئة التطبيق
         document.addEventListener('DOMContentLoaded', async () => {
@@ -348,9 +462,41 @@
             }
         });
         
+        // إدارة حالة التحميل
+        function setLoadingState(element, isLoading, text = '') {
+            if (isLoading) {
+                element.classList.add('btn-loading');
+                element.disabled = true;
+                if (text) {
+                    element.setAttribute('data-original-text', element.innerHTML);
+                    element.innerHTML = text;
+                }
+            } else {
+                element.classList.remove('btn-loading');
+                element.disabled = false;
+                if (text && element.getAttribute('data-original-text')) {
+                    element.innerHTML = element.getAttribute('data-original-text');
+                }
+            }
+        }
+        
+        // إظهار/إخفاء التحميل العام
+        function showGlobalLoading(message = 'جاري المعالجة...') {
+            loadingMessage.textContent = message;
+            globalLoading.classList.remove('hidden');
+        }
+        
+        function hideGlobalLoading() {
+            globalLoading.classList.add('hidden');
+        }
+        
         // تحميل الدورات من Supabase
         async function loadCourses() {
             try {
+                listLoading.classList.remove('hidden');
+                coursesList.classList.add('hidden');
+                emptyState.classList.add('hidden');
+                
                 if (isConnected && supabase) {
                     const { data, error } = await supabase
                         .from('courses')
@@ -373,6 +519,9 @@
                 courses = JSON.parse(localStorage.getItem('skillzoyCourses')) || [];
                 renderCourses();
                 updateStats();
+            } finally {
+                listLoading.classList.add('hidden');
+                coursesList.classList.remove('hidden');
             }
         }
         
@@ -390,6 +539,76 @@
             }
         }
         
+        // تحويل النص إلى رقم (يدعم الفواصل)
+        function parseNumberWithCommas(text) {
+            if (!text || text.trim() === '') return null;
+            // إزالة الفواصل وتحويل النص إلى رقم
+            const cleaned = text.toString().replace(/,/g, '');
+            const number = parseFloat(cleaned);
+            return isNaN(number) ? null : number;
+        }
+        
+        // تحويل نص التقييم إلى رقم عشري
+        function parseRating(text) {
+            if (!text || text.trim() === '') return null;
+            
+            // استبدال الفاصلة العربية أو الإنجليزية بنقطة
+            const cleaned = text.toString().replace(/،/g, '.').replace(/,/g, '.');
+            const number = parseFloat(cleaned);
+            
+            // التحقق من أن الرقم بين 1 و 5
+            if (isNaN(number) || number < 1 || number > 5) {
+                return null;
+            }
+            
+            return Math.round(number * 10) / 10; // تقريب إلى منزلة عشرية واحدة
+        }
+        
+        // تنسيق الرقم مع فواصل
+        function formatNumberWithCommas(number) {
+            if (!number && number !== 0) return '';
+            return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+        
+        // تنسيق التقييم - إصلاح المشكلة هنا
+        function formatRating(rating) {
+            if (!rating && rating !== 0) return '';
+            // التأكد من أن rating هو رقم قبل استدعاء toFixed
+            const numRating = parseFloat(rating);
+            return isNaN(numRating) ? '' : numRating.toFixed(1);
+        }
+        
+        // التحقق من صحة البيانات قبل الحفظ
+        function validateCourseData(courseData) {
+            const errors = [];
+            
+            if (!courseData.title || courseData.title.trim() === '') {
+                errors.push('عنوان الدورة مطلوب');
+            }
+            
+            if (!courseData.category || courseData.category.trim() === '') {
+                errors.push('تصنيف الدورة مطلوب');
+            }
+            
+            if (!courseData.duration || courseData.duration.trim() === '') {
+                errors.push('مدة الدورة مطلوبة');
+            }
+            
+            if (!courseData.level || courseData.level.trim() === '') {
+                errors.push('مستوى الدورة مطلوب');
+            }
+            
+            if (!courseData.playlist_id || courseData.playlist_id.trim() === '') {
+                errors.push('معرف قائمة التشغيل مطلوب');
+            }
+            
+            if (courseData.rating !== null && (courseData.rating < 1 || courseData.rating > 5)) {
+                errors.push('التقييم يجب أن يكون بين 1 و 5');
+            }
+            
+            return errors;
+        }
+        
         // عرض الدورات في القائمة
         function renderCourses() {
             if (courses.length === 0) {
@@ -401,7 +620,7 @@
             emptyState.classList.add('hidden');
             
             coursesList.innerHTML = courses.map(course => `
-                <div class="p-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                <div class="p-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors fade-in">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                         <div class="flex-1">
                             <div class="flex items-start space-x-3 space-x-reverse">
@@ -421,6 +640,12 @@
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
                                             ${course.level}
                                         </span>
+                                        ${course.rating ? `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">
+                                            <i class="fas fa-star text-yellow-500 ml-1"></i> ${formatRating(course.rating)}
+                                        </span>` : ''}
+                                        ${course.students ? `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200">
+                                            ${formatNumberWithCommas(course.students)} طالب
+                                        </span>` : ''}
                                     </div>
                                 </div>
                             </div>
@@ -443,11 +668,29 @@
         function updateStats() {
             totalCoursesEl.textContent = courses.length;
             activeCoursesEl.textContent = courses.length;
+            
+            // حساب متوسط التقييم
+            const ratings = courses
+                .filter(course => course.rating)
+                .map(course => course.rating);
+            
+            if (ratings.length > 0) {
+                const average = ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length;
+                averageRatingEl.textContent = `${formatRating(average)}/5`;
+            } else {
+                averageRatingEl.textContent = '0/5';
+            }
         }
         
         // إضافة دورة جديدة
         async function addCourse(courseData) {
             try {
+                // التحقق من صحة البيانات
+                const validationErrors = validateCourseData(courseData);
+                if (validationErrors.length > 0) {
+                    throw new Error(validationErrors.join(', '));
+                }
+                
                 const newCourse = {
                     ...courseData,
                     id: Date.now(), // ID مؤقت
@@ -465,10 +708,12 @@
                     
                     courses.unshift(data[0]);
                     showNotification('تم إضافة الدورة بنجاح', 'success');
+                    courseModal.classList.add('hidden');
                 } else {
                     courses.unshift(newCourse);
                     await saveCourses();
                     showNotification('تم إضافة الدورة بنجاح (محلياً)', 'info');
+                    courseModal.classList.add('hidden');
                 }
                 
                 renderCourses();
@@ -476,13 +721,22 @@
                 
             } catch (error) {
                 console.error('Error adding course:', error);
-                showNotification('حدث خطأ في إضافة الدورة', 'error');
+                showNotification(`حدث خطأ في إضافة الدورة: ${getErrorMessage(error)}`, 'error', true);
+                // لا نغلق النموذج عند الفشل
+                return false;
             }
+            return true;
         }
         
         // تعديل دورة
         async function updateCourse(courseId, courseData) {
             try {
+                // التحقق من صحة البيانات
+                const validationErrors = validateCourseData(courseData);
+                if (validationErrors.length > 0) {
+                    throw new Error(validationErrors.join(', '));
+                }
+                
                 if (isConnected && supabase) {
                     const { error } = await supabase
                         .from('courses')
@@ -497,12 +751,14 @@
                     }
                     
                     showNotification('تم تحديث الدورة بنجاح', 'success');
+                    courseModal.classList.add('hidden');
                 } else {
                     const index = courses.findIndex(c => c.id === courseId);
                     if (index !== -1) {
                         courses[index] = { ...courses[index], ...courseData };
                         await saveCourses();
                         showNotification('تم تحديث الدورة بنجاح (محلياً)', 'info');
+                        courseModal.classList.add('hidden');
                     }
                 }
                 
@@ -510,8 +766,11 @@
                 
             } catch (error) {
                 console.error('Error updating course:', error);
-                showNotification('حدث خطأ في تحديث الدورة', 'error');
+                showNotification(`حدث خطأ في تحديث الدورة: ${getErrorMessage(error)}`, 'error', true);
+                // لا نغلق النموذج عند الفشل
+                return false;
             }
+            return true;
         }
         
         // حذف دورة
@@ -519,6 +778,8 @@
             if (!confirm('هل أنت متأكد من حذف هذه الدورة؟')) return;
             
             try {
+                showGlobalLoading('جاري حذف الدورة...');
+                
                 if (isConnected && supabase) {
                     const { error } = await supabase
                         .from('courses')
@@ -540,8 +801,25 @@
                 
             } catch (error) {
                 console.error('Error deleting course:', error);
-                showNotification('حدث خطأ في حذف الدورة', 'error');
+                showNotification(`حدث خطأ في حذف الدورة: ${getErrorMessage(error)}`, 'error', true);
+            } finally {
+                hideGlobalLoading();
             }
+        }
+        
+        // استخراج رسالة الخطأ من كائن الخطأ
+        function getErrorMessage(error) {
+            if (!error) return 'خطأ غير معروف';
+            
+            // خطأ Supabase
+            if (error.message) return error.message;
+            
+            // خطأ شبكة
+            if (error.name === 'TypeError' && error.message.includes('Failed to fetch')) {
+                return 'فشل الاتصال بالخادم. يرجى التحقق من اتصال الإنترنت';
+            }
+            
+            return error.toString();
         }
         
         // فتح نموذج إضافة دورة
@@ -565,8 +843,8 @@
             document.getElementById('courseDuration').value = course.duration;
             document.getElementById('courseLevel').value = course.level;
             document.getElementById('playlistId').value = course.playlist_id;
-            document.getElementById('courseRating').value = course.rating || '';
-            document.getElementById('courseStudents').value = course.students || '';
+            document.getElementById('courseRating').value = formatRating(course.rating) || '';
+            document.getElementById('courseStudents').value = formatNumberWithCommas(course.students) || '';
             
             courseModal.classList.remove('hidden');
         }
@@ -607,23 +885,33 @@
                     duration: document.getElementById('courseDuration').value,
                     level: document.getElementById('courseLevel').value,
                     playlist_id: document.getElementById('playlistId').value,
-                    rating: document.getElementById('courseRating').value ? parseFloat(document.getElementById('courseRating').value) : null,
-                    students: document.getElementById('courseStudents').value ? parseInt(document.getElementById('courseStudents').value) : null,
+                    rating: parseRating(document.getElementById('courseRating').value),
+                    students: parseNumberWithCommas(document.getElementById('courseStudents').value),
                     provider: "Skillzoy Academy"
                 };
                 
+                // تعطيل الزر وإظهار مؤشر التحميل
+                setLoadingState(saveCourseBtn, true, 'جاري الحفظ...');
+                
+                let success = false;
                 if (courseId) {
-                    await updateCourse(parseInt(courseId), courseData);
+                    success = await updateCourse(parseInt(courseId), courseData);
                 } else {
-                    await addCourse(courseData);
+                    success = await addCourse(courseData);
                 }
                 
-                courseModal.classList.add('hidden');
+                // إعادة تمكين الزر
+                setLoadingState(saveCourseBtn, false);
+                
+                // فقط نغلق النموذج إذا كانت العملية ناجحة
+                if (success) {
+                    courseModal.classList.add('hidden');
+                }
             });
         }
         
         // عرض الإشعارات
-        function showNotification(message, type = 'info') {
+        function showNotification(message, type = 'info', expanded = false) {
             // إنشاء عنصر الإشعار
             const notification = document.createElement('div');
             
@@ -631,13 +919,15 @@
                            type === 'error' ? 'bg-red-500' : 
                            'bg-blue-500';
             
-            notification.className = `${bgColor} text-white px-4 py-3 rounded-lg shadow-lg flex items-center justify-between max-w-sm fixed top-20 left-4 z-50 transform transition-transform duration-300 translate-x-0`;
+            const expandedClass = expanded ? 'notification-expanded' : 'max-w-sm';
+            
+            notification.className = `${bgColor} text-white px-4 py-3 rounded-lg shadow-lg flex items-center justify-between ${expandedClass} fixed top-20 left-4 z-50 transform transition-transform duration-300 translate-x-0 fade-in`;
             notification.innerHTML = `
-                <div class="flex items-center">
-                    <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'} mr-2"></i>
-                    <span>${message}</span>
+                <div class="flex items-center flex-1">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-triangle' : 'info-circle'} mr-2 flex-shrink-0"></i>
+                    <span class="flex-1">${message}</span>
                 </div>
-                <button class="ml-4 text-white hover:text-gray-200" onclick="this.parentElement.remove()">
+                <button class="ml-4 text-white hover:text-gray-200 flex-shrink-0" onclick="this.parentElement.remove()">
                     <i class="fas fa-times"></i>
                 </button>
             `;
