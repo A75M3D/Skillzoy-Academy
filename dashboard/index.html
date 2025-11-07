@@ -1829,7 +1829,7 @@
             <div class="nav-section">
                 <h3 class="nav-section-title">الحساب والإعدادات</h3>
                 <ul class="nav-links">
-                    <li><a href="#" class="nav-link" data-page="settings"><i class="fas fa-cog"></i> الإعدادات </a> </li>
+                   <li><a href="settings.html" class="nav-link"><i class="fas fa-cog"></i> الإعدادات</a></li>
                     
                     <li><a href="#" class="nav-link"><i class="fas fa-question"></i> المساعدة</a></li>
                     <li><a href="#" onclick="logout()" class="nav-link"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</a></li>
@@ -3774,9 +3774,7 @@
             console.log('📊 Courses will be loaded from Supabase or fallback data');
             console.log('👤 Current User:', currentUser);
             console.log('📝 Certificate Manager:', certificateManager);
-        });
-        // اخر سطر في السكريبت - ضعه في النهاية
-document.querySelector('a[data-page="settings"]').onclick = e => { e.preventDefault(); document.querySelectorAll('[class*="page"]').forEach(p => p.style.display = p.classList.contains('settings-page') ? 'block' : 'none'); document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active')); e.target.classList.add('active'); };
+        { e.preventDefault(); document.querySelectorAll('[class*="page"]').forEach(p => p.style.display = p.classList.contains('settings-page') ? 'block' : 'none'); document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active')); e.target.classList.add('active'); };
     </script>
 </body>
 </html>
