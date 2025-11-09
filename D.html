@@ -34,6 +34,7 @@
             --success: #10b981;
             --warning: #f59e0b;
             --error: #ef4444;
+            --font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         /* الثيم الفاتح (وضع النهار) */
@@ -63,7 +64,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: var(--font-family);
         }
 
         body {
@@ -428,6 +429,11 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .course-video-container:hover img {
+            transform: scale(1.05);
         }
 
         .course-content {
@@ -1785,6 +1791,183 @@
             right: 0;
             color: gold;
         }
+
+        /* ===== صفحة الإعدادات ===== */
+        .settings-page {
+            display: none;
+        }
+
+        .settings-container {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--box-shadow);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            margin-bottom: 30px;
+        }
+
+        .settings-section {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .settings-section:last-child {
+            margin-bottom: 0;
+            border-bottom: none;
+        }
+
+        .settings-section h3 {
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+        }
+
+        .settings-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .setting-option {
+            background: var(--glass-bg);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .setting-info h4 {
+            color: var(--light);
+            margin-bottom: 5px;
+        }
+
+        .setting-info p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .setting-control {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .select-control {
+            background: var(--glass-bg);
+            color: var(--text);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .select-control:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--accent);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+
+        .danger-zone {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid var(--error);
+            padding: 25px;
+            border-radius: var(--border-radius);
+            margin-top: 30px;
+        }
+
+        .danger-zone h4 {
+            color: var(--error);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .danger-zone p {
+            color: var(--text-light);
+            margin-bottom: 15px;
+        }
+
+        /* تحسينات إضافية للوضع الفاتح */
+        .light-theme .settings-container,
+        .light-theme .setting-option,
+        .light-theme .select-control {
+            background: var(--card-bg);
+            color: var(--text);
+        }
+
+        .light-theme .setting-info h4 {
+            color: var(--light);
+        }
+
+        .light-theme .setting-info p {
+            color: var(--text-light);
+        }
+
+        /* تحسينات أداء الصور */
+        .course-video-container img,
+        .video-thumbnail img {
+            transition: transform 0.3s ease;
+            will-change: transform;
+        }
+
+        .lazy-image {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .lazy-image.loaded {
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
@@ -1829,9 +2012,8 @@
             <div class="nav-section">
                 <h3 class="nav-section-title">الحساب والإعدادات</h3>
                 <ul class="nav-links">
-                    <li><a href="#" class="nav-link"><i class="fas fa-cog"></i> الإعدادات</a></li>
+                   <li><a href="#" class="nav-link" data-page="settings"><i class="fas fa-cog"></i> الإعدادات</a></li>
                     <li><a href="#" class="nav-link"><i class="fas fa-question"></i> المساعدة</a></li>
-                    <li><a href="#" onclick="logout()" class="nav-link"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</a></li>
                 </ul> 
             </div>
             
@@ -2022,6 +2204,92 @@
                 <button class="btn btn-primary" id="browse-my-courses-btn">تصفح دوراتي</button>
             </div>
         </div>
+
+        <!-- ===== صفحة الإعدادات ===== -->
+        <div class="settings-page" style="display: none;">
+            <div class="page-title">
+                <h1>الإعدادات</h1>
+                <p>تخصيص تجربتك في المنصة وفقاً لتفضيلاتك</p>
+            </div>
+            
+            <div class="settings-container">
+                <!-- إعدادات المظهر -->
+                <div class="settings-section">
+                    <h3>المظهر</h3>
+                    <div class="settings-options">
+                        <div class="setting-option">
+                            <div class="setting-info">
+                                <h4>الوضع الداكن</h4>
+                                <p>تفعيل أو تعطيل الوضع الداكن</p>
+                            </div>
+                            <div class="setting-control">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="dark-mode-toggle">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-option">
+                            <div class="setting-info">
+                                <h4>نوع الخط</h4>
+                                <p>اختر الخط المناسب لك</p>
+                            </div>
+                            <div class="setting-control">
+                                <select class="select-control" id="font-select">
+                                    <option value="Cairo">Cairo</option>
+                                    <option value="Tajawal">Tajawal</option>
+                                    <option value="Arial">Arial</option>
+                                    <option value="Helvetica">Helvetica</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-option">
+                            <div class="setting-info">
+                                <h4>حجم الخط</h4>
+                                <p>تغيير حجم النص في المنصة</p>
+                            </div>
+                            <div class="setting-control">
+                                <select class="select-control" id="font-size-select">
+                                    <option value="small">صغير</option>
+                                    <option value="medium" selected>متوسط</option>
+                                    <option value="large">كبير</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- إعدادات اللغة -->
+                <div class="settings-section">
+                    <h3>اللغة</h3>
+                    <div class="settings-options">
+                        <div class="setting-option">
+                            <div class="setting-info">
+                                <h4>لغة الواجهة</h4>
+                                <p>اختر اللغة التي تريد عرض المنصة بها</p>
+                            </div>
+                            <div class="setting-control">
+                                <select class="select-control" id="language-select">
+                                    <option value="ar" selected>العربية</option>
+                                    <option value="en">English</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- منطقة الخطر -->
+                <div class="danger-zone">
+                    <h4><i class="fas fa-exclamation-triangle"></i> منطقة الخطر</h4>
+                    <p>هذه الإجراءات لا يمكن التراجع عنها. يرجى التأكد قبل المتابعة.</p>
+                    <button class="btn btn-danger" id="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+                    </button>
+                </div>
+            </div>
+        </div>
     </main>
 
     <!-- ===== صفحة تفاصيل الدورة ===== -->
@@ -2030,6 +2298,9 @@
             <a href="#" class="back-to-courses" id="back-to-courses">
                 <i class="fas fa-arrow-right"></i> العودة للدورات
             </a>
+            
+            <h1 id="course-details-title">دورة تطوير الويب الشاملة</h1>
+            <p id="course-details-description">تعلم تطوير الويب من المبتدئ إلى المحترف باستخدام HTML، CSS، JavaScript وتقنيات الويب الحديثة</p>
             
             <!-- ===== قسم معلومات الدورة ===== -->
             <div class="course-info-cards">
@@ -2055,8 +2326,6 @@
                 </div>
             </div>
             
-            <h1 id="course-details-title">دورة تطوير الويب الشاملة</h1>
-            <p id="course-details-description">تعلم تطوير الويب من المبتدئ إلى المحترف باستخدام HTML، CSS، JavaScript وتقنيات الويب الحديثة</p>
             <div class="course-meta-details">
                 <div class="meta-item">
                     <i class="far fa-clock"></i>
@@ -2637,9 +2906,76 @@
             }
         }
 
+        // ===== نظام إدارة الإعدادات =====
+        class SettingsManager {
+            constructor() {
+                this.settings = this.loadSettings();
+                this.applySettings();
+            }
+
+            loadSettings() {
+                const saved = localStorage.getItem('userSettings');
+                return saved ? JSON.parse(saved) : {
+                    darkMode: false,
+                    fontFamily: 'Cairo',
+                    fontSize: 'medium',
+                    language: 'ar'
+                };
+            }
+
+            saveSettings() {
+                localStorage.setItem('userSettings', JSON.stringify(this.settings));
+            }
+
+            applySettings() {
+                // تطبيق الوضع الداكن
+                if (this.settings.darkMode) {
+                    document.body.classList.add('light-theme');
+                    document.getElementById('dark-mode-toggle').checked = true;
+                } else {
+                    document.body.classList.remove('light-theme');
+                    document.getElementById('dark-mode-toggle').checked = false;
+                }
+
+                // تطبيق الخط
+                document.documentElement.style.setProperty('--font-family', this.settings.fontFamily);
+                document.getElementById('font-select').value = this.settings.fontFamily;
+
+                // تطبيق حجم الخط
+                this.applyFontSize(this.settings.fontSize);
+                document.getElementById('font-size-select').value = this.settings.fontSize;
+
+                // تطبيق اللغة
+                document.getElementById('language-select').value = this.settings.language;
+            }
+
+            applyFontSize(size) {
+                let fontSize;
+                switch(size) {
+                    case 'small':
+                        fontSize = '14px';
+                        break;
+                    case 'large':
+                        fontSize = '18px';
+                        break;
+                    default:
+                        fontSize = '16px';
+                }
+                document.body.style.fontSize = fontSize;
+            }
+
+            updateSetting(key, value) {
+                this.settings[key] = value;
+                this.saveSettings();
+                this.applySettings();
+                showNotification('تم التحديث', 'تم حفظ الإعدادات بنجاح', 'success');
+            }
+        }
+
         // ===== تهيئة النظام =====
         const progressSystem = new ProgressSystem();
         const certificateManager = new CertificateManager();
+        const settingsManager = new SettingsManager();
         let currentUser = {
             id: 1,
             name: "نشط الان",
@@ -2934,7 +3270,7 @@
                 coursesHTML += `
                 <div class="course-card" data-course-id="${course.id}">
                     <div class="course-video-container">
-                        <img src="https://img.youtube.com/vi/${firstVideo.youtubeId}/hqdefault.jpg" alt="${safeTitle}">
+                        <img src="https://img.youtube.com/vi/${firstVideo.youtubeId}/hqdefault.jpg" alt="${safeTitle}" loading="lazy">
                     </div>
                     <div class="course-content">
                         <span class="course-category">${getCategoryName(course.category)}</span>
@@ -3040,7 +3376,7 @@
                 coursesHTML += `
                 <div class="course-card" data-course-id="${course.id}">
                     <div class="course-video-container">
-                        <img src="https://img.youtube.com/vi/${firstVideo.youtubeId}/hqdefault.jpg" alt="${safeTitle}">
+                        <img src="https://img.youtube.com/vi/${firstVideo.youtubeId}/hqdefault.jpg" alt="${safeTitle}" loading="lazy">
                     </div>
                     <div class="course-content">
                         <span class="course-category">${getCategoryName(course.category)}</span>
@@ -3140,7 +3476,7 @@
                 videosHTML += `
                 <div class="video-item">
                     <div class="video-thumbnail" data-youtube-id="${video.youtubeId}" data-video-id="${video.id}">
-                        <img src="https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg" alt="${safeVideoTitle}">
+                        <img src="https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg" alt="${safeVideoTitle}" loading="lazy">
                         <span class="video-duration">${video.duration}</span>
                         <div class="video-play-icon">
                             <i class="fas fa-play"></i>
@@ -3200,6 +3536,7 @@
             document.querySelector('.my-courses-page').style.display = 'none';
             document.querySelector('.progress-page').style.display = 'none';
             document.querySelector('.certificates-page').style.display = 'none';
+            document.querySelector('.settings-page').style.display = 'none';
             document.getElementById('course-details').style.display = 'block';
             
             console.log('Course details page rendered successfully');
@@ -3353,12 +3690,14 @@
                 themeIcon.classList.remove('fa-toggle-on');
                 themeIcon.classList.add('fa-toggle-off');
                 localStorage.setItem('theme', 'dark');
+                settingsManager.updateSetting('darkMode', false);
                 showNotification('تم تغيير الثيم', 'تم تفعيل الوضع الليلي', 'info');
             } else {
                 body.classList.add('light-theme');
                 themeIcon.classList.remove('fa-toggle-off');
                 themeIcon.classList.add('fa-toggle-on');
                 localStorage.setItem('theme', 'light');
+                settingsManager.updateSetting('darkMode', true);
                 showNotification('تم تغيير الثيم', 'تم تفعيل وضع النهار', 'info');
             }
         }
@@ -3378,6 +3717,7 @@
             document.querySelector('.my-courses-page').style.display = 'none';
             document.querySelector('.progress-page').style.display = 'none';
             document.querySelector('.certificates-page').style.display = 'none';
+            document.querySelector('.settings-page').style.display = 'none';
             document.getElementById('course-details').style.display = 'none';
         }
 
@@ -3386,6 +3726,7 @@
             document.querySelector('.my-courses-page').style.display = 'block';
             document.querySelector('.progress-page').style.display = 'none';
             document.querySelector('.certificates-page').style.display = 'none';
+            document.querySelector('.settings-page').style.display = 'none';
             document.getElementById('course-details').style.display = 'none';
             renderMyCourses();
         }
@@ -3395,6 +3736,7 @@
             document.querySelector('.my-courses-page').style.display = 'none';
             document.querySelector('.progress-page').style.display = 'block';
             document.querySelector('.certificates-page').style.display = 'none';
+            document.querySelector('.settings-page').style.display = 'none';
             document.getElementById('course-details').style.display = 'none';
             renderProgressPage();
         }
@@ -3404,8 +3746,18 @@
             document.querySelector('.my-courses-page').style.display = 'none';
             document.querySelector('.progress-page').style.display = 'none';
             document.querySelector('.certificates-page').style.display = 'block';
+            document.querySelector('.settings-page').style.display = 'none';
             document.getElementById('course-details').style.display = 'none';
             renderCertificatesPage();
+        }
+
+        function showSettingsPage() {
+            document.querySelector('.home-page').style.display = 'none';
+            document.querySelector('.my-courses-page').style.display = 'none';
+            document.querySelector('.progress-page').style.display = 'none';
+            document.querySelector('.certificates-page').style.display = 'none';
+            document.querySelector('.settings-page').style.display = 'block';
+            document.getElementById('course-details').style.display = 'none';
         }
 
         // ===== إدارة الفيديو =====
@@ -3476,6 +3828,18 @@
             // تحديث صفحة تفاصيل الدورة إذا كانت مفتوحة
             if (document.getElementById('course-details').style.display === 'block') {
                 renderCourseDetails(courseId);
+            }
+        }
+
+        // ===== وظيفة تسجيل الخروج =====
+        function logout() {
+            if(confirm('هل تريد تسجيل الخروج؟')) {
+                // مسح بيانات الجلسة
+                localStorage.removeItem('token');
+                sessionStorage.clear();
+                
+                // التوجيه لصفحة تسجيل الخروج
+                window.location.href = 'https://skillzoy-academy.vercel.app/dashboard/logout.html';
             }
         }
 
@@ -3628,6 +3992,40 @@
             });
         }
 
+        function setupSettingsEventListeners() {
+            // إعدادات الوضع الداكن
+            document.getElementById('dark-mode-toggle').addEventListener('change', (e) => {
+                settingsManager.updateSetting('darkMode', e.target.checked);
+                if (e.target.checked) {
+                    document.body.classList.add('light-theme');
+                    document.getElementById('theme-icon').classList.remove('fa-toggle-off');
+                    document.getElementById('theme-icon').classList.add('fa-toggle-on');
+                } else {
+                    document.body.classList.remove('light-theme');
+                    document.getElementById('theme-icon').classList.remove('fa-toggle-on');
+                    document.getElementById('theme-icon').classList.add('fa-toggle-off');
+                }
+            });
+
+            // إعدادات الخط
+            document.getElementById('font-select').addEventListener('change', (e) => {
+                settingsManager.updateSetting('fontFamily', e.target.value);
+            });
+
+            // إعدادات حجم الخط
+            document.getElementById('font-size-select').addEventListener('change', (e) => {
+                settingsManager.updateSetting('fontSize', e.target.value);
+            });
+
+            // إعدادات اللغة
+            document.getElementById('language-select').addEventListener('change', (e) => {
+                settingsManager.updateSetting('language', e.target.value);
+            });
+
+            // زر تسجيل الخروج
+            document.getElementById('logout-btn').addEventListener('click', logout);
+        }
+
         function setupStatsAnimation() {
             const studentsCount = document.getElementById('students-count');
             const coursesCount = document.getElementById('courses-count');
@@ -3670,24 +4068,13 @@
             }, interval);
         }
 
-        // ===== وظيفة تسجيل الخروج =====
-        function logout() {
-            if(confirm('هل تريد تسجيل الخروج؟')) {
-                // مسح بيانات الجلسة
-                localStorage.removeItem('token');
-                sessionStorage.clear();
-                
-                // التوجيه لصفحة تسجيل الخروج
-                window.location.href = 'https://skillzoy-academy.vercel.app/dashboard/logout.html';
-            }
-        }
-
         // ===== تهيئة التطبيق =====
         document.addEventListener('DOMContentLoaded', () => {
             loadTheme();
             createCategoryFilters();
             renderCourses();
             setupStatsAnimation();
+            setupSettingsEventListeners();
             
             document.querySelector('.mobile-menu-btn').addEventListener('click', () => {
                 document.querySelector('.sidebar').classList.toggle('active');
@@ -3745,6 +4132,8 @@
                         showProgressPage();
                     } else if (page === 'certificates') {
                         showCertificatesPage();
+                    } else if (page === 'settings') {
+                        showSettingsPage();
                     }
                     
                     if (window.innerWidth <= 992) {
@@ -3773,6 +4162,7 @@
             console.log('📊 Courses will be loaded from Supabase or fallback data');
             console.log('👤 Current User:', currentUser);
             console.log('📝 Certificate Manager:', certificateManager);
+            console.log('⚙️ Settings Manager:', settingsManager);
         });
     </script>
 </body>
