@@ -1922,38 +1922,50 @@
         
         <nav class="sidebar-nav">
             <div class="nav-section">
-                <h3 class="nav-section-title">القائمة الرئيسية</h3>
+                <h3 class="nav-section-title" data-translate="main_menu">القائمة الرئيسية</h3>
                 <ul class="nav-links">
-                    <li><a href="#" class="nav-link active" data-page="home"><i class="fas fa-home"></i> الرئيسية</a></li>
-                    <li><a href="#" class="nav-link" data-page="my-courses"><i class="fas fa-user-graduate"></i> دوراتي</a></li>
-                    <li><a href="#" class="nav-link" data-page="progress"><i class="fas fa-chart-line"></i> التقدم</a></li>
-                    <li><a href="#" class="nav-link" data-page="certificates"><i class="fas fa-certificate"></i> شهاداتي</a></li>
+                    <li><a href="#" class="nav-link active" data-page="home"><i class="fas fa-home"></i> <span data-translate="home">الرئيسية</span></a></li>
+                    <li><a href="#" class="nav-link" data-page="my-courses"><i class="fas fa-user-graduate"></i> <span data-translate="my_courses">دوراتي</span></a></li>
+                    <li><a href="#" class="nav-link" data-page="progress"><i class="fas fa-chart-line"></i> <span data-translate="progress">التقدم</span></a></li>
+                    <li><a href="#" class="nav-link" data-page="certificates"><i class="fas fa-certificate"></i> <span data-translate="my_certificates">شهاداتي</span></a></li>
                 </ul>
             </div>
             
             <div class="nav-section">
-                <h3 class="nav-section-title">المحتوى التعليمي</h3>
+                <h3 class="nav-section-title" data-translate="educational_content">المحتوى التعليمي</h3>
                 <ul class="nav-links">
-                    <li><a href="#" class="nav-link"><i class="fas fa-file-alt"></i> المواد الدراسية</a></li>
-                    <li><a href="#" class="nav-link"><i class="fas fa-tasks"></i> الواجبات</a></li>
+                    <li><a href="#" class="nav-link"><i class="fas fa-file-alt"></i> <span data-translate="study_materials">المواد الدراسية</span></a></li>
+                    <li><a href="#" class="nav-link"><i class="fas fa-tasks"></i> <span data-translate="assignments">الواجبات</span></a></li>
                 </ul>
             </div>
             
             <div class="nav-section">
-                <h3 class="nav-section-title">الحساب والإعدادات</h3>
+                <h3 class="nav-section-title" data-translate="account_settings">الحساب والإعدادات</h3>
                 <ul class="nav-links">
-                   <li><a href="#" class="nav-link" data-page="settings"><i class="fas fa-cog"></i> الإعدادات</a></li>
-                    <li><a href="#" class="nav-link"><i class="fas fa-question"></i> المساعدة</a></li>
+                   <li><a href="#" class="nav-link" data-page="settings"><i class="fas fa-cog"></i> <span data-translate="settings">الإعدادات</span></a></li>
+                    <li><a href="#" class="nav-link"><i class="fas fa-question"></i> <span data-translate="help">المساعدة</span></a></li>
                 </ul> 
+            </div>
+            
+            <!-- زر تغيير اللغة -->
+            <div class="nav-section">
+                <h3 class="nav-section-title" data-translate="language">اللغة</h3>
+                <div class="theme-toggle" id="language-toggle">
+                    <div>
+                        <i class="fas fa-globe"></i>
+                        <span data-translate="language">English</span>
+                    </div>
+                    <i class="fas fa-toggle-off" id="language-icon"></i>
+                </div>
             </div>
             
             <!-- زر تغيير الثيم -->
             <div class="nav-section">
-                <h3 class="nav-section-title">المظهر</h3>
+                <h3 class="nav-section-title" data-translate="appearance">المظهر</h3>
                 <div class="theme-toggle" id="theme-toggle">
                     <div>
                         <i class="fas fa-sun"></i>
-                        <span>وضع النهار</span>
+                        <span data-translate="light_mode">وضع النهار</span>
                     </div>
                     <i class="fas fa-toggle-off" id="theme-icon"></i>
                 </div>
@@ -1964,8 +1976,8 @@
             <div class="user-profile">
                 <img src="https://ui-avatars.com/api/?name=نشط+الان&background=3b82f6&color=fff" alt="صورة المستخدم" class="user-avatar">
                 <div class="user-info">
-                    <h4>نشط الان</h4>
-                    <p>👨‍🎓طالب</p>
+                    <h4 data-translate="active_now">نشط الان</h4>
+                    <p data-translate="student">👨‍🎓طالب</p>
                 </div>
             </div>
         </div>
@@ -1984,17 +1996,17 @@
     <!-- ===== نموذج إدخال بيانات الشهادة ===== -->
     <div class="certificate-form-container" id="certificate-form-container">
         <div class="certificate-form">
-            <h2>مبروك! لقد أكملت الدورة بنجاح</h2>
-            <p>أدخل اسمك الكامل للحصول على شهادتك:</p>
+            <h2 data-translate="congratulations">مبروك! لقد أكملت الدورة بنجاح</h2>
+            <p data-translate="enter_full_name">أدخل اسمك الكامل للحصول على شهادتك:</p>
             
             <div class="form-group">
-                <label for="student-name">الاسم الكامل</label>
+                <label for="student-name" data-translate="full_name">الاسم الكامل</label>
                 <input type="text" id="student-name" placeholder="أدخل اسمك الكامل">
             </div>
             
             <div class="form-actions">
-                <button class="btn btn-outline" id="cancel-certificate">إلغاء</button>
-                <button class="btn btn-primary" id="generate-certificate">احصل على شهادتك</button>
+                <button class="btn btn-outline" id="cancel-certificate" data-translate="cancel">إلغاء</button>
+                <button class="btn btn-primary" id="generate-certificate" data-translate="get_certificate">احصل على شهادتك</button>
             </div>
         </div>
     </div>
@@ -2008,9 +2020,9 @@
             </div>
             
             <div class="certificate-body">
-                <p class="certificate-text">تمنح هذه الشهادة بكل فخر إلى</p>
+                <p class="certificate-text" data-translate="certificate_awarded">تمنح هذه الشهادة بكل فخر إلى</p>
                 <p class="student-name" id="certificate-student-name">اسم الطالب</p>
-                <p class="certificate-text">لإكماله بنجاح دورة</p>
+                <p class="certificate-text" data-translate="for_completing">لإكماله بنجاح دورة</p>
                 <h3 class="course-name" id="certificate-course-name">دورة كاملة <span>Canva</span></h3>
                 <p class="certificate-date" id="certificate-date">في تاريخ November 4, 2025</p>
             </div>
@@ -2026,12 +2038,12 @@
         </div>
         
         <div class="certificate-actions">
-            <button class="btn btn-outline" id="close-certificate">إغلاق</button>
+            <button class="btn btn-outline" id="close-certificate" data-translate="close">إغلاق</button>
             <button class="btn btn-success" id="download-certificate-png">
-                <i class="fas fa-download"></i> تحميل كصورة
+                <i class="fas fa-download"></i> <span data-translate="download_as_image">تحميل كصورة</span>
             </button>
             <button class="btn btn-primary" id="download-certificate-pdf">
-                <i class="fas fa-file-pdf"></i> تحميل كPDF
+                <i class="fas fa-file-pdf"></i> <span data-translate="download_as_pdf">تحميل كPDF</span>
             </button>
         </div>
     </div>
@@ -2041,8 +2053,8 @@
         <!-- ===== الصفحة الرئيسية ===== -->
         <div class="home-page">
             <div class="page-title">
-                <h1>Skillzoy Academy - منصة التعليم الالكتروني الرائدة</h1>
-                <p>أفضل الدورات التعليمية لتطوير مهاراتك ومعرفتك في مختلف المجالات</p>
+                <h1 data-translate="platform_title">Skillzoy Academy - منصة التعليم الالكتروني الرائدة</h1>
+                <p data-translate="platform_description">أفضل الدورات التعليمية لتطوير مهاراتك ومعرفتك في مختلف المجالات</p>
             </div>
             
             <!-- ===== فلاتر التصنيفات - محسنة ===== -->
@@ -2061,19 +2073,19 @@
             <div class="stats-section">
                 <div class="stat-card">
                     <div class="stat-number" id="students-count">0</div>
-                    <div class="stat-label">طالب مسجل</div>
+                    <div class="stat-label" data-translate="registered_students">طالب مسجل</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number" id="courses-count">0</div>
-                    <div class="stat-label">دورة متاحة</div>
+                    <div class="stat-label" data-translate="available_courses">دورة متاحة</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number" id="certificates-count">0</div>
-                    <div class="stat-label">شهادة معتمدة</div>
+                    <div class="stat-label" data-translate="certified_certificates">شهادة معتمدة</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number" id="instructors-count">0</div>
-                    <div class="stat-label">مدرب محترف</div>
+                    <div class="stat-label" data-translate="professional_instructors">مدرب محترف</div>
                 </div>
             </div>
         </div>
@@ -2081,8 +2093,8 @@
         <!-- ===== صفحة دوراتي ===== -->
         <div class="my-courses-page">
             <div class="page-title">
-                <h1>دوراتي</h1>
-                <p>الدورات التي سجلت فيها ويمكنك متابعتها</p>
+                <h1 data-translate="my_courses">دوراتي</h1>
+                <p data-translate="my_courses_description">الدورات التي سجلت فيها ويمكنك متابعتها</p>
             </div>
             
             <div class="courses-grid" id="my-courses-container">
@@ -2091,17 +2103,17 @@
             
             <div class="empty-state" id="empty-my-courses" style="display: none;">
                 <i class="fas fa-book-open"></i>
-                <h3>لا توجد دورات مسجلة</h3>
-                <p>لم تسجل في أي دورة بعد. تصفح الدورات المتاحة وسجل في الدورة التي تهمك.</p>
-                <button class="btn btn-primary" id="browse-courses-btn">تصفح الدورات</button>
+                <h3 data-translate="no_courses">لا توجد دورات مسجلة</h3>
+                <p data-translate="no_courses_description">لم تسجل في أي دورة بعد. تصفح الدورات المتاحة وسجل في الدورة التي تهمك.</p>
+                <button class="btn btn-primary" id="browse-courses-btn" data-translate="browse_courses">تصفح الدورات</button>
             </div>
         </div>
 
         <!-- ===== صفحة التقدم ===== -->
         <div class="progress-page">
             <div class="page-title">
-                <h1>تقدمي التعليمي</h1>
-                <p>تابع تقدمك في جميع الدورات المسجلة</p>
+                <h1 data-translate="my_progress">تقدمي التعليمي</h1>
+                <p data-translate="my_progress_description">تابع تقدمك في جميع الدورات المسجلة</p>
             </div>
             
             <div class="progress-stats" id="progress-stats">
@@ -2109,7 +2121,7 @@
             </div>
             
             <div class="progress-section">
-                <h2 style="margin-bottom: 20px; color: var(--light);">تقدم دوراتي</h2>
+                <h2 style="margin-bottom: 20px; color: var(--light);" data-translate="my_courses_progress">تقدم دوراتي</h2>
                 <div class="progress-courses" id="progress-courses-container">
                     <!-- سيتم ملؤها ديناميكياً -->
                 </div>
@@ -2119,8 +2131,8 @@
         <!-- ===== صفحة الشهادات ===== -->
         <div class="certificates-page" style="display: none;">
             <div class="page-title">
-                <h1>شهاداتي</h1>
-                <p>الشهادات التي حصلت عليها من الدورات المكتملة</p>
+                <h1 data-translate="my_certificates">شهاداتي</h1>
+                <p data-translate="my_certificates_description">الشهادات التي حصلت عليها من الدورات المكتملة</p>
             </div>
             
             <div class="courses-grid" id="certificates-container">
@@ -2129,28 +2141,28 @@
             
             <div class="empty-state" id="empty-certificates" style="display: none;">
                 <i class="fas fa-certificate"></i>
-                <h3>لا توجد شهادات بعد</h3>
-                <p>لم تكمل أي دورة بعد. أكمل الدورات المسجلة للحصول على شهادات معتمدة.</p>
-                <button class="btn btn-primary" id="browse-my-courses-btn">تصفح دوراتي</button>
+                <h3 data-translate="no_certificates">لا توجد شهادات بعد</h3>
+                <p data-translate="no_certificates_description">لم تكمل أي دورة بعد. أكمل الدورات المسجلة للحصول على شهادات معتمدة.</p>
+                <button class="btn btn-primary" id="browse-my-courses-btn" data-translate="browse_my_courses">تصفح دوراتي</button>
             </div>
         </div>
 
         <!-- ===== صفحة الإعدادات ===== -->
         <div class="settings-page" style="display: none;">
             <div class="page-title">
-                <h1>الإعدادات</h1>
-                <p>تخصيص تجربتك في المنصة وفقاً لتفضيلاتك</p>
+                <h1 data-translate="settings">الإعدادات</h1>
+                <p data-translate="settings_description">تخصيص تجربتك في المنصة وفقاً لتفضيلاتك</p>
             </div>
             
             <div class="settings-container">
                 <!-- إعدادات المظهر -->
                 <div class="settings-section">
-                    <h3>المظهر</h3>
+                    <h3 data-translate="appearance">المظهر</h3>
                     <div class="settings-options">
                         <div class="setting-option">
                             <div class="setting-info">
-                                <h4>الوضع الداكن</h4>
-                                <p>تفعيل أو تعطيل الوضع الداكن</p>
+                                <h4 data-translate="dark_mode">الوضع الداكن</h4>
+                                <p data-translate="dark_mode_description">تفعيل أو تعطيل الوضع الداكن</p>
                             </div>
                             <div class="setting-control">
                                 <label class="toggle-switch">
@@ -2162,15 +2174,13 @@
                         
                         <div class="setting-option">
                             <div class="setting-info">
-                                <h4>نوع الخط</h4>
-                                <p>اختر الخط المناسب لك</p>
+                                <h4 data-translate="language">اللغة</h4>
+                                <p data-translate="language_description">اختر اللغة المناسبة لك</p>
                             </div>
                             <div class="setting-control">
-                                <select class="select-control" id="font-select">
-                                    <option value="Cairo">Cairo</option>
-                                    <option value="Tajawal">Tajawal</option>
-                                    <option value="Arial">Arial</option>
-                                    <option value="Helvetica">Helvetica</option>
+                                <select class="select-control" id="language-select">
+                                    <option value="ar">العربية</option>
+                                    <option value="en">English</option>
                                 </select>
                             </div>
                         </div>
@@ -2179,10 +2189,10 @@
                 
                 <!-- منطقة الخطر -->
                 <div class="danger-zone">
-                    <h4><i class="fas fa-exclamation-triangle"></i> منطقة الخطر</h4>
-                    <p>هذه الإجراءات لا يمكن التراجع عنها. يرجى التأكد قبل المتابعة.</p>
+                    <h4><i class="fas fa-exclamation-triangle"></i> <span data-translate="danger_zone">منطقة الخطر</span></h4>
+                    <p data-translate="danger_zone_description">هذه الإجراءات لا يمكن التراجع عنها. يرجى التأكد قبل المتابعة.</p>
                     <button class="btn btn-danger" id="logout-btn">
-                        <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+                        <i class="fas fa-sign-out-alt"></i> <span data-translate="logout">تسجيل الخروج</span>
                     </button>
                 </div>
             </div>
@@ -2193,7 +2203,7 @@
     <div class="course-details" id="course-details">
         <div class="course-header">
             <a href="#" class="back-to-courses" id="back-to-courses">
-                <i class="fas fa-arrow-right"></i> العودة للدورات
+                <i class="fas fa-arrow-right"></i> <span data-translate="back_to_courses">العودة للدورات</span>
             </a>
             
             <!-- ===== قسم معلومات الدورة ===== -->
@@ -2201,22 +2211,22 @@
                 <div class="info-card">
                     <i class="fas fa-play-circle"></i>
                     <div class="number" id="course-videos-count">5</div>
-                    <div class="label">فيديوهات</div>
+                    <div class="label" data-translate="videos">فيديوهات</div>
                 </div>
                 <div class="info-card">
                     <i class="far fa-clock"></i>
                     <div class="number" id="course-total-hours">35</div>
-                    <div class="label">ساعة تعليمية</div>
+                    <div class="label" data-translate="learning_hours">ساعة تعليمية</div>
                 </div>
                 <div class="info-card">
                     <i class="fas fa-certificate"></i>
-                    <div class="number">شهادة</div>
-                    <div class="label">بعد الإكمال</div>
+                    <div class="number" data-translate="certificate">شهادة</div>
+                    <div class="label" data-translate="after_completion">بعد الإكمال</div>
                 </div>
                 <div class="info-card">
                     <i class="fas fa-signal"></i>
                     <div class="number" id="course-level">متقدم</div>
-                    <div class="label">المستوى</div>
+                    <div class="label" data-translate="level">المستوى</div>
                 </div>
             </div>
             
@@ -2242,7 +2252,7 @@
             </div>
         </div>
         <div class="course-content-section">
-            <h3>فيديوهات الدورة</h3>
+            <h3 data-translate="course_videos">فيديوهات الدورة</h3>
             <div class="videos-grid" id="course-videos-container">
                 <!-- سيتم ملؤها ديناميكياً -->
             </div>
@@ -2254,55 +2264,55 @@
                     <div class="certificate-notice-content">
                         <i class="fas fa-info-circle"></i>
                         <div>
-                            <strong>ملاحظة هامة:</strong> الشهادة المجانية ستظهر تلقائيًا بعد إكمال جميع فيديوهات الدورة بنجاح.
+                            <strong data-translate="important_note">ملاحظة هامة:</strong> <span data-translate="certificate_note">الشهادة المجانية ستظهر تلقائيًا بعد إكمال جميع فيديوهات الدورة بنجاح.</span>
                         </div>
                     </div>
                 </div>
                 
-                <h2>مبروك! لقد أكملت الدورة بنجاح</h2>
-                <p>يمكنك الآن الحصول على شهادتك المعتمدة من الأكاديمية</p>
+                <h2 data-translate="congratulations_completed">مبروك! لقد أكملت الدورة بنجاح</h2>
+                <p data-translate="get_certificate_now">يمكنك الآن الحصول على شهادتك المعتمدة من الأكاديمية</p>
                 
                 <div class="certificate-types">
                     <div class="certificate-type">
-                        <h3>شهادة مجانية</h3>
+                        <h3 data-translate="free_certificate">شهادة مجانية</h3>
                         <ul>
-                            <li>شهادة رقمية باللغة الإنجليزية</li>
-                            <li>ختم الأكاديمية الرسمي</li>
-                            <li>توقيع المدير التنفيذي</li>
-                            <li>رقم شهادة فريد</li>
-                            <li>تحميل كPDF/صورة</li>
+                            <li data-translate="certificate_feature1">شهادة رقمية باللغة الإنجليزية</li>
+                            <li data-translate="certificate_feature2">ختم الأكاديمية الرسمي</li>
+                            <li data-translate="certificate_feature3">توقيع المدير التنفيذي</li>
+                            <li data-translate="certificate_feature4">رقم شهادة فريد</li>
+                            <li data-translate="certificate_feature5">تحميل كPDF/صورة</li>
                         </ul>
                         <button class="btn btn-success" id="get-free-certificate-btn">
-                            <i class="fas fa-certificate"></i> احصل على شهادة مجانية
+                            <i class="fas fa-certificate"></i> <span data-translate="get_free_certificate">احصل على شهادة مجانية</span>
                         </button>
                     </div>
                     
                     <div class="certificate-type premium">
-                        <h3>شهادة مميزة</h3>
+                        <h3 data-translate="premium_certificate">شهادة مميزة</h3>
                         <ul>
-                            <li>جميع ميزات الشهادة المجانية</li>
-                            <li>تصميم مميز بلمسات ذهبية</li>
-                            <li>ختم مطبوع رسمي</li>
-                            <li>رمز QR للتحقق</li>
-                            <li>نسخة ورقية مطبوعة</li>
-                            <li>تحقق مدى الحياة</li>
+                            <li data-translate="premium_feature1">جميع ميزات الشهادة المجانية</li>
+                            <li data-translate="premium_feature2">تصميم مميز بلمسات ذهبية</li>
+                            <li data-translate="premium_feature3">ختم مطبوع رسمي</li>
+                            <li data-translate="premium_feature4">رمز QR للتحقق</li>
+                            <li data-translate="premium_feature5">نسخة ورقية مطبوعة</li>
+                            <li data-translate="premium_feature6">تحقق مدى الحياة</li>
                         </ul>
                         
                         <div class="premium-certificate-preview">
                             <img src="https://i.ibb.co/PvLgGpF4/Blue-Grey-Modern-Gradient-Certificate-of-Completion-20250927-110652.png" alt="الشهادة المميزة" class="premium-certificate-image">
                             <div class="premium-features">
-                                <h4>الميزات الإضافية للشهادة المميزة:</h4>
+                                <h4 data-translate="additional_premium_features">الميزات الإضافية للشهادة المميزة:</h4>
                                 <ul>
-                                    <li>تصميم فاخر بلمسات ذهبية</li>
-                                    <li>طباعة عالية الجودة على ورق مميز</li>
-                                    <li>اعتراف دولي</li>
-                                    <li>خيار التأطير متاح</li>
+                                    <li data-translate="premium_additional1">تصميم فاخر بلمسات ذهبية</li>
+                                    <li data-translate="premium_additional2">طباعة عالية الجودة على ورق مميز</li>
+                                    <li data-translate="premium_additional3">اعتراف دولي</li>
+                                    <li data-translate="premium_additional4">خيار التأطير متاح</li>
                                 </ul>
                             </div>
                         </div>
                         
                         <a href="https://wa.me/0924299798" class="btn btn-primary" target="_blank">
-                            <i class="fab fa-whatsapp"></i> تواصل للحصول على الشهادة المميزة
+                            <i class="fab fa-whatsapp"></i> <span data-translate="contact_for_premium">تواصل للحصول على الشهادة المميزة</span>
                         </a>
                     </div>
                 </div>
@@ -2315,7 +2325,7 @@
         <div class="footer-content">
             <div class="footer-section">
                 <h3>Skillzoy Academy</h3>
-                <p>منصة تعليمية رائدة في تقديم الدورات التعليمية عالية الجودة في مختلف المجالات. نهدف إلى تمكين الأفراد من خلال المعرفة والمهارات التي يحتاجونها لتحقيق أهدافهم.</p>
+                <p data-translate="footer_description">منصة تعليمية رائدة في تقديم الدورات التعليمية عالية الجودة في مختلف المجالات. نهدف إلى تمكين الأفراد من خلال المعرفة والمهارات التي يحتاجونها لتحقيق أهدافهم.</p>
                 <div class="social-links">
                     <a href="#" class="social-link">
                         <i class="fab fa-facebook-f"></i>
@@ -2336,40 +2346,40 @@
             </div>
             
             <div class="footer-section">
-                <h3>روابط سريعة</h3>
+                <h3 data-translate="quick_links">روابط سريعة</h3>
                 <ul class="footer-links">
-                    <li><a href="#"><i class="fas fa-home"></i> الرئيسية</a></li>
-                    <li><a href="#"><i class="fas fa-book"></i> جميع الدورات</a></li>
-                    <li><a href="#"><i class="fas fa-chalkboard-teacher"></i> المدربين</a></li>
-                    <li><a href="#"><i class="fas fa-certificate"></i> الشهادات</a></li>
-                    <li><a href="#"><i class="fas fa-info-circle"></i> عن الأكاديمية</a></li>
+                    <li><a href="#"><i class="fas fa-home"></i> <span data-translate="home">الرئيسية</span></a></li>
+                    <li><a href="#"><i class="fas fa-book"></i> <span data-translate="all_courses">جميع الدورات</span></a></li>
+                    <li><a href="#"><i class="fas fa-chalkboard-teacher"></i> <span data-translate="instructors">المدربين</span></a></li>
+                    <li><a href="#"><i class="fas fa-certificate"></i> <span data-translate="certificates">الشهادات</span></a></li>
+                    <li><a href="#"><i class="fas fa-info-circle"></i> <span data-translate="about_academy">عن الأكاديمية</span></a></li>
                 </ul>
             </div>
             
             <div class="footer-section">
-                <h3>مركز دعم المتعلم</h3>
+                <h3 data-translate="learner_support">مركز دعم المتعلم</h3>
                 <ul class="footer-links">
-                    <li><a href="#"><i class="fas fa-question-circle"></i> الأسئلة الشائعة</a></li>
-                    <li><a href="#"><i class="fas fa-headset"></i> الدعم الفني</a></li>
-                    <li><a href="#"><i class="fas fa-comments"></i> اتصل بنا</a></li>
-                    <li><a href="#"><i class="fas fa-file-alt"></i> سياسة الخصوصية</a></li>
-                    <li><a href="#"><i class="fas fa-file-contract"></i> شروط الاستخدام</a></li>
+                    <li><a href="#"><i class="fas fa-question-circle"></i> <span data-translate="faq">الأسئلة الشائعة</span></a></li>
+                    <li><a href="#"><i class="fas fa-headset"></i> <span data-translate="technical_support">الدعم الفني</span></a></li>
+                    <li><a href="#"><i class="fas fa-comments"></i> <span data-translate="contact_us">اتصل بنا</span></a></li>
+                    <li><a href="#"><i class="fas fa-file-alt"></i> <span data-translate="privacy_policy">سياسة الخصوصية</span></a></li>
+                    <li><a href="#"><i class="fas fa-file-contract"></i> <span data-translate="terms_of_use">شروط الاستخدام</span></a></li>
                 </ul>
             </div>
             
             <div class="footer-section">
-                <h3>اتصل بنا</h3>
+                <h3 data-translate="contact_us">اتصل بنا</h3>
                 <ul class="footer-links">
                     <li><a href="tel:+249924299798"><i class="fas fa-phone"></i> 249 924 299 798+</a></li>
                     <li><a href="mailto:info@skillzoy.com"><i class="fas fa-envelope"></i> info@skillzoy.com</a></li>
-                    <li><a href="https://wa.me/0924299798" target="_blank"><i class="fab fa-whatsapp"></i> واتساب</a></li>
-                    <li><a href="#"><i class="fas fa-map-marker-alt"></i> العنوان: مدينة المعرفة، الرياض</a></li>
+                    <li><a href="https://wa.me/0924299798" target="_blank"><i class="fab fa-whatsapp"></i> <span data-translate="whatsapp">واتساب</span></a></li>
+                    <li><a href="#"><i class="fas fa-map-marker-alt"></i> <span data-translate="address">العنوان: مدينة المعرفة، الرياض</span></a></li>
                 </ul>
             </div>
         </div>
         
         <div class="copyright">
-            <p>جميع الحقوق محفوظة &copy; 2025 Skillzoy Academy</p>
+            <p data-translate="copyright">جميع الحقوق محفوظة &copy; 2025 Skillzoy Academy</p>
         </div>
     </footer>
 
@@ -2465,6 +2475,326 @@
                 students: 1350
             }
         ];
+
+        // ===== نظام اللغة =====
+        class LanguageManager {
+            constructor() {
+                this.currentLanguage = localStorage.getItem('language') || 'ar';
+                this.translations = {
+                    ar: {
+                        // القائمة الرئيسية
+                        main_menu: "القائمة الرئيسية",
+                        home: "الرئيسية",
+                        my_courses: "دوراتي",
+                        progress: "التقدم",
+                        my_certificates: "شهاداتي",
+                        
+                        // المحتوى التعليمي
+                        educational_content: "المحتوى التعليمي",
+                        study_materials: "المواد الدراسية",
+                        assignments: "الواجبات",
+                        
+                        // الحساب والإعدادات
+                        account_settings: "الحساب والإعدادات",
+                        settings: "الإعدادات",
+                        help: "المساعدة",
+                        
+                        // اللغة والمظهر
+                        language: "اللغة",
+                        appearance: "المظهر",
+                        light_mode: "وضع النهار",
+                        
+                        // المستخدم
+                        active_now: "نشط الان",
+                        student: "👨‍🎓طالب",
+                        
+                        // الشهادات
+                        congratulations: "مبروك! لقد أكملت الدورة بنجاح",
+                        enter_full_name: "أدخل اسمك الكامل للحصول على شهادتك:",
+                        full_name: "الاسم الكامل",
+                        cancel: "إلغاء",
+                        get_certificate: "احصل على شهادتك",
+                        certificate_awarded: "تمنح هذه الشهادة بكل فخر إلى",
+                        for_completing: "لإكماله بنجاح دورة",
+                        close: "إغلاق",
+                        download_as_image: "تحميل كصورة",
+                        download_as_pdf: "تحميل كPDF",
+                        
+                        // الصفحة الرئيسية
+                        platform_title: "Skillzoy Academy - منصة التعليم الالكتروني الرائدة",
+                        platform_description: "أفضل الدورات التعليمية لتطوير مهاراتك ومعرفتك في مختلف المجالات",
+                        registered_students: "طالب مسجل",
+                        available_courses: "دورة متاحة",
+                        certified_certificates: "شهادة معتمدة",
+                        professional_instructors: "مدرب محترف",
+                        
+                        // صفحة دوراتي
+                        my_courses_description: "الدورات التي سجلت فيها ويمكنك متابعتها",
+                        no_courses: "لا توجد دورات مسجلة",
+                        no_courses_description: "لم تسجل في أي دورة بعد. تصفح الدورات المتاحة وسجل في الدورة التي تهمك.",
+                        browse_courses: "تصفح الدورات",
+                        
+                        // صفحة التقدم
+                        my_progress: "تقدمي التعليمي",
+                        my_progress_description: "تابع تقدمك في جميع الدورات المسجلة",
+                        my_courses_progress: "تقدم دوراتي",
+                        
+                        // صفحة الشهادات
+                        my_certificates_description: "الشهادات التي حصلت عليها من الدورات المكتملة",
+                        no_certificates: "لا توجد شهادات بعد",
+                        no_certificates_description: "لم تكمل أي دورة بعد. أكمل الدورات المسجلة للحصول على شهادات معتمدة.",
+                        browse_my_courses: "تصفح دوراتي",
+                        
+                        // صفحة الإعدادات
+                        settings_description: "تخصيص تجربتك في المنصة وفقاً لتفضيلاتك",
+                        dark_mode: "الوضع الداكن",
+                        dark_mode_description: "تفعيل أو تعطيل الوضع الداكن",
+                        language_description: "اختر اللغة المناسبة لك",
+                        danger_zone: "منطقة الخطر",
+                        danger_zone_description: "هذه الإجراءات لا يمكن التراجع عنها. يرجى التأكد قبل المتابعة.",
+                        logout: "تسجيل الخروج",
+                        
+                        // صفحة تفاصيل الدورة
+                        back_to_courses: "العودة للدورات",
+                        videos: "فيديوهات",
+                        learning_hours: "ساعة تعليمية",
+                        certificate: "شهادة",
+                        after_completion: "بعد الإكمال",
+                        level: "المستوى",
+                        course_videos: "فيديوهات الدورة",
+                        important_note: "ملاحظة هامة:",
+                        certificate_note: "الشهادة المجانية ستظهر تلقائيًا بعد إكمال جميع فيديوهات الدورة بنجاح.",
+                        congratulations_completed: "مبروك! لقد أكملت الدورة بنجاح",
+                        get_certificate_now: "يمكنك الآن الحصول على شهادتك المعتمدة من الأكاديمية",
+                        free_certificate: "شهادة مجانية",
+                        certificate_feature1: "شهادة رقمية باللغة الإنجليزية",
+                        certificate_feature2: "ختم الأكاديمية الرسمي",
+                        certificate_feature3: "توقيع المدير التنفيذي",
+                        certificate_feature4: "رقم شهادة فريد",
+                        certificate_feature5: "تحميل كPDF/صورة",
+                        get_free_certificate: "احصل على شهادة مجانية",
+                        premium_certificate: "شهادة مميزة",
+                        premium_feature1: "جميع ميزات الشهادة المجانية",
+                        premium_feature2: "تصميم مميز بلمسات ذهبية",
+                        premium_feature3: "ختم مطبوع رسمي",
+                        premium_feature4: "رمز QR للتحقق",
+                        premium_feature5: "نسخة ورقية مطبوعة",
+                        premium_feature6: "تحقق مدى الحياة",
+                        additional_premium_features: "الميزات الإضافية للشهادة المميزة:",
+                        premium_additional1: "تصميم فاخر بلمسات ذهبية",
+                        premium_additional2: "طباعة عالية الجودة على ورق مميز",
+                        premium_additional3: "اعتراف دولي",
+                        premium_additional4: "خيار التأطير متاح",
+                        contact_for_premium: "تواصل للحصول على الشهادة المميزة",
+                        
+                        // الفوتر
+                        footer_description: "منصة تعليمية رائدة في تقديم الدورات التعليمية عالية الجودة في مختلف المجالات. نهدف إلى تمكين الأفراد من خلال المعرفة والمهارات التي يحتاجونها لتحقيق أهدافهم.",
+                        quick_links: "روابط سريعة",
+                        all_courses: "جميع الدورات",
+                        instructors: "المدربين",
+                        about_academy: "عن الأكاديمية",
+                        learner_support: "مركز دعم المتعلم",
+                        faq: "الأسئلة الشائعة",
+                        technical_support: "الدعم الفني",
+                        contact_us: "اتصل بنا",
+                        privacy_policy: "سياسة الخصوصية",
+                        terms_of_use: "شروط الاستخدام",
+                        whatsapp: "واتساب",
+                        address: "العنوان: مدينة المعرفة، الرياض",
+                        copyright: "جميع الحقوق محفوظة &copy; 2025 Skillzoy Academy"
+                    },
+                    en: {
+                        // Main Menu
+                        main_menu: "Main Menu",
+                        home: "Home",
+                        my_courses: "My Courses",
+                        progress: "Progress",
+                        my_certificates: "My Certificates",
+                        
+                        // Educational Content
+                        educational_content: "Educational Content",
+                        study_materials: "Study Materials",
+                        assignments: "Assignments",
+                        
+                        // Account & Settings
+                        account_settings: "Account & Settings",
+                        settings: "Settings",
+                        help: "Help",
+                        
+                        // Language & Appearance
+                        language: "Language",
+                        appearance: "Appearance",
+                        light_mode: "Light Mode",
+                        
+                        // User
+                        active_now: "Active Now",
+                        student: "👨‍🎓Student",
+                        
+                        // Certificates
+                        congratulations: "Congratulations! You have successfully completed the course",
+                        enter_full_name: "Enter your full name to get your certificate:",
+                        full_name: "Full Name",
+                        cancel: "Cancel",
+                        get_certificate: "Get Your Certificate",
+                        certificate_awarded: "This certificate is proudly awarded to",
+                        for_completing: "for successfully completing the course",
+                        close: "Close",
+                        download_as_image: "Download as Image",
+                        download_as_pdf: "Download as PDF",
+                        
+                        // Home Page
+                        platform_title: "Skillzoy Academy - Leading E-Learning Platform",
+                        platform_description: "The best educational courses to develop your skills and knowledge in various fields",
+                        registered_students: "Registered Students",
+                        available_courses: "Available Courses",
+                        certified_certificates: "Certified Certificates",
+                        professional_instructors: "Professional Instructors",
+                        
+                        // My Courses Page
+                        my_courses_description: "Courses you have enrolled in and can follow",
+                        no_courses: "No courses enrolled",
+                        no_courses_description: "You haven't enrolled in any courses yet. Browse available courses and enroll in the course that interests you.",
+                        browse_courses: "Browse Courses",
+                        
+                        // Progress Page
+                        my_progress: "My Learning Progress",
+                        my_progress_description: "Track your progress in all enrolled courses",
+                        my_courses_progress: "My Courses Progress",
+                        
+                        // Certificates Page
+                        my_certificates_description: "Certificates you have obtained from completed courses",
+                        no_certificates: "No certificates yet",
+                        no_certificates_description: "You haven't completed any courses yet. Complete enrolled courses to get certified certificates.",
+                        browse_my_courses: "Browse My Courses",
+                        
+                        // Settings Page
+                        settings_description: "Customize your experience on the platform according to your preferences",
+                        dark_mode: "Dark Mode",
+                        dark_mode_description: "Enable or disable dark mode",
+                        language_description: "Choose your preferred language",
+                        danger_zone: "Danger Zone",
+                        danger_zone_description: "These actions cannot be undone. Please confirm before proceeding.",
+                        logout: "Logout",
+                        
+                        // Course Details Page
+                        back_to_courses: "Back to Courses",
+                        videos: "Videos",
+                        learning_hours: "Learning Hours",
+                        certificate: "Certificate",
+                        after_completion: "After Completion",
+                        level: "Level",
+                        course_videos: "Course Videos",
+                        important_note: "Important Note:",
+                        certificate_note: "The free certificate will automatically appear after successfully completing all course videos.",
+                        congratulations_completed: "Congratulations! You have successfully completed the course",
+                        get_certificate_now: "You can now get your certified certificate from the academy",
+                        free_certificate: "Free Certificate",
+                        certificate_feature1: "Digital certificate in English",
+                        certificate_feature2: "Official academy seal",
+                        certificate_feature3: "CEO signature",
+                        certificate_feature4: "Unique certificate number",
+                        certificate_feature5: "Download as PDF/Image",
+                        get_free_certificate: "Get Free Certificate",
+                        premium_certificate: "Premium Certificate",
+                        premium_feature1: "All free certificate features",
+                        premium_feature2: "Distinctive design with golden touches",
+                        premium_feature3: "Official printed seal",
+                        premium_feature4: "QR code for verification",
+                        premium_feature5: "Printed paper copy",
+                        premium_feature6: "Lifetime verification",
+                        additional_premium_features: "Additional Premium Certificate Features:",
+                        premium_additional1: "Luxurious design with golden touches",
+                        premium_additional2: "High-quality printing on premium paper",
+                        premium_additional3: "International recognition",
+                        premium_additional4: "Framing option available",
+                        contact_for_premium: "Contact for Premium Certificate",
+                        
+                        // Footer
+                        footer_description: "A leading educational platform providing high-quality educational courses in various fields. We aim to empower individuals through the knowledge and skills they need to achieve their goals.",
+                        quick_links: "Quick Links",
+                        all_courses: "All Courses",
+                        instructors: "Instructors",
+                        about_academy: "About Academy",
+                        learner_support: "Learner Support Center",
+                        faq: "FAQ",
+                        technical_support: "Technical Support",
+                        contact_us: "Contact Us",
+                        privacy_policy: "Privacy Policy",
+                        terms_of_use: "Terms of Use",
+                        whatsapp: "WhatsApp",
+                        address: "Address: Knowledge City, Riyadh",
+                        copyright: "All rights reserved &copy; 2025 Skillzoy Academy"
+                    }
+                };
+            }
+
+            // تغيير اللغة
+            changeLanguage(lang) {
+                this.currentLanguage = lang;
+                localStorage.setItem('language', lang);
+                this.applyTranslations();
+                
+                // تحديث اتجاه النص
+                document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+                document.documentElement.lang = lang;
+                
+                // تحديث زر تغيير اللغة في الشريط الجانبي
+                const languageToggle = document.getElementById('language-toggle');
+                const languageText = languageToggle.querySelector('span');
+                const languageIcon = document.getElementById('language-icon');
+                
+                if (lang === 'ar') {
+                    languageText.textContent = 'English';
+                    languageIcon.classList.remove('fa-toggle-on');
+                    languageIcon.classList.add('fa-toggle-off');
+                } else {
+                    languageText.textContent = 'العربية';
+                    languageIcon.classList.remove('fa-toggle-off');
+                    languageIcon.classList.add('fa-toggle-on');
+                }
+                
+                showNotification(
+                    this.translate('language_changed', lang),
+                    this.translate('language_changed_message', lang),
+                    'success'
+                );
+            }
+
+            // تطبيق الترجمة على جميع العناصر
+            applyTranslations() {
+                const elements = document.querySelectorAll('[data-translate]');
+                elements.forEach(element => {
+                    const key = element.getAttribute('data-translate');
+                    const translation = this.translate(key);
+                    if (translation) {
+                        if (element.tagName === 'INPUT' && element.type === 'text') {
+                            element.placeholder = translation;
+                        } else {
+                            element.textContent = translation;
+                        }
+                    }
+                });
+            }
+
+            // ترجمة مفتاح معين
+            translate(key, lang = this.currentLanguage) {
+                return this.translations[lang]?.[key] || key;
+            }
+
+            // الحصول على اللغة الحالية
+            getCurrentLanguage() {
+                return this.currentLanguage;
+            }
+
+            // تهيئة اللغة
+            init() {
+                this.applyTranslations();
+                
+                // تحديث اتجاه النص بناءً على اللغة
+                document.documentElement.dir = this.currentLanguage === 'ar' ? 'rtl' : 'ltr';
+                document.documentElement.lang = this.currentLanguage;
+            }
+        }
 
         // ===== جلب الدورات من Supabase =====
         async function fetchCoursesFromSupabase() {
@@ -2805,6 +3135,7 @@
         // ===== تهيئة النظام =====
         const progressSystem = new ProgressSystem();
         const certificateManager = new CertificateManager();
+        const languageManager = new LanguageManager();
         let currentUser = {
             id: 1,
             name: "نشط الان",
@@ -3099,7 +3430,7 @@
                 coursesHTML += `
                 <div class="course-card" data-course-id="${course.id}">
                     <div class="course-video-container">
-                        <img src="https://img.youtube.com/vi/${firstVideo.youtubeId}/hqdefault.jpg" alt="${safeTitle}" loading="lazy">
+                        <img src="https://img.youtube.com/vi/${firstVideo.youtubeId}/hqdefault.jpg" alt="${safeTitle}" loading="lazy" onerror="this.src='https://i.ibb.co/S49HKqjW/Picsart-25-09-27-12-30-45-516.jpg'">
                     </div>
                     <div class="course-content">
                         <span class="course-category">${getCategoryName(course.category)}</span>
@@ -3205,7 +3536,7 @@
                 coursesHTML += `
                 <div class="course-card" data-course-id="${course.id}">
                     <div class="course-video-container">
-                        <img src="https://img.youtube.com/vi/${firstVideo.youtubeId}/hqdefault.jpg" alt="${safeTitle}" loading="lazy">
+                        <img src="https://img.youtube.com/vi/${firstVideo.youtubeId}/hqdefault.jpg" alt="${safeTitle}" loading="lazy" onerror="this.src='https://i.ibb.co/S49HKqjW/Picsart-25-09-27-12-30-45-516.jpg'">
                     </div>
                     <div class="course-content">
                         <span class="course-category">${getCategoryName(course.category)}</span>
@@ -3305,7 +3636,7 @@
                 videosHTML += `
                 <div class="video-item">
                     <div class="video-thumbnail" data-youtube-id="${video.youtubeId}" data-video-id="${video.id}">
-                        <img src="https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg" alt="${safeVideoTitle}" loading="lazy">
+                        <img src="https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg" alt="${safeVideoTitle}" loading="lazy" onerror="this.src='https://i.ibb.co/S49HKqjW/Picsart-25-09-27-12-30-45-516.jpg'">
                         <span class="video-duration">${video.duration}</span>
                         <div class="video-play-icon">
                             <i class="fas fa-play"></i>
@@ -3535,6 +3866,7 @@
                 document.body.classList.add('light-theme');
                 document.getElementById('theme-icon').classList.remove('fa-toggle-off');
                 document.getElementById('theme-icon').classList.add('fa-toggle-on');
+                document.getElementById('dark-mode-toggle').checked = true;
             }
         }
 
@@ -3852,10 +4184,10 @@
                 }
             });
 
-            // إعدادات الخط
-            document.getElementById('font-select').addEventListener('change', (e) => {
-                document.body.style.fontFamily = e.target.value;
-                localStorage.setItem('font-family', e.target.value);
+            // إعدادات اللغة
+            document.getElementById('language-select').addEventListener('change', (e) => {
+                const selectedLanguage = e.target.value;
+                languageManager.changeLanguage(selectedLanguage);
             });
 
             // زر تسجيل الخروج
@@ -3863,6 +4195,14 @@
                 if(confirm('هل تريد تسجيل الخروج؟')) {
                     showNotification('تم تسجيل الخروج', 'تم تسجيل خروجك بنجاح', 'info');
                 }
+            });
+        }
+
+        function setupLanguageToggle() {
+            document.getElementById('language-toggle').addEventListener('click', () => {
+                const currentLang = languageManager.getCurrentLanguage();
+                const newLang = currentLang === 'ar' ? 'en' : 'ar';
+                languageManager.changeLanguage(newLang);
             });
         }
 
@@ -3911,10 +4251,12 @@
         // ===== تهيئة التطبيق =====
         document.addEventListener('DOMContentLoaded', () => {
             loadTheme();
+            languageManager.init();
             createCategoryFilters();
             renderCourses();
             setupStatsAnimation();
             setupSettingsEventListeners();
+            setupLanguageToggle();
             
             // إعداد الشريط الجانبي
             document.querySelector('.mobile-menu-btn').addEventListener('click', () => {
@@ -3989,10 +4331,9 @@
             });
             
             // تحميل إعدادات المستخدم
-            const savedFont = localStorage.getItem('font-family');
-            if (savedFont) {
-                document.body.style.fontFamily = savedFont;
-                document.getElementById('font-select').value = savedFont;
+            const savedLanguage = localStorage.getItem('language');
+            if (savedLanguage) {
+                document.getElementById('language-select').value = savedLanguage;
             }
             
             const savedTheme = localStorage.getItem('theme');
@@ -4004,6 +4345,7 @@
             console.log('📊 Courses will be loaded from Supabase or fallback data');
             console.log('👤 Current User:', currentUser);
             console.log('📝 Certificate Manager:', certificateManager);
+            console.log('🌐 Language Manager:', languageManager);
         });
     </script>
 </body>
