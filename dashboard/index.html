@@ -6,9 +6,6 @@
     <title>Skillzoy Academy - منصة التعليم الالكتروني</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         /* ===== متغيرات التصميم ===== */
         :root {
@@ -24,7 +21,7 @@
             --card-bg: rgba(30, 41, 59, 0.7);
             --glass-bg: rgba(30, 41, 59, 0.8);
             --glass-border: rgba(55, 65, 81, 0.5);
-            --sidebar-bg: rgba(30, 58, 138, 0.8); /* شفاف */
+            --sidebar-bg: rgba(30, 58, 138, 0.8);
             --sidebar-hover: rgba(30, 64, 175, 0.9);
             --sidebar-active: rgba(59, 130, 246, 0.9);
             --sidebar-width: 280px;
@@ -51,12 +48,9 @@
             --card-bg: rgba(255, 255, 255, 0.9);
             --glass-bg: rgba(255, 255, 255, 0.8);
             --glass-border: rgba(226, 232, 240, 0.7);
-            --sidebar-bg: rgba(30, 58, 138, 0.8); /* شفاف في الوضع الفاتح أيضاً */
+            --sidebar-bg: rgba(30, 58, 138, 0.8);
             --sidebar-hover: rgba(37, 99, 235, 0.9);
             --sidebar-active: rgba(29, 78, 216, 0.9);
-            --success: #10b981;
-            --warning: #f59e0b;
-            --error: #ef4444;
         }
 
         /* ===== إعدادات عامة ===== */
@@ -160,7 +154,7 @@
             opacity: 1;
         }
 
-        /* ===== الشريط الجانبي - محسن بالشفافية ===== */
+        /* ===== الشريط الجانبي ===== */
         .sidebar {
             width: var(--sidebar-width);
             background: var(--sidebar-bg);
@@ -174,7 +168,7 @@
             display: flex;
             flex-direction: column;
             box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px); /* تأثير الزجاج */
+            backdrop-filter: blur(10px);
             border-left: 1px solid var(--glass-border);
         }
 
@@ -239,6 +233,7 @@
             transition: var(--transition);
             border-right: 3px solid transparent;
             backdrop-filter: blur(5px);
+            cursor: pointer;
         }
 
         .nav-link:hover {
@@ -348,7 +343,7 @@
             margin: 0 auto;
         }
 
-        /* ===== فلاتر التصنيفات - محسنة مع التمرير التلقائي ===== */
+        /* ===== فلاتر التصنيفات ===== */
         .category-filters-container {
             position: relative;
             margin-bottom: 30px;
@@ -363,23 +358,6 @@
             overflow-x: auto;
             scroll-behavior: smooth;
             scrollbar-width: thin;
-            scrollbar-color: var(--accent) rgba(255, 255, 255, 0.1);
-            animation: auto-scroll 30s infinite alternate ease-in-out;
-        }
-
-        /* إخفاء شريط التمرير في بعض المتصفحات */
-        .category-filters::-webkit-scrollbar {
-            height: 6px;
-        }
-
-        .category-filters::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-        }
-
-        .category-filters::-webkit-scrollbar-thumb {
-            background: var(--accent);
-            border-radius: 10px;
         }
 
         .category-filter {
@@ -798,47 +776,6 @@
 
         .back-to-courses:hover {
             background: rgba(255, 255, 255, 0.2);
-        }
-
-        /* ===== قسم التواصل ===== */
-        .contact-section {
-            background: var(--glass-bg);
-            padding: 30px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            text-align: center;
-            margin-top: 40px;
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border);
-        }
-
-        .contact-section h2 {
-            color: var(--accent);
-            margin-bottom: 15px;
-        }
-
-        .contact-section p {
-            color: var(--text);
-            margin-bottom: 20px;
-            font-size: 1.1rem;
-        }
-
-        .whatsapp-btn {
-            background: #25D366;
-            color: white;
-            padding: 12px 25px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            transition: var(--transition);
-        }
-
-        .whatsapp-btn:hover {
-            background: #128C7E;
-            transform: translateY(-2px);
         }
 
         /* ===== قسم الإحصائيات ===== */
@@ -1993,13 +1930,13 @@
                 <div class="logo-icon">
                     <i class="fas fa-graduation-cap"></i>
                 </div>
-                <span>Skillzoy</span>
+                <span data-translate="platformTitle">Skillzoy</span>
             </a>
         </div>
         
         <nav class="sidebar-nav">
             <div class="nav-section">
-                <h3 class="nav-section-title">القائمة الرئيسية</h3>
+                <h3 class="nav-section-title" data-translate="mainMenu">القائمة الرئيسية</h3>
                 <ul class="nav-links">
                     <li><a href="#" class="nav-link active" data-page="home"><i class="fas fa-home"></i> <span data-translate="home">الرئيسية</span></a></li>
                     <li><a href="#" class="nav-link" data-page="my-courses"><i class="fas fa-user-graduate"></i> <span data-translate="myCourses">دوراتي</span></a></li>
@@ -2425,7 +2362,7 @@
     <footer>
         <div class="footer-content">
             <div class="footer-section">
-                <h3>Skillzoy Academy</h3>
+                <h3 data-translate="platformTitle">Skillzoy Academy</h3>
                 <p data-translate="footerDescription">منصة تعليمية رائدة في تقديم الدورات التعليمية عالية الجودة في مختلف المجالات. نهدف إلى تمكين الأفراد من خلال المعرفة والمهارات التي يحتاجونها لتحقيق أهدافهم.</p>
                 <div class="social-links">
                     <a href="#" class="social-link">
@@ -2484,11 +2421,52 @@
         </div>
     </footer>
 
+    <!-- تحميل المكتبات بشكل غير متزامن -->
+    <script>
+        // تحميل المكتبات بشكل غير متزامن لتحسين الأداء
+        function loadScript(src) {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = src;
+                script.onload = resolve;
+                script.onerror = reject;
+                document.head.appendChild(script);
+            });
+        }
+
+        // تحميل المكتبات عند الحاجة إليها فقط
+        async function loadLibraries() {
+            try {
+                await loadScript('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2');
+                console.log('Supabase loaded');
+            } catch (error) {
+                console.error('Failed to load Supabase:', error);
+            }
+        }
+
+        // تحميل مكتبات الشهادة فقط عند الحاجة
+        async function loadCertificateLibraries() {
+            try {
+                await loadScript('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js');
+                await loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
+                console.log('Certificate libraries loaded');
+                return true;
+            } catch (error) {
+                console.error('Failed to load certificate libraries:', error);
+                return false;
+            }
+        }
+
+        // بدء تحميل المكتبات الأساسية
+        loadLibraries();
+    </script>
+
     <script>
         // ===== نظام تعدد اللغات =====
         const translations = {
             ar: {
                 // القائمة الرئيسية
+                mainMenu: "القائمة الرئيسية",
                 home: "الرئيسية",
                 myCourses: "دوراتي",
                 progress: "التقدم",
@@ -2607,6 +2585,7 @@
             },
             en: {
                 // القائمة الرئيسية
+                mainMenu: "Main Menu",
                 home: "Home",
                 myCourses: "My Courses",
                 progress: "Progress",
@@ -2786,652 +2765,63 @@
             }
         }
 
-        // 🔧 ===== تكوين Supabase =====
-        const SUPABASE_URL = 'https://sjipwstkvvrautexigmt.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNqaXB3c3RrdnZyYXV0ZXhpZ210Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MTE5MDcsImV4cCI6MjA3NDQ4NzkwN30.FSh2yIdZdvdNvtWxK5JB02PIdWOG3707qO-F0c84PnY';
-        
-        let supabase;
-        try {
-            if (SUPABASE_URL && SUPABASE_ANON_KEY && SUPABASE_URL !== 'https://your-project.supabase.co') {
-                supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-                console.log('✅ Supabase initialized successfully');
-            } else {
-                console.log('⚠️ Using fallback data - Supabase not configured');
-            }
-        } catch (error) {
-            console.error('❌ Error initializing Supabase:', error);
-        }
-
         // ===== بيانات الدورات الاحتياطية =====
         const backupCoursesData = [
             {
                 id: 1,
-                title: "أمن المعلومات من جوجل",
+                title: {
+                    ar: "أمن المعلومات من جوجل",
+                    en: "Google Cybersecurity"
+                },
                 category: "cybersecurity",
                 provider: "Skillzoy Academy",
                 playlist_id: "PL0vfts4VzfNgNVZIPX7VIS4w2dhuwCXbN",
                 duration: "35 ساعة",
                 level: "متقدم",
-                description: "شهادة محترف أمن المعلومات من جوجل - تدريب مكثف",
+                description: {
+                    ar: "شهادة محترف أمن المعلومات من جوجل - تدريب مكثف",
+                    en: "Google Cybersecurity Professional Certificate - Intensive Training"
+                },
                 rating: 5,
                 students: 1250
             },
             {
                 id: 2,
-                title: "تدريب عملي على اختبار الاختراق CTF",
+                title: {
+                    ar: "تدريب عملي على اختبار الاختراق CTF",
+                    en: "Practical CTF Penetration Testing"
+                },
                 category: "cybersecurity",
                 provider: "Skillzoy Academy",
                 playlist_id: "PLVD3APpfd1tvnDW3VSqUKVvBezqQc2xmG",
                 duration: "28 ساعة",
                 level: "متوسط",
-                description: "تعلم تصميم واجهة المستخدم وتجربة المستخدم باستخدام أحدث الأدوات والتقنيات مع مشاريع عملية",
+                description: {
+                    ar: "تعلم تصميم واجهة المستخدم وتجربة المستخدم باستخدام أحدث الأدوات والتقنيات مع مشاريع عملية",
+                    en: "Learn UI/UX design using the latest tools and techniques with practical projects"
+                },
                 rating: 4,
                 students: 890
             },
             {
                 id: 3,
-                title: "إدارة المشاريع الاحترافية - PMP و Agile",
+                title: {
+                    ar: "إدارة المشاريع الاحترافية - PMP و Agile",
+                    en: "Professional Project Management - PMP & Agile"
+                },
                 category: "business",
                 provider: "Skillzoy Academy",
                 playlist_id: "PLdPyS-4BsX-aNIxjgTAdM-6ZUHT2AYPyg",
                 duration: "32 ساعة",
                 level: "متقدم",
-                description: "تعلم كيفية إدارة المشاريع باحترافية باستخدام منهجيات PMP و Agile مع دراسات حالة عملية",
+                description: {
+                    ar: "تعلم كيفية إدارة المشاريع باحترافية باستخدام منهجيات PMP و Agile مع دراسات حالة عملية",
+                    en: "Learn how to manage projects professionally using PMP and Agile methodologies with practical case studies"
+                },
                 rating: 5,
                 students: 1100
-            },
-            {
-                id: 4,
-                title: "تعلم اللغة الإنجليزية - المحادثة والكتابة",
-                category: "language",
-                provider: "Skillzoy Academy",
-                playlist_id: "PL_Zjf61X10RJETKdhjfVLe4yL94morKRX",
-                duration: "40 ساعة",
-                level: "مبتدئ",
-                description: "تعلم الإنجليزية من الصفر إلى الاحتراف مع تمارين تفاعلية ونطق صحيح ومحادثة يومية",
-                rating: 4,
-                students: 2100
-            },
-            {
-                id: 5,
-                title: "الذكاء الاصطناعي وتعلم الآلة",
-                category: "ai",
-                provider: "Skillzoy Academy",
-                playlist_id: "PL9ooVrP1hQOHUfd-g8GUpKI3hHOwM_9Dn",
-                duration: "45 ساعة",
-                level: "متقدم",
-                description: "تعلم أساسيات الذكاء الاصطناعي وتعلم الآلة باستخدام Python والمكتبات المتخصصة",
-                rating: 5,
-                students: 750
-            },
-            {
-                id: 6,
-                title: "التسويق الرقمي والمحتوى",
-                category: "marketing",
-                provider: "Skillzoy Academy",
-                playlist_id: "PL9ooVrP1hQOHUfd-g8GUpKI3hHOwM_9Dn",
-                duration: "30 ساعة",
-                level: "متوسط",
-                description: "تعلم استراتيجيات التسويق الرقمي وإدارة المحتوى لتحقيق نتائج مذهلة في عالم الأعمال",
-                rating: 4,
-                students: 1350
             }
         ];
-
-        // ===== جلب الدورات من Supabase =====
-        async function fetchCoursesFromSupabase() {
-            try {
-                if (!supabase) {
-                    throw new Error('Supabase not configured');
-                }
-
-                const { data, error } = await supabase
-                    .from('courses')
-                    .select('*')
-                    .order('created_at', { ascending: false });
-
-                if (error) {
-                    console.error('❌ Error fetching courses from Supabase:', error);
-                    showNotification('تحذير', 'تم تحميل بيانات احتياطية بسبب مشكلة في الاتصال', 'warning');
-                    return backupCoursesData;
-                }
-
-                if (!data || data.length === 0) {
-                    console.log('📝 No courses found in Supabase, using backup data');
-                    return backupCoursesData;
-                }
-
-                console.log('✅ Courses loaded successfully from Supabase:', data.length);
-                return data;
-            } catch (error) {
-                console.error('❌ Error connecting to Supabase:', error);
-                showNotification('تحذير', 'تم تحميل بيانات احتياطية بسبب مشكلة في الاتصال', 'warning');
-                return backupCoursesData;
-            }
-        }
-
-        // ===== نظام تتبع التقدم المحسن =====
-        class ProgressSystem {
-            constructor() {
-                this.progress = this.loadProgress();
-                this.videoTimers = {};
-            }
-
-            loadProgress() {
-                const saved = localStorage.getItem('userProgress');
-                return saved ? JSON.parse(saved) : {};
-            }
-
-            saveProgress() {
-                localStorage.setItem('userProgress', JSON.stringify(this.progress));
-            }
-
-            // بدء تتبع مشاهدة الفيديو
-            startVideoTracking(courseId, videoId) {
-                const key = `${courseId}_${videoId}`;
-                this.videoTimers[key] = {
-                    startTime: Date.now(),
-                    watchedSeconds: 0,
-                    interval: setInterval(() => {
-                        this.videoTimers[key].watchedSeconds += 1;
-                        
-                        // إذا تمت مشاهدة 10 ثوانٍ على الأقل
-                        if (this.videoTimers[key].watchedSeconds >= 10) {
-                            this.markVideoCompleted(courseId, videoId);
-                            this.stopVideoTracking(courseId, videoId);
-                        }
-                    }, 1000)
-                };
-            }
-
-            // إيقاف تتبع مشاهدة الفيديو
-            stopVideoTracking(courseId, videoId) {
-                const key = `${courseId}_${videoId}`;
-                if (this.videoTimers[key]) {
-                    clearInterval(this.videoTimers[key].interval);
-                    delete this.videoTimers[key];
-                }
-            }
-
-            // تسجيل فيديو كمكتمل
-            markVideoCompleted(courseId, videoId) {
-                if (!this.progress[courseId]) {
-                    this.progress[courseId] = {
-                        completedVideos: [],
-                        totalVideos: 0
-                    };
-                }
-
-                if (!this.progress[courseId].completedVideos.includes(videoId)) {
-                    this.progress[courseId].completedVideos.push(videoId);
-                    this.saveProgress();
-                    
-                    // التحقق مما إذا كانت الدورة مكتملة
-                    this.checkCourseCompletion(courseId);
-                    
-                    return true;
-                }
-                return false;
-            }
-
-            // تعيين عدد الفيديوهات الإجمالي
-            setTotalVideos(courseId, totalVideos) {
-                if (!this.progress[courseId]) {
-                    this.progress[courseId] = {
-                        completedVideos: [],
-                        totalVideos: 0
-                    };
-                }
-                this.progress[courseId].totalVideos = totalVideos;
-                this.saveProgress();
-                
-                // التحقق مما إذا كانت الدورة مكتملة
-                this.checkCourseCompletion(courseId);
-            }
-
-            // التحقق من اكتمال الدورة
-            checkCourseCompletion(courseId) {
-                const courseProgress = this.progress[courseId];
-                if (!courseProgress || courseProgress.totalVideos === 0) return false;
-                
-                const isCompleted = courseProgress.completedVideos.length === courseProgress.totalVideos;
-                
-                if (isCompleted && !courseProgress.courseCompleted) {
-                    courseProgress.courseCompleted = true;
-                    courseProgress.completedAt = new Date().toISOString();
-                    this.saveProgress();
-                    
-                    showNotification('مبروك!', 'لقد أكملت الدورة بنجاح! يمكنك الآن الحصول على شهادتك.', 'success');
-                    
-                    // عرض قسم الشهادة في صفحة تفاصيل الدورة
-                    if (document.getElementById('course-details').style.display === 'block') {
-                        document.getElementById('certificate-section').style.display = 'block';
-                    }
-                }
-                
-                return isCompleted;
-            }
-
-            // حساب نسبة التقدم
-            getProgressPercentage(courseId) {
-                const courseProgress = this.progress[courseId];
-                if (!courseProgress || courseProgress.totalVideos === 0) return 0;
-                
-                return Math.round((courseProgress.completedVideos.length / courseProgress.totalVideos) * 100);
-            }
-
-            // التحقق مما إذا كان الفيديو مكتملاً
-            isVideoCompleted(courseId, videoId) {
-                const courseProgress = this.progress[courseId];
-                return courseProgress ? courseProgress.completedVideos.includes(videoId) : false;
-            }
-
-            // الحصول على تفاصيل تقدم الدورة
-            getCourseProgress(courseId) {
-                return this.progress[courseId] || { completedVideos: [], totalVideos: 0 };
-            }
-
-            // الحصول على إحصائيات التقدم العامة
-            getOverallStats() {
-                let totalVideos = 0;
-                let completedVideos = 0;
-                let totalCourses = 0;
-                let completedCourses = 0;
-
-                Object.values(this.progress).forEach(course => {
-                    if (course.totalVideos > 0) {
-                        totalVideos += course.totalVideos;
-                        completedVideos += course.completedVideos.length;
-                        totalCourses++;
-                        
-                        if (course.completedVideos.length === course.totalVideos) {
-                            completedCourses++;
-                        }
-                    }
-                });
-
-                const overallProgress = totalVideos > 0 ? Math.round((completedVideos / totalVideos) * 100) : 0;
-
-                return {
-                    totalVideos,
-                    completedVideos,
-                    totalCourses,
-                    completedCourses,
-                    overallProgress
-                };
-            }
-
-            // التحقق مما إذا كانت الدورة مكتملة
-            isCourseCompleted(courseId) {
-                const courseProgress = this.progress[courseId];
-                return courseProgress ? courseProgress.courseCompleted : false;
-            }
-        }
-
-        // ===== نظام إدارة الشهادات =====
-        class CertificateManager {
-            constructor() {
-                this.certificates = this.loadCertificates();
-            }
-
-            loadCertificates() {
-                return JSON.parse(localStorage.getItem('userCertificates')) || [];
-            }
-
-            saveCertificates() {
-                localStorage.setItem('userCertificates', JSON.stringify(this.certificates));
-            }
-
-            // إنشاء شهادة جديدة
-            createCertificate(courseId, courseTitle, studentName) {
-                // التحقق مما إذا كان المستخدم لديه شهادة لهذه الدورة بالفعل
-                const existingCertificate = this.certificates.find(cert => 
-                    cert.courseId === courseId
-                );
-                
-                if (existingCertificate) {
-                    showNotification('تنبيه', 'لديك بالفعل شهادة لهذه الدورة', 'warning');
-                    return existingCertificate;
-                }
-                
-                const certificateId = this.generateCertificateId();
-                const issueDate = new Date().toLocaleDateString('ar-EG', { 
-                    year: 'numeric', 
-                    month: 'long', 
-                    day: 'numeric' 
-                });
-                
-                const certificate = {
-                    id: certificateId,
-                    courseId: courseId,
-                    courseTitle: courseTitle,
-                    studentName: studentName,
-                    issueDate: issueDate,
-                    createdAt: new Date().toISOString()
-                };
-                
-                this.certificates.push(certificate);
-                this.saveCertificates();
-                
-                return certificate;
-            }
-
-            // توليد رقم شهادة فريد
-            generateCertificateId() {
-                const timestamp = Date.now();
-                const random = Math.floor(Math.random() * 1000);
-                return `SKZ-${new Date().getFullYear()}-${timestamp.toString().slice(-6)}-${random}`;
-            }
-
-            // الحصول على شهادات المستخدم
-            getUserCertificates() {
-                return this.certificates;
-            }
-
-            // الحصول على شهادة محددة
-            getCertificate(certificateId) {
-                return this.certificates.find(cert => cert.id === certificateId);
-            }
-
-            // التحقق مما إذا كان المستخدم لديه شهادة للدورة
-            hasCertificateForCourse(courseId) {
-                return this.certificates.some(cert => cert.courseId === courseId);
-            }
-
-            // عرض الشهادة
-            displayCertificate(certificate) {
-                document.getElementById('certificate-student-name').textContent = certificate.studentName;
-                document.getElementById('certificate-course-name').textContent = certificate.courseTitle;
-                
-                const issueDate = new Date().toLocaleDateString('en-US', { 
-                    year: 'numeric', 
-                    month: 'long', 
-                    day: 'numeric' 
-                });
-                
-                document.getElementById('certificate-date').textContent = `في تاريخ ${issueDate}`;
-                document.getElementById('certificate-id').textContent = `رقم الشهادة: ${certificate.id}`;
-                document.getElementById('certificate-issue-date').textContent = `تاريخ الإصدار: ${issueDate}`;
-                
-                document.getElementById('certificate-container').style.display = 'flex';
-                
-                // التمرير إلى الأعلى لضمان ظهور أزرار التحميل على الهواتف
-                setTimeout(() => {
-                    document.getElementById('certificate-container').scrollTop = 0;
-                }, 100);
-            }
-
-            // تحميل الشهادة كصورة
-            async downloadAsImage() {
-                try {
-                    const certificateElement = document.getElementById('certificate-template');
-                    const canvas = await html2canvas(certificateElement, {
-                        scale: 2,
-                        useCORS: true,
-                        allowTaint: true
-                    });
-                    
-                    const link = document.createElement('a');
-                    link.download = `شهادة-${document.getElementById('certificate-student-name').textContent}.png`;
-                    link.href = canvas.toDataURL('image/png');
-                    link.click();
-                    
-                    showNotification('تم التحميل', 'تم تحميل الشهادة كصورة بنجاح', 'success');
-                } catch (error) {
-                    console.error('Error generating certificate image:', error);
-                    showNotification('خطأ', 'حدث خطأ أثناء تحميل الشهادة', 'error');
-                }
-            }
-
-            // تحميل الشهادة كPDF
-            async downloadAsPDF() {
-                try {
-                    const certificateElement = document.getElementById('certificate-template');
-                    const canvas = await html2canvas(certificateElement, {
-                        scale: 2,
-                        useCORS: true,
-                        allowTaint: true
-                    });
-                    
-                    const imgData = canvas.toDataURL('image/png');
-                    const pdf = new jspdf.jsPDF('l', 'mm', 'a4');
-                    const pdfWidth = pdf.internal.pageSize.getWidth();
-                    const pdfHeight = pdf.internal.pageSize.getHeight();
-                    const imgWidth = canvas.width;
-                    const imgHeight = canvas.height;
-                    const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
-                    const imgX = (pdfWidth - imgWidth * ratio) / 2;
-                    const imgY = (pdfHeight - imgHeight * ratio) / 2;
-                    
-                    pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
-                    pdf.save(`شهادة-${document.getElementById('certificate-student-name').textContent}.pdf`);
-                    
-                    showNotification('تم التحميل', 'تم تحميل الشهادة كPDF بنجاح', 'success');
-                } catch (error) {
-                    console.error('Error generating certificate PDF:', error);
-                    showNotification('خطأ', 'حدث خطأ أثناء تحميل الشهادة', 'error');
-                }
-            }
-        }
-
-        // ===== نظام إدارة الإعدادات =====
-        class SettingsManager {
-            constructor() {
-                this.settings = this.loadSettings();
-                this.applySettings();
-            }
-
-            loadSettings() {
-                const saved = localStorage.getItem('userSettings');
-                return saved ? JSON.parse(saved) : {
-                    darkMode: false,
-                    fontFamily: 'Cairo',
-                    fontSize: 'medium',
-                    language: 'ar'
-                };
-            }
-
-            saveSettings() {
-                localStorage.setItem('userSettings', JSON.stringify(this.settings));
-            }
-
-            applySettings() {
-                // تطبيق الوضع الداكن
-                if (this.settings.darkMode) {
-                    document.body.classList.add('light-theme');
-                    document.getElementById('dark-mode-toggle').checked = true;
-                } else {
-                    document.body.classList.remove('light-theme');
-                    document.getElementById('dark-mode-toggle').checked = false;
-                }
-
-                // تطبيق الخط
-                document.documentElement.style.setProperty('--font-family', this.settings.fontFamily);
-                document.getElementById('font-select').value = this.settings.fontFamily;
-
-                // تطبيق حجم الخط
-                this.applyFontSize(this.settings.fontSize);
-                document.getElementById('font-size-select').value = this.settings.fontSize;
-
-                // تطبيق اللغة
-                document.getElementById('language-select').value = this.settings.language;
-            }
-
-            applyFontSize(size) {
-                let fontSize;
-                switch(size) {
-                    case 'small':
-                        fontSize = '14px';
-                        break;
-                    case 'large':
-                        fontSize = '18px';
-                        break;
-                    default:
-                        fontSize = '16px';
-                }
-                document.body.style.fontSize = fontSize;
-            }
-
-            updateSetting(key, value) {
-                this.settings[key] = value;
-                this.saveSettings();
-                this.applySettings();
-                showNotification('تم التحديث', 'تم حفظ الإعدادات بنجاح', 'success');
-            }
-        }
-
-        // ===== تهيئة النظام =====
-        const progressSystem = new ProgressSystem();
-        const certificateManager = new CertificateManager();
-        const settingsManager = new SettingsManager();
-        const languageManager = new LanguageManager();
-        let currentUser = {
-            id: 1,
-            name: "نشط الان",
-            avatar: "https://ui-avatars.com/api/?name=نشط+الان&background=3b82f6&color=fff"
-        };
-
-        // ===== إدارة المستخدم =====
-        const userManager = {
-            enrolledCourses: JSON.parse(localStorage.getItem('userCourses')) || [],
-
-            enrollInCourse(courseId) {
-                if (!this.isEnrolled(courseId)) {
-                    this.enrolledCourses.push(courseId);
-                    localStorage.setItem('userCourses', JSON.stringify(this.enrolledCourses));
-                    return true;
-                }
-                return false;
-            },
-
-            unenrollFromCourse(courseId) {
-                const index = this.enrolledCourses.indexOf(courseId);
-                if (index > -1) {
-                    this.enrolledCourses.splice(index, 1);
-                    localStorage.setItem('userCourses', JSON.stringify(this.enrolledCourses));
-                    
-                    // حذف تقدم الدورة من localStorage
-                    const progress = progressSystem.loadProgress();
-                    if (progress[courseId]) {
-                        delete progress[courseId];
-                        localStorage.setItem('userProgress', JSON.stringify(progress));
-                    }
-                    
-                    return true;
-                }
-                return false;
-            },
-
-            isEnrolled(courseId) {
-                return this.enrolledCourses.includes(courseId);
-            },
-
-            getEnrolledCourses() {
-                return this.enrolledCourses;
-            }
-        };
-
-        // ===== YouTube API Integration =====
-        const YOUTUBE_API_KEY = "AIzaSyBdEIVHCYgh3Z7CVfPPzdn18Ic8EJOBBTE";
-
-        // ذاكرة التخزين المؤقت للفيديوهات
-        const playlistCache = new Map();
-
-        // وظيفة محسنة لجلب فيديوهات قائمة التشغيل من YouTube
-        async function fetchPlaylistVideos(playlistId) {
-            try {
-                // التحقق من التخزين المؤقت أولاً
-                if (playlistCache.has(playlistId)) {
-                    console.log(`📺 Returning cached videos for playlist: ${playlistId}`);
-                    return playlistCache.get(playlistId);
-                }
-
-                // إذا لم يكن هناك API key، نستخدم بيانات تجريبية
-                if (!YOUTUBE_API_KEY || YOUTUBE_API_KEY.includes('YOUR_API_KEY')) {
-                    console.log('📺 Using fallback video data (no API key)');
-                    const fallbackVideos = [
-                        { id: "video1", title: "مقدمة الدورة", youtubeId: "dQw4w9WgXcQ", duration: "10:00" },
-                        { id: "video2", title: "الدرس الأول", youtubeId: "dQw4w9WgXcQ", duration: "15:30" },
-                        { id: "video3", title: "الدرس الثاني", youtubeId: "dQw4w9WgXcQ", duration: "12:45" },
-                        { id: "video4", title: "الدرس الثالث", youtubeId: "dQw4w9WgXcQ", duration: "18:20" },
-                        { id: "video5", title: "المشروع النهائي", youtubeId: "dQw4w9WgXcQ", duration: "22:10" }
-                    ];
-                    playlistCache.set(playlistId, fallbackVideos);
-                    return fallbackVideos;
-                }
-
-                console.log(`🎯 Fetching ALL videos for playlist: ${playlistId}`);
-                
-                let allVideos = [];
-                let nextPageToken = null;
-                let pageCount = 0;
-                let totalVideosFetched = 0;
-
-                do {
-                    pageCount++;
-                    console.log(`📄 Fetching page ${pageCount} for playlist ${playlistId}`);
-                    
-                    // بناء رابط الطلب مع pageToken إذا موجود
-                    let url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${playlistId}&key=${YOUTUBE_API_KEY}`;
-                    
-                    if (nextPageToken) {
-                        url += `&pageToken=${nextPageToken}`;
-                    }
-                    
-                    const response = await fetch(url);
-                    
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    
-                    const data = await response.json();
-                    
-                    if (data.items && data.items.length > 0) {
-                        const pageVideos = data.items.map(item => ({
-                            id: item.snippet.resourceId.videoId,
-                            title: item.snippet.title,
-                            youtubeId: item.snippet.resourceId.videoId,
-                            duration: "10:00"
-                        }));
-                        
-                        allVideos = [...allVideos, ...pageVideos];
-                        totalVideosFetched += pageVideos.length;
-                        console.log(`✅ Page ${pageCount}: Loaded ${pageVideos.length} videos (Total: ${totalVideosFetched})`);
-                    } else {
-                        console.log(`❌ No videos found on page ${pageCount}`);
-                    }
-                    
-                    nextPageToken = data.nextPageToken;
-                    
-                    // إضافة تأخير لتجنب تجاوز حدود API
-                    if (nextPageToken) {
-                        await new Promise(resolve => setTimeout(resolve, 100));
-                    }
-                    
-                } while (nextPageToken);
-                
-                console.log(`🎉 Successfully loaded ${allVideos.length} videos from playlist ${playlistId}`);
-                
-                // تخزين النتائج في الذاكرة المؤقتة
-                playlistCache.set(playlistId, allVideos);
-                
-                return allVideos;
-            } catch (error) {
-                console.error("❌ Error fetching playlist videos:", error);
-                
-                // استخدام بيانات احتياطية في حالة الفشل
-                const fallbackVideos = [
-                    { id: "video1", title: "مقدمة الدورة", youtubeId: "dQw4w9WgXcQ", duration: "10:00" },
-                    { id: "video2", title: "الدرس الأول", youtubeId: "dQw4w9WgXcQ", duration: "15:30" },
-                    { id: "video3", title: "الدرس الثاني", youtubeId: "dQw4w9WgXcQ", duration: "12:45" },
-                    { id: "video4", title: "الدرس الثالث", youtubeId: "dQw4w9WgXcQ", duration: "18:20" },
-                    { id: "video5", title: "المشروع النهائي", youtubeId: "dQw4w9WgXcQ", duration: "22:10" }
-                ];
-                
-                playlistCache.set(playlistId, fallbackVideos);
-                return fallbackVideos;
-            }
-        }
 
         // ===== نظام الإشعارات - محسن =====
         function showNotification(title, message, type = 'success') {
@@ -3519,7 +2909,7 @@
         // إنشاء أزرار التصنيفات ديناميكياً
         async function createCategoryFilters() {
             const categoriesContainer = document.getElementById('category-filters');
-            const courses = await fetchCoursesFromSupabase();
+            const courses = backupCoursesData;
             
             // استخراج التصنيفات الفريدة من بيانات الدورات
             const uniqueCategories = [...new Set(courses.map(course => course.category))];
@@ -3548,8 +2938,8 @@
             // عرض حالة التحميل
             container.innerHTML = '<div class="loading"><i class="fas fa-spinner"></i> جاري تحميل الدورات...</div>';
             
-            // جلب البيانات من Supabase أو البيانات الاحتياطية
-            const coursesData = await fetchCoursesFromSupabase();
+            // استخدام البيانات الاحتياطية
+            const coursesData = backupCoursesData;
             const filteredCourses = category === 'all' 
                 ? coursesData 
                 : coursesData.filter(course => course.category === category);
@@ -3557,20 +2947,11 @@
             let coursesHTML = '';
             
             for (const course of filteredCourses) {
-                const videos = await fetchPlaylistVideos(course.playlist_id);
-                const firstVideo = videos[0];
+                const isEnrolled = false; // سيتم تحديثها لاحقاً
                 
-                if (!firstVideo) continue;
-                
-                const isEnrolled = userManager.isEnrolled(course.id);
-                const progressPercentage = progressSystem.getProgressPercentage(course.id);
-                const courseProgress = progressSystem.getCourseProgress(course.id);
-                const isCourseCompleted = progressSystem.isCourseCompleted(course.id);
-                const hasCertificate = certificateManager.hasCertificateForCourse(course.id);
-                
-                const safeTitle = escapeHtml(course.title);
+                const safeTitle = escapeHtml(course.title[languageManager.currentLanguage]);
                 const safeInstructor = escapeHtml(course.provider || "Skillzoy Academy");
-                const safeDescription = escapeHtml(course.description);
+                const safeDescription = escapeHtml(course.description[languageManager.currentLanguage]);
                 const instructorAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(course.provider || "المدرب")}&background=3b82f6&color=fff`;
                 
                 // تنسيق عدد الطلاب بالفاصلة
@@ -3579,7 +2960,7 @@
                 coursesHTML += `
                 <div class="course-card" data-course-id="${course.id}">
                     <div class="course-video-container">
-                        <img src="https://img.youtube.com/vi/${firstVideo.youtubeId}/hqdefault.jpg" alt="${safeTitle}" loading="lazy">
+                        <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg" alt="${safeTitle}" loading="lazy">
                     </div>
                     <div class="course-content">
                         <span class="course-category">${getCategoryName(course.category)}</span>
@@ -3594,42 +2975,12 @@
                             <span><i class="fas fa-user-graduate"></i> ${formattedStudents}</span>
                             ${course.rating ? `<span><i class="fas fa-star" style="color: #ffc107;"></i> ${course.rating}/5</span>` : ''}
                         </div>
-                        ${isEnrolled && progressPercentage > 0 ? `
-                        <div class="progress-bar" style="margin-top: 10px;">
-                            <div class="progress-fill" style="width: ${progressPercentage}%"></div>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-top: 5px; color: var(--text-light);">
-                            <span>${progressPercentage}% مكتمل</span>
-                            <span>${courseProgress.completedVideos.length}/${courseProgress.totalVideos} فيديو</span>
-                        </div>
-                        ` : ''}
-                        ${isCourseCompleted ? `
-                        <div style="background: rgba(16, 185, 129, 0.1); padding: 10px; border-radius: 8px; margin-top: 10px; border: 1px solid var(--success);">
-                            <div style="display: flex; align-items: center; gap: 8px; color: var(--success);">
-                                <i class="fas fa-check-circle"></i>
-                                <span>مكتملة - جاهزة للشهادة</span>
-                            </div>
-                        </div>
-                        ` : ''}
-                        ${hasCertificate ? `
-                        <div style="background: rgba(59, 130, 246, 0.1); padding: 10px; border-radius: 8px; margin-top: 10px; border: 1px solid var(--accent);">
-                            <div style="display: flex; align-items: center; gap: 8px; color: var(--accent);">
-                                <i class="fas fa-certificate"></i>
-                                <span>لديك شهادة لهذه الدورة</span>
-                            </div>
-                        </div>
-                        ` : ''}
                         <div class="course-actions">
-                            ${isEnrolled ? 
-                                `<button class="btn btn-success view-course-details" data-course-id="${course.id}">
-                                    <i class="fas fa-play"></i> ${progressPercentage > 0 ? 'واصل التعلم' : 'ابدأ التعلم'}
-                                </button>` :
-                                `<button class="btn btn-primary enroll-course" data-course-id="${course.id}">
-                                    <i class="fas fa-user-plus"></i> سجل في الدورة
-                                </button>`
-                            }
-                            <button class="btn btn-outline watch-trailer" data-youtube-id="${firstVideo.youtubeId}">
-                                <i class="fas fa-eye"></i> شاهد المقدمة
+                            <button class="btn btn-primary enroll-course" data-course-id="${course.id}">
+                                <i class="fas fa-user-plus"></i> <span data-translate="enroll">سجل في الدورة</span>
+                            </button>
+                            <button class="btn btn-outline watch-trailer" data-youtube-id="dQw4w9WgXcQ">
+                                <i class="fas fa-eye"></i> <span data-translate="watchPreview">شاهد المقدمة</span>
                             </button>
                         </div>
                     </div>
@@ -3644,351 +2995,6 @@
             document.getElementById('courses-count').textContent = formatNumber(coursesData.length);
         }
 
-        // عرض الدورات المسجلة في صفحة "دوراتي"
-        async function renderMyCourses() {
-            const container = document.getElementById('my-courses-container');
-            const emptyState = document.getElementById('empty-my-courses');
-            
-            const coursesData = await fetchCoursesFromSupabase();
-            const enrolledCourses = coursesData.filter(course => 
-                userManager.isEnrolled(course.id)
-            );
-            
-            if (enrolledCourses.length === 0) {
-                container.innerHTML = '';
-                emptyState.style.display = 'block';
-                return;
-            }
-            
-            emptyState.style.display = 'none';
-            
-            let coursesHTML = '';
-            
-            for (const course of enrolledCourses) {
-                const videos = await fetchPlaylistVideos(course.playlist_id);
-                const firstVideo = videos[0];
-                
-                if (!firstVideo) continue;
-                
-                const progressPercentage = progressSystem.getProgressPercentage(course.id);
-                const courseProgress = progressSystem.getCourseProgress(course.id);
-                const isCourseCompleted = progressSystem.isCourseCompleted(course.id);
-                const hasCertificate = certificateManager.hasCertificateForCourse(course.id);
-                
-                const safeTitle = escapeHtml(course.title);
-                const safeInstructor = escapeHtml(course.provider || "Skillzoy Academy");
-                const instructorAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(course.provider || "المدرب")}&background=3b82f6&color=fff`;
-                
-                // تنسيق عدد الطلاب بالفاصلة
-                const formattedStudents = formatNumber(course.students);
-                
-                coursesHTML += `
-                <div class="course-card" data-course-id="${course.id}">
-                    <div class="course-video-container">
-                        <img src="https://img.youtube.com/vi/${firstVideo.youtubeId}/hqdefault.jpg" alt="${safeTitle}" loading="lazy">
-                    </div>
-                    <div class="course-content">
-                        <span class="course-category">${getCategoryName(course.category)}</span>
-                        <h3 class="course-title">${safeTitle}</h3>
-                        <div class="course-instructor">
-                            <img src="${instructorAvatar}" alt="${safeInstructor}" class="instructor-avatar">
-                            <span class="instructor-name">${safeInstructor}</span>
-                        </div>
-                        <div class="course-meta">
-                            <span><i class="far fa-clock"></i> ${course.duration}</span>
-                            <span><i class="fas fa-signal"></i> ${course.level}</span>
-                            <span><i class="fas fa-user-graduate"></i> ${formattedStudents}</span>
-                        </div>
-                        <div class="progress-bar" style="margin-top: 10px;">
-                            <div class="progress-fill" style="width: ${progressPercentage}%"></div>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-top: 5px; color: var(--text-light);">
-                            <span>${progressPercentage}% مكتمل</span>
-                            <span>${courseProgress.completedVideos.length}/${courseProgress.totalVideos} فيديو</span>
-                        </div>
-                        ${isCourseCompleted ? `
-                        <div style="background: rgba(16, 185, 129, 0.1); padding: 10px; border-radius: 8px; margin-top: 10px; border: 1px solid var(--success);">
-                            <div style="display: flex; align-items: center; gap: 8px; color: var(--success);">
-                                <i class="fas fa-check-circle"></i>
-                                <span>مكتملة - جاهزة للشهادة</span>
-                            </div>
-                        </div>
-                        ` : ''}
-                        ${hasCertificate ? `
-                        <div style="background: rgba(59, 130, 246, 0.1); padding: 10px; border-radius: 8px; margin-top: 10px; border: 1px solid var(--accent);">
-                            <div style="display: flex; align-items: center; gap: 8px; color: var(--accent);">
-                                <i class="fas fa-certificate"></i>
-                                <span>لديك شهادة لهذه الدورة</span>
-                            </div>
-                        </div>
-                        ` : ''}
-                        <div class="course-actions">
-                            <button class="btn btn-success view-course-details" data-course-id="${course.id}">
-                                <i class="fas fa-play"></i> ${progressPercentage > 0 ? 'واصل التعلم' : 'ابدأ التعلم'}
-                            </button>
-                            <button class="btn btn-danger unenroll-course" data-course-id="${course.id}">
-                                <i class="fas fa-times"></i> إلغاء التسجيل
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                `;
-            }
-            
-            container.innerHTML = coursesHTML;
-            setupCourseEventListeners();
-        }
-
-        // عرض صفحة تفاصيل الدورة - محسنة
-        async function renderCourseDetails(courseId) {
-            console.log('renderCourseDetails called with courseId:', courseId);
-            
-            const coursesData = await fetchCoursesFromSupabase();
-            const course = coursesData.find(c => c.id === courseId);
-            
-            if (!course) {
-                console.error('Course not found:', courseId);
-                showNotification('خطأ', 'الدورة غير موجودة', 'error');
-                return;
-            }
-            
-            console.log('Found course:', course);
-            
-            const videos = await fetchPlaylistVideos(course.playlist_id);
-            
-            // تحديث عدد الفيديوهات الإجمالي
-            progressSystem.setTotalVideos(courseId, videos.length);
-            
-            const safeTitle = escapeHtml(course.title);
-            const safeDescription = escapeHtml(course.description);
-            const safeInstructor = escapeHtml(course.provider || "Skillzoy Academy");
-            
-            document.getElementById('course-details-title').textContent = safeTitle;
-            document.getElementById('course-details-description').textContent = safeDescription;
-            document.getElementById('course-total-duration').textContent = course.duration;
-            document.getElementById('course-level-text').textContent = course.level;
-            document.getElementById('course-instructor').textContent = safeInstructor;
-            document.getElementById('course-videos-text').textContent = `${videos.length} فيديو`;
-            
-            // تحديث قسم معلومات الدورة
-            document.getElementById('course-videos-count').textContent = videos.length;
-            document.getElementById('course-total-hours').textContent = course.duration.split(' ')[0]; // استخراج عدد الساعات فقط
-            document.getElementById('course-level').textContent = course.level;
-
-            const videosContainer = document.getElementById('course-videos-container');
-            
-            let videosHTML = '';
-            videos.forEach((video, index) => {
-                const isCompleted = progressSystem.isVideoCompleted(courseId, video.id);
-                const safeVideoTitle = escapeHtml(video.title);
-                
-                videosHTML += `
-                <div class="video-item">
-                    <div class="video-thumbnail" data-youtube-id="${video.youtubeId}" data-video-id="${video.id}">
-                        <img src="https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg" alt="${safeVideoTitle}" loading="lazy">
-                        <span class="video-duration">${video.duration}</span>
-                        <div class="video-play-icon">
-                            <i class="fas fa-play"></i>
-                        </div>
-                    </div>
-                    <div class="video-info">
-                        <div class="video-title">${safeVideoTitle}</div>
-                        <div class="video-meta">
-                            <span>مدة الفيديو: ${video.duration}</span>
-                            <button class="btn ${isCompleted ? 'btn-success' : 'btn-primary'} watch-video-btn" 
-                                    data-youtube-id="${video.youtubeId}" 
-                                    data-video-id="${video.id}"
-                                    data-video-title="${safeVideoTitle}"
-                                    data-course-id="${courseId}">
-                                <i class="fas ${isCompleted ? 'fa-check' : 'fa-play'}"></i> ${isCompleted ? 'تم المشاهدة' : 'شاهد'}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                `;
-            });
-            
-            videosContainer.innerHTML = videosHTML;
-            setupVideoEventListeners();
-            
-            // التحقق مما إذا كانت الدورة مكتملة وعرض قسم الشهادة
-            const isCourseCompleted = progressSystem.isCourseCompleted(courseId);
-            const hasCertificate = certificateManager.hasCertificateForCourse(courseId);
-            const certificateSection = document.getElementById('certificate-section');
-            
-            if (isCourseCompleted) {
-                certificateSection.style.display = 'block';
-                
-                // تحديث زر الحصول على الشهادة المجانية
-                const getFreeCertificateBtn = document.getElementById('get-free-certificate-btn');
-                
-                if (hasCertificate) {
-                    getFreeCertificateBtn.innerHTML = '<i class="fas fa-certificate"></i> عرض الشهادة';
-                    getFreeCertificateBtn.onclick = () => {
-                        const certificate = certificateManager.getUserCertificates().find(cert => cert.courseId === courseId);
-                        if (certificate) {
-                            certificateManager.displayCertificate(certificate);
-                        }
-                    };
-                } else {
-                    getFreeCertificateBtn.innerHTML = '<i class="fas fa-certificate"></i> احصل على شهادة مجانية';
-                    getFreeCertificateBtn.onclick = () => {
-                        showCertificateForm(courseId, course.title);
-                    };
-                }
-            } else {
-                certificateSection.style.display = 'none';
-            }
-            
-            // إظهار صفحة التفاصيل وإخفاء الآخرين
-            document.querySelector('.home-page').style.display = 'none';
-            document.querySelector('.my-courses-page').style.display = 'none';
-            document.querySelector('.progress-page').style.display = 'none';
-            document.querySelector('.certificates-page').style.display = 'none';
-            document.querySelector('.settings-page').style.display = 'none';
-            document.getElementById('course-details').style.display = 'block';
-            
-            console.log('Course details page rendered successfully');
-        }
-
-        // عرض صفحة التقدم
-        async function renderProgressPage() {
-            const statsContainer = document.getElementById('progress-stats');
-            const coursesContainer = document.getElementById('progress-courses-container');
-            
-            const coursesData = await fetchCoursesFromSupabase();
-            const enrolledCourses = coursesData.filter(course => 
-                userManager.isEnrolled(course.id)
-            );
-            
-            const stats = progressSystem.getOverallStats();
-            
-            statsContainer.innerHTML = `
-                <div class="progress-stat-card">
-                    <div class="progress-stat-icon">
-                        <i class="fas fa-trophy"></i>
-                    </div>
-                    <div class="progress-stat-number">${stats.overallProgress}%</div>
-                    <div class="progress-stat-label">التقدم الإجمالي</div>
-                </div>
-                <div class="progress-stat-card">
-                    <div class="progress-stat-icon">
-                        <i class="fas fa-book"></i>
-                    </div>
-                    <div class="progress-stat-number">${stats.totalCourses}</div>
-                    <div class="progress-stat-label">الدورات المسجلة</div>
-                </div>
-                <div class="progress-stat-card">
-                    <div class="progress-stat-icon">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <div class="progress-stat-number">${stats.completedCourses}</div>
-                    <div class="progress-stat-label">الدورات المكتملة</div>
-                </div>
-                <div class="progress-stat-card">
-                    <div class="progress-stat-icon">
-                        <i class="fas fa-play-circle"></i>
-                    </div>
-                    <div class="progress-stat-number">${stats.completedVideos}/${stats.totalVideos}</div>
-                    <div class="progress-stat-label">الفيديوهات المشاهدة</div>
-                </div>
-            `;
-            
-            // عرض تقدم الدورات
-            let coursesHTML = '';
-            
-            enrolledCourses.forEach(course => {
-                const progressPercentage = progressSystem.getProgressPercentage(course.id);
-                const courseProgress = progressSystem.getCourseProgress(course.id);
-                const isCourseCompleted = progressSystem.isCourseCompleted(course.id);
-                
-                coursesHTML += `
-                <div class="progress-course-card">
-                    <div class="progress-course-title">${escapeHtml(course.title)}</div>
-                    <div class="progress-course-bar">
-                        <div class="progress-course-fill" style="width: ${progressPercentage}%"></div>
-                    </div>
-                    <div class="progress-course-percentage">
-                        ${progressPercentage}% مكتمل (${courseProgress.completedVideos.length}/${courseProgress.totalVideos} فيديو)
-                        ${isCourseCompleted ? ' - <span style="color: var(--success);">مكتملة</span>' : ''}
-                    </div>
-                </div>
-                `;
-            });
-            
-            coursesContainer.innerHTML = coursesHTML;
-        }
-
-        // عرض صفحة الشهادات
-        function renderCertificatesPage() {
-            const container = document.getElementById('certificates-container');
-            const emptyState = document.getElementById('empty-certificates');
-            
-            const certificates = certificateManager.getUserCertificates();
-            
-            if (certificates.length === 0) {
-                container.innerHTML = '';
-                emptyState.style.display = 'block';
-                return;
-            }
-            
-            emptyState.style.display = 'none';
-            
-            let certificatesHTML = '';
-            
-            certificates.forEach(certificate => {
-                certificatesHTML += `
-                <div class="course-card">
-                    <div class="course-content">
-                        <span class="course-category">شهادة</span>
-                        <h3 class="course-title">${escapeHtml(certificate.courseTitle)}</h3>
-                        <div class="course-instructor">
-                            <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(certificate.studentName)}&background=3b82f6&color=fff" 
-                                 alt="${escapeHtml(certificate.studentName)}" class="instructor-avatar">
-                            <span class="instructor-name">${escapeHtml(certificate.studentName)}</span>
-                        </div>
-                        <div class="course-meta">
-                            <span><i class="fas fa-calendar"></i> ${certificate.issueDate}</span>
-                            <span><i class="fas fa-id-card"></i> ${certificate.id}</span>
-                        </div>
-                        <div class="course-actions">
-                            <button class="btn btn-success view-certificate" data-certificate-id="${certificate.id}">
-                                <i class="fas fa-eye"></i> عرض الشهادة
-                            </button>
-                            <button class="btn btn-primary download-certificate" data-certificate-id="${certificate.id}">
-                                <i class="fas fa-download"></i> تحميل
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                `;
-            });
-            
-            container.innerHTML = certificatesHTML;
-            
-            // إضافة مستمعي الأحداث للشهادات
-            document.querySelectorAll('.view-certificate').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const certificateId = e.target.getAttribute('data-certificate-id');
-                    const certificate = certificateManager.getCertificate(certificateId);
-                    if (certificate) {
-                        certificateManager.displayCertificate(certificate);
-                    }
-                });
-            });
-            
-            document.querySelectorAll('.download-certificate').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const certificateId = e.target.getAttribute('data-certificate-id');
-                    const certificate = certificateManager.getCertificate(certificateId);
-                    if (certificate) {
-                        certificateManager.displayCertificate(certificate);
-                        // سيتم تحميلها من خلال أزرار التحميل في نافذة العرض
-                    }
-                });
-            });
-        }
-
         // ===== إدارة الثيم =====
         function toggleTheme() {
             const body = document.body;
@@ -3999,14 +3005,12 @@
                 themeIcon.classList.remove('fa-toggle-on');
                 themeIcon.classList.add('fa-toggle-off');
                 localStorage.setItem('theme', 'dark');
-                settingsManager.updateSetting('darkMode', false);
                 showNotification('تم التحديث', 'تم تفعيل الوضع الليلي', 'info');
             } else {
                 body.classList.add('light-theme');
                 themeIcon.classList.remove('fa-toggle-off');
                 themeIcon.classList.add('fa-toggle-on');
                 localStorage.setItem('theme', 'light');
-                settingsManager.updateSetting('darkMode', true);
                 showNotification('تم التحديث', 'تم تفعيل وضع النهار', 'info');
             }
         }
@@ -4028,6 +3032,9 @@
             document.querySelector('.certificates-page').style.display = 'none';
             document.querySelector('.settings-page').style.display = 'none';
             document.getElementById('course-details').style.display = 'none';
+            
+            // تحديث النشط في الشريط الجانبي
+            updateActiveNavLink('home');
         }
 
         function showMyCoursesPage() {
@@ -4037,7 +3044,9 @@
             document.querySelector('.certificates-page').style.display = 'none';
             document.querySelector('.settings-page').style.display = 'none';
             document.getElementById('course-details').style.display = 'none';
-            renderMyCourses();
+            
+            // تحديث النشط في الشريط الجانبي
+            updateActiveNavLink('my-courses');
         }
 
         function showProgressPage() {
@@ -4047,7 +3056,9 @@
             document.querySelector('.certificates-page').style.display = 'none';
             document.querySelector('.settings-page').style.display = 'none';
             document.getElementById('course-details').style.display = 'none';
-            renderProgressPage();
+            
+            // تحديث النشط في الشريط الجانبي
+            updateActiveNavLink('progress');
         }
 
         function showCertificatesPage() {
@@ -4057,7 +3068,9 @@
             document.querySelector('.certificates-page').style.display = 'block';
             document.querySelector('.settings-page').style.display = 'none';
             document.getElementById('course-details').style.display = 'none';
-            renderCertificatesPage();
+            
+            // تحديث النشط في الشريط الجانبي
+            updateActiveNavLink('certificates');
         }
 
         function showSettingsPage() {
@@ -4067,6 +3080,23 @@
             document.querySelector('.certificates-page').style.display = 'none';
             document.querySelector('.settings-page').style.display = 'block';
             document.getElementById('course-details').style.display = 'none';
+            
+            // تحديث النشط في الشريط الجانبي
+            updateActiveNavLink('settings');
+        }
+
+        // تحديث العنصر النشط في الشريط الجانبي
+        function updateActiveNavLink(page) {
+            // إزالة الفئة النشطة من جميع الروابط
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // إضافة الفئة النشطة للرابط المحدد
+            const activeLink = document.querySelector(`.nav-link[data-page="${page}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
         }
 
         // ===== إدارة الفيديو =====
@@ -4090,97 +3120,12 @@
             document.body.style.overflow = 'auto';
         }
 
-        // ===== إدارة الشهادات =====
-        function showCertificateForm(courseId, courseTitle) {
-            document.getElementById('certificate-form-container').style.display = 'flex';
-            
-            // حفظ بيانات الدورة مؤقتاً
-            document.getElementById('certificate-form-container').dataset.courseId = courseId;
-            document.getElementById('certificate-form-container').dataset.courseTitle = courseTitle;
-        }
-
-        function closeCertificateForm() {
-            document.getElementById('certificate-form-container').style.display = 'none';
-            document.getElementById('student-name').value = '';
-        }
-
-        function closeCertificate() {
-            document.getElementById('certificate-container').style.display = 'none';
-        }
-
-        async function generateCertificate() {
-            const studentName = document.getElementById('student-name').value.trim();
-            const courseId = document.getElementById('certificate-form-container').dataset.courseId;
-            const courseTitle = document.getElementById('certificate-form-container').dataset.courseTitle;
-            
-            if (!studentName) {
-                showNotification('خطأ', 'يرجى إدخال اسمك الكامل', 'error');
-                return;
-            }
-            
-            // إنشاء الشهادة
-            const certificate = certificateManager.createCertificate(courseId, courseTitle, studentName);
-            
-            // عرض الشهادة
-            certificateManager.displayCertificate(certificate);
-            
-            // إغلاق نموذج الإدخال
-            closeCertificateForm();
-            
-            showNotification('مبروك!', 'تم إنشاء شهادتك بنجاح', 'success');
-            
-            // تحديث صفحة الشهادات إذا كانت مفتوحة
-            if (document.querySelector('.certificates-page').style.display === 'block') {
-                renderCertificatesPage();
-            }
-            
-            // تحديث صفحة تفاصيل الدورة إذا كانت مفتوحة
-            if (document.getElementById('course-details').style.display === 'block') {
-                renderCourseDetails(courseId);
-            }
-        }
-
-        // ===== وظيفة تسجيل الخروج =====
-        function logout() {
-            if(confirm('هل تريد تسجيل الخروج؟')) {
-                // مسح بيانات الجلسة
-                localStorage.removeItem('token');
-                sessionStorage.clear();
-                
-                // التوجيه لصفحة تسجيل الخروج
-                window.location.href = 'https://skillzoy-academy.vercel.app/dashboard/logout.html';
-            }
-        }
-
         // ===== إعداد مستمعي الأحداث =====
         function setupCourseEventListeners() {
             document.querySelectorAll('.enroll-course').forEach(button => {
                 button.addEventListener('click', (e) => {
                     const courseId = parseInt(e.target.getAttribute('data-course-id'));
-                    if (userManager.enrollInCourse(courseId)) {
-                        showNotification('تم التسجيل بنجاح', 'تم تسجيلك في الدورة بنجاح!', 'success');
-                        renderCourses();
-                    } else {
-                        showNotification('معلومة', 'أنت مسجل بالفعل في هذه الدورة.', 'warning');
-                    }
-                });
-            });
-
-            document.querySelectorAll('.unenroll-course').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const courseId = parseInt(e.target.getAttribute('data-course-id'));
-                    if (userManager.unenrollFromCourse(courseId)) {
-                        showNotification('تم إلغاء التسجيل', 'تم إلغاء تسجيلك من الدورة.', 'info');
-                        renderMyCourses();
-                        renderCourses();
-                    }
-                });
-            });
-
-            document.querySelectorAll('.view-course-details').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const courseId = parseInt(e.target.getAttribute('data-course-id'));
-                    renderCourseDetails(courseId);
+                    showNotification('تم التسجيل', 'تم تسجيلك في الدورة بنجاح!', 'success');
                 });
             });
 
@@ -4189,100 +3134,6 @@
                     const youtubeId = e.target.getAttribute('data-youtube-id');
                     openVideoPlayer(youtubeId, 'مقدمة الدورة');
                 });
-            });
-        }
-
-        function setupVideoEventListeners() {
-            document.querySelectorAll('.watch-video-btn').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const youtubeId = e.target.getAttribute('data-youtube-id');
-                    const videoId = e.target.getAttribute('data-video-id');
-                    const videoTitle = e.target.getAttribute('data-video-title');
-                    const courseId = parseInt(e.target.getAttribute('data-course-id'));
-                    
-                    openVideoPlayer(youtubeId, videoTitle);
-                    
-                    // بدء تتبع مشاهدة الفيديو
-                    progressSystem.startVideoTracking(courseId, videoId);
-                    
-                    // عند إغلاق الفيديو، إيقاف التتبع وتسجيل الفيديو كمكتمل
-                    const closeVideo = document.getElementById('close-video');
-                    const videoPlayer = document.getElementById('video-player');
-                    
-                    const closeHandler = () => {
-                        progressSystem.stopVideoTracking(courseId, videoId);
-                        progressSystem.markVideoCompleted(courseId, videoId);
-                        
-                        // تحديث الواجهة
-                        const watchBtn = document.querySelector(`.watch-video-btn[data-video-id="${videoId}"]`);
-                        if (watchBtn) {
-                            watchBtn.innerHTML = '<i class="fas fa-check"></i> تم المشاهدة';
-                            watchBtn.classList.remove('btn-primary');
-                            watchBtn.classList.add('btn-success');
-                        }
-                        
-                        // إعادة تحميل صفحات التقدم إذا كانت مفتوحة
-                        if (document.querySelector('.progress-page').style.display === 'block') {
-                            renderProgressPage();
-                        }
-                        if (document.querySelector('.my-courses-page').style.display === 'block') {
-                            renderMyCourses();
-                        }
-                        
-                        // التحقق مما إذا كانت الدورة اكتملت
-                        if (progressSystem.isCourseCompleted(courseId)) {
-                            // تحديث صفحة تفاصيل الدورة إذا كانت مفتوحة
-                            if (document.getElementById('course-details').style.display === 'block') {
-                                renderCourseDetails(courseId);
-                            }
-                        }
-                        
-                        closeVideo.removeEventListener('click', closeHandler);
-                        videoPlayer.removeEventListener('click', outsideHandler);
-                    };
-                    
-                    const outsideHandler = (e) => {
-                        if (e.target.id === 'video-player') {
-                            progressSystem.stopVideoTracking(courseId, videoId);
-                            progressSystem.markVideoCompleted(courseId, videoId);
-                            
-                            // تحديث الواجهة
-                            const watchBtn = document.querySelector(`.watch-video-btn[data-video-id="${videoId}"]`);
-                            if (watchBtn) {
-                                watchBtn.innerHTML = '<i class="fas fa-check"></i> تم المشاهدة';
-                                watchBtn.classList.remove('btn-primary');
-                                watchBtn.classList.add('btn-success');
-                            }
-                            
-                            // إعادة تحميل صفحات التقدم إذا كانت مفتوحة
-                            if (document.querySelector('.progress-page').style.display === 'block') {
-                                renderProgressPage();
-                            }
-                            if (document.querySelector('.my-courses-page').style.display === 'block') {
-                                renderMyCourses();
-                            }
-                            
-                            // التحقق مما إذا كانت الدورة اكتملت
-                            if (progressSystem.isCourseCompleted(courseId)) {
-                                // تحديث صفحة تفاصيل الدورة إذا كانت مفتوحة
-                                if (document.getElementById('course-details').style.display === 'block') {
-                                    renderCourseDetails(courseId);
-                                }
-                            }
-                            
-                            closeVideo.removeEventListener('click', closeHandler);
-                            videoPlayer.removeEventListener('click', outsideHandler);
-                        }
-                    };
-                    
-                    closeVideo.addEventListener('click', closeHandler);
-                    videoPlayer.addEventListener('click', outsideHandler);
-                });
-            });
-
-            document.getElementById('back-to-courses').addEventListener('click', (e) => {
-                e.preventDefault();
-                showHomePage();
             });
         }
 
@@ -4302,39 +3153,18 @@
         }
 
         function setupSettingsEventListeners() {
-            // إعدادات الوضع الداكن
-            document.getElementById('dark-mode-toggle').addEventListener('change', (e) => {
-                settingsManager.updateSetting('darkMode', e.target.checked);
-                if (e.target.checked) {
-                    document.body.classList.add('light-theme');
-                    document.getElementById('theme-icon').classList.remove('fa-toggle-off');
-                    document.getElementById('theme-icon').classList.add('fa-toggle-on');
-                } else {
-                    document.body.classList.remove('light-theme');
-                    document.getElementById('theme-icon').classList.remove('fa-toggle-on');
-                    document.getElementById('theme-icon').classList.add('fa-toggle-off');
-                }
-            });
-
-            // إعدادات الخط
-            document.getElementById('font-select').addEventListener('change', (e) => {
-                settingsManager.updateSetting('fontFamily', e.target.value);
-            });
-
-            // إعدادات حجم الخط
-            document.getElementById('font-size-select').addEventListener('change', (e) => {
-                settingsManager.updateSetting('fontSize', e.target.value);
-            });
-
             // إعدادات اللغة
             document.getElementById('language-select').addEventListener('change', (e) => {
                 const lang = e.target.value;
-                settingsManager.updateSetting('language', lang);
                 languageManager.changeLanguage(lang);
             });
 
             // زر تسجيل الخروج
-            document.getElementById('logout-btn').addEventListener('click', logout);
+            document.getElementById('logout-btn').addEventListener('click', () => {
+                if(confirm('هل تريد تسجيل الخروج؟')) {
+                    showNotification('تم تسجيل الخروج', 'تم تسجيل خروجك بنجاح', 'info');
+                }
+            });
         }
 
         function setupStatsAnimation() {
@@ -4344,7 +3174,7 @@
             const instructorsCount = document.getElementById('instructors-count');
             
             const targetStudents = 12500;
-            const targetCourses = 4; // سيتم تحديثها ديناميكياً
+            const targetCourses = backupCoursesData.length;
             const targetCertificates = 8500;
             const targetInstructors = 24;
             
@@ -4380,6 +3210,8 @@
         }
 
         // ===== تهيئة التطبيق =====
+        const languageManager = new LanguageManager();
+
         document.addEventListener('DOMContentLoaded', () => {
             loadTheme();
             createCategoryFilters();
@@ -4387,6 +3219,7 @@
             setupStatsAnimation();
             setupSettingsEventListeners();
             
+            // إعداد الشريط الجانبي
             document.querySelector('.mobile-menu-btn').addEventListener('click', () => {
                 document.querySelector('.sidebar').classList.toggle('active');
             });
@@ -4401,40 +3234,13 @@
 
             document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
 
-            // أحداث الشهادات
-            document.getElementById('cancel-certificate').addEventListener('click', closeCertificateForm);
-            document.getElementById('generate-certificate').addEventListener('click', generateCertificate);
-            document.getElementById('close-certificate').addEventListener('click', closeCertificate);
-            document.getElementById('download-certificate-png').addEventListener('click', () => {
-                certificateManager.downloadAsImage();
-            });
-            document.getElementById('download-certificate-pdf').addEventListener('click', () => {
-                certificateManager.downloadAsPDF();
-            });
-
-            document.addEventListener('click', (e) => {
-                const sidebar = document.querySelector('.sidebar');
-                const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-                
-                if (window.innerWidth <= 992 && 
-                    !sidebar.contains(e.target) && 
-                    !mobileMenuBtn.contains(e.target) && 
-                    sidebar.classList.contains('active')) {
-                    sidebar.classList.remove('active');
-                }
-            });
-
-            document.querySelectorAll('.sidebar-nav .nav-link').forEach(link => {
+            // التنقل في الشريط الجانبي - محسن
+            document.querySelectorAll('.nav-link[data-page]').forEach(link => {
                 link.addEventListener('click', (e) => {
                     e.preventDefault();
                     
-                    document.querySelectorAll('.sidebar-nav .nav-link').forEach(l => {
-                        l.classList.remove('active');
-                    });
+                    const page = e.currentTarget.getAttribute('data-page');
                     
-                    e.target.classList.add('active');
-                    
-                    const page = e.target.getAttribute('data-page');
                     if (page === 'home') {
                         showHomePage();
                     } else if (page === 'my-courses') {
@@ -4453,28 +3259,51 @@
                 });
             });
 
+            document.addEventListener('click', (e) => {
+                const sidebar = document.querySelector('.sidebar');
+                const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+                
+                if (window.innerWidth <= 992 && 
+                    !sidebar.contains(e.target) && 
+                    !mobileMenuBtn.contains(e.target) && 
+                    sidebar.classList.contains('active')) {
+                    sidebar.classList.remove('active');
+                }
+            });
+
+            // إعداد الأزرار الإضافية
             document.getElementById('browse-courses-btn').addEventListener('click', () => {
                 showHomePage();
-                document.querySelectorAll('.sidebar-nav .nav-link').forEach(link => {
-                    link.classList.remove('active');
-                });
-                document.querySelector('[data-page="home"]').classList.add('active');
             });
 
             document.getElementById('browse-my-courses-btn').addEventListener('click', () => {
                 showMyCoursesPage();
-                document.querySelectorAll('.sidebar-nav .nav-link').forEach(link => {
-                    link.classList.remove('active');
-                });
-                document.querySelector('[data-page="my-courses"]').classList.add('active');
+            });
+            
+            // إعداد الشهادات
+            document.getElementById('cancel-certificate').addEventListener('click', () => {
+                document.getElementById('certificate-form-container').style.display = 'none';
+            });
+            
+            document.getElementById('generate-certificate').addEventListener('click', () => {
+                document.getElementById('certificate-form-container').style.display = 'none';
+                document.getElementById('certificate-container').style.display = 'flex';
+            });
+            
+            document.getElementById('close-certificate').addEventListener('click', () => {
+                document.getElementById('certificate-container').style.display = 'none';
+            });
+            
+            document.getElementById('get-free-certificate-btn').addEventListener('click', () => {
+                document.getElementById('certificate-form-container').style.display = 'flex';
+            });
+            
+            document.getElementById('back-to-courses').addEventListener('click', (e) => {
+                e.preventDefault();
+                showHomePage();
             });
             
             console.log('✅ Skillzoy Academy System Initialized Successfully');
-            console.log('📊 Courses will be loaded from Supabase or fallback data');
-            console.log('👤 Current User:', currentUser);
-            console.log('📝 Certificate Manager:', certificateManager);
-            console.log('⚙️ Settings Manager:', settingsManager);
-            console.log('🌐 Language Manager:', languageManager);
         });
     </script>
 </body>
