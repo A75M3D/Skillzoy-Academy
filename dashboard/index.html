@@ -16,6 +16,7 @@
             --primary-dark: #0a0f1c;
             --primary-light: #1e293b;
             --accent: #3b82f6;
+            --accent-rgb: 59, 130, 246;
             --light: #f8fafc;
             --dark: #020617;
             --text: #e2e8f0;
@@ -37,12 +38,47 @@
             --font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        /* الثيم الأزرق (الافتراضي) */
+        .theme-blue {
+            --accent: #3b82f6;
+            --accent-rgb: 59, 130, 246;
+            --sidebar-bg: rgba(30, 58, 138, 0.9);
+            --sidebar-hover: rgba(30, 64, 175, 0.9);
+            --sidebar-active: rgba(59, 130, 246, 0.9);
+        }
+
+        /* الثيم الأخضر */
+        .theme-green {
+            --accent: #10b981;
+            --accent-rgb: 16, 185, 129;
+            --sidebar-bg: rgba(6, 95, 70, 0.9);
+            --sidebar-hover: rgba(5, 122, 85, 0.9);
+            --sidebar-active: rgba(16, 185, 129, 0.9);
+        }
+
+        /* الثيم البنفسجي */
+        .theme-purple {
+            --accent: #8b5cf6;
+            --accent-rgb: 139, 92, 246;
+            --sidebar-bg: rgba(76, 29, 149, 0.9);
+            --sidebar-hover: rgba(91, 33, 182, 0.9);
+            --sidebar-active: rgba(139, 92, 246, 0.9);
+        }
+
+        /* الثيم البرتقالي */
+        .theme-orange {
+            --accent: #f59e0b;
+            --accent-rgb: 245, 158, 11;
+            --sidebar-bg: rgba(146, 64, 14, 0.9);
+            --sidebar-hover: rgba(180, 83, 9, 0.9);
+            --sidebar-active: rgba(245, 158, 11, 0.9);
+        }
+
         /* الثيم الفاتح (وضع النهار) */
         .light-theme {
             --primary: #f8fafc;
             --primary-dark: #e2e8f0;
             --primary-light: #ffffff;
-            --accent: #3b82f6;
             --light: #0f172a;
             --dark: #f1f5f9;
             --text: #334155;
@@ -51,9 +87,30 @@
             --card-bg: rgba(255, 255, 255, 0.9);
             --glass-bg: rgba(255, 255, 255, 0.8);
             --glass-border: rgba(226, 232, 240, 0.7);
+        }
+
+        .light-theme.theme-blue {
             --sidebar-bg: rgba(30, 58, 138, 0.9);
             --sidebar-hover: rgba(37, 99, 235, 0.9);
             --sidebar-active: rgba(29, 78, 216, 0.9);
+        }
+
+        .light-theme.theme-green {
+            --sidebar-bg: rgba(6, 95, 70, 0.9);
+            --sidebar-hover: rgba(5, 122, 85, 0.9);
+            --sidebar-active: rgba(16, 185, 129, 0.9);
+        }
+
+        .light-theme.theme-purple {
+            --sidebar-bg: rgba(76, 29, 149, 0.9);
+            --sidebar-hover: rgba(91, 33, 182, 0.9);
+            --sidebar-active: rgba(139, 92, 246, 0.9);
+        }
+
+        .light-theme.theme-orange {
+            --sidebar-bg: rgba(146, 64, 14, 0.9);
+            --sidebar-hover: rgba(180, 83, 9, 0.9);
+            --sidebar-active: rgba(245, 158, 11, 0.9);
         }
 
         /* ===== إعدادات عامة ===== */
@@ -121,7 +178,7 @@
         }
 
         .notification.info {
-            background: rgba(59, 130, 246, 0.9);
+            background: rgba(var(--accent-rgb), 0.9);
             border-left: 4px solid var(--accent);
         }
 
@@ -430,7 +487,7 @@
 
         .course-category {
             display: inline-block;
-            background: rgba(59, 130, 246, 0.2);
+            background: rgba(var(--accent-rgb), 0.2);
             color: var(--accent);
             padding: 6px 12px;
             border-radius: 20px;
@@ -509,7 +566,7 @@
         }
 
         .btn-primary:hover {
-            background: #2563eb;
+            background: rgba(var(--accent-rgb), 0.8);
             transform: translateY(-2px);
         }
 
@@ -520,7 +577,7 @@
         }
 
         .btn-outline:hover {
-            background: rgba(59, 130, 246, 0.1);
+            background: rgba(var(--accent-rgb), 0.1);
         }
 
         .btn-success {
@@ -1048,7 +1105,7 @@
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: #2563eb;
+            background: rgba(var(--accent-rgb), 0.8);
         }
 
         /* ===== صفحة دوراتي ===== */
@@ -1358,7 +1415,7 @@
         .form-group input:focus {
             outline: none;
             border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+            box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.2);
         }
 
         .form-actions {
@@ -1410,7 +1467,7 @@
             left: 40px;
             right: 40px;
             bottom: 40px;
-            border: 10px solid #3b82f6;
+            border: 10px solid var(--accent);
             pointer-events: none;
         }
 
@@ -1428,7 +1485,7 @@
         }
 
         .certificate-subtitle {
-            color: #3b82f6;
+            color: var(--accent);
             font-size: 24px;
             font-weight: 600;
         }
@@ -1495,7 +1552,7 @@
             width: 180px;
             height: 180px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            background: linear-gradient(135deg, #1e3a8a, var(--accent));
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1604,7 +1661,7 @@
         }
 
         .certificate-notice {
-            background: rgba(59, 130, 246, 0.1);
+            background: rgba(var(--accent-rgb), 0.1);
             padding: 15px;
             border-radius: 8px;
             margin-bottom: 20px;
@@ -1898,9 +1955,71 @@
         .lazy-image.loaded {
             opacity: 1;
         }
+
+        /* ===== أزرار تغيير الألوان ===== */
+        .color-theme-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            padding: 0 20px;
+        }
+
+        .color-theme-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .color-theme-option:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .color-theme-option.active {
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .color-swatch {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .color-swatch.blue {
+            background: #3b82f6;
+        }
+
+        .color-swatch.green {
+            background: #10b981;
+        }
+
+        .color-swatch.purple {
+            background: #8b5cf6;
+        }
+
+        .color-swatch.orange {
+            background: #f59e0b;
+        }
+
+        .color-theme-option span {
+            color: #cbd5e1;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .color-theme-option.active span {
+            color: white;
+        }
     </style>
 </head>
-<body>
+<body class="theme-blue">
     <!-- ===== نظام الإشعارات ===== -->
     <div class="notification-container" id="notification-container"></div>
 
@@ -1968,6 +2087,29 @@
                         <span data-translate="light_mode">وضع النهار</span>
                     </div>
                     <i class="fas fa-toggle-off" id="theme-icon"></i>
+                </div>
+            </div>
+            
+            <!-- أزرار تغيير الألوان -->
+            <div class="nav-section">
+                <h3 class="nav-section-title">الألوان</h3>
+                <div class="color-theme-options">
+                    <div class="color-theme-option active" data-theme="blue">
+                        <div class="color-swatch blue"></div>
+                        <span>أزرق</span>
+                    </div>
+                    <div class="color-theme-option" data-theme="green">
+                        <div class="color-swatch green"></div>
+                        <span>أخضر</span>
+                    </div>
+                    <div class="color-theme-option" data-theme="purple">
+                        <div class="color-swatch purple"></div>
+                        <span>بنفسجي</span>
+                    </div>
+                    <div class="color-theme-option" data-theme="orange">
+                        <div class="color-swatch orange"></div>
+                        <span>برتقالي</span>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -3132,10 +3274,95 @@
             }
         }
 
+        // ===== نظام إدارة الثيمات =====
+        class ThemeManager {
+            constructor() {
+                this.currentTheme = localStorage.getItem('theme') || 'blue';
+                this.currentMode = localStorage.getItem('mode') || 'dark';
+            }
+
+            // تغيير الثيم
+            changeTheme(theme) {
+                this.currentTheme = theme;
+                localStorage.setItem('theme', theme);
+                
+                // إزالة كل الثيمات السابقة
+                document.body.classList.remove('theme-blue', 'theme-green', 'theme-purple', 'theme-orange');
+                
+                // إضافة الثيم الجديد
+                document.body.classList.add(`theme-${theme}`);
+                
+                // تحديث أزرار الألوان النشطة
+                this.updateActiveColorButtons(theme);
+                
+                showNotification('تم التحديث', `تم تغيير اللون إلى ${this.getThemeName(theme)}`, 'info');
+            }
+
+            // تغيير الوضع (فاتح/داكن)
+            toggleMode() {
+                if (this.currentMode === 'dark') {
+                    this.currentMode = 'light';
+                    document.body.classList.add('light-theme');
+                } else {
+                    this.currentMode = 'dark';
+                    document.body.classList.remove('light-theme');
+                }
+                
+                localStorage.setItem('mode', this.currentMode);
+                
+                const themeIcon = document.getElementById('theme-icon');
+                if (this.currentMode === 'light') {
+                    themeIcon.classList.remove('fa-toggle-off');
+                    themeIcon.classList.add('fa-toggle-on');
+                } else {
+                    themeIcon.classList.remove('fa-toggle-on');
+                    themeIcon.classList.add('fa-toggle-off');
+                }
+                
+                showNotification('تم التحديث', `تم تفعيل ${this.currentMode === 'light' ? 'وضع النهار' : 'الوضع الداكن'}`, 'info');
+            }
+
+            // الحصول على اسم الثيم
+            getThemeName(theme) {
+                const themeNames = {
+                    'blue': 'أزرق',
+                    'green': 'أخضر',
+                    'purple': 'بنفسجي',
+                    'orange': 'برتقالي'
+                };
+                return themeNames[theme] || theme;
+            }
+
+            // تحديث أزرار الألوان النشطة
+            updateActiveColorButtons(activeTheme) {
+                document.querySelectorAll('.color-theme-option').forEach(option => {
+                    option.classList.remove('active');
+                    if (option.getAttribute('data-theme') === activeTheme) {
+                        option.classList.add('active');
+                    }
+                });
+            }
+
+            // تهيئة الثيم
+            init() {
+                // تطبيق الثيم المحفوظ
+                this.changeTheme(this.currentTheme);
+                
+                // تطبيق الوضع المحفوظ
+                if (this.currentMode === 'light') {
+                    document.body.classList.add('light-theme');
+                    document.getElementById('theme-icon').classList.remove('fa-toggle-off');
+                    document.getElementById('theme-icon').classList.add('fa-toggle-on');
+                    document.getElementById('dark-mode-toggle').checked = true;
+                }
+            }
+        }
+
         // ===== تهيئة النظام =====
         const progressSystem = new ProgressSystem();
         const certificateManager = new CertificateManager();
         const languageManager = new LanguageManager();
+        const themeManager = new ThemeManager();
         let currentUser = {
             id: 1,
             name: "نشط الان",
@@ -3463,7 +3690,7 @@
                         </div>
                         ` : ''}
                         ${hasCertificate ? `
-                        <div style="background: rgba(59, 130, 246, 0.1); padding: 10px; border-radius: 8px; margin-top: 10px; border: 1px solid var(--accent);">
+                        <div style="background: rgba(var(--accent-rgb), 0.1); padding: 10px; border-radius: 8px; margin-top: 10px; border: 1px solid var(--accent);">
                             <div style="display: flex; align-items: center; gap: 8px; color: var(--accent);">
                                 <i class="fas fa-certificate"></i>
                                 <span>لديك شهادة لهذه الدورة</span>
@@ -3566,7 +3793,7 @@
                         </div>
                         ` : ''}
                         ${hasCertificate ? `
-                        <div style="background: rgba(59, 130, 246, 0.1); padding: 10px; border-radius: 8px; margin-top: 10px; border: 1px solid var(--accent);">
+                        <div style="background: rgba(var(--accent-rgb), 0.1); padding: 10px; border-radius: 8px; margin-top: 10px; border: 1px solid var(--accent);">
                             <div style="display: flex; align-items: center; gap: 8px; color: var(--accent);">
                                 <i class="fas fa-certificate"></i>
                                 <span>لديك شهادة لهذه الدورة</span>
@@ -3842,32 +4069,11 @@
 
         // ===== إدارة الثيم =====
         function toggleTheme() {
-            const body = document.body;
-            const themeIcon = document.getElementById('theme-icon');
-            
-            if (body.classList.contains('light-theme')) {
-                body.classList.remove('light-theme');
-                themeIcon.classList.remove('fa-toggle-on');
-                themeIcon.classList.add('fa-toggle-off');
-                localStorage.setItem('theme', 'dark');
-                showNotification('تم التحديث', 'تم تفعيل الوضع الليلي', 'info');
-            } else {
-                body.classList.add('light-theme');
-                themeIcon.classList.remove('fa-toggle-off');
-                themeIcon.classList.add('fa-toggle-on');
-                localStorage.setItem('theme', 'light');
-                showNotification('تم التحديث', 'تم تفعيل وضع النهار', 'info');
-            }
+            themeManager.toggleMode();
         }
 
         function loadTheme() {
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'light') {
-                document.body.classList.add('light-theme');
-                document.getElementById('theme-icon').classList.remove('fa-toggle-off');
-                document.getElementById('theme-icon').classList.add('fa-toggle-on');
-                document.getElementById('dark-mode-toggle').checked = true;
-            }
+            themeManager.init();
         }
 
         // ===== إدارة الصفحات =====
@@ -4175,12 +4381,12 @@
                     document.body.classList.add('light-theme');
                     document.getElementById('theme-icon').classList.remove('fa-toggle-off');
                     document.getElementById('theme-icon').classList.add('fa-toggle-on');
-                    localStorage.setItem('theme', 'light');
+                    localStorage.setItem('mode', 'light');
                 } else {
                     document.body.classList.remove('light-theme');
                     document.getElementById('theme-icon').classList.remove('fa-toggle-on');
                     document.getElementById('theme-icon').classList.add('fa-toggle-off');
-                    localStorage.setItem('theme', 'dark');
+                    localStorage.setItem('mode', 'dark');
                 }
             });
 
@@ -4203,6 +4409,15 @@
                 const currentLang = languageManager.getCurrentLanguage();
                 const newLang = currentLang === 'ar' ? 'en' : 'ar';
                 languageManager.changeLanguage(newLang);
+            });
+        }
+
+        function setupColorThemeButtons() {
+            document.querySelectorAll('.color-theme-option').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const theme = e.currentTarget.getAttribute('data-theme');
+                    themeManager.changeTheme(theme);
+                });
             });
         }
 
@@ -4257,6 +4472,7 @@
             setupStatsAnimation();
             setupSettingsEventListeners();
             setupLanguageToggle();
+            setupColorThemeButtons();
             
             // إعداد الشريط الجانبي
             document.querySelector('.mobile-menu-btn').addEventListener('click', () => {
@@ -4337,7 +4553,12 @@
             }
             
             const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'light') {
+            if (savedTheme) {
+                themeManager.changeTheme(savedTheme);
+            }
+            
+            const savedMode = localStorage.getItem('mode');
+            if (savedMode === 'light') {
                 document.getElementById('dark-mode-toggle').checked = true;
             }
             
@@ -4346,6 +4567,7 @@
             console.log('👤 Current User:', currentUser);
             console.log('📝 Certificate Manager:', certificateManager);
             console.log('🌐 Language Manager:', languageManager);
+            console.log('🎨 Theme Manager:', themeManager);
         });
     </script>
 </body>
