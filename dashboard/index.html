@@ -3750,30 +3750,4 @@
                     
                     if (window.innerWidth <= 992) {
                         document.querySelector('.sidebar').classList.remove('active');
-                    }
-                });
-            });
 
-            document.getElementById('browse-courses-btn').addEventListener('click', () => {
-                showHomePage();
-                document.querySelectorAll('.sidebar-nav .nav-link').forEach(link => {
-                    link.classList.remove('active');
-                });
-                document.querySelector('[data-page="home"]').classList.add('active');
-            });
-
-            document.getElementById('browse-my-courses-btn').addEventListener('click', () => {
-                showMyCoursesPage();
-                document.querySelectorAll('.sidebar-nav .nav-link').forEach(link => {
-                    link.classList.remove('active');
-                });
-                document.querySelector('[data-page="my-courses"]').classList.add('active');
-            });
-            
-            console.log('✅ Skillzoy Academy System Initialized Successfully');
-            console.log('📊 Courses will be loaded from Supabase or fallback data');
-            console.log('👤 Current User:', currentUser);
-            console.log('📝 Certificate Manager:', certificateManager);});
-        </script>
-</body>
-</html>
