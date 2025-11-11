@@ -1,4 +1,4 @@
-const CACHE_NAME = 'skillzoy-v4'; // غيّر الرقم كل مرة ترفع تحديث جديد
+const CACHE_NAME = 'skillzoy-v5'; // غيّر الرقم كل مرة ترفع تحديث جديد
 const urlsToCache = [
   '/',
   '/manifest.json',
