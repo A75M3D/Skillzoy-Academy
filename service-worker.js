@@ -1,5 +1,5 @@
-const CACHE_NAME = 'skillzoy-dynamic-v1';
-const STATIC_CACHE = 'skillzoy-static-v1';
+const CACHE_NAME = 'skillzoy-dynamic-v2';
+const STATIC_CACHE = 'skillzoy-static-v2';
 
 // الملفات الثابتة التي نريد تخزينها
 const staticAssets = [
