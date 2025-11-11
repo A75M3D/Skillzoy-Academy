@@ -1,7 +1,6 @@
 // ========== الأمان والحماية ==========
 function safeHTML(str) {
     if (!str) return '';
-    
     const div = document.createElement('div');
     div.textContent = str;
     return div.innerHTML;
@@ -28,7 +27,12 @@ if ('serviceWorker' in navigator) {
                     
                     newWorker.addEventListener('statechange', () => {
                         if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                            console.log('📦 New content available - please refresh!');
+                            console.log('📦 New content available - activating new version!');
+                            
+                            // ✅ تفعيل النسخة الجديدة فورًا
+                            newWorker.postMessage({ type: 'SKIP_WAITING' });
+
+                            // عرض إشعار التحديث
                             showUpdateNotification();
                         }
                     });
@@ -39,20 +43,20 @@ if ('serviceWorker' in navigator) {
             });
     });
 
-    // تحديث الصفحة عندما يصبح الـ Service Worker جاهز
+    // تحديث الصفحة تلقائيًا عندما يصبح الـ Service Worker الجديد جاهز
     let refreshing = false;
     navigator.serviceWorker.addEventListener('controllerchange', () => {
         if (!refreshing) {
             refreshing = true;
             console.log('🔄 Controller changed - reloading page');
-            window.location.reload();
+            showReloadMessage(); // عرض تنبيه قبل التحديث
+            setTimeout(() => window.location.reload(), 1500); // تحديث بعد ثانية ونصف
         }
     });
 }
 
 // ========== إشعار التحديث ==========
 function showUpdateNotification() {
-    // إنشاء عنصر الإشعار
     const notification = document.createElement('div');
     notification.style.cssText = `
         position: fixed;
@@ -66,13 +70,14 @@ function showUpdateNotification() {
         z-index: 10000;
         max-width: 300px;
         font-family: Arial, sans-serif;
+        animation: fadeIn 0.4s ease;
     `;
     
     notification.innerHTML = safeHTML(`
         <div style="margin-bottom: 10px;">
             <strong>تحديث جديد متاح!</strong>
         </div>
-        <button onclick="location.reload()" style="
+        <button id="reload-btn" style="
             background: white;
             color: #1e3a8a;
             border: none;
@@ -85,7 +90,11 @@ function showUpdateNotification() {
     
     document.body.appendChild(notification);
     
-    // إزالة الإشعار تلقائياً بعد 10 ثواني
+    document.getElementById('reload-btn').addEventListener('click', () => {
+        window.location.reload();
+    });
+
+    // إزالة الإشعار تلقائيًا بعد 10 ثوانٍ
     setTimeout(() => {
         if (document.body.contains(notification)) {
             document.body.removeChild(notification);
@@ -93,22 +102,40 @@ function showUpdateNotification() {
     }, 10000);
 }
 
+// ========== تنبيه أثناء التحديث ==========
+function showReloadMessage() {
+    const message = document.createElement('div');
+    message.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #111827;
+        color: white;
+        padding: 20px 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        font-family: 'Cairo', sans-serif;
+        font-size: 16px;
+        z-index: 99999;
+        text-align: center;
+    `;
+    message.innerHTML = '⏳ جارٍ تحديث الموقع إلى آخر إصدار...';
+    document.body.appendChild(message);
+}
+
 // ========== إدارة الحالة ==========
 const AppState = {
-    // حالة التطبيق
     currentUser: null,
     isOnline: navigator.onLine,
     
-    // تهيئة التطبيق
     init() {
         this.setupEventListeners();
         this.checkAuthStatus();
         console.log('🚀 Skillzoy Academy Initialized');
     },
     
-    // إعداد مستمعي الأحداث
     setupEventListeners() {
-        // أحداث الاتصال بالإنترنت
         window.addEventListener('online', () => {
             this.isOnline = true;
             this.showOnlineStatus();
@@ -118,17 +145,14 @@ const AppState = {
             this.isOnline = false;
             this.showOfflineStatus();
         });
-        
-        // منع الإجراءات الافتراضية
+
         document.addEventListener('contextmenu', (e) => {
-            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
-                return;
+            if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+                e.preventDefault();
             }
-            e.preventDefault();
         });
     },
     
-    // التحقق من حالة المصادقة
     checkAuthStatus() {
         const token = localStorage.getItem('authToken');
         if (token) {
@@ -136,10 +160,8 @@ const AppState = {
         }
     },
     
-    // التحقق من صحة التوكن
     validateToken(token) {
         try {
-            // منطق التحقق من التوكن
             return JSON.parse(atob(token.split('.')[1]));
         } catch (error) {
             localStorage.removeItem('authToken');
@@ -147,7 +169,6 @@ const AppState = {
         }
     },
     
-    // عرض حالة الاتصال
     showOnlineStatus() {
         this.showToast('✅ تم استعادة الاتصال بالإنترنت', 'success');
     },
@@ -156,7 +177,6 @@ const AppState = {
         this.showToast('⚠️ أنت غير متصل بالإنترنت', 'warning');
     },
     
-    // عرض إشعارات
     showToast(message, type = 'info') {
         const toast = document.createElement('div');
         const styles = {
@@ -191,17 +211,14 @@ const AppState = {
 
 // ========== الأدوات المساعدة ==========
 const Utils = {
-    // تنسيق التاريخ
     formatDate(date) {
         return new Date(date).toLocaleDateString('ar-EG');
     },
     
-    // تقييد الإدخال
     sanitizeInput(input) {
         return input.trim().replace(/[<>]/g, '');
     },
     
-    // تحميل الصفحات
     async loadPage(url) {
         try {
             const response = await fetch(url);
@@ -213,7 +230,6 @@ const Utils = {
         }
     },
     
-    // التمرير السلس
     smoothScrollTo(elementId) {
         const element = document.getElementById(elementId);
         if (element) {
@@ -224,14 +240,10 @@ const Utils = {
 
 // ========== تهيئة التطبيق ==========
 document.addEventListener('DOMContentLoaded', function() {
-    // تهيئة حالة التطبيق
     AppState.init();
-    
-    // استخدام الدوال الآمنة لعرض المحتوى
     displaySafeText('app-title', 'Skillzoy Academy');
     displaySafeText('app-subtitle', 'منصة التعلم الذكي');
     
-    // التحقق من حالة الاتصال الأولية
     if (!AppState.isOnline) {
         AppState.showOfflineStatus();
     }
@@ -242,14 +254,12 @@ document.addEventListener('DOMContentLoaded', function() {
 // ========== التعامل مع الأخطاء ==========
 window.addEventListener('error', function(e) {
     console.error('💥 Global error:', e.error);
-    
-    // في بيئة الإنتاج، أرسل الخطأ للسيرفر
     if (window.location.hostname !== 'localhost') {
         // fetch('/api/error', { method: 'POST', body: JSON.stringify({ error: e.error.toString() }) });
     }
 });
 
-// جعل الدوال متاحة globally للاستخدام في HTML
+// جعل الدوال متاحة عالميًا
 window.safeHTML = safeHTML;
 window.displaySafeText = displaySafeText;
 window.AppState = AppState;
