@@ -9,14 +9,14 @@
   "scope": "/",
   "icons": [
     {
-      "src": "https://cdn.vectorstock.com/i/1000v/10/42/graduation-hat-diploma-icon-vector-28741042.jpg",
+      "src": "https://images.vexels.com/media/users/3/143402/isolated/preview/afbbf15d5e82a1c4fb5a55c4eacf3003-graduation-cap-icon.png",
       "sizes": "192x192",
-      "type": "image/jpeg"
+      "type": "image/png"
     },
     {
-      "src": "https://cdn.vectorstock.com/i/1000v/10/42/graduation-hat-diploma-icon-vector-28741042.jpg",
+      "src": "https://images.vexels.com/media/users/3/143402/isolated/preview/afbbf15d5e82a1c4fb5a55c4eacf3003-graduation-cap-icon.png",
       "sizes": "512x512",
-      "type": "image/jpeg"
+      "type": "image/png"
     }
   ]
 }
