@@ -1,37 +1,35 @@
-// ⚡ Skillzoy Smart Auto-Updating Service Worker
-const VERSION = new Date().getTime(); // رقم فريد تلقائي في كل تحميل جديد
-const CACHE_NAME = `skillzoy-cache-${VERSION}`;
-const STATIC_FILES = [
-  '/',
-  '/manifest.json',
-  '/style.css',
+const CACHE_NAME = 'Skillzoy-Academy';
+const urlsToCache = [
+  '/script.js',
   '/login.html',
+  '/manifest.json',
   '/register.html',
+  // الملفات الثابتة اللي مش بتتغير
 ];
 
-// 🧠 تثبيت الملفات الثابتة
+// Install Event
 self.addEventListener('install', (event) => {
-  console.log('📦 Installing new service worker:', CACHE_NAME);
+  console.log('Service Worker: Installed');
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(STATIC_FILES);
-    }).then(() => {
-      console.log('✅ Cached static files successfully');
-      return self.skipWaiting();
-    })
+    caches.open(CACHE_NAME)
+      .then((cache) => {
+        console.log('Service Worker: Caching Files');
+        return cache.addAll(urlsToCache);
+      })
+      .then(() => self.skipWaiting())
   );
 });
 
-// 🧹 تنشيط وحذف الكاش القديم
+// Activate Event
 self.addEventListener('activate', (event) => {
-  console.log('🚀 Activating service worker...');
+  console.log('Service Worker: Activated');
   event.waitUntil(
-    caches.keys().then((keys) => {
+    caches.keys().then((cacheNames) => {
       return Promise.all(
-        keys.map((key) => {
-          if (key !== CACHE_NAME) {
-            console.log('🗑️ Removing old cache:', key);
-            return caches.delete(key);
+        cacheNames.map((cacheName) => {
+          if (cacheName !== CACHE_NAME) {
+            console.log('Service Worker: Clearing Old Cache');
+            return caches.delete(cacheName);
           }
         })
       );
@@ -39,49 +37,87 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// ⚙️ إستراتيجية ذكية للتعامل مع الطلبات
+// Fetch Event
 self.addEventListener('fetch', (event) => {
-  const req = event.request;
+  // الملفات الديناميكية اللي بتتغير باستمرار
+  const dynamicFiles = [
+    '',
+    '/dashboard/index.html',
+    '/index.html',
+    '/ad.html',
+    
+  ];
   
-  // لو كان طلب API أو Supabase → تحديث فوري من الشبكة
-  if (req.url.includes('supabase.co') || req.url.includes('/api/')) {
-    event.respondWith(fetch(req).catch(() => caches.match(req)));
-    return;
-  }
-
-  // لو كان HTML → استخدم Network First
-  if (req.headers.get('accept')?.includes('text/html')) {
-    event.respondWith(
-      fetch(req)
-        .then((res) => {
-          const copy = res.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(req, copy));
-          return res;
-        })
-        .catch(() => caches.match(req))
-    );
-    return;
-  }
-
-  // باقي الملفات (CSS, JS, صور...) → Stale-While-Revalidate
-  event.respondWith(
-    caches.match(req).then((cached) => {
-      const fetchPromise = fetch(req).then((res) => {
-        caches.open(CACHE_NAME).then((cache) => cache.put(req, res.clone()));
-        return res;
-      });
-      return cached || fetchPromise;
-    })
+  const isDynamicFile = dynamicFiles.some(file => 
+    event.request.url.includes(file)
   );
+
+  // إذا كان طلب لملفات HTML الديناميكية
+  if (isDynamicFile) {
+    // Network First Strategy - النت أولاً
+    event.respondWith(
+      fetch(event.request)
+        .then((networkResponse) => {
+          // إذا نجح التحميل من النت، خزن النسخة الجديدة
+          if (networkResponse && networkResponse.status === 200) {
+            const responseClone = networkResponse.clone();
+            caches.open(CACHE_NAME)
+              .then((cache) => {
+                cache.put(event.request, responseClone);
+                console.log('Service Worker: Dynamic File Updated -', event.request.url);
+              });
+          }
+          return networkResponse;
+        })
+        .catch(() => {
+          // إذا فشل التحميل من النت، جيب من الكاش
+          console.log('Service Worker: Using Cached Version -', event.request.url);
+          return caches.match(event.request)
+            .then((cachedResponse) => {
+              return cachedResponse || new Response('Offline - No cached version available');
+            });
+        })
+    );
+  } else {
+    // Cache First Strategy - الكاش أولاً للملفات الثابتة
+    event.respondWith(
+      caches.match(event.request)
+        .then((response) => {
+          // إذا وجد في الكاش، ارجعه
+          if (response) {
+            console.log('Service Worker: Serving from Cache -', event.request.url);
+            return response;
+          }
+          
+          // إذا مش موجود في الكاش، حمله من النت وخزنه
+          return fetch(event.request)
+            .then((fetchResponse) => {
+              // تحقق إذا كان الرد صالح للتخزين
+              if (!fetchResponse || fetchResponse.status !== 200 || fetchResponse.type !== 'basic') {
+                return fetchResponse;
+              }
+              
+              const responseToCache = fetchResponse.clone();
+              caches.open(CACHE_NAME)
+                .then((cache) => {
+                  cache.put(event.request, responseToCache);
+                  console.log('Service Worker: New File Cached -', event.request.url);
+                });
+              
+              return fetchResponse;
+            })
+            .catch(() => {
+              // إذا فشل التحميل من النت
+              return new Response('Offline - Please check your connection');
+            });
+        })
+    );
+  }
 });
 
-// 🔁 تحديث تلقائي للعميل عند وجود SW جديد
+// Listen for Messages from the Page
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
   }
-});
-
-self.addEventListener('controllerchange', () => {
-  console.log('♻️ Controller changed — app updated automatically!');
 });
