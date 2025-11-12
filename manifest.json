@@ -1,6 +1,6 @@
 {
   "name": "Skillzoy-Academy",
-  "short_name": "Skillzoy",
+  "short_name": "SkillZOY",
   "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -9,14 +9,14 @@
   "scope": "/",
   "icons": [
     {
-      "src": "https://images.vexels.com/media/users/3/143402/isolated/preview/afbbf15d5e82a1c4fb5a55c4eacf3003-graduation-cap-icon.png",
+      "src": "/i-192.jpg",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/jpeg"
     },
     {
-      "src": "https://images.vexels.com/media/users/3/143402/isolated/preview/afbbf15d5e82a1c4fb5a55c4eacf3003-graduation-cap-icon.png",
+      "src": "/i-512.jpg",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/jpeg"
     }
   ]
 }
