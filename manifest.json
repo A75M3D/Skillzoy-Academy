@@ -1,5 +1,5 @@
 {
-  "name": "Skillzoy Academy",
+  "name": "Skillzoy-Academy",
   "short_name": "Skillzoy",
   "start_url": "/index.html",
   "display": "standalone",
@@ -8,17 +8,15 @@
   "orientation": "portrait",
   "scope": "/",
   "icons": [
-    {
-      "src": "https://www.freeiconspng.com/uploads/graduation-cap-icon-12.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "https://www.freeiconspng.com/uploads/graduation-cap-icon-12.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
+  {
+    "src": "https://cdn-icons-png.flaticon.com/512/2331/2331966.png",
+    "sizes": "192x192",
+    "type": "image/png"
+  },
+  {
+    "src": "https://cdn-icons-png.flaticon.com/512/2331/2331966.png",
+    "sizes": "512x512",
+    "type": "image/png"
+  }
   ]
 }
