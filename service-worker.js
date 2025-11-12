@@ -1,5 +1,6 @@
 const CACHE_NAME = 'Skillzoy-Academy';
 const urlsToCache = [
+  '/index.js',
   '/script.js',
   '/login.html',
   '/manifest.json',
