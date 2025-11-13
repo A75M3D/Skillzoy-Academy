@@ -2018,23 +2018,21 @@
             color: white;
         }
         
-   /* ===== أنماط الكاروسيل للتصنيفات ===== */
+   /* ===== أنماط الكاروسيل للتصنيفات - الإصدار النهائي ===== */
 .category-filters-container {
     position: relative;
     margin-bottom: 30px;
     overflow: hidden;
     padding: 15px 0;
-    background: linear-gradient(90deg, 
-        transparent 0%, 
-        rgba(var(--accent-rgb), 0.1) 50%, 
-        transparent 100%);
     border-radius: var(--border-radius);
+    background: none; /* إزالة الخلفية المتحركة */
 }
 
 .category-carousel-wrapper {
     overflow: hidden;
     width: 100%;
     position: relative;
+    z-index: 2;
 }
 
 .category-filters {
@@ -2043,6 +2041,8 @@
     padding: 10px 5px;
     transition: transform 0.5s ease;
     will-change: transform;
+    position: relative;
+    z-index: 3;
 }
 
 .category-filter {
@@ -2061,6 +2061,7 @@
     position: relative;
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 4;
 }
 
 .category-filter::before {
@@ -2099,35 +2100,58 @@
     }
 }
 
-/* تأثيرات التدرج على الجوانب */
-.category-filters-container::before,
-.category-filters-container::after {
+/* خلفية ثابتة منفصلة */
+.category-filters-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(var(--accent-rgb), 0.1) 50%, 
+        transparent 100%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* تأثيرات التدرج الثابتة على الجوانب */
+.category-filters-container::after,
+.category-carousel-wrapper::before {
     content: '';
     position: absolute;
     top: 0;
     bottom: 0;
     width: 60px;
-    z-index: 2;
+    z-index: 5;
     pointer-events: none;
 }
 
-.category-filters-container::before {
+.category-filters-container::after {
     left: 0;
     background: linear-gradient(90deg, var(--primary), transparent);
 }
 
-.category-filters-container::after {
+.category-carousel-wrapper::before {
     right: 0;
     background: linear-gradient(90deg, transparent, var(--primary));
 }
 
-.light-theme .category-filters-container::before {
+.light-theme .category-filters-container::after {
     background: linear-gradient(90deg, var(--primary-light), transparent);
 }
 
-.light-theme .category-filters-container::after {
+.light-theme .category-carousel-wrapper::before {
     background: linear-gradient(90deg, transparent, var(--primary-light));
-}  
+}
+
+.light-theme .category-filters-container::before {
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(var(--accent-rgb), 0.05) 50%, 
+        transparent 100%);
+}
     </style>
 </head>
 <body class="theme-blue">
@@ -3471,111 +3495,87 @@
             }
         }
 
-// ===== نظام الكاروسيل للتصنيفات - محسّن =====
+// ===== نظام الكاروسيل للتصنيفات - الإصدار النهائي =====
 class CategoryCarousel {
     constructor() {
         this.container = document.getElementById('category-filters');
         this.wrapper = document.querySelector('.category-carousel-wrapper');
-        this.scrollSpeed = 2;
-        this.scrollDirection = 1;
         this.isUserInteracting = false;
-        this.resumeTimeout = null;
-        this.isPaused = false;
-        this.animationId = null;
-        this.lastDirectionChange = 0;
-        this.directionChangeCooldown = 1500; // زيادة الوقت لضمان رؤية جميع العناصر
-        this.hasReachedEnd = false; // لتتبع ما إذا وصلنا للنهاية
+        this.hasCompletedCycle = false;
+        this.autoScrollSpeed = 2;
         
         this.init();
     }
 
     init() {
-        this.setupAutoScroll();
         this.setupUserInteractions();
+        this.startAutoScroll();
     }
 
-    setupAutoScroll() {
-        const animate = () => {
-            if (!this.isUserInteracting && !this.isPaused && this.container.children.length > 0) {
-                const containerWidth = this.container.scrollWidth;
-                const wrapperWidth = this.wrapper.clientWidth;
-                
-                // إذا كان المحتوى أصغر من الحاوية، لا داعي للتمرير
-                if (containerWidth <= wrapperWidth) {
+    // التمرير التلقائي لدورة كاملة
+    startAutoScroll() {
+        if (this.hasCompletedCycle) return;
+        
+        const containerWidth = this.container.scrollWidth;
+        const wrapperWidth = this.wrapper.clientWidth;
+        
+        if (containerWidth <= wrapperWidth) {
+            this.hasCompletedCycle = true;
+            return;
+        }
+        
+        const maxScroll = containerWidth - wrapperWidth;
+        let currentPosition = 0;
+        let isReturning = false;
+
+        const autoScroll = () => {
+            if (this.isUserInteracting || this.hasCompletedCycle) return;
+            
+            if (!isReturning) {
+                currentPosition += this.autoScrollSpeed;
+                if (currentPosition >= maxScroll) {
+                    currentPosition = maxScroll;
+                    isReturning = true;
+                    setTimeout(() => requestAnimationFrame(autoScroll), 1000);
                     return;
                 }
-                
-                // حساب الحد الأقصى للتمرير
-                const maxScroll = containerWidth - wrapperWidth;
-                
-                // الحصول على الموضع الحالي من transform
-                const currentTransform = this.getCurrentTransform();
-                let newPosition = currentTransform + (this.scrollSpeed * this.scrollDirection);
-                
-                // التحقق مما إذا وصلنا للنهاية
-                const now = Date.now();
-                const reachedEnd = newPosition >= maxScroll;
-                const reachedStart = newPosition <= 0;
-                
-                // إذا وصلنا للنهاية، ننتظر قليلاً قبل العودة
-                if (reachedEnd && !this.hasReachedEnd && now - this.lastDirectionChange > this.directionChangeCooldown) {
-                    this.hasReachedEnd = true;
-                    this.lastDirectionChange = now;
-                    
-                    // انتظار إضافي عند النهاية لضمان رؤية جميع العناصر
-                    setTimeout(() => {
-                        this.scrollDirection = -1;
-                        this.hasReachedEnd = false;
-                    }, 1000); // انتظار ثانية إضافية عند النهاية
-                } 
-                // إذا وصلنا للبداية، ننتظر قليلاً قبل الاستمرار
-                else if (reachedStart && now - this.lastDirectionChange > this.directionChangeCooldown) {
-                    this.lastDirectionChange = now;
-                    
-                    // انتظار إضافي عند البداية
-                    setTimeout(() => {
-                        this.scrollDirection = 1;
-                    }, 1000); // انتظار ثانية إضافية عند البداية
+            } else {
+                currentPosition -= this.autoScrollSpeed;
+                if (currentPosition <= 0) {
+                    currentPosition = 0;
+                    this.hasCompletedCycle = true;
+                    this.container.style.transform = `translateX(-${currentPosition}px)`;
+                    return;
                 }
-                
-                // منع التمرير خارج الحدود
-                newPosition = Math.max(0, Math.min(newPosition, maxScroll));
-                
-                // تطبيق التحويل الجديد
-                this.container.style.transform = `translateX(-${newPosition}px)`;
             }
             
-            this.animationId = requestAnimationFrame(animate.bind(this));
+            this.container.style.transform = `translateX(-${currentPosition}px)`;
+            requestAnimationFrame(autoScroll);
         };
-        
-        animate();
-    }
 
-    getCurrentTransform() {
-        const transform = this.container.style.transform;
-        if (!transform || transform === 'none') return 0;
-        
-        const match = transform.match(/translateX\(-(\d+(\.\d+)?)px\)/);
-        return match ? parseFloat(match[1]) : 0;
+        setTimeout(() => {
+            if (!this.isUserInteracting) {
+                requestAnimationFrame(autoScroll);
+            }
+        }, 1000);
     }
 
     setupUserInteractions() {
         let startX, startTransform;
         let isDragging = false;
         
-        // بدء السحب
         const startDrag = (e) => {
             this.isUserInteracting = true;
+            this.hasCompletedCycle = true;
             isDragging = true;
             
             startX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
             startTransform = this.getCurrentTransform();
             
-            // إضافة class للإشارة إلى السحب
             this.container.classList.add('dragging');
+            this.container.style.transition = 'none';
         };
         
-        // أثناء السحب
         const duringDrag = (e) => {
             if (!isDragging) return;
             
@@ -3590,18 +3590,16 @@ class CategoryCarousel {
             this.container.style.transform = `translateX(-${newTransform}px)`;
         };
         
-        // إنهاء السحب
         const endDrag = () => {
             this.container.classList.remove('dragging');
+            this.container.style.transition = 'transform 0.3s ease';
             isDragging = false;
             
-            // استئناف التمرير التلقائي بعد فترة
-            this.resumeTimeout = setTimeout(() => {
+            setTimeout(() => {
                 this.isUserInteracting = false;
-            }, 3000);
+            }, 100);
         };
         
-        // إضافة مستمعي الأحداث
         this.container.addEventListener('mousedown', startDrag);
         this.container.addEventListener('touchstart', startDrag, { passive: true });
         
@@ -3611,44 +3609,27 @@ class CategoryCarousel {
         document.addEventListener('mouseup', endDrag);
         document.addEventListener('touchend', endDrag);
         
-        // إيقاف التمرير عند التمرير فوق العنصر
-        this.container.addEventListener('mouseenter', () => {
-            this.isPaused = true;
-        });
-        
-        this.container.addEventListener('mouseleave', () => {
-            this.isPaused = false;
-        });
-        
-        // إيقاف التمرير عند النقر على زر
-        this.container.addEventListener('click', (e) => {
-            if (e.target.classList.contains('category-filter')) {
-                this.isUserInteracting = true;
-                
-                // استئناف التمرير بعد فترة
-                clearTimeout(this.resumeTimeout);
-                this.resumeTimeout = setTimeout(() => {
-                    this.isUserInteracting = false;
-                }, 5000);
-            }
+        this.container.addEventListener('dragstart', (e) => {
+            e.preventDefault();
         });
     }
 
-    // إعادة تعيين الكاروسيل عند تغيير التصنيفات
+    getCurrentTransform() {
+        const transform = this.container.style.transform;
+        if (!transform || transform === 'none') return 0;
+        
+        const match = transform.match(/translateX\(-(\d+(\.\d+)?)px\)/);
+        return match ? parseFloat(match[1]) : 0;
+    }
+
     reset() {
         this.container.style.transform = 'translateX(0px)';
-        this.scrollDirection = 1;
-        this.isUserInteracting = false;
-        this.isPaused = false;
-        this.hasReachedEnd = false;
-    }
-
-    // تنظيف الموارد عند الحاجة
-    destroy() {
-        if (this.animationId) {
-            cancelAnimationFrame(this.animationId);
-        }
-        clearTimeout(this.resumeTimeout);
+        this.container.style.transition = 'none';
+        this.hasCompletedCycle = false;
+        
+        setTimeout(() => {
+            this.startAutoScroll();
+        }, 500);
     }
 }
         // ===== تهيئة النظام =====
