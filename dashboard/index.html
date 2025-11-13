@@ -2017,6 +2017,117 @@
         .color-theme-option.active span {
             color: white;
         }
+        
+   /* ===== أنماط الكاروسيل للتصنيفات ===== */
+.category-filters-container {
+    position: relative;
+    margin-bottom: 30px;
+    overflow: hidden;
+    padding: 15px 0;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(var(--accent-rgb), 0.1) 50%, 
+        transparent 100%);
+    border-radius: var(--border-radius);
+}
+
+.category-carousel-wrapper {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+}
+
+.category-filters {
+    display: flex;
+    gap: 15px;
+    padding: 10px 5px;
+    transition: transform 0.5s ease;
+    will-change: transform;
+}
+
+.category-filter {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--text);
+    padding: 12px 24px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    backdrop-filter: blur(10px);
+    white-space: nowrap;
+    flex-shrink: 0;
+    user-select: none;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.category-filter::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.category-filter:hover::before {
+    left: 100%;
+}
+
+.category-filter:hover, .category-filter.active {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 20px rgba(var(--accent-rgb), 0.4);
+}
+
+.category-filter.active {
+    animation: pulseGlow 2s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+    0%, 100% {
+        box-shadow: 0 4px 15px rgba(var(--accent-rgb), 0.4);
+    }
+    50% {
+        box-shadow: 0 4px 25px rgba(var(--accent-rgb), 0.8);
+    }
+}
+
+/* تأثيرات التدرج على الجوانب */
+.category-filters-container::before,
+.category-filters-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 60px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.category-filters-container::before {
+    left: 0;
+    background: linear-gradient(90deg, var(--primary), transparent);
+}
+
+.category-filters-container::after {
+    right: 0;
+    background: linear-gradient(90deg, transparent, var(--primary));
+}
+
+.light-theme .category-filters-container::before {
+    background: linear-gradient(90deg, var(--primary-light), transparent);
+}
+
+.light-theme .category-filters-container::after {
+    background: linear-gradient(90deg, transparent, var(--primary-light));
+}  
     </style>
 </head>
 <body class="theme-blue">
@@ -2199,10 +2310,12 @@
                 <p data-translate="platform_description">أفضل الدورات التعليمية لتطوير مهاراتك ومعرفتك في مختلف المجالات</p>
             </div>
             
-            <!-- ===== فلاتر التصنيفات - محسنة ===== -->
+            <!-- ===== فلاتر التصنيفات - محسنة مع الكاروسيل ===== -->
             <div class="category-filters-container">
-                <div class="category-filters" id="category-filters">
-                    <!-- سيتم ملؤها ديناميكياً -->
+                <div class="category-carousel-wrapper">
+                    <div class="category-filters" id="category-filters">
+                        <!-- سيتم ملؤها ديناميكياً -->
+                    </div>
                 </div>
             </div>
             
@@ -3358,11 +3471,167 @@
             }
         }
 
+// ===== نظام الكاروسيل للتصنيفات - محسّن =====
+class CategoryCarousel {
+    constructor() {
+        this.container = document.getElementById('category-filters');
+        this.wrapper = document.querySelector('.category-carousel-wrapper');
+        this.scrollSpeed = 1;
+         // سرعة التمرير (بكسل لكل إطار)
+        this.scrollDirection = 1; // 1 للتمرير لليسار، -1 لليمين
+        this.autoScrollInterval = null;
+        this.isUserInteracting = false;
+        this.resumeTimeout = null;
+        this.isPaused = false;
+        this.animationId = null;
+        
+        this.init();
+    }
+
+    init() {
+        this.setupAutoScroll();
+        this.setupUserInteractions();
+    }
+
+    setupAutoScroll() {
+        const animate = () => {
+            if (!this.isUserInteracting && !this.isPaused && this.container.children.length > 0) {
+                const containerWidth = this.container.scrollWidth;
+                const wrapperWidth = this.wrapper.clientWidth;
+                
+                // إذا كان المحتوى أصغر من الحاوية، لا داعي للتمرير
+                if (containerWidth <= wrapperWidth) {
+                    return;
+                }
+                
+                // حساب الحد الأقصى للتمرير
+                const maxScroll = containerWidth - wrapperWidth;
+                
+                // الحصول على الموضع الحالي من transform
+                const currentTransform = this.getCurrentTransform();
+                let newPosition = currentTransform + (this.scrollSpeed * this.scrollDirection);
+                
+                // تغيير الاتجاه عند الوصول إلى النهاية
+                if (newPosition >= maxScroll) {
+                    newPosition = maxScroll;
+                    this.scrollDirection = -1;
+                } else if (newPosition <= 0) {
+                    newPosition = 0;
+                    this.scrollDirection = 1;
+                }
+                
+                // تطبيق التحويل الجديد
+                this.container.style.transform = `translateX(-${newPosition}px)`;
+            }
+            
+            this.animationId = requestAnimationFrame(animate.bind(this));
+        };
+        
+        animate();
+    }
+
+    getCurrentTransform() {
+        const transform = this.container.style.transform;
+        if (!transform || transform === 'none') return 0;
+        
+        const match = transform.match(/translateX\(-(\d+(\.\d+)?)px\)/);
+        return match ? parseFloat(match[1]) : 0;
+    }
+
+    setupUserInteractions() {
+        let startX, startTransform;
+        let isDragging = false;
+        
+        // بدء السحب
+        const startDrag = (e) => {
+            this.isUserInteracting = true;
+            isDragging = true;
+            
+            startX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+            startTransform = this.getCurrentTransform();
+            
+            // إضافة class للإشارة إلى السحب
+            this.container.classList.add('dragging');
+        };
+        
+        // أثناء السحب
+        const duringDrag = (e) => {
+            if (!isDragging) return;
+            
+            const currentX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+            const diff = startX - currentX;
+            const newTransform = Math.max(0, Math.min(startTransform + diff, this.container.scrollWidth - this.wrapper.clientWidth));
+            
+            this.container.style.transform = `translateX(-${newTransform}px)`;
+        };
+        
+        // إنهاء السحب
+        const endDrag = () => {
+            this.container.classList.remove('dragging');
+            isDragging = false;
+            
+            // استئناف التمرير التلقائي بعد فترة
+            this.resumeTimeout = setTimeout(() => {
+                this.isUserInteracting = false;
+            }, 3000);
+        };
+        
+        // إضافة مستمعي الأحداث
+        this.container.addEventListener('mousedown', startDrag);
+        this.container.addEventListener('touchstart', startDrag, { passive: true });
+        
+        document.addEventListener('mousemove', duringDrag);
+        document.addEventListener('touchmove', duringDrag, { passive: true });
+        
+        document.addEventListener('mouseup', endDrag);
+        document.addEventListener('touchend', endDrag);
+        
+        // إيقاف التمرير عند التمرير فوق العنصر
+        this.container.addEventListener('mouseenter', () => {
+            this.isPaused = true;
+        });
+        
+        this.container.addEventListener('mouseleave', () => {
+            this.isPaused = false;
+        });
+        
+        // إيقاف التمرير عند النقر على زر
+        this.container.addEventListener('click', (e) => {
+            if (e.target.classList.contains('category-filter')) {
+                this.isUserInteracting = true;
+                
+                // استئناف التمرير بعد فترة
+                clearTimeout(this.resumeTimeout);
+                this.resumeTimeout = setTimeout(() => {
+                    this.isUserInteracting = false;
+                }, 5000);
+            }
+        });
+    }
+
+    // إعادة تعيين الكاروسيل عند تغيير التصنيفات
+    reset() {
+        this.container.style.transform = 'translateX(0px)';
+        this.scrollDirection = 1;
+        this.isUserInteracting = false;
+        this.isPaused = false;
+    }
+
+    // تنظيف الموارد عند الحاجة
+    destroy() {
+        if (this.animationId) {
+            cancelAnimationFrame(this.animationId);
+        }
+        clearTimeout(this.resumeTimeout);
+    }
+}
+
         // ===== تهيئة النظام =====
         const progressSystem = new ProgressSystem();
         const certificateManager = new CertificateManager();
         const languageManager = new LanguageManager();
         const themeManager = new ThemeManager();
+        let categoryCarousel;
         let currentUser = {
             id: 1,
             name: "نشط الان",
@@ -3617,6 +3886,13 @@
             
             // إعداد مستمعي الأحداث للتصنيفات الجديدة
             setupCategoryFilters();
+            
+            // تهيئة الكاروسيل بعد تحميل التصنيفات
+            if (!categoryCarousel) {
+                categoryCarousel = new CategoryCarousel();
+            } else {
+                categoryCarousel.reset();
+            }
         }
 
         // عرض الدورات في الصفحة الرئيسية
@@ -4568,6 +4844,7 @@
             console.log('📝 Certificate Manager:', certificateManager);
             console.log('🌐 Language Manager:', languageManager);
             console.log('🎨 Theme Manager:', themeManager);
+            console.log('🔄 Category Carousel:', categoryCarousel);
         });
     </script>
 </body>
