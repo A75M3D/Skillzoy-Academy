@@ -1,42 +1,64 @@
-// ========== نظام الأمان المتوازن - بدون تعارض ==========
-class BalancedSecuritySystem {
+// ========== نظام الأمان المتوازن - متوافق مع Supabase ==========
+class SupabaseFriendlySecurity {
     constructor() {
-        this.csrfToken = this.generateCSRFToken();
+        this.allowedDomains = [
+            'supabase.co',
+            'supabase.com', 
+            'youtube.com',
+            'youtu.be',
+            'www.googleapis.com',
+            'fonts.googleapis.com',
+            'fonts.gstatic.com'
+        ];
         this.init();
     }
 
     init() {
-        console.log('🛡️ نظام الأمان المتوازن مفعل - بدون تعارض');
+        console.log('🛡️ نظام الأمان المتوازن - متوافق مع Supabase');
         this.setupSmartCSRF();
         this.setupNonIntrusiveProtection();
-        this.setupSmartMonitoring();
     }
 
-    // ========== 1. حماية CSRF ذكية (بدون تعطيل الخدمات) ==========
+    // ========== 1. حماية CSRF ذكية (لا تؤثر على APIs الخارجية) ==========
     setupSmartCSRF() {
         const originalFetch = window.fetch;
         window.fetch = async (...args) => {
-            // إضافة CSRF فقط للطلبات التي تحتاجه حقاً
-            if (this.requiresCSRF(args)) {
-                args[1] = args[1] || {};
-                args[1].headers = {
-                    ...args[1].headers,
-                    'X-CSRF-Token': this.csrfToken
+            const url = args[0];
+            const requestOptions = args[1] || {};
+            
+            // ✅ لا نضيف CSRF للطلبات الخارجية
+            if (this.isInternalRequest(url) && this.requiresCSRF(requestOptions)) {
+                requestOptions.headers = {
+                    ...requestOptions.headers,
+                    'X-CSRF-Token': this.generateCSRFToken()
                 };
             }
-            return originalFetch.apply(this, args);
+            
+            return originalFetch.apply(this, [url, requestOptions]);
         };
     }
 
-    requiresCSRF(args) {
-        // فقط الطلبات التي تغير البيانات وتوجه لموقعنا
-        const url = args[0];
-        const method = args[1]?.method?.toUpperCase();
+    isInternalRequest(url) {
+        // ✅ الطلبات الداخلية فقط (نفس النطاق)
+        if (typeof url !== 'string') return false;
         
-        const isOurDomain = typeof url === 'string' && url.includes(window.location.hostname);
-        const isModifyingMethod = ['POST', 'PUT', 'DELETE', 'PATCH'].includes(method);
+        const requestHostname = new URL(url, window.location.origin).hostname;
+        const currentHostname = window.location.hostname;
         
-        return isOurDomain && isModifyingMethod;
+        // ✅ إذا كان الطلب لنفس النطاق أو localhost
+        if (requestHostname === currentHostname || 
+            requestHostname === 'localhost' || 
+            requestHostname === '127.0.0.1') {
+            return true;
+        }
+        
+        // ❌ الطلبات لـ Supabase وYouTube وغيرها تعتبر خارجية
+        return false;
+    }
+
+    requiresCSRF(requestOptions) {
+        const method = requestOptions.method?.toUpperCase();
+        return ['POST', 'PUT', 'DELETE', 'PATCH'].includes(method);
     }
 
     generateCSRFToken() {
@@ -45,18 +67,12 @@ class BalancedSecuritySystem {
 
     // ========== 2. حماية غير متطفلة ==========
     setupNonIntrusiveProtection() {
-        // ✅ لا تمنع أدوات المطور
-        // ✅ لا تمنع النسخ العادي
-        // ✅ لا تمنع النوافذ المنبثقة الشرعية
-        
         this.setupSelectiveContextMenu();
         this.setupCopyProtection();
-        this.setupFormProtection();
     }
 
     setupSelectiveContextMenu() {
         document.addEventListener('contextmenu', (e) => {
-            // فقط على العناصر التي تحمل class "protected"
             if (e.target.classList.contains('protected') || 
                 e.target.closest('.protected')) {
                 e.preventDefault();
@@ -67,7 +83,6 @@ class BalancedSecuritySystem {
 
     setupCopyProtection() {
         document.addEventListener('copy', (e) => {
-            // فقط على العناصر التي تحمل class "no-copy"
             if (e.target.classList.contains('no-copy') || 
                 e.target.closest('.no-copy')) {
                 e.preventDefault();
@@ -76,56 +91,7 @@ class BalancedSecuritySystem {
         });
     }
 
-    setupFormProtection() {
-        // حماية النماذج من البوتات بدون التأثير على المستخدمين
-        document.addEventListener('submit', (e) => {
-            const form = e.target;
-            
-            // فحص الوقت - إذا تم تعبئة النموذج بسرعة كبيرة
-            const startTime = parseInt(form.dataset.startTime || Date.now());
-            const fillTime = Date.now() - startTime;
-            
-            if (fillTime < 1000) { // أقل من ثانية
-                this.logSuspiciousActivity('FAST_FORM_SUBMISSION', { fillTime });
-                // لا نمنع، فقط نسجل
-            }
-        });
-
-        // تسجيل وقت بدء التعامل مع النموذج
-        document.addEventListener('focus', (e) => {
-            if (e.target.form && !e.target.form.dataset.startTime) {
-                e.target.form.dataset.startTime = Date.now();
-            }
-        }, true);
-    }
-
-    // ========== 3. مراقبة ذكية (بدون حظر) ==========
-    setupSmartMonitoring() {
-        this.setupActivityLogging();
-        this.setupErrorMonitoring();
-    }
-
-    setupActivityLogging() {
-        // تسجيل الأنشطة المشبوهة بدون حظر المستخدم
-        window.addEventListener('error', (e) => {
-            this.logSuspiciousActivity('CLIENT_ERROR', {
-                message: e.message,
-                filename: e.filename,
-                lineno: e.lineno
-            });
-        });
-    }
-
-    setupErrorMonitoring() {
-        // مراقبة الأخطاء بدون التأثير على الأداء
-        const originalConsoleError = console.error;
-        console.error = (...args) => {
-            this.logSuspiciousActivity('CONSOLE_ERROR', { args: args.map(String) });
-            originalConsoleError.apply(console, args);
-        };
-    }
-
-    // ========== 4. دوال الأمان الأساسية (آمنة) ==========
+    // ========== 3. دوال الأمان الأساسية ==========
     safeHTML(str) {
         if (!str) return '';
         const div = document.createElement('div');
@@ -157,9 +123,8 @@ class BalancedSecuritySystem {
             .replace(/'/g, "&#039;");
     }
 
-    // ========== 5. أدوات مساعدة (بدون تعقيد) ==========
+    // ========== 4. أدوات مساعدة ==========
     showToast(message, type = 'info', duration = 3000) {
-        // منع التكرار
         const existingToast = document.getElementById('security-toast');
         if (existingToast) {
             document.body.removeChild(existingToast);
@@ -204,37 +169,27 @@ class BalancedSecuritySystem {
         }, duration);
     }
 
-    logSuspiciousActivity(type, data = {}) {
-        const activity = {
-            type,
-            data,
-            timestamp: new Date().toISOString(),
-            url: window.location.href
-        };
-        
-        // تخزين محلي فقط - بدون إرسال للسيرفر (لتجنب مشاكل CORS)
-        this.storeLocally(activity);
-        
-        console.log(`🔍 نشاط مسجل: ${type}`, activity);
-    }
-
-    storeLocally(activity) {
+    // ========== 5. فحص الاتصال بـ Supabase ==========
+    async testSupabaseConnection() {
         try {
-            const stored = JSON.parse(localStorage.getItem('security_logs') || '[]');
-            stored.push(activity);
-            // حفظ آخر 50 حدث فقط
-            localStorage.setItem('security_logs', JSON.stringify(stored.slice(-50)));
-        } catch (e) {
-            // إذا فشل التخزين، لا نفعل شيء (لتجنب الأخطاء)
-        }
-    }
-
-    // ========== 6. التنظيف الآمن ==========
-    cleanup() {
-        // تنظيف ذكي - إزالة فقط ما أنشأناه
-        const toast = document.getElementById('security-toast');
-        if (toast) {
-            document.body.removeChild(toast);
+            const response = await fetch('https://your-project.supabase.co/rest/v1/', {
+                method: 'GET',
+                headers: {
+                    'apikey': 'your-anon-key',
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            if (response.ok) {
+                console.log('✅ الاتصال مع Supabase يعمل بشكل صحيح');
+                return true;
+            } else {
+                console.warn('⚠️ مشكلة في الاتصال مع Supabase');
+                return false;
+            }
+        } catch (error) {
+            console.error('❌ فشل الاتصال مع Supabase:', error);
+            return false;
         }
     }
 }
@@ -244,7 +199,7 @@ let Security;
 
 document.addEventListener('DOMContentLoaded', function() {
     try {
-        Security = new BalancedSecuritySystem();
+        Security = new SupabaseFriendlySecurity();
         
         // إضافة CSS للأنيميشن
         const style = document.createElement('style');
@@ -273,37 +228,25 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
         document.head.appendChild(style);
         
-        console.log('✅ نظام الأمان شغال بدون تعارض');
+        console.log('✅ نظام الأمان الجديد شغال - متوافق مع Supabase');
+        
+        // اختبار الاتصال بعد التحميل
+        setTimeout(() => Security.testSupabaseConnection(), 1000);
+        
     } catch (error) {
         console.warn('⚠️ نظام الأمان لم يتم تحميله، لكن الموقع سيستمر في العمل:', error);
     }
 });
 
 // ========== جعل الدوال متاحة بشكل آمن ==========
-// نستخدم try/catch لتجنب أي أخطاء
-try {
-    window.safeHTML = (str) => {
-        return Security ? Security.safeHTML(str) : (str || '');
-    };
-    
-    window.sanitizeInput = (input) => {
-        return Security ? Security.sanitizeInput(input) : (input || '');
-    };
-    
-    window.validateEmail = (email) => {
-        return Security ? Security.validateEmail(email) : false;
-    };
-    
-    window.validatePassword = (password) => {
-        return Security ? Security.validatePassword(password) : false;
-    };
-} catch (error) {
-    console.log('🔧 الدوال الأمنية غير متاحة، لكن الموقع يعمل بشكل طبيعي');
-}
+window.safeHTML = (str) => Security ? Security.safeHTML(str) : (str || '');
+window.sanitizeInput = (input) => Security ? Security.sanitizeInput(input) : (input || '');
+window.validateEmail = (email) => Security ? Security.validateEmail(email) : false;
+window.validatePassword = (password) => Security ? Security.validatePassword(password) : false;
+window.escapeHtml = (unsafe) => Security ? Security.escapeHtml(unsafe) : (unsafe || '');
 
 // ========== التأكد من أن الموقع يعمل حتى إذا فشل الأمان ==========
 window.addEventListener('error', (e) => {
-    // منع انتشار الأخطاء الحرجة
     if (e.message && e.message.includes('Security')) {
         console.log('🛡️ خطأ في نظام الأمان تم احتواؤه');
         e.preventDefault();
