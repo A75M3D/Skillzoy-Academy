@@ -1,4 +1,4 @@
-const CACHE_NAME = 'Skillzoy-Academy';
+const CACHE_NAME = 'Skillzoy-Academy-v1.2'; // غير الرقم عند كل تحديث
 const urlsToCache = [
   '/index.html',
   '/script.js',
@@ -21,7 +21,7 @@ self.addEventListener('install', (event) => {
   );
 });
 
-// Activate Event
+// Activate Event - حدث واحد فقط
 self.addEventListener('activate', (event) => {
   console.log('Service Worker: Activated');
   event.waitUntil(
@@ -34,7 +34,18 @@ self.addEventListener('activate', (event) => {
           }
         })
       );
-    }).then(() => self.clients.claim())
+    }).then(() => {
+      // 🔥 هذا هو الجزء الجديد - أضف هنا إرسال الإشعارات
+      self.clients.matchAll().then((clients) => {
+        clients.forEach((client) => {
+          client.postMessage({
+            type: 'SW_UPDATED',
+            message: 'New version available!'
+          });
+        });
+      });
+      return self.clients.claim();
+    })
   );
 });
 
@@ -46,7 +57,6 @@ self.addEventListener('fetch', (event) => {
     '/dashboard/index.html',
     '/index.html',
     '/ad.html',
-    
   ];
   
   const isDynamicFile = dynamicFiles.some(file => 
@@ -121,33 +131,4 @@ self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
   }
-});
-
-
-// Broadcast update to clients
-self.addEventListener('activate', (event) => {
-  console.log('Service Worker: Activated');
-  event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cacheName) => {
-          if (cacheName !== CACHE_NAME) {
-            console.log('Service Worker: Clearing Old Cache');
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    }).then(() => {
-      // إرسال رسالة لجميع النوافذ/التبويبات المفتوحة بأن هناك تحديث جديد
-      self.clients.matchAll().then((clients) => {
-        clients.forEach((client) => {
-          client.postMessage({
-            type: 'SW_UPDATED',
-            message: 'New version available!'
-          });
-        });
-      });
-      return self.clients.claim();
-    })
-  );
 });
