@@ -1,4 +1,4 @@
-const CACHE_NAME = 'Skillzoy-Academy-v1.4'; // غير الرقم عند كل تحديث
+const CACHE_NAME = 'Skillzoy-Academy-v1.6'; // غير الرقم عند كل تحديث
 const urlsToCache = [
   '/index.html',
   '/script.js',
