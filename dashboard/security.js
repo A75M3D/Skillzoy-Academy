@@ -125,3 +125,116 @@ window.addEventListener('error', function(e) {
         return true; // منع انتشار الخطأ
     }
 });
+
+// ========== CSRF Protection - آمن ولا يتعارض مع أي شيء ==========
+class CSRFProtection {
+    constructor() {
+        this.token = this.generateToken();
+        this.setupSmartProtection();
+        console.log('🔒 CSRF Protection activated - No conflicts');
+    }
+
+    generateToken() {
+        const token = 'csrf_' + Math.random().toString(36).substring(2, 15) + Date.now().toString(36);
+        // استخدم sessionStorage بدلاً من localStorage لأمان أفضل
+        sessionStorage.setItem('csrf_token_skillzoy', token);
+        return token;
+    }
+
+    setupSmartProtection() {
+        const originalFetch = window.fetch;
+        
+        window.fetch = (...args) => {
+            const url = args[0];
+            const options = args[1] || {};
+            
+            // ✅ تحديد ذكي: فقط الطلبات الداخلية التي تحتاج CSRF
+            if (this.isInternalFormRequest(url, options.method)) {
+                const protectedOptions = {
+                    ...options,
+                    headers: {
+                        ...options.headers,
+                        'X-CSRF-Token': this.token
+                    }
+                };
+                console.log('🛡️ CSRF Protected:', url);
+                return originalFetch(url, protectedOptions);
+            }
+            
+            // ✅ جميع الطلبات الأخرى (APIs خارجية) تمر بشكل طبيعي
+            return originalFetch(...args);
+        };
+    }
+
+    isInternalFormRequest(url, method) {
+        // ✅ يتحقق فقط من الطلبات الداخلية التي تغير البيانات
+        if (typeof url !== 'string') return false;
+        
+        const modifyingMethods = ['POST', 'PUT', 'DELETE', 'PATCH'];
+        const isModifying = modifyingMethods.includes((method || 'GET').toUpperCase());
+        
+        if (!isModifying) return false;
+        
+        // ✅ فقط الطلبات لنفس النطاق (لا تشمل Supabase/YouTube)
+        try {
+            const urlObj = new URL(url, window.location.origin);
+            const isSameOrigin = urlObj.hostname === window.location.hostname;
+            const isLocalhost = urlObj.hostname === 'localhost' || urlObj.hostname === '127.0.0.1';
+            
+            return (isSameOrigin || isLocalhost);
+        } catch {
+            return false;
+        }
+    }
+
+    // ✅ دالة مساعدة لحماية النماذج
+    protectForm(formElement) {
+        if (formElement && formElement.tagName === 'FORM') {
+            const existingToken = formElement.querySelector('input[name="csrf_token"]');
+            if (!existingToken) {
+                const tokenInput = document.createElement('input');
+                tokenInput.type = 'hidden';
+                tokenInput.name = 'csrf_token';
+                tokenInput.value = this.token;
+                formElement.appendChild(tokenInput);
+            }
+        }
+    }
+
+    // ✅ حماية جميع النماذج تلقائياً
+    protectAllForms() {
+        setTimeout(() => {
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => this.protectForm(form));
+            console.log(`✅ CSRF: Protected ${forms.length} forms`);
+        }, 100);
+    }
+}
+
+// ========== التهيئة الآمنة لـ CSRF ==========
+document.addEventListener('DOMContentLoaded', function() {
+    try {
+        // ✅ تهيئة CSRF Protection
+        const csrf = new CSRFProtection();
+        
+        // ✅ حماية النماذج تلقائياً
+        csrf.protectAllForms();
+        
+        // ✅ جعلها متاحة عالمياً للاستخدام المتقدم
+        window.CSRFProtection = csrf;
+        
+        console.log('🎯 CSRF Protection working - No API conflicts');
+        
+    } catch (error) {
+        console.log('⚠️ CSRF initialization skipped - No impact on site:', error);
+    }
+});
+
+// ========== التأكد من عدم تعطيل أي شيء ==========
+window.addEventListener('error', function(e) {
+    if (e.message && e.message.includes('CSRF')) {
+        console.log('🔧 CSRF error contained - Site continues normally');
+        e.preventDefault();
+        return true;
+    }
+});
