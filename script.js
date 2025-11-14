@@ -16,10 +16,17 @@ function displaySafeText(elementId, text) {
 // ========== Service Worker Registration ==========
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
-        navigator.serviceWorker.register('/service-worker.js')
+        navigator.serviceWorker.register('/sw.js')
             .then(function(registration) {
                 console.log('✅ Service Worker registered with scope:', registration.scope);
                 
+                // استمع لرسائل التحديث من service worker
+                navigator.serviceWorker.addEventListener('message', (event) => {
+                    if (event.data && event.data.type === 'SW_UPDATED') {
+                        showUpdateNotification();
+                    }
+                });
+
                 // تحقق إذا فيه تحديث جديد
                 registration.addEventListener('updatefound', () => {
                     const newWorker = registration.installing;
@@ -28,11 +35,6 @@ if ('serviceWorker' in navigator) {
                     newWorker.addEventListener('statechange', () => {
                         if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
                             console.log('📦 New content available - activating new version!');
-                            
-                            // ✅ تفعيل النسخة الجديدة فورًا
-                            newWorker.postMessage({ type: 'SKIP_WAITING' });
-
-                            // عرض إشعار التحديث
                             showUpdateNotification();
                         }
                     });
@@ -53,11 +55,22 @@ if ('serviceWorker' in navigator) {
             setTimeout(() => window.location.reload(), 1500); // تحديث بعد ثانية ونصف
         }
     });
+
+    // التحقق من التحديثات عند التركيز على الصفحة
+    window.addEventListener('focus', () => {
+        navigator.serviceWorker.ready.then((registration) => {
+            registration.update();
+        });
+    });
 }
 
 // ========== إشعار التحديث ==========
 function showUpdateNotification() {
+    // منع التكرار إذا كان الإشعار موجود بالفعل
+    if (document.getElementById('update-notification')) return;
+
     const notification = document.createElement('div');
+    notification.id = 'update-notification';
     notification.style.cssText = `
         position: fixed;
         top: 20px;
@@ -70,13 +83,14 @@ function showUpdateNotification() {
         z-index: 10000;
         max-width: 300px;
         font-family: Arial, sans-serif;
-        animation: fadeIn 0.4s ease;
+        animation: slideInRight 0.3s ease-out;
     `;
     
     notification.innerHTML = safeHTML(`
-        <div style="margin-bottom: 10px;">
-            <strong>تحديث جديد متاح!</strong>
+        <div style="margin-bottom: 10px; font-weight: bold;">
+            🔄 تحديث جديد متاح!
         </div>
+        <p style="margin: 0 0 10px 0; font-size: 14px;">يوجد إصدار جديد من التطبيق</p>
         <button id="reload-btn" style="
             background: white;
             color: #1e3a8a;
@@ -85,21 +99,38 @@ function showUpdateNotification() {
             border-radius: 4px;
             cursor: pointer;
             font-weight: bold;
+            margin-right: 8px;
         ">تحديث الآن</button>
+        <button id="close-update-btn" style="
+            background: transparent;
+            color: white;
+            border: 1px solid white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        ">لاحقاً</button>
     `);
     
     document.body.appendChild(notification);
     
+    // حدث زر التحديث
     document.getElementById('reload-btn').addEventListener('click', () => {
         window.location.reload();
     });
 
-    // إزالة الإشعار تلقائيًا بعد 10 ثوانٍ
+    // حدث زر الإغلاق
+    document.getElementById('close-update-btn').addEventListener('click', () => {
+        if (document.body.contains(notification)) {
+            document.body.removeChild(notification);
+        }
+    });
+
+    // إزالة الإشعار تلقائيًا بعد 15 ثوانٍ
     setTimeout(() => {
         if (document.body.contains(notification)) {
             document.body.removeChild(notification);
         }
-    }, 10000);
+    }, 15000);
 }
 
 // ========== تنبيه أثناء التحديث ==========
@@ -259,8 +290,25 @@ window.addEventListener('error', function(e) {
     }
 });
 
+// إضافة أنميشن CSS مطلوب
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideInRight {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+`;
+document.head.appendChild(style);
+
 // جعل الدوال متاحة عالميًا
 window.safeHTML = safeHTML;
 window.displaySafeText = displaySafeText;
 window.AppState = AppState;
 window.Utils = Utils;
+window.showUpdateNotification = showUpdateNotification;
