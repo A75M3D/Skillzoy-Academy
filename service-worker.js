@@ -1,4 +1,4 @@
-const CACHE_NAME = 'Skillzoy-Academy-v1.6'; // غير الرقم عند كل تحديث
+const CACHE_NAME = 'Skillzoy-Academy';
 const urlsToCache = [
   '/index.html',
   '/script.js',
@@ -21,7 +21,7 @@ self.addEventListener('install', (event) => {
   );
 });
 
-// Activate Event - حدث واحد فقط
+// Activate Event
 self.addEventListener('activate', (event) => {
   console.log('Service Worker: Activated');
   event.waitUntil(
@@ -34,18 +34,7 @@ self.addEventListener('activate', (event) => {
           }
         })
       );
-    }).then(() => {
-      // 🔥 هذا هو الجزء الجديد - أضف هنا إرسال الإشعارات
-      self.clients.matchAll().then((clients) => {
-        clients.forEach((client) => {
-          client.postMessage({
-            type: 'SW_UPDATED',
-            message: 'New version available!'
-          });
-        });
-      });
-      return self.clients.claim();
-    })
+    }).then(() => self.clients.claim())
   );
 });
 
@@ -57,6 +46,7 @@ self.addEventListener('fetch', (event) => {
     '/dashboard/index.html',
     '/index.html',
     '/ad.html',
+    
   ];
   
   const isDynamicFile = dynamicFiles.some(file => 
@@ -132,3 +122,4 @@ self.addEventListener('message', (event) => {
     self.skipWaiting();
   }
 });
+
