@@ -122,3 +122,32 @@ self.addEventListener('message', (event) => {
     self.skipWaiting();
   }
 });
+
+
+// Broadcast update to clients
+self.addEventListener('activate', (event) => {
+  console.log('Service Worker: Activated');
+  event.waitUntil(
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames.map((cacheName) => {
+          if (cacheName !== CACHE_NAME) {
+            console.log('Service Worker: Clearing Old Cache');
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    }).then(() => {
+      // إرسال رسالة لجميع النوافذ/التبويبات المفتوحة بأن هناك تحديث جديد
+      self.clients.matchAll().then((clients) => {
+        clients.forEach((client) => {
+          client.postMessage({
+            type: 'SW_UPDATED',
+            message: 'New version available!'
+          });
+        });
+      });
+      return self.clients.claim();
+    })
+  );
+});
