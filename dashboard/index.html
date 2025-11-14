@@ -2017,142 +2017,141 @@
         .color-theme-option.active span {
             color: white;
         }
-        
-   /* ===== أنماط الكاروسيل للتصنيفات - الإصدار النهائي ===== */
-.category-filters-container {
-    position: relative;
-    margin-bottom: 30px;
-    overflow: hidden;
-    padding: 15px 0;
-    border-radius: var(--border-radius);
-    background: none; /* إزالة الخلفية المتحركة */
+   /* ===== التصميم الثاني - تمرير يدوي فقط ===== */
+.category-carousel-manual {
+  position: relative;
+  margin-bottom: 30px;
+  overflow: hidden;
+  padding: 20px 0;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: var(--border-radius);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: grab;
 }
 
-.category-carousel-wrapper {
-    overflow: hidden;
-    width: 100%;
-    position: relative;
-    z-index: 2;
+.category-carousel-manual:active {
+  cursor: grabbing;
 }
 
-.category-filters {
-    display: flex;
-    gap: 15px;
-    padding: 10px 5px;
-    transition: transform 0.5s ease;
-    will-change: transform;
-    position: relative;
-    z-index: 3;
+.category-carousel-wrapper-manual {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
 }
 
-.category-filter {
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    color: var(--text);
-    padding: 12px 24px;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: 600;
-    backdrop-filter: blur(10px);
-    white-space: nowrap;
-    flex-shrink: 0;
-    user-select: none;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    z-index: 4;
+.category-filters-manual {
+  display: flex;
+  gap: 12px;
+  padding: 10px 5px;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
 }
 
-.category-filter::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    transition: left 0.5s ease;
+.category-filter-manual {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  color: var(--text);
+  padding: 14px 28px;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
-.category-filter:hover::before {
-    left: 100%;
+.category-filter-manual::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(var(--accent-rgb), 0) 0%, rgba(var(--accent-rgb), 0.1) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-.category-filter:hover, .category-filter.active {
-    background: var(--accent);
-    color: white;
-    border-color: var(--accent);
-    transform: translateY(-2px) scale(1.05);
-    box-shadow: 0 6px 20px rgba(var(--accent-rgb), 0.4);
+.category-filter-manual:hover::before {
+  opacity: 1;
 }
 
-.category-filter.active {
-    animation: pulseGlow 2s ease-in-out infinite;
+.category-filter-manual:hover, .category-filter-manual.active {
+  color: var(--accent);
+  border-color: rgba(var(--accent-rgb), 0.3);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 20px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
-@keyframes pulseGlow {
-    0%, 100% {
-        box-shadow: 0 4px 15px rgba(var(--accent-rgb), 0.4);
-    }
-    50% {
-        box-shadow: 0 4px 25px rgba(var(--accent-rgb), 0.8);
-    }
+.category-filter-manual.active {
+  background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.1) 0%, rgba(var(--accent-rgb), 0.05) 100%);
+  border-color: var(--accent);
+  box-shadow: 
+    0 8px 20px rgba(var(--accent-rgb), 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
-/* خلفية ثابتة منفصلة */
-.category-filters-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(90deg, 
-        transparent 0%, 
-        rgba(var(--accent-rgb), 0.1) 50%, 
-        transparent 100%);
-    z-index: 1;
-    pointer-events: none;
+/* مؤشر التمرير اليدوي */
+.scroll-hint {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
 }
 
-/* تأثيرات التدرج الثابتة على الجوانب */
-.category-filters-container::after,
-.category-carousel-wrapper::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 60px;
-    z-index: 5;
-    pointer-events: none;
+.scroll-hint-left {
+  left: 10px;
 }
 
-.category-filters-container::after {
-    left: 0;
-    background: linear-gradient(90deg, var(--primary), transparent);
+.scroll-hint-right {
+  right: 10px;
 }
 
-.category-carousel-wrapper::before {
-    right: 0;
-    background: linear-gradient(90deg, transparent, var(--primary));
+.category-carousel-manual.scrollable-left .scroll-hint-left,
+.category-carousel-manual.scrollable-right .scroll-hint-right {
+  opacity: 0.7;
 }
 
-.light-theme .category-filters-container::after {
-    background: linear-gradient(90deg, var(--primary-light), transparent);
+.scroll-hint::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-top: 2px solid var(--accent);
+  border-right: 2px solid var(--accent);
+  transform: rotate(45deg);
 }
 
-.light-theme .category-carousel-wrapper::before {
-    background: linear-gradient(90deg, transparent, var(--primary-light));
+.scroll-hint-left::before {
+  transform: rotate(-135deg);
 }
 
-.light-theme .category-filters-container::before {
-    background: linear-gradient(90deg, 
-        transparent 0%, 
-        rgba(var(--accent-rgb), 0.05) 50%, 
-        transparent 100%);
+.scroll-hint-right::before {
+  transform: rotate(45deg);
 }
-    </style>
+
+/* تأثير القصور الذاتي عند التمرير */
+.category-carousel-manual.inertia .category-filters-manual {
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}    
+   
+       </style>
 </head>
 <body class="theme-blue">
     <!-- ===== نظام الإشعارات ===== -->
@@ -3495,143 +3494,158 @@
             }
         }
 
-// ===== نظام الكاروسيل للتصنيفات - الإصدار النهائي =====
-class CategoryCarousel {
-    constructor() {
-        this.container = document.getElementById('category-filters');
-        this.wrapper = document.querySelector('.category-carousel-wrapper');
-        this.isUserInteracting = false;
-        this.hasCompletedCycle = false;
-        this.autoScrollSpeed = 2;
-        
-        this.init();
+// سكربت التصميم الثاني - تمرير يدوي فقط
+class ManualScrollCarousel {
+  constructor(container) {
+    this.container = container;
+    this.wrapper = container.querySelector('.category-carousel-wrapper-manual');
+    this.filters = container.querySelector('.category-filters-manual');
+    this.hintLeft = container.querySelector('.scroll-hint-left');
+    this.hintRight = container.querySelector('.scroll-hint-right');
+    this.isDragging = false;
+    this.startX = 0;
+    this.scrollLeft = 0;
+    this.velocity = 0;
+    this.lastX = 0;
+    this.lastTime = 0;
+    this.animationId = null;
+    
+    this.init();
+  }
+  
+  init() {
+    // إضافة مستمعي الأحداث للسحب واللمس
+    this.container.addEventListener('mousedown', this.startDrag.bind(this));
+    this.container.addEventListener('touchstart', this.startDrag.bind(this));
+    
+    window.addEventListener('mousemove', this.drag.bind(this));
+    window.addEventListener('touchmove', this.drag.bind(this));
+    
+    window.addEventListener('mouseup', this.endDrag.bind(this));
+    window.addEventListener('touchend', this.endDrag.bind(this));
+    
+    // تحديث حالة مؤشرات التمرير
+    this.updateScrollHints();
+    
+    // إضافة مستمع لتحديث المؤشرات عند تغيير الحجم
+    window.addEventListener('resize', this.updateScrollHints.bind(this));
+  }
+  
+  startDrag(e) {
+    this.isDragging = true;
+    this.container.classList.add('grabbing');
+    this.container.classList.remove('inertia');
+    
+    const clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+    this.startX = clientX - this.container.getBoundingClientRect().left;
+    this.scrollLeft = this.getScrollPosition();
+    this.lastX = clientX;
+    this.lastTime = Date.now();
+    this.velocity = 0;
+    
+    // إيقاف أي حركة قصور ذاتي سابقة
+    if (this.animationId) {
+      cancelAnimationFrame(this.animationId);
+      this.animationId = null;
     }
-
-    init() {
-        this.setupUserInteractions();
-        this.startAutoScroll();
+  }
+  
+  drag(e) {
+    if (!this.isDragging) return;
+    
+    e.preventDefault();
+    const clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+    const currentTime = Date.now();
+    const deltaTime = currentTime - this.lastTime;
+    
+    if (deltaTime > 0) {
+      const deltaX = clientX - this.lastX;
+      this.velocity = deltaX / deltaTime;
+      this.lastX = clientX;
+      this.lastTime = currentTime;
     }
-
-    // التمرير التلقائي لدورة كاملة
-    startAutoScroll() {
-        if (this.hasCompletedCycle) return;
-        
-        const containerWidth = this.container.scrollWidth;
-        const wrapperWidth = this.wrapper.clientWidth;
-        
-        if (containerWidth <= wrapperWidth) {
-            this.hasCompletedCycle = true;
-            return;
-        }
-        
-        const maxScroll = containerWidth - wrapperWidth;
-        let currentPosition = 0;
-        let isReturning = false;
-
-        const autoScroll = () => {
-            if (this.isUserInteracting || this.hasCompletedCycle) return;
-            
-            if (!isReturning) {
-                currentPosition += this.autoScrollSpeed;
-                if (currentPosition >= maxScroll) {
-                    currentPosition = maxScroll;
-                    isReturning = true;
-                    setTimeout(() => requestAnimationFrame(autoScroll), 1000);
-                    return;
-                }
-            } else {
-                currentPosition -= this.autoScrollSpeed;
-                if (currentPosition <= 0) {
-                    currentPosition = 0;
-                    this.hasCompletedCycle = true;
-                    this.container.style.transform = `translateX(-${currentPosition}px)`;
-                    return;
-                }
-            }
-            
-            this.container.style.transform = `translateX(-${currentPosition}px)`;
-            requestAnimationFrame(autoScroll);
-        };
-
-        setTimeout(() => {
-            if (!this.isUserInteracting) {
-                requestAnimationFrame(autoScroll);
-            }
-        }, 1000);
+    
+    const x = clientX - this.container.getBoundingClientRect().left;
+    const walk = (x - this.startX) * 1.8; // زيادة الحساسية
+    this.setScrollPosition(this.scrollLeft - walk);
+    
+    this.updateScrollHints();
+  }
+  
+  endDrag() {
+    this.isDragging = false;
+    this.container.classList.remove('grabbing');
+    
+    // تطبيق القصور الذاتي
+    if (Math.abs(this.velocity) > 0.1) {
+      this.applyInertia();
     }
-
-    setupUserInteractions() {
-        let startX, startTransform;
-        let isDragging = false;
-        
-        const startDrag = (e) => {
-            this.isUserInteracting = true;
-            this.hasCompletedCycle = true;
-            isDragging = true;
-            
-            startX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
-            startTransform = this.getCurrentTransform();
-            
-            this.container.classList.add('dragging');
-            this.container.style.transition = 'none';
-        };
-        
-        const duringDrag = (e) => {
-            if (!isDragging) return;
-            
-            const currentX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
-            const diff = startX - currentX;
-            const containerWidth = this.container.scrollWidth;
-            const wrapperWidth = this.wrapper.clientWidth;
-            const maxScroll = containerWidth - wrapperWidth;
-            
-            const newTransform = Math.max(0, Math.min(startTransform + diff, maxScroll));
-            
-            this.container.style.transform = `translateX(-${newTransform}px)`;
-        };
-        
-        const endDrag = () => {
-            this.container.classList.remove('dragging');
-            this.container.style.transition = 'transform 0.3s ease';
-            isDragging = false;
-            
-            setTimeout(() => {
-                this.isUserInteracting = false;
-            }, 100);
-        };
-        
-        this.container.addEventListener('mousedown', startDrag);
-        this.container.addEventListener('touchstart', startDrag, { passive: true });
-        
-        document.addEventListener('mousemove', duringDrag);
-        document.addEventListener('touchmove', duringDrag, { passive: true });
-        
-        document.addEventListener('mouseup', endDrag);
-        document.addEventListener('touchend', endDrag);
-        
-        this.container.addEventListener('dragstart', (e) => {
-            e.preventDefault();
-        });
-    }
-
-    getCurrentTransform() {
-        const transform = this.container.style.transform;
-        if (!transform || transform === 'none') return 0;
-        
-        const match = transform.match(/translateX\(-(\d+(\.\d+)?)px\)/);
-        return match ? parseFloat(match[1]) : 0;
-    }
-
-    reset() {
-        this.container.style.transform = 'translateX(0px)';
-        this.container.style.transition = 'none';
-        this.hasCompletedCycle = false;
-        
-        setTimeout(() => {
-            this.startAutoScroll();
-        }, 500);
-    }
+    
+    this.updateScrollHints();
+  }
+  
+  applyInertia() {
+    this.container.classList.add('inertia');
+    
+    const friction = 0.92;
+    const minVelocity = 0.1;
+    
+    const animate = () => {
+      if (Math.abs(this.velocity) < minVelocity) {
+        this.velocity = 0;
+        this.container.classList.remove('inertia');
+        this.updateScrollHints();
+        return;
+      }
+      
+      const currentScroll = this.getScrollPosition();
+      const maxScroll = this.filters.scrollWidth - this.wrapper.offsetWidth;
+      
+      let newScroll = currentScroll + (this.velocity * 15);
+      
+      // الحد من التمرير داخل النطاق المسموح
+      if (newScroll < 0) {
+        newScroll = 0;
+        this.velocity = 0;
+      } else if (newScroll > maxScroll) {
+        newScroll = maxScroll;
+        this.velocity = 0;
+      }
+      
+      this.setScrollPosition(newScroll);
+      this.velocity *= friction;
+      
+      this.animationId = requestAnimationFrame(animate);
+    };
+    
+    this.animationId = requestAnimationFrame(animate);
+  }
+  
+  updateScrollHints() {
+    const currentScroll = this.getScrollPosition();
+    const maxScroll = this.filters.scrollWidth - this.wrapper.offsetWidth;
+    
+    // إظهار/إخفاء مؤشرات التمرير
+    this.container.classList.toggle('scrollable-left', currentScroll > 0);
+    this.container.classList.toggle('scrollable-right', currentScroll < maxScroll);
+  }
+  
+  getScrollPosition() {
+    return parseInt(this.filters.style.transform?.replace('translateX(', '')?.replace('px)', '') || 0);
+  }
+  
+  setScrollPosition(position) {
+    this.filters.style.transform = `translateX(${position}px)`;
+  }
 }
+
+// تهيئة الكاروسيل اليدوي
+document.addEventListener('DOMContentLoaded', () => {
+  const manualCarousels = document.querySelectorAll('.category-carousel-manual');
+  manualCarousels.forEach(container => {
+    new ManualScrollCarousel(container);
+  });
+});
         // ===== تهيئة النظام =====
         const progressSystem = new ProgressSystem();
         const certificateManager = new CertificateManager();
