@@ -12,7 +12,158 @@ function displaySafeText(elementId, text) {
         element.textContent = text;
     }
 }
+// ===== نظام الأمان الشامل =====
+class SecuritySystem {
+    constructor() {
+        this.devToolsOpen = false;
+        this.lastTime = Date.now();
+        this.csrfToken = this.generateCSRFToken();
+        this.encryptionKey = 'skillzoy-secure-key-2024';
+        
+        this.init();
+    }
 
+    init() {
+        this.detectDevTools();
+        this.preventContextMenu();
+        this.preventCopy();
+        this.preventNewWindows();
+        this.setupCSRFProtection();
+        this.hideSensitiveData();
+        this.setupCSP();
+        this.integrityCheck();
+    }
+
+    // توليد رمز CSRF
+    generateCSRFToken() {
+        const token = Math.random().toString(36).substring(2) + Date.now().toString(36);
+        localStorage.setItem('csrf_token', token);
+        return token;
+    }
+
+    // اكتشاف أدوات المطور
+    detectDevTools() {
+        // الطريقة 1: قياس الوقت
+        setInterval(() => {
+            const currentTime = Date.now();
+            if (currentTime - this.lastTime > 200) {
+                this.devToolsOpen = true;
+                this.handleDevToolsDetection();
+            }
+            this.lastTime = currentTime;
+        }, 1000);
+
+        // الطريقة 2: مراقبة حجم النافذة
+        const widthThreshold = window.outerWidth - window.innerWidth > 160;
+        const heightThreshold = window.outerHeight - window.innerHeight > 160;
+        
+        if (widthThreshold || heightThreshold) {
+            this.devToolsOpen = true;
+            this.handleDevToolsDetection();
+        }
+
+        // الطريقة 3: اكتشاف عناصر أدوات المطور
+        const checkForDevTools = () => {
+            const elements = document.querySelectorAll('*');
+            for (let el of elements) {
+                if (el.tagName.includes('-') || 
+                    el.className.includes('devtools') || 
+                    el.id.includes('devtools')) {
+                    this.devToolsOpen = true;
+                    this.handleDevToolsDetection();
+                    break;
+                }
+            }
+        };
+        setInterval(checkForDevTools, 3000);
+    }
+
+    handleDevToolsDetection() {
+        // إجراءات عند اكتشاف أدوات المطور
+        document.body.innerHTML = '<div style="text-align:center; padding:50px; font-family: Arial; color:red;"><h1>🚫 Access Denied</h1><p>Developer tools are not allowed on this page.</p></div>';
+        window.location.href = 'about:blank';
+        throw new Error('Developer tools detection');
+    }
+
+    // منع القائمة المنبثقة (النقر بزر الماوس الأيمن)
+    preventContextMenu() {
+        document.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            return false;
+        });
+    }
+
+    // منع النسخ
+    preventCopy() {
+        document.addEventListener('copy', (e) => {
+            e.preventDefault();
+            return false;
+        });
+
+        document.addEventListener('cut', (e) => {
+            e.preventDefault();
+            return false;
+        });
+    }
+
+    // منع فتح النوافذ المنبثقة
+    preventNewWindows() {
+        window.open = function() { return null; };
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && (e.key === 'u' || e.key === 'U' || e.key === 's' || e.key === 'S')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+    }
+
+    // إعداد حماية CSRF
+    setupCSRFProtection() {
+        // إضافة رمز CSRF لجميع طلبات AJAX
+        const originalFetch = window.fetch;
+        window.fetch = function(...args) {
+            if (args[1]) {
+                args[1].headers = {
+                    ...args[1].headers,
+                    'X-CSRF-Token': localStorage.getItem('csrf_token')
+                };
+            }
+            return originalFetch.apply(this, args);
+        };
+    }
+
+    // إخفاء البيانات الحساسة
+    hideSensitiveData() {
+        // إزالة البيانات الحساسة من الكود المصدري
+        delete window.SUPABASE_URL;
+        delete window.SUPABASE_ANON_KEY;
+        delete window.YOUTUBE_API_KEY;
+        
+        // تشفير البيانات في localStorage
+        this.encryptLocalStorage();
+    }
+
+    // تشفير البيانات في localStorage
+    encryptLocalStorage() {
+        const originalSetItem = localStorage.setItem;
+        localStorage.setItem = function(key, value) {
+            if (key.includes('user') || key.includes('token') || key.includes('certificate')) {
+                value = btoa(unescape(encodeURIComponent(value)));
+            }
+            originalSetItem.call(this, key, value);
+        };
+
+        const originalGetItem = localStorage.getItem;
+        localStorage.getItem = function(key) {
+            let value = originalGetItem.call(this, key);
+            if (value && (key.includes('user') || key.includes('token') || key.includes('certificate'))) {
+                try {
+                    value = decodeURIComponent(escape(atob(value)));
+                } catch (e) {
+                    // إذا فشل فك التشفير، نعيد القيمة كما هي
+                }
+            }
+            retur
 // ========== Service Worker Registration ==========
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
