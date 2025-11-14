@@ -3883,37 +3883,43 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // ===== وظائف العرض =====
-        // إنشاء أزرار التصنيفات ديناميكياً
-        async function createCategoryFilters() {
-            const categoriesContainer = document.getElementById('category-filters');
-            const courses = await fetchCoursesFromSupabase();
-            
-            // استخراج التصنيفات الفريدة من بيانات الدورات
-            const uniqueCategories = [...new Set(courses.map(course => course.category))];
-            
-            // إضافة زر "جميع الدورات" أولاً
-            categoriesContainer.innerHTML = `
-                <button class="category-filter active" data-category="all">جميع الدورات</button>
+        // ===== وظائف العرض =====
+// إنشاء أزرار التصنيفات ديناميكياً - معدل لمنع التكرار
+async function createCategoryFilters() {
+    const categoriesContainer = document.getElementById('category-filters');
+    const courses = await fetchCoursesFromSupabase();
+    
+    // استخراج التصنيفات الفريدة من بيانات الدورات باستخدام Set
+    const uniqueCategories = [...new Set(courses.map(course => course.category))];
+    
+    // بناء HTML جديد كامل بدلاً من الإضافة التدريجية
+    let categoriesHTML = `
+        <button class="category-filter active" data-category="all">جميع الدورات</button>
+    `;
+    
+    // إضافة أزرار التصنيفات الأخرى بشكل فريد
+    uniqueCategories.forEach(category => {
+        if (category) { // التأكد من أن التصنيف ليس فارغاً
+            const categoryName = getCategoryName(category);
+            categoriesHTML += `
+                <button class="category-filter" data-category="${category}">${categoryName}</button>
             `;
-            
-            // إضافة أزرار التصنيفات الأخرى
-            uniqueCategories.forEach(category => {
-                const categoryName = getCategoryName(category);
-                categoriesContainer.innerHTML += `
-                    <button class="category-filter" data-category="${category}">${categoryName}</button>
-                `;
-            });
-            
-            // إعداد مستمعي الأحداث للتصنيفات الجديدة
-            setupCategoryFilters();
-            
-            // تهيئة الكاروسيل بعد تحميل التصنيفات
-            if (!categoryCarousel) {
-                categoryCarousel = new CategoryCarousel();
-            } else {
-                categoryCarousel.reset();
-            }
         }
+    });
+    
+    // تعيين الـ HTML الجديد كاملاً (هذا يحل مشكلة التكرار)
+    categoriesContainer.innerHTML = categoriesHTML;
+    
+    // إعداد مستمعي الأحداث للتصنيفات الجديدة
+    setupCategoryFilters();
+    
+    // تهيئة الكاروسيل بعد تحميل التصنيفات
+    if (!categoryCarousel) {
+        categoryCarousel = new CategoryCarousel();
+    } else {
+        categoryCarousel.reset();
+    }
+}
 
         // عرض الدورات في الصفحة الرئيسية
         async function renderCourses(category = 'all') {
