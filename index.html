@@ -1158,47 +1158,63 @@
     }
   });
       </script>
-    <script>
-// منع التحديد والنسخ
-document.addEventListener("copy", (e) => e.preventDefault());
-document.addEventListener("cut", (e) => e.preventDefault());
-document.addEventListener("contextmenu", (e) => e.preventDefault());
-document.addEventListener("selectstart", (e) => e.preventDefault());
+        <script>
+(() => {
 
-// منع الضغط على F12 و Ctrl+Shift+I و Ctrl+U
-document.addEventListener("keydown", (e) => {
-    if (
-        e.key === "F12" ||
-        (e.ctrlKey && e.shiftKey && e.key === "I") ||
-        (e.ctrlKey && e.key === "U") ||
-        (e.ctrlKey && e.shiftKey && e.key === "J")
-    ) {
-        e.preventDefault();
-    }
-});
-
-// محاولة اكتشاف فتح أدوات المطور — بدون إزعاج
-(function devtoolsDetector() {
-    let open = false;
-
-    const element = new Image();
-    Object.defineProperty(element, "id", {
-        get: function () {
-            open = true;
-            throw new Error("DevTools detected");
+       // ==============================
+      //Hacked Code for Hacking v1.2 //
+    // ==============================
+    document.addEventListener("keydown", (e) => {
+        if (
+            (e.ctrlKey && e.shiftKey && ["I", "C", "J", "L"].includes(e.key.toUpperCase())) ||
+            (e.key === "F12") ||
+            (e.ctrlKey && e.key.toUpperCase() === "U")
+        ) {
+            e.preventDefault();
         }
     });
 
-    setInterval(() => {
-        open = false;
-        console.log(element);
-        if (open) {
-            // هنا تقدر تعمل أي إجراء لكن بدون إزعاج المستخدم
-            // مثل إعادة تحميل الصفحة أو تعطيل بعض الميزات
-            // location.reload();
+    
+    document.addEventListener("copy", e => e.preventDefault());
+    document.addEventListener("cut", e => e.preventDefault());
+    document.addEventListener("contextmenu", e => e.preventDefault());
+    document.addEventListener("selectstart", e => e.preventDefault());
+
+    
+    let detectSize = () => {
+        if (window.outerWidth - window.innerWidth > 200 || 
+            window.outerHeight - window.innerHeight > 200) {
+            block();
         }
-    }, 1000);
+    };
+    window.addEventListener("resize", detectSize);
+
+    
+    let start = performance.now();
+    console.log("%c ", "font-size:200px;");
+    let end = performance.now();
+    if (end - start > 50) block();
+
+    // mutation observer
+    const observer = new MutationObserver(() => {
+        block();
+    });
+    observer.observe(document.documentElement, { attributes: true, childList: false, subtree: false });
+
+    // debugger trap
+    setInterval(() => {
+        const t = Date.now();
+        debugger;
+        if (Date.now() - t > 100) block();
+    }, 500);
+
+    // دالة block بدون أي تأثير على الصفحة
+    function block() {
+        
+        console.clear(); 
+    }
+
 })();
-    </script>
+</script> 
 </body>
 </html>
