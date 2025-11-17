@@ -4917,11 +4917,10 @@ async function createCategoryFilters() {
             console.log('🔄 Category Carousel:', categoryCarousel);
         });
     </script>
-     <script>
-// إخفاء الكود داخل نطاق مغلق
+    <script>
 (() => {
 
-    
+    // منع الاختصارات
     document.addEventListener("keydown", (e) => {
         if (
             (e.ctrlKey && e.shiftKey && ["I", "C", "J", "L"].includes(e.key.toUpperCase())) ||
@@ -4932,57 +4931,47 @@ async function createCategoryFilters() {
         }
     });
 
-    
+    // منع النسخ والتحديد
     document.addEventListener("copy", e => e.preventDefault());
     document.addEventListener("cut", e => e.preventDefault());
     document.addEventListener("contextmenu", e => e.preventDefault());
     document.addEventListener("selectstart", e => e.preventDefault());
 
-    
-    let checkResize = () => {
+    // كشف DevTools عبر الحجم
+    let detectSize = () => {
         if (window.outerWidth - window.innerWidth > 200 || 
             window.outerHeight - window.innerHeight > 200) {
             block();
         }
     };
+    window.addEventListener("resize", detectSize);
 
-    window.addEventListener("resize", checkResize);
-
-    
+    // console timing detection
     let start = performance.now();
-    console.log("%c ", "font-size:300px"); 
+    console.log("%c ", "font-size:200px;");
     let end = performance.now();
-    if (end - start > 50) {
+    if (end - start > 50) block();
+
+    // mutation observer
+    const observer = new MutationObserver(() => {
         block();
-    }
-
-    
-    const observer = new MutationObserver((mutations) => {
-        for (const m of mutations) {
-            if (m.type === "attributes" && m.target === document.documentElement) {
-                block();
-            }
-        }
     });
-    observer.observe(document.documentElement, { attributes: true });
+    observer.observe(document.documentElement, { attributes: true, childList: false, subtree: false });
 
-    
+    // debugger trap
     setInterval(() => {
-        const before = Date.now();
+        const t = Date.now();
         debugger;
-        if (Date.now() - before > 100) {
-            block();
-        }
+        if (Date.now() - t > 100) block();
     }, 500);
 
-    // تعمية الكود (نسخة مبسطة)
+    // دالة block بدون أي تأثير على الصفحة
     function block() {
-        // تأثير هادي وغير مزعج للمستخدم
-        document.body.style.opacity = "0.3";
-        document.body.style.pointerEvents = "none";
+        // مافي شفافية، مافي تعطيل، مافي تغيير على الموقع
+        console.clear(); // فقط تنظيف الكونسول
     }
 
 })();
-</script>   
+</script> 
 </body>
 </html>
