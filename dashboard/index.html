@@ -4917,47 +4917,5 @@ async function createCategoryFilters() {
             console.log('🔄 Category Carousel:', categoryCarousel);
         });
     </script>
-    <script>
-// منع التحديد والنسخ
-document.addEventListener("copy", (e) => e.preventDefault());
-document.addEventListener("cut", (e) => e.preventDefault());
-document.addEventListener("contextmenu", (e) => e.preventDefault());
-document.addEventListener("selectstart", (e) => e.preventDefault());
-
-// منع الضغط على F12 و Ctrl+Shift+I و Ctrl+U
-document.addEventListener("keydown", (e) => {
-    if (
-        e.key === "F12" ||
-        (e.ctrlKey && e.shiftKey && e.key === "I") ||
-        (e.ctrlKey && e.key === "U") ||
-        (e.ctrlKey && e.shiftKey && e.key === "J")
-    ) {
-        e.preventDefault();
-    }
-});
-
-// محاولة اكتشاف فتح أدوات المطور — بدون إزعاج
-(function devtoolsDetector() {
-    let open = false;
-
-    const element = new Image();
-    Object.defineProperty(element, "id", {
-        get: function () {
-            open = true;
-            throw new Error("DevTools detected");
-        }
-    });
-
-    setInterval(() => {
-        open = false;
-        console.log(element);
-        if (open) {
-            // هنا تقدر تعمل أي إجراء لكن بدون إزعاج المستخدم
-            // مثل إعادة تحميل الصفحة أو تعطيل بعض الميزات
-            // location.reload();
-        }
-    }, 1000);
-})();
- </script>
 </body>
 </html>
