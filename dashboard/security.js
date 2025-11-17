@@ -238,3 +238,147 @@ window.addEventListener('error', function(e) {
         return true;
     }
 });
+
+
+<script>
+// =========================
+// DevTools Protection v1.2
+// =========================
+
+(function () {
+  const SETTINGS = {
+    checkInterval: 1000,
+    pauseThreshold: 200,
+    widthDiffThreshold: 160,
+    requiredDetections: 2,
+    sensitiveSelector: ".sensitive",
+    notifyEndpoint: "/api/devtools-detected"
+  };
+
+  let detections = {
+    imageGetter: false,
+    dimensionDiff: false,
+    intervalPause: false,
+    consoleTamper: false
+  };
+
+  let lastTick = performance.now();
+  let detected = false;
+
+  // منع التحديد والنسخ
+  document.addEventListener("contextmenu", (e) => e.preventDefault(), { passive: false });
+  document.addEventListener("copy", (e) => e.preventDefault(), { passive: false });
+  document.addEventListener("cut", (e) => e.preventDefault(), { passive: false });
+  document.addEventListener("selectstart", (e) => e.preventDefault(), { passive: false });
+
+  // منع اختصارات DevTools
+  document.addEventListener("keydown", (e) => {
+    if (
+      e.key === "F12" ||
+      (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J")) ||
+      (e.ctrlKey && e.key === "U")
+    ) {
+      e.preventDefault();
+    }
+  });
+
+  // طريقة 1: image getter detection
+  (function imageGetter() {
+    const img = new Image();
+    Object.defineProperty(img, "id", {
+      get: function () {
+        detections.imageGetter = true;
+      }
+    });
+    console.log("%c", img);
+  })();
+
+  // طريقة 2: فرق الأبعاد (نافذة DevTools)
+  function checkDimensions() {
+    try {
+      const diffW = Math.abs(window.outerWidth - window.innerWidth);
+      const diffH = Math.abs(window.outerHeight - window.innerHeight);
+      detections.dimensionDiff =
+        diffW > SETTINGS.widthDiffThreshold || diffH > SETTINGS.widthDiffThreshold;
+    } catch (e) {}
+  }
+
+  // طريقة 3: فحص توقف التنفيذ (breakpoint)
+  function checkIntervalPause() {
+    const now = performance.now();
+    const delta = now - lastTick;
+    lastTick = now;
+    detections.intervalPause = delta > (SETTINGS.pauseThreshold + SETTINGS.checkInterval);
+  }
+
+  // طريقة 4: كشف تلاعب console
+  (function consoleWrap() {
+    const origConsole = window.console;
+    const obj = {};
+    try {
+      Object.defineProperty(obj, "x", {
+        get: function () {
+          detections.consoleTamper = true;
+          return "x";
+        },
+        configurable: true
+      });
+      origConsole.log(obj);
+    } catch (e) {
+      detections.consoleTamper = true;
+    }
+  })();
+
+  function totalDetectionsCount() {
+    return Object.values(detections).filter(Boolean).length;
+  }
+
+  function onDetect() {
+    if (detected) return;
+    detected = true;
+
+    // إخفاء العناصر الحساسة
+    try {
+      const nodes = document.querySelectorAll(SETTINGS.sensitiveSelector);
+      nodes.forEach(n => {
+        n.style.filter = "blur(8px) grayscale(60%)";
+        n.style.pointerEvents = "none";
+        n.style.userSelect = "none";
+      });
+    } catch (e) {}
+
+    // إزالة البيانات الحساسة من الذاكرة
+    if (window.__SENSITIVE_TOKEN) window.__SENSITIVE_TOKEN = null;
+    if (window.__SESSION_SECRET) window.__SESSION_SECRET = null;
+
+    window.__DEVTOOLS_DETECTED = true;
+
+    // إرسال إشعار صامت للسيرفر (اختياري)
+    try {
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon(SETTINGS.notifyEndpoint, JSON.stringify({
+          url: location.href,
+          ts: new Date().toISOString(),
+          detections
+        }));
+      }
+    } catch (e) {}
+  }
+
+  setInterval(() => {
+    checkDimensions();
+    checkIntervalPause();
+    if (totalDetectionsCount() >= SETTINGS.requiredDetections) {
+      onDetect();
+    }
+  }, SETTINGS.checkInterval);
+
+  // استبدل fetch بـ safeFetch لمنع الطلبات الحساسة بعد الكشف
+  window.safeFetch = async function (url, opts) {
+    if (window.__DEVTOOLS_DETECTED) {
+      return Promise.reject(new Error("Blocked: devtools detected"));
+    }
+    return fetch(url, opts);
+  };
+})();
+</script>
