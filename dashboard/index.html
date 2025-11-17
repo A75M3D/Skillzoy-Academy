@@ -4917,147 +4917,72 @@ async function createCategoryFilters() {
             console.log('🔄 Category Carousel:', categoryCarousel);
         });
     </script>
-    <script>
-// =========================
-// Syber Atack Hacker code v1.2
-// =========================
+     <script>
+// إخفاء الكود داخل نطاق مغلق
+(() => {
 
-(function () {
-  const SETTINGS = {
-    checkInterval: 1000,
-    pauseThreshold: 200,
-    widthDiffThreshold: 160,
-    requiredDetections: 2,
-    sensitiveSelector: ".sensitive",
-    notifyEndpoint: "/api/devtools-detected"
-  };
-
-  let detections = {
-    imageGetter: false,
-    dimensionDiff: false,
-    intervalPause: false,
-    consoleTamper: false
-  };
-
-  let lastTick = performance.now();
-  let detected = false;
-
-  
-  document.addEventListener("contextmenu", (e) => e.preventDefault(), { passive: false });
-  document.addEventListener("copy", (e) => e.preventDefault(), { passive: false });
-  document.addEventListener("cut", (e) => e.preventDefault(), { passive: false });
-  document.addEventListener("selectstart", (e) => e.preventDefault(), { passive: false });
-
-  
-  document.addEventListener("keydown", (e) => {
-    if (
-      e.key === "F12" ||
-      (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J")) ||
-      (e.ctrlKey && e.key === "U")
-    ) {
-      e.preventDefault();
-    }
-  });
-
-  // طريقة 1: image getter detection
-  (function imageGetter() {
-    const img = new Image();
-    Object.defineProperty(img, "id", {
-      get: function () {
-        detections.imageGetter = true;
-      }
+    
+    document.addEventListener("keydown", (e) => {
+        if (
+            (e.ctrlKey && e.shiftKey && ["I", "C", "J", "L"].includes(e.key.toUpperCase())) ||
+            (e.key === "F12") ||
+            (e.ctrlKey && e.key.toUpperCase() === "U")
+        ) {
+            e.preventDefault();
+        }
     });
-    console.log("%c", img);
-  })();
 
-  // طريقة 2: فرق الأبعاد (نافذة DevTools)
-  function checkDimensions() {
-    try {
-      const diffW = Math.abs(window.outerWidth - window.innerWidth);
-      const diffH = Math.abs(window.outerHeight - window.innerHeight);
-      detections.dimensionDiff =
-        diffW > SETTINGS.widthDiffThreshold || diffH > SETTINGS.widthDiffThreshold;
-    } catch (e) {}
-  }
+    
+    document.addEventListener("copy", e => e.preventDefault());
+    document.addEventListener("cut", e => e.preventDefault());
+    document.addEventListener("contextmenu", e => e.preventDefault());
+    document.addEventListener("selectstart", e => e.preventDefault());
 
-  // طريقة 3: فحص توقف التنفيذ (breakpoint)
-  function checkIntervalPause() {
-    const now = performance.now();
-    const delta = now - lastTick;
-    lastTick = now;
-    detections.intervalPause = delta > (SETTINGS.pauseThreshold + SETTINGS.checkInterval);
-  }
+    
+    let checkResize = () => {
+        if (window.outerWidth - window.innerWidth > 200 || 
+            window.outerHeight - window.innerHeight > 200) {
+            block();
+        }
+    };
 
-  // طريقة 4: كشف تلاعب console
-  (function consoleWrap() {
-    const origConsole = window.console;
-    const obj = {};
-    try {
-      Object.defineProperty(obj, "x", {
-        get: function () {
-          detections.consoleTamper = true;
-          return "x";
-        },
-        configurable: true
-      });
-      origConsole.log(obj);
-    } catch (e) {
-      detections.consoleTamper = true;
+    window.addEventListener("resize", checkResize);
+
+    
+    let start = performance.now();
+    console.log("%c ", "font-size:300px"); 
+    let end = performance.now();
+    if (end - start > 50) {
+        block();
     }
-  })();
 
-  function totalDetectionsCount() {
-    return Object.values(detections).filter(Boolean).length;
-  }
+    
+    const observer = new MutationObserver((mutations) => {
+        for (const m of mutations) {
+            if (m.type === "attributes" && m.target === document.documentElement) {
+                block();
+            }
+        }
+    });
+    observer.observe(document.documentElement, { attributes: true });
 
-  function onDetect() {
-    if (detected) return;
-    detected = true;
+    
+    setInterval(() => {
+        const before = Date.now();
+        debugger;
+        if (Date.now() - before > 100) {
+            block();
+        }
+    }, 500);
 
-    // إخفاء العناصر الحساسة
-    try {
-      const nodes = document.querySelectorAll(SETTINGS.sensitiveSelector);
-      nodes.forEach(n => {
-        n.style.filter = "blur(8px) grayscale(60%)";
-        n.style.pointerEvents = "none";
-        n.style.userSelect = "none";
-      });
-    } catch (e) {}
-
-    // إزالة البيانات الحساسة من الذاكرة
-    if (window.__SENSITIVE_TOKEN) window.__SENSITIVE_TOKEN = null;
-    if (window.__SESSION_SECRET) window.__SESSION_SECRET = null;
-
-    window.__DEVTOOLS_DETECTED = true;
-
-    // إرسال إشعار صامت للسيرفر (اختياري)
-    try {
-      if (navigator.sendBeacon) {
-        navigator.sendBeacon(SETTINGS.notifyEndpoint, JSON.stringify({
-          url: location.href,
-          ts: new Date().toISOString(),
-          detections
-        }));
-      }
-    } catch (e) {}
-  }
-
-  setInterval(() => {
-    checkDimensions();
-    checkIntervalPause();
-    if (totalDetectionsCount() >= SETTINGS.requiredDetections) {
-      onDetect();
+    // تعمية الكود (نسخة مبسطة)
+    function block() {
+        // تأثير هادي وغير مزعج للمستخدم
+        document.body.style.opacity = "0.3";
+        document.body.style.pointerEvents = "none";
     }
-  }, SETTINGS.checkInterval);
 
-  // استبدل fetch بـ safeFetch لمنع الطلبات الحساسة بعد الكشف
-  window.safeFetch = async function (url, opts) {
-    if (window.__DEVTOOLS_DETECTED) {
-      return Promise.reject(new Error("Blocked: devtools detected"));
-    }
-    return fetch(url, opts);
-  };
 })();
-    </script>
+</script>   
 </body>
 </html>
