@@ -4920,7 +4920,7 @@ async function createCategoryFilters() {
     <script>
 (() => {
 
-    // منع الاختصارات
+    
     document.addEventListener("keydown", (e) => {
         if (
             (e.ctrlKey && e.shiftKey && ["I", "C", "J", "L"].includes(e.key.toUpperCase())) ||
@@ -4931,13 +4931,13 @@ async function createCategoryFilters() {
         }
     });
 
-    // منع النسخ والتحديد
+    
     document.addEventListener("copy", e => e.preventDefault());
     document.addEventListener("cut", e => e.preventDefault());
     document.addEventListener("contextmenu", e => e.preventDefault());
     document.addEventListener("selectstart", e => e.preventDefault());
 
-    // كشف DevTools عبر الحجم
+    
     let detectSize = () => {
         if (window.outerWidth - window.innerWidth > 200 || 
             window.outerHeight - window.innerHeight > 200) {
@@ -4946,7 +4946,7 @@ async function createCategoryFilters() {
     };
     window.addEventListener("resize", detectSize);
 
-    // console timing detection
+    
     let start = performance.now();
     console.log("%c ", "font-size:200px;");
     let end = performance.now();
@@ -4967,8 +4967,8 @@ async function createCategoryFilters() {
 
     // دالة block بدون أي تأثير على الصفحة
     function block() {
-        // مافي شفافية، مافي تعطيل، مافي تغيير على الموقع
-        console.clear(); // فقط تنظيف الكونسول
+        
+        console.clear(); 
     }
 
 })();
