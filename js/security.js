@@ -164,9 +164,14 @@ class SecurityMiddleware {
         // تخزين آمن
         this.secureStorage.setItem('csrf_token', this.state.csrf
 
-                                   // ✅ security.js - مؤكد العمل
-console.log('🛡️ نظام الأمان يعمل بنجاح!');
 
+
+
+
+
+                                console.log('🛡️ نظام الأمان يعمل بنجاح!');
+
+// نظام حماية فعال
 class SecurityManager {
     constructor() {
         this.init();
@@ -175,79 +180,107 @@ class SecurityManager {
     init() {
         console.log('🚀 بدء النظام الأمني...');
         this.checkAuthentication();
-        this.protectPage();
+        this.protectDashboard();
+        this.setupMonitoring();
     }
 
     checkAuthentication() {
-        // تحقق بسيط من التسجيل
         const user = localStorage.getItem('user');
         const isLoggedIn = localStorage.getItem('isLoggedIn');
         
-        if (!user || !isLoggedIn) {
-            console.warn('⚠️ يلزم تسجيل الدخول للوصول لهذه الصفحة');
-            this.showLoginAlert();
-        } else {
-            console.log('✅ مستخدم مسجل الدخول:', user);
+        console.log('🔐 فحص المصادقة:', { user, isLoggedIn });
+        
+        if (!user || isLoggedIn !== 'true') {
+            console.warn('⚠️ دخول غير مصرح - إعادة التوجيه...');
+            this.redirectToLogin();
+            return false;
         }
+        
+        console.log('✅ مصادقة ناجحة:', user);
+        return true;
     }
 
-    protectPage() {
-        // حماية أساسية ضد التلاعب
-        this.preventDevTools();
-        this.monitorChanges();
+    protectDashboard() {
+        // منع الوصول المباشر
+        if (!this.checkAuthentication()) {
+            return;
+        }
+
+        // حماية إضافية
+        this.preventTampering();
+        this.detectDevTools();
     }
 
-    preventDevTools() {
-        // كشف فتح أدوات المطور
-        setInterval(() => {
-            const devToolsOpen = window.outerWidth - window.innerWidth > 200 || 
-                               window.outerHeight - window.innerHeight > 200;
-            
-            if (devToolsOpen) {
-                this.onSecurityBreach();
-            }
-        }, 1000);
-    }
-
-    monitorChanges() {
-        // مراقبة التغييرات في localStorage
+    preventTampering() {
+        // حماية localStorage
         const originalSetItem = localStorage.setItem;
         localStorage.setItem = function(key, value) {
             if (key === 'user' || key === 'isLoggedIn') {
                 console.warn('🚨 محاولة تعديل بيانات المصادقة:', key);
-                return false; // منع التعديل
+                return false;
             }
             return originalSetItem.call(this, key, value);
         };
+
+        console.log('✅ حماية ضد التلاعب مفعلة');
     }
 
-    showLoginAlert() {
-        // رسالة تنبيه بدلاً من إعادة التوجيه المباشر
-        setTimeout(() => {
-            if (!localStorage.getItem('user')) {
-                const confirmLogin = confirm('⚠️ يلزم تسجيل الدخول للوصول لهذه الصفحة\n\nهل تريد الذهاب لصفحة التسجيل؟');
-                if (confirmLogin) {
-                    window.location.href = 'index.html';
-                }
+    detectDevTools() {
+        // كشف أدوات المطور
+        const checkDevTools = () => {
+            const threshold = 160;
+            const widthDiff = window.outerWidth - window.innerWidth;
+            const heightDiff = window.outerHeight - window.innerHeight;
+            
+            if (widthDiff > threshold || heightDiff > threshold) {
+                this.onSecurityBreach();
             }
+        };
+        
+        setInterval(checkDevTools, 1000);
+        console.log('✅ كشف أدوات المطور مفعل');
+    }
+
+    setupMonitoring() {
+        // مراقبة مستمرة
+        setInterval(() => {
+            this.checkAuthentication();
+        }, 30000); // كل 30 ثانية
+        
+        console.log('✅ المراقبة المستمرة مفعلة');
+    }
+
+    redirectToLogin() {
+        console.log('🔄 إعادة التوجيه إلى صفحة التسجيل...');
+        setTimeout(() => {
+            window.location.href = '../index.html?error=unauthorized';
         }, 2000);
     }
 
     onSecurityBreach() {
         console.error('🚨 انتهاك أمني مكتشف!');
         document.body.innerHTML = `
-            <div style="text-align: center; padding: 50px; font-family: Cairo;">
-                <h1 style="color: red;">🚫 انتهاك أمني</h1>
-                <p>تم اكتشاف محاولة اختراق. يرجى إغلاق أدوات المطور.</p>
+            <div style="text-align: center; padding: 100px; font-family: 'Cairo', sans-serif; background: #f8f9fa;">
+                <div style="background: white; padding: 40px; border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.1);">
+                    <h1 style="color: #dc3545; font-size: 2.5rem;">🚫 انتهاك أمني</h1>
+                    <p style="font-size: 1.2rem; color: #666; margin: 20px 0;">
+                        تم اكتشاف محاولة اختراق. يرجى إغلاق أدوات المطور وإعادة تحميل الصفحة.
+                    </p>
+                    <button onclick="window.location.href='../index.html'" 
+                            style="background: #dc3545; color: white; border: none; padding: 12px 30px; 
+                                   border-radius: 5px; font-size: 1.1rem; cursor: pointer;">
+                        العودة للصفحة الرئيسية
+                    </button>
+                </div>
             </div>
         `;
     }
 }
 
-// بدء النظام عند تحميل الصفحة
+// بدء النظام الأمني فور تحميل الصفحة
 document.addEventListener('DOMContentLoaded', function() {
     window.securitySystem = new SecurityManager();
 });
 
-// تأكيد تحميل الملف
-console.log('✅ js/security.js تم تحميله بنجاح في: ' + new Date().toLocaleTimeString());
+// التأكيد النهائي على تحميل النظام
+console.log('✅ js/security.js تم تحميله وتنفيذه بنجاح في: ' + new Date().toLocaleTimeString());   
