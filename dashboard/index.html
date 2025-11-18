@@ -4,49 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Skillzoy Academy - منصة التعليم الالكتروني</title>
-<!-- CSP آمن ومحدث -->
-<meta http-equiv="Content-Security-Policy" 
-      content="
-        default-src 'self';
-        script-src 'self' 
-                   https://cdnjs.cloudflare.com 
-                   https://cdn.jsdelivr.net 
-                   https://apis.google.com 
-                   https://www.youtube.com 
-                   https://*.supabase.co 
-                   https://*.supabase.in;
-        style-src 'self' 
-                  'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='
-                  https://cdnjs.cloudflare.com 
-                  https://fonts.googleapis.com 
-                  https://*.supabase.co;
-        font-src 'self' 
-                 https://cdnjs.cloudflare.com 
-                 https://fonts.gstatic.com 
-                 https://fonts.googleapis.com;
-        img-src 'self' data: 
-                https://*.supabase.co 
-                https://i.ytimg.com 
-                https://img.youtube.com;
-        connect-src 'self' 
-                   https://*.supabase.co 
-                   https://*.supabase.in 
-                   https://www.googleapis.com 
-                   https://youtube.googleapis.com 
-                   wss://*.supabase.co;
-        frame-src 'self' 
-                 https://www.youtube.com 
-                 https://youtube.com 
-                 https://*.youtube.com 
-                 https://*.supabase.co;
-        frame-ancestors 'none';
-        media-src 'self' 
-                  https://*.supabase.co 
-                  https://*.youtube.com;
-        object-src 'none';
-        base-uri 'self';
-        form-action 'self' https://*.supabase.co;
-        upgrade-insecure-requests;">
+-- ✅ CSP آمن - لا يعطل أي شيء -->
+    <meta http-equiv="Content-Security-Policy" 
+          content="
+            default-src 'self' https://skillzoy-academy.vercel.app;
+            script-src 'self' 'unsafe-inline' 'unsafe-eval' 
+                       https://cdnjs.cloudflare.com 
+                       https://cdn.jsdelivr.net 
+                       https://apis.google.com 
+                       https://www.youtube.com 
+                       https://*.supabase.co 
+                       https://*.supabase.in;
+            style-src 'self' 'unsafe-inline' 
+                      https://cdnjs.cloudflare.com 
+                      https://fonts.googleapis.com 
+                      https://*.supabase.co;
+            font-src 'self' 
+                     https://cdnjs.cloudflare.com 
+                     https://fonts.gstatic.com 
+                     https://fonts.googleapis.com;
+            img-src 'self' data: https: 
+                    https://*.supabase.co 
+                    https://i.ytimg.com 
+                    https://img.youtube.com;
+            connect-src 'self' 
+                       https://*.supabase.co 
+                       https://*.supabase.in 
+                       https://www.googleapis.com 
+                       https://youtube.googleapis.com 
+                       wss://*.supabase.co;
+            frame-src 'self' 
+                     https://www.youtube.com 
+                     https://youtube.com 
+                     https://*.youtube.com 
+                     https://*.supabase.co;
+            media-src 'self' https: 
+                      https://*.supabase.co 
+                      https://*.youtube.com;
+            object-src 'none';
+            base-uri 'self';
+            form-action 'self' https://*.supabase.co;">
+<meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
