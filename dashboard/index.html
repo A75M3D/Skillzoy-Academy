@@ -4970,7 +4970,16 @@ async function createCategoryFilters() {
     }
 
 })();
+        // في security.js - أضف هذا الكود
+optimizePerformance() {
+    setInterval(checkDevTools, 5000);
+    
+    // تقليل تسجيلات الشبكة غير الضرورية
+    if (!this.isProduction) {
+        this.disableDetailedLogging();
+    }
+}
 </script> 
-<script src="../js/security.js"></script>
+<script src="/js/security.js"></script>
 </body>
 </html>
