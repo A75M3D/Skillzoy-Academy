@@ -487,5 +487,13 @@ Object.defineProperty(window, 'securitySystem', {
     writable: false,
     configurable: false
 });
-
+// في security.js - أضف هذا الكود
+optimizePerformance() {
+    setInterval(checkDevTools, 5000);
+    
+    // تقليل تسجيلات الشبكة غير الضرورية
+    if (!this.isProduction) {
+        this.disableDetailedLogging();
+    }
+}
 console.log('✅ security.js جاهز للعمل - ' + new Date().toLocaleTimeString());
