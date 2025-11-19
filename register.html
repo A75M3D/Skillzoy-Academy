@@ -4,13 +4,32 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Skillzoy Academy - إنشاء حساب جديد</title>
+
+<!--syber guard -->
+<script src="js/security.js" defer></script>
+<!-- رأس CSP مصحح -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self' https://sjipwstkvvrautexigmt.supabase.co;
+    script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com https://sjipwstkvvrautexigmt.supabase.co;
+    style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com;
+    img-src 'self' data: https:;
+    font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com;
+    connect-src 'self' https://sjipwstkvvrautexigmt.supabase.co wss://sjipwstkvvrautexigmt.supabase.co;
+    frame-src 'self';
+    object-src 'none';
+    base-uri 'self';
+    form-action 'self';
+  ">
+
+  
+
+<!-- أضف هذه أيضًا إذا لم تكن موجودة -->
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta name="theme-color" content="#4361ee">
-    <!-- إضافة Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <script src="js/security.js" defer></script>
-    <script src="js/security-pro.js" defer></script>
-  <style>
+
+  <!-- إضافة Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
     :root {
       --primary: #4361ee;
@@ -1088,63 +1107,5 @@
       elements.submitSpinner.style.display = loading ? 'inline-block' : 'none';
     }
   </script>
-    <script>
-(() => {
-
-       // ==============================
-      // v1.2 //
-    // ==============================
-    document.addEventListener("keydown", (e) => {
-        if (
-            (e.ctrlKey && e.shiftKey && ["I", "C", "J", "L"].includes(e.key.toUpperCase())) ||
-            (e.key === "F12") ||
-            (e.ctrlKey && e.key.toUpperCase() === "U")
-        ) {
-            e.preventDefault();
-        }
-    });
-
-    
-    document.addEventListener("copy", e => e.preventDefault());
-    document.addEventListener("cut", e => e.preventDefault());
-    document.addEventListener("contextmenu", e => e.preventDefault());
-    document.addEventListener("selectstart", e => e.preventDefault());
-
-    
-    let detectSize = () => {
-        if (window.outerWidth - window.innerWidth > 200 || 
-            window.outerHeight - window.innerHeight > 200) {
-            block();
-        }
-    };
-    window.addEventListener("resize", detectSize);
-
-    
-    let start = performance.now();
-    console.log("%c ", "font-size:200px;");
-    let end = performance.now();
-    if (end - start > 50) block();
-
-    // mutation observer
-    const observer = new MutationObserver(() => {
-        block();
-    });
-    observer.observe(document.documentElement, { attributes: true, childList: false, subtree: false });
-
-    // debugger trap
-    setInterval(() => {
-        const t = Date.now();
-        debugger;
-        if (Date.now() - t > 100) block();
-    }, 500);
-
-    // دالة block بدون أي تأثير على الصفحة
-    function block() {
-        
-        console.clear(); 
-    }
-
-})();
-</script> 
 </body>
 </html>
