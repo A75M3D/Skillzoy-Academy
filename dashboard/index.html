@@ -8,12 +8,14 @@
     <meta http-equiv="Content-Security-Policy" 
           content="
             default-src 'self' https://skillzoy-academy.vercel.app;
-            script-src 'self' 'nonce-random123' https://cdnjs.cloudflare.com;
-               style-src 'self' 'nonce-random123';
-               ...">
-                       https://cdnjs.cloudflare.com 
-                       https://cdn.jsdelivr.net 
-                       https://apis.google.com 
+            <meta http-equiv="Content-Security-Policy" 
+        script-src 'self' 'nonce-random123456' 
+                   https://cdnjs.cloudflare.com 
+                   https://cdn.jsdelivr.net;
+        style-src 'self' 'nonce-random123456'
+                  https://fonts.googleapis.com;
+        ...">
+                        
                        https://www.youtube.com 
                        https://*.supabase.co 
                        https://*.supabase.in;
