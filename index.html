@@ -4,12 +4,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="oSd203M5ljdzzVDAHe_R7NBxg5seGO5-EUleZL8D90E" />
-    <meta name="description" content="منصة تعليمية تقدم شهادات معتمدة و كورسات مجانية لتعلم البرمجة خطوة بخطوة.">
+    <meta name="description" content="منصة تعليمية تقدم شهادات معتمدة و كورسات مجانية.">
     <meta name="keywords" content="التطوير المهني ,افضل شهادات مجانية, تعلم البرمجة, تعليم اونلاين, HTML, CSS, JavaScript, Skillzoy Academy">
     <title>Skillzoy Academy - منصة التعلم الإلكتروني</title>
     <!-- PWA Manifest -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#1e3a8a">
+<!-- 3. CSP معدل ومبسط -->
+<meta http-equiv="Content-Security-Policy" 
+      content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline' 'unsafe-eval'
+                   https://cdnjs.cloudflare.com 
+                   https://cdn.jsdelivr.net 
+                   https://cdn.tailwindcss.com;
+        style-src 'self' 'unsafe-inline'
+                  https://cdnjs.cloudflare.com 
+                  https://fonts.googleapis.com 
+                  https://cdn.tailwindcss.com;
+        font-src 'self' data:
+                 https://cdnjs.cloudflare.com 
+                 https://fonts.gstatic.com 
+                 https://fonts.googleapis.com 
+                 https://ka-f.fontawesome.com;
+        img-src 'self' data: https: blob:;
+        connect-src 'self' 
+                   https://ka-f.fontawesome.com;
+        frame-src 'none';
+        frame-ancestors 'none';
+        media-src 'self' blob:;
+        object-src 'none';
+        base-uri 'self';
+        form-action 'self';
+        worker-src 'self' blob:;
+        manifest-src 'self';
+        upgrade-insecure-requests;">
+
+<!-- 4. الرؤوس الأمنية -->
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="X-Frame-Options" content="DENY">
+<meta http-equiv="X-XSS-Protection" content="1; mode=block">
+<meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+
+<!-- 5. CSS والخطوط -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- 4. الرؤوس الأمنية (بدون تكرار) -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+
+    <!-- 5. CSS والخطوط -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+        
     <!-- إضافة Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
