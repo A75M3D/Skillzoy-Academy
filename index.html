@@ -2,1228 +2,729 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="HandheldFriendly" content="true">
-    <meta name="MobileOptimized" content="width">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="oSd203M5ljdzzVDAHe_R7NBxg5seGO5-EUleZL8D90E" />
-    <meta name="description" content="منصة تعليمية تقدم شهادات معتمدة و كورسات مجانية.">
+    <meta name="description" content="منصة تعليمية تقدم شهادات معتمدة و كورسات مجانية لتعلم البرمجة خطوة بخطوة.">
     <meta name="keywords" content="التطوير المهني ,افضل شهادات مجانية, تعلم البرمجة, تعليم اونلاين, HTML, CSS, JavaScript, Skillzoy Academy">
     <title>Skillzoy Academy - منصة التعلم الإلكتروني</title>
-    
     <!-- PWA Manifest -->
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#1e3a8a">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="Skillzoy Academy">
-    
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1e3a8a">
+    <!-- إضافة Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: 'rgb(var(--color-primary) / <alpha-value>)',
+                        'primary-dark': 'rgb(var(--color-primary-dark) / <alpha-value>)',
+                        'primary-light': 'rgb(var(--color-primary-light) / <alpha-value>)',
+                    }
+                }
+            }
+        }
+    </script>
     
     <style>
-        /* شاشة التحميل المحسنة مع الشاحنة - نفس متجر المستقبل */
-        #loadingScreen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
-            z-index: 9999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        #loadingScreen.fade-out {
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.8s ease, visibility 0.8s ease;
-        }
-
-        .loading-truck {
-            position: absolute;
-            font-size: 80px;
-            color: #00c6ff;
-            bottom: 20%;
-            left: -100px;
-            text-shadow: 0 0 20px rgba(0, 198, 255, 0.7);
-            transition: left 3s ease-in-out;
-        }
-
-        .loading-truck.active {
-            left: 120%;
-        }
-
-        .loading-logo {
-            font-size: 3.5rem;
-            font-weight: 800;
-            background: linear-gradient(to right, #00c6ff, #ff2d75, #7b42f6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 20px rgba(0, 198, 255, 0.7);
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1s ease 0.5s;
-        }
-
-        .loading-logo.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .loading-progress {
-            width: 300px;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
-            margin-top: 30px;
-            overflow: hidden;
-            opacity: 0;
-            transition: opacity 1s ease 1s;
-        }
-
-        .loading-progress.show {
-            opacity: 1;
-        }
-
-        .loading-progress-bar {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(to right, #00c6ff, #ff2d75);
-            border-radius: 3px;
-            transition: width 3s ease 1.5s;
-        }
-
-        /* إخفاء المحتوى الرئيسي أثناء التحميل */
-        .main-content {
-            display: none;
-        }
-
-        .main-content.loaded {
-            display: block;
-        }
-
-        /* الأنماط الأصلية المحسنة */
         :root {
-            --primary: #00c6ff;
-            --primary-dark: #0072ff;
-            --primary-light: #6ee2ff;
-            --secondary: #ff2d75;
-            --accent: #7b42f6;
-            --text: #ffffff;
-            --text-light: #b3b3b3;
-            --background: #0a0a0a;
-            --card-bg: rgba(30, 30, 40, 0.9);
-            --card-border: rgba(255, 255, 255, 0.1);
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            --glass-bg: rgba(20, 20, 30, 0.85);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --blur: blur(10px);
-            --neon-glow: 0 0 10px rgba(0, 198, 255, 0.5);
+            --color-primary: 59 130 246;
+            --color-primary-dark: 37 99 235;
+            --color-primary-light: 147 197 253;
+        }
+        
+        [data-theme="blue"] { 
+            --color-primary: 59 130 246;
+            --color-primary-dark: 37 99 235;
+            --color-primary-light: 147 197 253;
+        }
+        [data-theme="green"] { 
+            --color-primary: 34 197 94;
+            --color-primary-dark: 22 163 74;
+            --color-primary-light: 134 239 172;
+        }
+        [data-theme="purple"] { 
+            --color-primary: 168 85 247;
+            --color-primary-dark: 147 51 234;
+            --color-primary-light: 216 180 254;
+        }
+        [data-theme="red"] { 
+            --color-primary: 239 68 68;
+            --color-primary-dark: 220 38 38;
+            --color-primary-light: 252 165 165;
+        }
+        [data-theme="orange"] { 
+            --color-primary: 249 115 22;
+            --color-primary-dark: 234 88 12;
+            --color-primary-light: 253 186 116;
+        }
+        [data-theme="teal"] { 
+            --color-primary: 20 184 166;
+            --color-primary-dark: 15 118 110;
+            --color-primary-light: 94 234 212;
+        }
+        [data-theme="indigo"] { 
+            --color-primary: 99 102 241;
+            --color-primary-dark: 79 70 229;
+            --color-primary-light: 165 180 252;
+        }
+        [data-theme="pink"] { 
+            --color-primary: 236 72 153;
+            --color-primary-dark: 219 39 119;
+            --color-primary-light: 249 168 212;
+        }
+        [data-theme="yellow"] { 
+            --color-primary: 234 179 8;
+            --color-primary-dark: 202 138 4;
+            --color-primary-light: 254 240 138;
+        }
+        [data-theme="cyan"] { 
+            --color-primary: 6 182 212;
+            --color-primary-dark: 8 145 178;
+            --color-primary-light: 103 232 249;
+        }
+        
+        .theme-transition {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .dark .glass-effect {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .shadow-glow {
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        .shadow-glow-primary {
+            box-shadow: 0 8px 32px rgb(var(--color-primary) / 0.15);
+        }
+        
+        .bg-gradient-primary {
+            background: linear-gradient(135deg, rgb(var(--color-primary)) 0%, rgb(var(--color-primary-dark)) 100%);
+        }
+        
+        .sidebar-glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .dark .sidebar-glass {
+            background: rgba(0, 0, 0, 0.3);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .header-glass {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .dark .header-glass {
+            background: rgba(0, 0, 0, 0.4);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .card-glass {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .dark .card-glass {
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .neon-border {
+            border: 1px solid rgb(var(--color-primary) / 0.3);
+            box-shadow: 0 0 10px rgb(var(--color-primary) / 0.2), inset 0 0 10px rgb(var(--color-primary) / 0.1);
+        }
+        
+        .dark .neon-border {
+            border: 1px solid rgb(var(--color-primary) / 0.5);
+            box-shadow: 0 0 15px rgb(var(--color-primary) / 0.4), inset 0 0 15px rgb(var(--color-primary) / 0.2);
+        }
+        
+        .sidebar-item.active {
+            background: linear-gradient(135deg, rgb(var(--color-primary) / 0.15) 0%, rgb(var(--color-primary) / 0.05) 100%);
+            color: rgb(var(--color-primary));
+            border-right: 3px solid rgb(var(--color-primary));
+            box-shadow: 0 4px 12px rgb(var(--color-primary) / 0.1);
+        }
+        
+        .hover-lift {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .dark .hover-lift:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
         }
 
-        .light-theme {
-            --primary: #0066cc;
-            --primary-dark: #004499;
-            --primary-light: #4da6ff;
-            --secondary: #e6005c;
-            --accent: #5a2dbe;
-            --text: #1a1a1a;
-            --text-light: #666666;
-            --background: #f0f2f5;
-            --card-bg: rgba(255, 255, 255, 0.95);
-            --card-border: rgba(0, 0, 0, 0.1);
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            --glass-bg: rgba(255, 255, 255, 0.9);
-            --glass-border: rgba(0, 0, 0, 0.08);
-            --neon-glow: 0 0 10px rgba(0, 102, 204, 0.3);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background: linear-gradient(135deg, var(--background) 0%, #1a1a2e 50%, #16213e 100%);
-            color: var(--text);
-            min-height: 100vh;
-            direction: rtl;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        body::before {
-            content: '';
+        /* تأثيرات الخلفية المتحركة */
+        .bg-bubbles {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(0, 198, 255, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(123, 66, 246, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(255, 45, 117, 0.1) 0%, transparent 50%);
             z-index: -1;
         }
 
-        .light-theme body::before {
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(0, 102, 204, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(90, 45, 190, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(230, 0, 92, 0.05) 0%, transparent 50%);
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Header Styles */
-        header {
-            background: var(--glass-bg);
-            backdrop-filter: var(--blur);
-            border-bottom: 1px solid var(--glass-border);
-            box-shadow: var(--shadow);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 90px;
-        }
-
-        .logo-container {
-            position: relative;
-            overflow: hidden;
-            padding: 10px 0;
-        }
-
-        .logo {
-            font-size: 32px;
-            font-weight: 800;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            cursor: pointer;
-            text-shadow: var(--neon-glow);
-            position: relative;
-            white-space: nowrap;
-            display: inline-block;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 25px;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text);
-            font-weight: 500;
-            padding: 10px 20px;
-            border-radius: 12px;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .nav-links a::before {
-            content: '';
+        .bg-bubbles li {
             position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transition: left 0.5s;
-        }
-
-        .nav-links a:hover::before {
-            left: 100%;
-        }
-
-        .nav-links a:hover, .nav-links a.active {
-            background: var(--primary);
-            color: #0a0a0a;
-            transform: translateY(-2px);
-            box-shadow: var(--neon-glow);
-        }
-
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .theme-toggle, .icon-btn {
-            position: relative;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
+            list-style: none;
+            display: block;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.15);
+            bottom: -160px;
+            animation: square 25s infinite;
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 20px;
-            color: var(--text);
-            backdrop-filter: var(--blur);
-            transition: all 0.3s;
-            overflow: hidden;
         }
 
-        .theme-toggle::before, .icon-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transition: left 0.5s;
+        .bg-bubbles li:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .bg-bubbles li:nth-child(2) { left: 20%; width: 80px; height: 80px; animation-delay: 2s; animation-duration: 17s; }
+        .bg-bubbles li:nth-child(3) { left: 25%; animation-delay: 4s; }
+        .bg-bubbles li:nth-child(4) { left: 40%; width: 60px; height: 60px; animation-duration: 22s; }
+        .bg-bubbles li:nth-child(5) { left: 70%; }
+        .bg-bubbles li:nth-child(6) { left: 80%; width: 120px; height: 120px; animation-delay: 3s; }
+        .bg-bubbles li:nth-child(7) { left: 32%; width: 160px; height: 160px; animation-delay: 7s; }
+        .bg-bubbles li:nth-child(8) { left: 55%; width: 20px; height: 20px; animation-delay: 15s; animation-duration: 40s; }
+        .bg-bubbles li:nth-child(9) { left: 25%; width: 10px; height: 10px; animation-delay: 2s; animation-duration: 40s; }
+        .bg-bubbles li:nth-child(10) { left: 90%; width: 160px; height: 160px; animation-delay: 11s; }
+
+        @keyframes square {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; border-radius: 50%; }
+            100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; border-radius: 10%; }
         }
 
-        .theme-toggle:hover::before, .icon-btn:hover::before {
-            left: 100%;
-        }
-
-        .theme-toggle:hover, .icon-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--neon-glow);
-        }
-
-        .badge {
-            position: absolute;
-            top: -5px;
-            left: -5px;
-            background: var(--secondary);
-            color: white;
-            border-radius: 50%;
-            width: 22px;
-            height: 22px;
-            font-size: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            box-shadow: 0 0 10px rgba(255, 45, 117, 0.7);
-            z-index: 10;
-        }
-
-        /* Hero Section */
-        .hero {
-            padding: 150px 0 120px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            margin-bottom: 80px;
-        }
-
-        .hero-animation {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            overflow: hidden;
-        }
-
-        .hero-animation::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(10, 10, 10, 0.8) 0%, rgba(26, 26, 46, 0.7) 100%);
-            z-index: -1;
-        }
-
-        .floating-shapes {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-        }
-
-        .shape {
-            position: absolute;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            border-radius: 50%;
-            opacity: 0.1;
-            filter: blur(10px);
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            background: var(--glass-bg);
-            backdrop-filter: var(--blur);
-            border: 1px solid var(--glass-border);
-            border-radius: 30px;
-            padding: 60px 40px;
-            box-shadow: var(--shadow);
-            max-width: 900px;
-            margin: 0 auto;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero h1 {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            background: linear-gradient(to right, #fff, var(--primary-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-            position: relative;
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            max-width: 600px;
-            margin: 0 auto 30px;
-            opacity: 0.9;
-            line-height: 1.6;
-        }
-
-        .btn {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 15px 35px;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            backdrop-filter: var(--blur);
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
-            z-index: -1;
-        }
-
-        .btn:hover::before {
-            left: 100%;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--neon-glow);
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            border: 1px solid var(--primary-light);
-        }
-
-        /* Products Section - مع تأثيرات الضوء المحسنة */
-        .section-title {
-            text-align: center;
-            font-size: 3rem;
-            margin-bottom: 60px;
-            position: relative;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .filters {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 50px;
-        }
-
-        .filter-btn {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            padding: 12px 25px;
-            border-radius: 50px;
-            cursor: pointer;
-            color: var(--text);
-            backdrop-filter: var(--blur);
-            transition: all 0.3s;
-            font-weight: 500;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .filter-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transition: left 0.5s;
-        }
-
-        .filter-btn:hover::before {
-            left: 100%;
-        }
-
-        .filter-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        .filter-btn.active {
-            background: var(--primary);
-            color: #0a0a0a;
-            box-shadow: var(--neon-glow);
-        }
-
-        /* تأثيرات الضوء الجديدة للأزرار */
-        .filter-btn.intense-glow {
-            animation: intenseGlow 3s ease;
-        }
-
-        @keyframes intenseGlow {
-            0% {
-                box-shadow: 0 0 20px rgba(0, 198, 255, 0.8), 0 0 30px rgba(123, 66, 246, 0.6);
-            }
-            70% {
-                box-shadow: 0 0 30px rgba(0, 198, 255, 1), 0 0 40px rgba(123, 66, 246, 0.8), 0 0 60px rgba(255, 45, 117, 0.6);
-            }
-            100% {
-                box-shadow: 0 0 10px rgba(0, 198, 255, 0.5);
-            }
-        }
-
-        .filter-btn.electro-glow {
-            animation: electroGlow 6s infinite;
-        }
-
-        @keyframes electroGlow {
-            0%, 100% {
-                box-shadow: 0 0 10px rgba(0, 198, 255, 0.5);
-            }
-            50% {
-                box-shadow: 0 0 15px rgba(0, 198, 255, 0.7), 0 0 20px rgba(123, 66, 246, 0.5);
-            }
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 40px;
-            margin-bottom: 80px;
-        }
-
-        .course-card {
-            background: var(--card-bg);
-            backdrop-filter: var(--blur);
-            border: 1px solid var(--card-border);
-            border-radius: 25px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: all 0.4s;
-            position: relative;
-            opacity: 0;
-            animation: fadeIn 0.5s ease forwards;
-        }
-
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-
-        .course-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(0, 198, 255, 0.1) 0%, rgba(123, 66, 246, 0.1) 100%);
-            opacity: 0;
-            transition: opacity 0.4s;
-            z-index: 0;
-        }
-
-        .course-card:hover::before {
-            opacity: 1;
-        }
-
-        .course-card:hover {
-            transform: translateY(-15px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4), var(--neon-glow);
-        }
-
-        .video-wrapper {
-            height: 280px;
-            width: 100%;
-            position: relative;
-            z-index: 1;
-        }
-
-        .video-wrapper iframe {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .course-content {
-            padding: 25px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .course-category {
-            color: var(--primary);
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 8px;
-            display: inline-block;
-            padding: 5px 12px;
-            background: var(--glass-bg);
-            border-radius: 20px;
-            backdrop-filter: var(--blur);
-        }
-
-        .course-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: var(--text);
-            line-height: 1.4;
-        }
-
-        /* تنسيق التقييم للدورات */
-        .course-rating {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 15px;
-            color: var(--secondary);
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .course-rating i {
-            color: var(--secondary);
+        .pulse {
             animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
+            0% { box-shadow: 0 0 0 0 rgba(67, 97, 238, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(67, 97, 238, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(67, 97, 238, 0); }
         }
-
-        .course-price {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 20px;
+        
+        /* تصميم الفوتر الجديد */
+        .footer-gradient {
+            background: linear-gradient(135deg, rgb(var(--color-primary) / 0.1) 0%, rgb(var(--color-primary-dark) / 0.05) 100%);
+            border-top-left-radius: 50px;
+            border-top-right-radius: 50px;
         }
-
-        .current-price {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            text-shadow: 0 0 10px rgba(0, 198, 255, 0.5);
+        
+        /* تحسينات إضافية */
+        .scroll-indicator {
+            animation: bounce 2s infinite;
         }
-
-        .original-price {
-            font-size: 1.1rem;
-            color: var(--text-light);
-            text-decoration: line-through;
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
         }
-
-        .course-actions {
-            display: flex;
-            justify-content: space-between;
-            gap: 10px;
+        
+        .gradient-text {
+            background: linear-gradient(135deg, rgb(var(--color-primary)) 0%, rgb(var(--color-primary-dark)) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-
-        .action-btn {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 50%;
-            width: 45px;
-            height: 45px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            color: var(--text);
-            backdrop-filter: var(--blur);
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .action-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transition: left 0.5s;
-        }
-
-        .action-btn:hover::before {
-            left: 100%;
-        }
-
-        .action-btn:hover {
-            background: var(--primary);
-            color: #0a0a0a;
-            transform: rotate(10deg);
-            box-shadow: var(--neon-glow);
-        }
-
-        .enroll-btn {
-            background: var(--primary);
-            color: #0a0a0a;
-            border: none;
-            border-radius: 15px;
-            padding: 12px 25px;
-            font-weight: 600;
-            cursor: pointer;
-            flex-grow: 1;
-            margin-right: 10px;
-            transition: all 0.3s;
-            backdrop-filter: var(--blur);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-        }
-
-        .enroll-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.5s;
-            z-index: -1;
-        }
-
-        .enroll-btn:hover::before {
-            left: 100%;
-        }
-
-        .enroll-btn:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: var(--neon-glow);
-        }
-
-        .free-badge {
-            background: var(--secondary);
-            color: white;
-            border-radius: 20px;
-            padding: 5px 12px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            box-shadow: 0 0 15px rgba(255, 45, 117, 0.7);
-            z-index: 10;
-        }
-
-        .course-free-note {
-            background: rgba(34, 197, 94, 0.1);
-            color: #22c55e;
-            padding: 12px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .course-certificate-note {
-            background: rgba(234, 179, 8, 0.1);
-            color: #eab308;
-            padding: 12px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        /* Toast Notifications */
-        .toast {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: var(--primary);
-            color: #0a0a0a;
-            padding: 15px 25px;
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-            z-index: 10000;
-            transform: translateX(150%);
-            transition: transform 0.3s ease;
-            font-weight: 600;
-        }
-
-        .toast.show {
-            transform: translateX(0);
-        }
-
-        .toast.error {
-            background: var(--secondary);
-            color: white;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--glass-bg);
-            backdrop-filter: var(--blur);
-            border-top: 1px solid var(--glass-border);
-            padding: 60px 0 20px;
-            margin-top: 80px;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .footer-column h3 {
-            font-size: 1.4rem;
-            margin-bottom: 25px;
-            color: var(--text);
+        
+        /* تصميم زر التبديل بين الوضع الداكن والفاتح */
+        .dark-mode-toggle {
             position: relative;
             display: inline-block;
+            width: 60px;
+            height: 30px;
         }
-
-        .footer-column h3::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            right: 0;
-            width: 40px;
-            height: 3px;
-            background: var(--primary);
-            border-radius: 2px;
-            box-shadow: 0 0 10px rgba(0, 198, 255, 0.5);
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-
-        .footer-links a {
-            text-decoration: none;
-            color: var(--text-light);
-            transition: color 0.3s;
-            display: inline-block;
-            padding: 5px 0;
-            position: relative;
-        }
-
-        .footer-links a::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            right: 0;
+        
+        .dark-mode-toggle input {
+            opacity: 0;
             width: 0;
-            height: 2px;
-            background: var(--primary);
-            transition: width 0.3s;
+            height: 0;
         }
-
-        .footer-links a:hover {
-            color: var(--primary);
-            transform: translateX(-5px);
-        }
-
-        .footer-links a:hover::before {
-            width: 100%;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 15px;
-            margin-top: 25px;
-        }
-
-        .social-link {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 50%;
-            width: 45px;
-            height: 45px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text);
-            text-decoration: none;
-            transition: all 0.3s;
-            backdrop-filter: var(--blur);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .social-link::before {
-            content: '';
+        
+        .dark-mode-slider {
             position: absolute;
+            cursor: pointer;
             top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transition: left 0.5s;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
         }
-
-        .social-link:hover::before {
-            left: 100%;
+        
+        .dark-mode-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
         }
-
-        .social-link:hover {
-            background: var(--primary);
-            color: #0a0a0a;
-            transform: translateY(-3px);
-            box-shadow: var(--neon-glow);
+        
+        input:checked + .dark-mode-slider {
+            background-color: #2196F3;
         }
-
-        .copyright {
-            text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid var(--glass-border);
-            color: var(--text-light);
-            font-size: 0.9rem;
+        
+        input:checked + .dark-mode-slider:before {
+            transform: translateX(30px);
         }
-
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--text-light);
-        }
-
-        .empty-state i {
-            font-size: 80px;
-            margin-bottom: 20px;
-            opacity: 0.5;
-        }
-
-        .empty-state p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-        }
-
-        /* Mobile Menu Button */
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--text);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        /* زر تثبيت PWA - نفس متجر المستقبل */
-        .install-btn {
-            background: linear-gradient(135deg, #2563eb, #1e3a8a);
-            color: #fff;
-            border: none;
-            padding: 12px 30px;
-            font-size: 18px;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
-            transition: all 0.3s ease;
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            z-index: 10000;
-        }
-
-        .install-btn:hover {
-            background: linear-gradient(135deg, #1d4ed8, #1e40af);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 14px rgba(30, 58, 138, 0.5);
-        }
-
-        .install-btn:active {
-            transform: scale(0.98);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 1024px) {
-            .products-grid {
-                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            }
-        }
-
+        
+        /* تحسينات للجوال */
         @media (max-width: 768px) {
-            .nav-links {
-                display: none;
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
             }
             
-            .hero h1 {
-                font-size: 2.8rem;
+            .hero-text h1 {
+                font-size: 2rem;
             }
             
-            .section-title {
-                font-size: 2.2rem;
+            .section-title h2 {
+                font-size: 1.75rem;
             }
             
-            .products-grid {
-                grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-                gap: 25px;
-            }
-
-            .mobile-menu-btn {
-                display: block;
+            .course-card {
+                margin-bottom: 1.5rem;
             }
             
-            .nav-links {
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: var(--glass-bg);
-                backdrop-filter: var(--blur);
-                flex-direction: column;
-                padding: 20px;
-                box-shadow: var(--shadow);
-                display: none;
-            }
-            
-            .nav-links.active {
-                display: flex;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero h1 {
-                font-size: 2.2rem;
-            }
-            
-            .hero-content {
-                padding: 40px 20px;
-            }
-            
-            .section-title {
-                font-size: 1.8rem;
-            }
-            
-            .products-grid {
+            .process-steps {
                 grid-template-columns: 1fr;
             }
             
-            .header-content {
-                height: 80px;
+            .testimonials-grid {
+                grid-template-columns: 1fr;
             }
             
-            .logo {
-                font-size: 26px;
-            }
-
             .footer-content {
                 grid-template-columns: 1fr;
-                gap: 30px;
             }
-
-            .loading-logo {
-                font-size: 2.5rem;
-            }
-            
-            .loading-truck {
-                font-size: 60px;
-            }
+        }
+        
+        /* إصلاح الخطوط الشفافة */
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 100%;
         }
     </style>
 </head>
-<body class="dark-theme">
-    <!-- زر تثبيت التطبيق - نفس متجر المستقبل -->
-    <button id="installBtn" hidden class="install-btn">
-        📥 تثبيت التطبيق
-    </button>
+<body class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-950 dark:to-gray-900 theme-transition" data-theme="blue">
+   <button id="installBtn" hidden class="install-btn">
+  📥 تثبيت التطبيق
+</button>
 
-    <!-- شاشة التحميل مع الشاحنة - نفس متجر المستقبل -->
-    <div id="loadingScreen">
-        <div class="loading-truck">
-            <i class="fas fa-truck"></i>
+<style>
+  .install-btn {
+    background: linear-gradient(135deg, #2563eb, #1e3a8a);
+    color: #fff;
+    border: none;
+    padding: 12px 30px;
+    font-size: 18px;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+    transition: all 0.3s ease;
+  }
+
+  .install-btn:hover {
+    background: linear-gradient(135deg, #1d4ed8, #1e40af);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 14px rgba(30, 58, 138, 0.5);
+  }
+
+  .install-btn:active {
+    transform: scale(0.98);
+  }
+</style>
+    <!-- تأثيرات الخلفية -->
+    <ul class="bg-bubbles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+
+    <!-- Header -->
+    <header class="header-glass shadow-sm theme-transition z-30 sticky top-0">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <a href="#home" class="logo flex items-center text-gray-800 dark:text-white no-underline">
+                        <div class="logo-icon w-10 h-10 md:w-12 md:h-12 bg-gradient-primary rounded-2xl flex items-center justify-center shadow-glow-primary mr-3">
+                            <i class="fas fa-graduation-cap text-white text-lg md:text-xl"></i>
+                        </div>
+                        <span class="text-xl md:text-2xl font-bold">Skillzoy Academy</span>
+                    </a>
+                </div>
+
+                <nav class="hidden lg:block">
+                    <ul class="flex space-x-2 space-x-reverse">
+                        <li><a href="#home" class="text-gray-700 dark:text-gray-200 hover:text-primary py-2 px-4 rounded-2xl transition-all duration-300">الرئيسية</a></li>
+                        <li><a href="#courses" class="text-gray-700 dark:text-gray-200 hover:text-primary py-2 px-4 rounded-2xl transition-all duration-300">الدورات</a></li>
+                        <li><a href="#process" class="text-gray-700 dark:text-gray-200 hover:text-primary py-2 px-4 rounded-2xl transition-all duration-300">الاشتراك</a></li>
+                        <li><a href="#testimonials" class="text-gray-700 dark:text-gray-200 hover:text-primary py-2 px-4 rounded-2xl transition-all duration-300">آراء الطلاب</a></li>
+                        <li><a href="#certificate" class="text-gray-700 dark:text-gray-200 hover:text-primary py-2 px-4 rounded-2xl transition-all duration-300">الشهادات</a></li>
+                        <li><a href="#contact" class="text-gray-700 dark:text-gray-200 hover:text-primary py-2 px-4 rounded-2xl transition-all duration-300">التواصل</a></li>
+                    </ul>
+                </nav>
+
+                <div class="flex items-center space-x-3 space-x-reverse">
+                    <!-- زر الثيمات في الركن الأيسر -->
+                    <button id="themes-toggle" class="p-2 rounded-2xl hover:bg-gray-200/30 dark:hover:bg-gray-700/30 text-gray-600 dark:text-gray-300 theme-transition neon-border">
+                        <i class="fas fa-palette text-xl"></i>
+                    </button>
+                    
+                    <!-- زر القائمة للجوال -->
+                    <button id="mobile-menu-btn" class="p-2 rounded-2xl hover:bg-gray-200/30 dark:hover:bg-gray-700/30 text-gray-600 dark:text-gray-300 theme-transition lg:hidden neon-border">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                    
+                    <div class="hidden lg:flex space-x-3 space-x-reverse">
+                        <a href="login.html" class="btn bg-gray-200/30 dark:bg-gray-700/30 text-gray-700 dark:text-gray-300 hover:bg-gray-300/30 dark:hover:bg-gray-600/30 py-2 px-4 rounded-2xl transition-all duration-300 neon-border">تسجيل الدخول</a>
+                        <a href="register.html" class="btn bg-gradient-primary text-white hover:shadow-glow-primary py-2 px-4 rounded-2xl transition-all duration-300 pulse">إنشاء حساب</a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="loading-logo">Skillzoy Academy</div>
-        <div class="loading-progress">
-            <div class="loading-progress-bar"></div>
+    </header>
+
+    <!-- الشريط الجانبي للجوال -->
+    <div id="mobile-sidebar" class="fixed inset-0 bg-black/50 z-40 hidden theme-transition backdrop-blur-sm lg:hidden">
+        <div class="absolute top-0 right-0 h-full w-80 max-w-full sidebar-glass theme-transition flex flex-col overflow-y-auto">
+            <!-- اللوجو وزر الإغلاق -->
+            <div class="p-6 border-b border-gray-200/30 dark:border-gray-700/30 flex items-center justify-between">
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <div class="w-12 h-12 bg-gradient-primary rounded-2xl flex items-center justify-center shadow-glow-primary">
+                        <i class="fas fa-graduation-cap text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-800 dark:text-white">Skillzoy</h1>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">منصة التعلم الإلكتروني</p>
+                    </div>
+                </div>
+                <button id="close-mobile-sidebar" class="p-2 rounded-xl hover:bg-gray-200/50 dark:hover:bg-gray-700/50 text-gray-500 dark:text-gray-400">
+                    <i class="fas fa-times text-lg"></i>
+                </button>
+            </div>
+
+            <!-- الملف الشخصي المصغر -->
+            <div class="p-6 border-b border-gray-200/30 dark:border-gray-700/30">
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <div class="relative">
+                        <div class="w-16 h-16 bg-gradient-primary rounded-2xl overflow-hidden border-4 border-white/70 dark:border-gray-800/70 shadow-glow">
+                            <div class="w-full h-full flex items-center justify-center text-white">
+                                <i class="fas fa-user text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-white/70 dark:border-gray-800/70 shadow-glow"></div>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-lg font-semibold text-gray-800 dark:text-white truncate">مرحباً بك!</p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 truncate">طالب في Skillzoy</p>
+                        <div class="flex items-center mt-1">
+                            <div class="flex text-yellow-400 text-xs">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="text-xs text-gray-500 dark:text-gray-400 mr-1">4.8</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- القائمة الرئيسية -->
+            <nav class="flex-1 p-6 space-y-2 overflow-y-auto">
+                <a href="#home" class="sidebar-item flex items-center space-x-4 space-x-reverse p-4 rounded-2xl text-gray-700 dark:text-gray-200 hover:bg-gray-100/30 dark:hover:bg-gray-700/30 theme-transition group hover-lift">
+                    <div class="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow-primary group-hover:scale-110 transition-transform">
+                        <i class="fas fa-home text-white text-sm"></i>
+                    </div>
+                    <span class="font-medium">الرئيسية</span>
+                </a>
+                
+                <a href="#courses" class="sidebar-item flex items-center space-x-4 space-x-reverse p-4 rounded-2xl text-gray-700 dark:text-gray-200 hover:bg-gray-100/30 dark:hover:bg-gray-700/30 theme-transition group hover-lift">
+                    <div class="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow-primary group-hover:scale-110 transition-transform">
+                        <i class="fas fa-book text-white text-sm"></i>
+                    </div>
+                    <div class="flex-1 flex items-center justify-between">
+                        <span class="font-medium">الدورات</span>
+                        <span class="bg-primary text-white text-xs px-2 py-1 rounded-full shadow-glow">3</span>
+                    </div>
+                </a>
+                
+                <a href="#process" class="sidebar-item flex items-center space-x-4 space-x-reverse p-4 rounded-2xl text-gray-700 dark:text-gray-200 hover:bg-gray-100/30 dark:hover:bg-gray-700/30 theme-transition group hover-lift">
+                    <div class="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow-primary group-hover:scale-110 transition-transform">
+                        <i class="fas fa-sign-in-alt text-white text-sm"></i>
+                    </div>
+                    <span class="font-medium">كيفية الاشتراك</span>
+                </a>
+                
+                <a href="#testimonials" class="sidebar-item flex items-center space-x-4 space-x-reverse p-4 rounded-2xl text-gray-700 dark:text-gray-200 hover:bg-gray-100/30 dark:hover:bg-gray-700/30 theme-transition group hover-lift">
+                    <div class="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow-primary group-hover:scale-110 transition-transform">
+                        <i class="fas fa-comments text-white text-sm"></i>
+                    </div>
+                    <span class="font-medium">آراء الطلاب</span>
+                </a>
+                
+                <a href="#certificate" class="sidebar-item flex items-center space-x-4 space-x-reverse p-4 rounded-2xl text-gray-700 dark:text-gray-200 hover:bg-gray-100/30 dark:hover:bg-gray-700/30 theme-transition group hover-lift">
+                    <div class="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow-primary group-hover:scale-110 transition-transform">
+                        <i class="fas fa-award text-white text-sm"></i>
+                    </div>
+                    <span class="font-medium">الشهادات</span>
+                </a>
+                
+                <a href="#contact" class="sidebar-item flex items-center space-x-4 space-x-reverse p-4 rounded-2xl text-gray-700 dark:text-gray-200 hover:bg-gray-100/30 dark:hover:bg-gray-700/30 theme-transition group hover-lift">
+                    <div class="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow-primary group-hover:scale-110 transition-transform">
+                        <i class="fas fa-envelope text-white text-sm"></i>
+                    </div>
+                    <span class="font-medium">التواصل</span>
+                </a>
+               <!-- قسم طلباتي -->
+                <div class="pt-6 mt-6 border-t border-gray-200/30 dark:border-gray-700/30">
+                    <a href="https://wa.me/message/6TY5HI5QHOQBA1" class="sidebar-item flex items-center space-x-4 space-x-reverse p-4 rounded-2xl text-gray-700 dark:text-gray-200 hover:bg-gray-100/30 dark:hover:bg-gray-700/30 theme-transition group hover-lift">
+                        <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                            <i class="fas fa-clipboard-list text-white text-sm"></i>
+                        </div>
+                        <div class="flex-1 flex items-center justify-between">
+                            <span class="font-medium">help center</span>
+                            <span class="bg-purple-500 text-white text-xs px-2 py-1 rounded-full shadow-glow"></span>
+                        </div>    
+            
+                    </a>
+                </div>
+            </nav>
+
+            <!-- أزرار تسجيل الدخول وإنشاء حساب -->
+            <div class="p-6 border-t border-gray-200/30 dark:border-gray-700/30">
+                <div class="space-y-3">
+                    <a href="login.html" class="w-full flex items-center justify-center space-x-2 space-x-reverse p-3 rounded-xl bg-gradient-primary text-white hover:shadow-glow-primary theme-transition font-medium">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>تسجيل الدخول</span>
+                    </a>
+                    
+                    <a href="register.html" class="w-full flex items-center justify-center space-x-2 space-x-reverse p-3 rounded-xl bg-gray-200/30 dark:bg-gray-700/30 text-gray-700 dark:text-gray-300 hover:bg-gray-300/30 dark:hover:bg-gray-600/30 theme-transition font-medium">
+                        <i class="fas fa-user-plus"></i>
+                        <span>إنشاء حساب</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة الثيمات -->
+    <div id="themes-modal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden theme-transition backdrop-blur-sm">
+        <div class="bg-white/90 dark:bg-gray-800/90 glass-effect rounded-3xl shadow-2xl w-full max-w-md mx-4 theme-transition border border-gray-200/30 dark:border-gray-700/30">
+            <div class="p-6 border-b border-gray-200/30 dark:border-gray-700/30">
+                <h3 class="text-xl font-bold text-gray-800 dark:text-white flex items-center">
+                    <i class="fas fa-palette text-primary ml-2"></i>
+                    <span>إعدادات المظهر</span>
+                </h3>
+            </div>
+            
+            <!-- قسم التبديل بين الوضع الداكن والفاتح -->
+            <div class="p-6 border-b border-gray-200/30 dark:border-gray-700/30">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-lg font-medium text-gray-800 dark:text-white">الوضع الداكن</span>
+                    <label class="dark-mode-toggle">
+                        <input type="checkbox" id="dark-mode-switch">
+                        <span class="dark-mode-slider"></span>
+                    </label>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-400">قم بالتبديل بين الوضع الداكن والفاتح لتجربة تصفح مريحة</p>
+            </div>
+            
+            <div class="p-6">
+                <h4 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">اختر لون السمة</h4>
+                <div class="grid grid-cols-5 gap-4">
+                    <div class="w-12 h-12 bg-blue-500 rounded-2xl cursor-pointer border-4 border-blue-500 theme-option shadow-glow" data-theme="blue" title="أزرق"></div>
+                    <div class="w-12 h-12 bg-green-500 rounded-2xl cursor-pointer border-4 border-transparent theme-option shadow-glow hover:scale-110 transition-transform" data-theme="green" title="أخضر"></div>
+                    <div class="w-12 h-12 bg-purple-500 rounded-2xl cursor-pointer border-4 border-transparent theme-option shadow-glow hover:scale-110 transition-transform" data-theme="purple" title="بنفسجي"></div>
+                    <div class="w-12 h-12 bg-red-500 rounded-2xl cursor-pointer border-4 border-transparent theme-option shadow-glow hover:scale-110 transition-transform" data-theme="red" title="أحمر"></div>
+                    <div class="w-12 h-12 bg-orange-500 rounded-2xl cursor-pointer border-4 border-transparent theme-option shadow-glow hover:scale-110 transition-transform" data-theme="orange" title="برتقالي"></div>
+                    <div class="w-12 h-12 bg-teal-500 rounded-2xl cursor-pointer border-4 border-transparent theme-option shadow-glow hover:scale-110 transition-transform" data-theme="teal" title="تركواز"></div>
+                    <div class="w-12 h-12 bg-indigo-500 rounded-2xl cursor-pointer border-4 border-transparent theme-option shadow-glow hover:scale-110 transition-transform" data-theme="indigo" title="نيلي"></div>
+                    <div class="w-12 h-12 bg-pink-500 rounded-2xl cursor-pointer border-4 border-transparent theme-option shadow-glow hover:scale-110 transition-transform" data-theme="pink" title="وردي"></div>
+                    <div class="w-12 h-12 bg-yellow-500 rounded-2xl cursor-pointer border-4 border-transparent theme-option shadow-glow hover:scale-110 transition-transform" data-theme="yellow" title="أصفر"></div>
+                    <div class="w-12 h-12 bg-cyan-500 rounded-2xl cursor-pointer border-4 border-transparent theme-option shadow-glow hover:scale-110 transition-transform" data-theme="cyan" title="سماوي"></div>
+                </div>
+            </div>
+            
+            <div class="flex justify-end p-6 border-t border-gray-200/30 dark:border-gray-700/30">
+                <button id="close-themes-modal" class="bg-gradient-primary text-white px-8 py-3 rounded-2xl hover:shadow-glow-primary transition-all duration-300 font-medium">
+                    <span>تم</span>
+                </button>
+            </div>
         </div>
     </div>
 
     <!-- المحتوى الرئيسي -->
-    <div class="main-content">
-        <!-- Header -->
-        <header>
-            <div class="container">
-                <div class="header-content">
-                    <button class="mobile-menu-btn" id="mobileMenuBtn">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                    <div class="logo">Skillzoy Academy</div>
-                    
-                    <nav class="nav-links" id="navLinks">
-                        <a href="#home" class="active">الرئيسية</a>
-                        <a href="#courses">الدورات</a>
-                        <a href="#process">كيفية الاشتراك</a>
-                        <a href="#testimonials">آراء الطلاب</a>
-                        <a href="#certificate">الشهادات</a>
-                        <a href="#contact">التواصل</a>
-                    </nav>
-                    
-                    <div class="header-actions">
-                        <button class="theme-toggle" id="themeToggle">
-                            <i class="fas fa-moon"></i>
-                        </button>
-                        <button class="icon-btn">
-                            <i class="fas fa-heart"></i>
-                            <span class="badge">3</span>
-                        </button>
-                        <a href="login.html" class="icon-btn">
-                            <i class="fas fa-user"></i>
-                        </a>
+    <div class="min-h-screen flex flex-col">
+        <!-- Hero Section -->
+        <section class="hero py-16 lg:py-24 relative overflow-hidden" id="home">
+            <div class="container mx-auto px-4 relative z-10">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="hero-text">
+                        <div class="mb-4">
+                            <span class="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium">منصة التعلم الإلكتروني المتقدمة</span>
+                        </div>
+                        <h1 class="text-3xl lg:text-5xl font-bold text-gray-800 dark:text-white mb-6 leading-tight">
+                            طور مهاراتك مع Skillzoy Academy
+                        </h1>
+                        <p class="text-lg lg:text-xl text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">انضم إلى آلاف الطلاب حول العالم وطور مهاراتك مع دوراتنا المتخصصة. احصل على شهادات معتمدة وافتح أبوابًا جديدة لمستقبلك المهني.</p>
+                        <div class="hero-buttons flex flex-wrap gap-4">
+                            <a href="login.html" class="btn bg-gradient-primary text-white hover:shadow-glow-primary py-3 px-6 rounded-2xl transition-all duration-300 flex items-center pulse">
+                                <i class="fas fa-play-circle ml-2"></i>
+                                ابدأ التعلم الآن
+                            </a>
+                            <a href="#courses" class="btn bg-gray-200/30 dark:bg-gray-700/30 text-gray-700 dark:text-gray-300 hover:bg-gray-300/30 dark:hover:bg-gray-600/30 py-3 px-6 rounded-2xl transition-all duration-300 flex items-center">
+                                <i class="fas fa-book ml-2"></i>
+                                عرض الدورات  
+                            </a>
+                        </div>
+                        
+                        <!-- إحصائيات سريعة -->
+                        <div class="mt-12 grid grid-cols-3 gap-6">
+                            <div class="text-center">
+                                <p class="text-2xl font-bold text-primary">789,128+</p>
+                                <p class="text-gray-600 dark:text-gray-400">طالب مسجل</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-2xl font-bold text-primary">579+</p>
+                                <p class="text-gray-600 dark:text-gray-400">دورة تدريبية</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-2xl font-bold text-primary">4.8</p>
+                                <p class="text-gray-600 dark:text-gray-400">تقييم الطلاب</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-video-container card-glass rounded-2xl shadow-glow p-4 theme-transition hover-lift">
+                        <div class="video-wrapper rounded-2xl overflow-hidden">
+                            <iframe class="w-full h-64 lg:h-96" src="https://www.youtube.com/embed/paCYau71G7g?rel=0&modestbranding=1&autoplay=0" 
+                                title="مقدمة عن Skillzoy Academy" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </header>
-
-        <!-- Hero Section -->
-        <section class="hero" id="home">
-            <div class="hero-animation">
-                <div class="floating-shapes">
-                    <div class="shape" style="width: 200px; height: 200px; top: 10%; left: 10%;"></div>
-                    <div class="shape" style="width: 150px; height: 150px; top: 60%; left: 80%;"></div>
-                    <div class="shape" style="width: 120px; height: 120px; top: 30%; left: 60%;"></div>
-                    <div class="shape" style="width: 180px; height: 180px; top: 80%; left: 20%;"></div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="hero-content">
-                    <h1>Skillzoy Academy</h1>
-                    <p>منصة التعلم الإلكتروني المتقدمة. انضم إلى آلاف الطلاب حول العالم وطور مهاراتك مع دوراتنا المتخصصة. احصل على شهادات معتمدة وافتح أبوابًا جديدة لمستقبلك المهني.</p>
-                    <button class="btn btn-primary" id="exploreCoursesBtn">استكشف الدورات</button>
+                
+                <!-- مؤشر التمرير -->
+                <div class="mt-16 text-center scroll-indicator">
+                    <a href="#courses" class="text-gray-500 dark:text-gray-400 hover:text-primary transition-colors duration-300">
+                        <i class="fas fa-chevron-down text-2xl"></i>
+                    </a>
                 </div>
             </div>
         </section>
 
         <!-- Courses Section -->
-        <section class="container" id="courses">
-            <h2 class="section-title">دوراتنا التعليمية المجانية</h2>
-            
-            <div class="filters">
-                <button class="filter-btn active" data-category="all">الكل</button>
-                <button class="filter-btn" data-category="تطوير الذات">تطوير الذات</button>
-                <button class="filter-btn" data-category="القيادة">القيادة</button>
-                <button class="filter-btn" data-category="التدريب">التدريب</button>
-                <button class="filter-btn" data-category="الإدارة">الإدارة</button>
-            </div>
-            
-            <div class="products-grid" id="coursesGrid">
-                <!-- دورة 1: TOT -->
-                <div class="course-card">
-                    <div class="video-wrapper">
-                        <iframe width="100%" height="315" src="https://www.youtube.com/embed/7Ok6J0CURvc?rel=0&modestbranding=1&autoplay=0" frameborder="0" allowfullscreen></iframe>
-                    </div>
-                    <div class="course-content">
-                        <div class="course-category">التدريب</div>
-                        <h3 class="course-title">دورة مدرب مدربين (TOT) <span class="free-badge">مجاني</span></h3>
-                        <div class="course-free-note">
-                            <i class="fas fa-gift"></i> هذه الدورة مقدمة مجاناً بالكامل
-                        </div>
-                        <div class="course-instructor">
-                            <i class="fas fa-user-tie"></i> د. أحمد محمد
-                        </div>
-                        <p class="course-desc">
-                            تعلم كيفية تصميم وتقديم برامج تدريبية فعالة، وإدارة جلسات التدريب، وتطوير مهاراتك كمدرب محترف. هذه السلسلة الكاملة تغطي جميع جوانب التدريب والتطوير.
-                        </p>
-                        <div class="course-meta">
-                            <span><i class="far fa-clock"></i> 40 ساعة</span>
-                            <span><i class="far fa-user"></i> 12,258 طالب</span>
-                        </div>
-                        <div class="course-certificate-note">
-                            <i class="fas fa-award"></i> بعد إكمال الدورة، ستحصل على شهادتك المعتمدة
-                        </div>
-                        <div class="course-actions">
-                            <a href="login.html" class="enroll-btn">
-                                <i class="fas fa-sign-in-alt"></i>
-                                سجل الدخول لمشاهدة الدورة
-                            </a>
-                            <button class="action-btn"><i class="far fa-heart"></i></button>
-                            <button class="action-btn"><i class="far fa-eye"></i></button>
-                        </div>
-                    </div>
+        <section class="courses py-16 lg:py-24" id="courses">
+            <div class="container mx-auto px-4">
+                <div class="section-title text-center mb-16">
+                    <h2 class="text-3xl lg:text-4xl font-bold text-gray-800 dark:text-white mb-4">دوراتنا التعليمية المجانية</h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">اختر من بين مجموعة واسعة من الدورات المجانية المصممة خصيصًا لتلبية احتياجات سوق العمل الحديث</p>
                 </div>
-                
-                <!-- دورة 2: القيادة -->
-                <div class="course-card">
-                    <div class="video-wrapper">
-                        <iframe width="100%" height="315" src="https://www.youtube.com/embed/5MgBikgcWnY?rel=0&modestbranding=1&autoplay=0" frameborder="0" allowfullscreen></iframe>
-                    </div>
-                    <div class="course-content">
-                        <div class="course-category">القيادة</div>
-                        <h3 class="course-title">دورة القيادة والإدارة المتقدمة <span class="free-badge">مجاني</span></h3>
-                        <div class="course-free-note">
-                            <i class="fas fa-gift"></i> هذه الدورة مقدمة مجاناً بالكامل
+                <div class="courses-grid grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- دورة 1: TOT -->
+                    <div class="course-card card-glass rounded-2xl shadow-glow overflow-hidden theme-transition hover-lift">
+                        <div class="video-wrapper">
+                            <iframe width="100%" height="315" src="https://www.youtube.com/embed/7Ok6J0CURvc?rel=0&modestbranding=1&autoplay=0" frameborder="0" allowfullscreen></iframe>
                         </div>
-                        <div class="course-instructor">
-                            <i class="fas fa-user-tie"></i> د. خالد الحربي
-                        </div>
-                        <p class="course-desc">
-                            طور مهاراتك القيادية وتعلم كيفية إدارة الفرق بفعالية، واتخاذ القرارات الاستراتيجية، وتحقيق الأهداف التنظيمية. سلسلة شاملة عن فنون القيادة الحديثة.
-                        </p>
-                        <div class="course-meta">
-                            <span><i class="far fa-clock"></i> 32 ساعة</span>
-                            <span><i class="far fa-user"></i> 22,820 طالب</span>
-                        </div>
-                        <div class="course-certificate-note">
-                            <i class="fas fa-award"></i> بعد إكمال الدورة، ستحصل على شهادتك المعتمدة
-                        </div>
-                        <div class="course-actions">
-                            <a href="login.html" class="enroll-btn">
-                                <i class="fas fa-sign-in-alt"></i>
+                        <div class="p-6">
+                            <h3 class="course-title text-xl font-bold text-gray-800 dark:text-white mb-2">دورة مدرب مدربين (TOT) <span class="free-badge bg-green-500 text-white text-sm px-3 py-1 rounded-full">مجاني</span></h3>
+                            <div class="course-free-note bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 p-3 rounded-xl mb-4 flex items-center">
+                                <i class="fas fa-gift ml-2"></i> هذه الدورة مقدمة مجاناً بالكامل
+                            </div>
+                            <div class="course-instructor text-gray-600 dark:text-gray-400 mb-3 flex items-center">
+                                <i class="fas fa-user-tie ml-2"></i> د. أحمد محمد
+                            </div>
+                            <p class="course-desc text-gray-700 dark:text-gray-300 mb-4">
+                                تعلم كيفية تصميم وتقديم برامج تدريبية فعالة، وإدارة جلسات التدريب، وتطوير مهاراتك كمدرب محترف. هذه السلسلة الكاملة تغطي جميع جوانب التدريب والتطوير.
+                            </p>
+                            <div class="course-meta flex text-gray-600 dark:text-gray-400 mb-4">
+                                <span class="flex items-center ml-4"><i class="far fa-clock ml-1"></i> 40 ساعة</span>
+                                <span class="flex items-center"><i class="far fa-user ml-1"></i> 12,258 طالب</span>
+                            </div>
+                            <div class="course-certificate-note bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 p-3 rounded-xl mb-4 flex items-center">
+                                <i class="fas fa-award ml-2"></i> بعد إكمال الدورة، ستحصل على شهادتك المعتمدة
+                            </div>
+                            <a href="login.html" class="btn-login w-full bg-gradient-primary text-white hover:shadow-glow-primary py-3 rounded-2xl transition-all duration-300 flex items-center justify-center">
+                                <i class="fas fa-sign-in-alt ml-2"></i>
                                 سجل الدخول لمشاهدة الدورة
                             </a>
-                            <button class="action-btn"><i class="far fa-heart"></i></button>
-                            <button class="action-btn"><i class="far fa-eye"></i></button>
+                        </div>
+                    </div>
+                    
+                    <!-- دورة 2: القيادة -->
+                    <div class="course-card card-glass rounded-2xl shadow-glow overflow-hidden theme-transition hover-lift">
+                        <div class="video-wrapper">
+                            <iframe width="100%" height="315" src="https://www.youtube.com/embed/5MgBikgcWnY?rel=0&modestbranding=1&autoplay=0" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="course-title text-xl font-bold text-gray-800 dark:text-white mb-2">دورة القيادة والإدارة المتقدمة <span class="free-badge bg-green-500 text-white text-sm px-3 py-1 rounded-full">مجاني</span></h3>
+                            <div class="course-free-note bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 p-3 rounded-xl mb-4 flex items-center">
+                                <i class="fas fa-gift ml-2"></i> هذه الدورة مقدمة مجاناً بالكامل
+                            </div>
+                            <div class="course-instructor text-gray-600 dark:text-gray-400 mb-3 flex items-center">
+                                <i class="fas fa-user-tie ml-2"></i> د. خالد الحربي
+                            </div>
+                            <p class="course-desc text-gray-700 dark:text-gray-300 mb-4">
+                                طور مهاراتك القيادية وتعلم كيفية إدارة الفرق بفعالية، واتخاذ القرارات الاستراتيجية، وتحقيق الأهداف التنظيمية. سلسلة شاملة عن فنون القيادة الحديثة.
+                            </p>
+                            <div class="course-meta flex text-gray-600 dark:text-gray-400 mb-4">
+                                <span class="flex items-center ml-4"><i class="far fa-clock ml-1"></i> 32 ساعة</span>
+                                <span class="flex items-center"><i class="far fa-user ml-1"></i> 22,820 طالب</span>
+                            </div>
+                            <div class="course-certificate-note bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 p-3 rounded-xl mb-4 flex items-center">
+                                <i class="fas fa-award ml-2"></i> بعد إكمال الدورة، ستحصل على شهادتك المعتمدة
+                            </div>
+                            <a href="login.html" class="btn-login w-full bg-gradient-primary text-white hover:shadow-glow-primary py-3 rounded-2xl transition-all duration-300 flex items-center justify-center">
+                                <i class="fas fa-sign-in-alt ml-2"></i>
+                                سجل الدخول لمشاهدة الدورة
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -1232,10 +733,11 @@
 
         <!-- Process Section -->
         <section class="process py-16 lg:py-24 bg-gray-100/30 dark:bg-gray-800/30" id="process">
-            <div class="container">
-                <h2 class="section-title">كيفية الاشتراك في الدورات</h2>
-                <p class="text-center text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-16">اتبع هذه الخطوات البسيطة للانضمام إلى دوراتنا والحصول على شهادتك المعتمدة</p>
-                
+            <div class="container mx-auto px-4">
+                <div class="section-title text-center mb-16">
+                    <h2 class="text-3xl lg:text-4xl font-bold text-gray-800 dark:text-white mb-4">كيفية الاشتراك في الدورات</h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">اتبع هذه الخطوات البسيطة للانضمام إلى دوراتنا والحصول على شهادتك المعتمدة</p>
+                </div>
                 <div class="process-steps grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     <div class="process-step card-glass rounded-2xl p-8 text-center theme-transition hover-lift relative">
                         <div class="absolute -top-4 -right-4 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold">1</div>
@@ -1276,228 +778,443 @@
             </div>
         </section>
 
-        <!-- Footer -->
-        <footer>
-            <div class="container">
-                <div class="footer-content">
-                    <div class="footer-column">
-                        <h3>Skillzoy Academy</h3>
-                        <p>منصة التعلم الإلكتروني الرائدة في تقديم دورات تدريبية متخصصة وشهادات معتمدة.</p>
-                        <div class="social-links">
-                            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
+        <!-- Testimonials Section -->
+        <section class="testimonials py-16 lg:py-24" id="testimonials">
+            <div class="container mx-auto px-4">
+                <div class="section-title text-center mb-16">
+                    <h2 class="text-3xl lg:text-4xl font-bold text-gray-800 dark:text-white mb-4">آراء طلابنا</h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">انظر ماذا يقول طلابنا عن تجربتهم مع Skillzoy Academy</p>
+                </div>
+                <div class="testimonials-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="testimonial-card card-glass rounded-2xl p-8 text-center theme-transition hover-lift">
+                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="نورة" class="testimonial-avatar w-20 h-20 rounded-full mx-auto mb-6 border-4 border-primary/30">
+                        <div class="testimonial-rating text-yellow-400 mb-4">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
                         </div>
+                        <p class="testimonial-text text-gray-700 dark:text-gray-300 mb-6 italic">
+                            "الدورة كانت رائعة ومفيدة جداً. الشهادة ساعدتني في الحصول على ترقية في عملي. شكراً لـ Skillzoy Academy!"
+                        </p>
+                        <p class="testimonial-author text-primary font-semibold text-lg">- نورة أحمد، 22 سنة</p>
                     </div>
                     
-                    <div class="footer-column">
-                        <h3>روابط سريعة</h3>
-                        <ul class="footer-links">
-                            <li><a href="#home">الرئيسية</a></li>
-                            <li><a href="#courses">الدورات</a></li>
-                            <li><a href="#process">كيفية الاشتراك</a></li>
-                            <li><a href="#testimonials">آراء الطلاب</a></li>
-                            <li><a href="#certificate">الشهادات</a></li>
-                            <li><a href="#contact">التواصل</a></li>
-                        </ul>
+                    <div class="testimonial-card card-glass rounded-2xl p-8 text-center theme-transition hover-lift">
+                        <img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="سارة" class="testimonial-avatar w-20 h-20 rounded-full mx-auto mb-6 border-4 border-primary/30">
+                        <div class="testimonial-rating text-yellow-400 mb-4">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <p class="testimonial-text text-gray-700 dark:text-gray-300 mb-6 italic">
+                            "المحتوى كان منظمًا جدًا وسهل المتابعة. فريق الدعم كان دائمًا متاحًا للإجابة على استفساراتي."
+                        </p>
+                        <p class="testimonial-author text-primary font-semibold text-lg">- سارة الخالد</p>
                     </div>
                     
-                    <div class="footer-column">
-                        <h3>خدمة العملاء</h3>
-                        <ul class="footer-links">
-                            <li><a href="#">الشحن والتوصيل</a></li>
-                            <li><a href="#">سياسة الإرجاع</a></li>
-                            <li><a href="#">أسئلة شائعة</a></li>
-                            <li><a href="#">دليل المقاسات</a></li>
-                            <li><a href="#">طرق الدفع</a></li>
-                        </ul>
-                    </div>
-                    
-                    <div class="footer-column">
-                        <h3>اتصل بنا</h3>
-                        <ul class="footer-links">
-                            <li><i class="fas fa-phone" style="margin-left: 8px;"></i>+249 924 299 798</li>
-                            <li><i class="fas fa-envelope" style="margin-left: 8px;"></i> info@skillzoya.com</li>
-                            <li><i class="fas fa-map-marker-alt" style="margin-left: 8px;"></i> الخرطوم ، السودان</li>
-                        </ul>
+                    <div class="testimonial-card card-glass rounded-2xl p-8 text-center theme-transition hover-lift">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="فاطمة" class="testimonial-avatar w-20 h-20 rounded-full mx-auto mb-6 border-4 border-primary/30">
+                        <div class="testimonial-rating text-yellow-400 mb-4">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="testimonial-text text-gray-700 dark:text-gray-300 mb-6 italic">
+                            "تجربة رائعة من البداية إلى النهاية. أنصح الجميع بالانضمام إلى هذه المنصة الرائعة للتعلم الإلكتروني."
+                        </p>
+                        <p class="testimonial-author text-primary font-semibold text-lg">- فاطمة العتيبي، 22 سنة</p>
                     </div>
                 </div>
-                
-                <div class="copyright">
-                    <p>جميع الحقوق محفوظة &copy; 2025 Skillzoy Academy</p>
+            </div>
+        </section>
+
+        <!-- Certificate Template -->
+        <section class="certificate-template py-16 lg:py-24 bg-gray-100/30 dark:bg-gray-800/30" id="certificate">
+            <div class="container mx-auto px-4">
+                <div class="section-title text-center mb-16">
+                    <h2 class="text-3xl lg:text-4xl font-bold text-gray-800 dark:text-white mb-4">نموذج الشهادة المعتمدة</h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">شهادة معتمدة من Skillzoy Academy تثبت إنجازك في الدورة التدريبية</p>
+                </div>
+                <div class="certificate flex justify-center">
+                    <img src="https://dl.dropbox.com/scl/fi/8qp2k21gy5um5gelp3iq2/Blue-Grey-Modern-Gradient-Certificate-of-Completion_20250927_110652_.png?rlkey=gadbixsqdabfsymguk6bv8ua8&st=dl6zl89j&raw=1" 
+                         alt="نموذج شهادة Skillzoy Academy" 
+                         class="certificate-image w-full max-w-3xl rounded-2xl shadow-glow hover:scale-105 transition-transform duration-300">
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact py-16 lg:py-24" id="contact">
+            <div class="container mx-auto px-4">
+                <div class="section-title text-center mb-16">
+                    <h2 class="text-3xl lg:text-4xl font-bold text-gray-800 dark:text-white mb-4">تواصل معنا</h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">يسعدنا تواصلكم معنا لأي استفسار حول الدورات أو الشهادات</p>
+                </div>
+                <div class="contact-container grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <div class="contact-info card-glass rounded-2xl p-8 theme-transition">
+                        <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">معلومات الاتصال</h3>
+                        <div class="space-y-6">
+                            <p class="flex items-center text-gray-700 dark:text-gray-300 text-lg">
+                                <i class="fas fa-map-marker-alt text-primary text-xl ml-4"></i> 
+                                <span>khartoum, Sudan</span>
+                            </p>
+                            <p class="flex items-center text-gray-700 dark:text-gray-300 text-lg">
+                                <i class="fas fa-phone text-primary text-xl ml-4"></i> 
+                                <span>0924299798</span>
+                            </p>
+                            <p class="flex items-center text-gray-700 dark:text-gray-300 text-lg">
+                                <i class="fas fa-envelope text-primary text-xl ml-4"></i> 
+                                <span>info@skillzoya.com</span>
+                            </p>
+                            <p class="flex items-center text-gray-700 dark:text-gray-300 text-lg">
+                                <i class="fas fa-clock text-primary text-xl ml-4"></i> 
+                                <span>من الأحد إلى الخميس، 9 صباحاً - 6 مساءً</span>
+                            </p>
+                        </div>
+                        
+                        <a href="register.html" class="w-full mt-8 bg-gradient-primary text-white hover:shadow-glow-primary py-4 rounded-2xl transition-all duration-300 flex items-center justify-center space-x-2 space-x-reverse font-medium text-lg">
+                            <i class="fas fa-user-plus"></i>
+                            <span>إنشاء حساب جديد</span>
+                        </a>
+                    </div>
+                    
+                    <div class="contact-form card-glass rounded-2xl p-8 theme-transition">
+                        <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">أرسل رسالة</h3>
+                        <form id="contactForm" class="space-y-6">
+                            <input type="text" placeholder="اسمك" required
+                                class="w-full px-4 py-4 bg-white/50 dark:bg-gray-800/50 border border-gray-300/50 dark:border-gray-600/50 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent theme-transition text-lg">
+                            <input type="email" placeholder="بريدك الإلكتروني" required
+                                class="w-full px-4 py-4 bg-white/50 dark:bg-gray-800/50 border border-gray-300/50 dark:border-gray-600/50 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent theme-transition text-lg">
+                            <input type="text" placeholder="الموضوع" required
+                                class="w-full px-4 py-4 bg-white/50 dark:bg-gray-800/50 border border-gray-300/50 dark:border-gray-600/50 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent theme-transition text-lg">
+                            <textarea placeholder="رسالتك" required rows="5"
+                                class="w-full px-4 py-4 bg-white/50 dark:bg-gray-800/50 border border-gray-300/50 dark:border-gray-600/50 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent theme-transition text-lg"></textarea>
+                            <button type="submit" class="w-full bg-gradient-primary text-white hover:shadow-glow-primary py-4 rounded-2xl transition-all duration-300 flex items-center justify-center space-x-2 space-x-reverse font-medium text-lg">
+                                <i class="fas fa-paper-plane"></i>
+                                <span>إرسال</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer-gradient py-16 lg:py-24 mt-20">
+            <div class="container mx-auto px-4">
+                <div class="footer-content grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                    <div class="footer-column">
+                        <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-6">Skillzoy Academy</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-6">منصة التعلم الإلكتروني الرائدة في تقديم دورات تدريبية متخصصة وشهادات معتمدة.</p>
+                        <div class="social-links flex space-x-4 space-x-reverse">
+                            <a href="https://twitter.com/skillzoy" class="w-12 h-12 bg-gray-200/30 dark:bg-gray-700/30 rounded-2xl flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-primary hover:text-white transition-all duration-300" target="_blank"><i class="fab fa-twitter"></i></a>
+                            <a href="https://linkedin.com/company/skillzoy" class="w-12 h-12 bg-gray-200/30 dark:bg-gray-700/30 rounded-2xl flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-primary hover:text-white transition-all duration-300" target="_blank"><i class="fab fa-linkedin"></i></a>
+                            <a href="https://youtube.com/c/skillzoy" class="w-12 h-12 bg-gray-200/30 dark:bg-gray-700/30 rounded-2xl flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-primary hover:text-white transition-all duration-300" target="_blank"><i class="fab fa-youtube"></i></a>
+                            <a href="https://instagram.com/skillzoy" class="w-12 h-12 bg-gray-200/30 dark:bg-gray-700/30 rounded-2xl flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-primary hover:text-white transition-all duration-300" target="_blank"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-column">
+                        <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-6">روابط سريعة</h3>
+                        <ul class="footer-links space-y-3">
+                            <li><a href="#home" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">الرئيسية</a></li>
+                            <li><a href="#courses" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">الدورات</a></li>
+                            <li><a href="#process" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">كيفية الاشتراك</a></li>
+                            <li><a href="#testimonials" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">آراء الطلاب</a></li>
+                            <li><a href="#certificate" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">الشهادات</a></li>
+                            <li><a href="#contact" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">التواصل</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-6">الدورات</h3>
+                        <ul class="footer-links space-y-3">
+                            <li><a href="#courses" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">مدرب مدربين (TOT)</a></li>
+                            <li><a href="#courses" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">القيادة والإدارة</a></li>
+                            <li><a href="#courses" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">إدارة الموارد البشرية</a></li>
+                            <li><a href="#courses" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">تطوير الأعمال</a></li>
+                            <li><a href="#courses" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">مهارات التواصل</a></li>
+                            <li><a href="#courses" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">إدارة المشاريع</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-6">النشرة البريدية</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4">اشترك في نشرتنا البريدية لتصلك آخر المستجدات والدورات الجديدة.</p>
+                        <form class="flex">
+                            <input type="email" placeholder="بريدك الإلكتروني" required
+                                class="flex-1 px-4 py-3 bg-white/50 dark:bg-gray-800/50 border border-gray-300/50 dark:border-gray-600/50 rounded-r-2xl focus:ring-2 focus:ring-primary focus:border-transparent theme-transition">
+                            <button type="submit" class="bg-gradient-primary text-white px-4 rounded-l-2xl hover:shadow-glow-primary transition-all duration-300">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="copyright text-center pt-8 border-t border-gray-200/30 dark:border-gray-700/30">
+                    <p class="text-gray-600 dark:text-gray-400">جميع الحقوق محفوظة &copy; 2025 Skillzoy Academy</p>
                 </div>
             </div>
         </footer>
     </div>
 
-    <!-- Toast Notification -->
-    <div class="toast" id="toast"></div>
-
     <script>
         // عناصر DOM
-        const loadingScreen = document.getElementById('loadingScreen');
-        const loadingTruck = document.querySelector('.loading-truck');
-        const loadingLogo = document.querySelector('.loading-logo');
-        const loadingProgress = document.querySelector('.loading-progress');
-        const loadingProgressBar = document.querySelector('.loading-progress-bar');
-        const mainContent = document.querySelector('.main-content');
-        const themeToggle = document.getElementById('themeToggle');
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const navLinks = document.getElementById('navLinks');
-        const exploreCoursesBtn = document.getElementById('exploreCoursesBtn');
-        const filterButtons = document.querySelectorAll('.filter-btn');
-        const toast = document.getElementById('toast');
-        const installBtn = document.getElementById('installBtn');
-
-        // بدء التحميل
-        function startLoading() {
-            // تشغيل أنيميشن الشاحنة
-            setTimeout(() => {
-                loadingTruck.classList.add('active');
-            }, 500);
-
-            // إظهار الشعار وشريط التقدم بعد اختفاء الشاحنة
-            setTimeout(() => {
-                loadingLogo.classList.add('show');
-                loadingProgress.classList.add('show');
-                loadingProgressBar.style.width = '100%';
-            }, 2000);
-
-            // الانتقال إلى المحتوى الرئيسي
-            setTimeout(() => {
-                loadingScreen.classList.add('fade-out');
-                setTimeout(() => {
-                    loadingScreen.style.display = 'none';
-                    mainContent.classList.add('loaded');
-                    initializeSite();
-                }, 800);
-            }, 4500);
-        }
-
-        // تهيئة الموقع
-        function initializeSite() {
-            setupEventListeners();
-        }
-
-        // إعداد مستمعي الأحداث
-        function setupEventListeners() {
-            // تبديل السمة
-            themeToggle.addEventListener('click', toggleTheme);
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const closeMobileSidebarBtn = document.getElementById('close-mobile-sidebar');
+        const mobileSidebar = document.getElementById('mobile-sidebar');
+        const themesToggle = document.getElementById('themes-toggle');
+        const themesModal = document.getElementById('themes-modal');
+        const closeThemesModal = document.getElementById('close-themes-modal');
+        const themeOptions = document.querySelectorAll('.theme-option');
+        const darkModeSwitch = document.getElementById('dark-mode-switch');
+        
+        // تهيئة التطبيق
+        document.addEventListener('DOMContentLoaded', function() {
+            // تحميل التفضيلات
+            loadPreferencesFromLocalStorage();
             
-            // القائمة المتنقلة
-            mobileMenuBtn.addEventListener('click', () => {
-                navLinks.classList.toggle('active');
-            });
+            // إضافة مستمعي الأحداث
+            mobileMenuBtn.addEventListener('click', toggleMobileSidebar);
+            closeMobileSidebarBtn.addEventListener('click', closeMobileSidebar);
+            themesToggle.addEventListener('click', showThemesModal);
+            closeThemesModal.addEventListener('click', hideThemesModal);
             
-            // زر استكشف الدورات
-            exploreCoursesBtn.addEventListener('click', () => {
-                document.querySelector('#courses').scrollIntoView({ 
-                    behavior: 'smooth' 
+            // مستمع الحدث لزر التبديل بين الوضع الداكن والفاتح
+            if (darkModeSwitch) {
+                darkModeSwitch.addEventListener('change', toggleDarkMode);
+            }
+            
+            // التنقل السلس للروابط
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                        
+                        // إغلاق الشريط الجانبي على الجوال
+                        closeMobileSidebar();
+                    }
                 });
             });
             
-            // تصفية الدورات مع تأثيرات الضوء
-            filterButtons.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    // إزالة الفئة النشطة من جميع الأزرار
-                    filterButtons.forEach(b => {
-                        b.classList.remove('active');
-                        b.classList.remove('intense-glow');
-                        b.classList.remove('electro-glow');
-                    });
-                    
-                    // إضافة الفئة النشطة للزر المختار
-                    this.classList.add('active');
-                    
-                    // إضافة تأثير الضوء الكثيف
-                    this.classList.add('intense-glow');
-                    
-                    // بعد 3 ثوانٍ، إزالة الضوء الكثيف وإضافة الضوء الكهروضوئي الخفيف
-                    setTimeout(() => {
-                        this.classList.remove('intense-glow');
-                        this.classList.add('electro-glow');
-                    }, 3000);
-                });
+            themeOptions.forEach(option => {
+                option.addEventListener('click', changeThemeColor);
             });
+            
+            // إغلاق القوائم المنسدلة عند النقر خارجها
+            document.addEventListener('click', function(e) {
+                if (!themesToggle.contains(e.target) && !themesModal.contains(e.target)) {
+                    themesModal.classList.add('hidden');
+                }
+                
+                if (!mobileMenuBtn.contains(e.target) && !mobileSidebar.contains(e.target)) {
+                    closeMobileSidebar();
+                }
+            });
+            
+            // معالجة إرسال نموذج الاتصال
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('شكراً لتواصلكم معنا! سنرد على رسالتكم في أقرب وقت ممكن.');
+                    contactForm.reset();
+                });
+            }
+        });
+
+        // تحميل التفضيلات من localStorage
+        function loadPreferencesFromLocalStorage() {
+            const savedThemeColor = localStorage.getItem('themeColor') || 'blue';
+            const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+            
+            const preferences = {
+                theme: savedThemeColor,
+                darkMode: savedDarkMode
+            };
+            
+            applyUserPreferences(preferences);
         }
 
-        // تبديل السمة
-        function toggleTheme() {
-            document.body.classList.toggle('dark-theme');
-            document.body.classList.toggle('light-theme');
+        // تطبيق تفضيلات المستخدم
+        function applyUserPreferences(preferences) {
+            // تطبيق لون السمة
+            document.body.setAttribute('data-theme', preferences.theme);
             
-            const icon = themeToggle.querySelector('i');
-            if (document.body.classList.contains('light-theme')) {
-                icon.classList.remove('fa-moon');
-                icon.classList.add('fa-sun');
-                localStorage.setItem('theme', 'light');
+            // تحديث أزرار الألوان
+            themeOptions.forEach(option => {
+                if (option.getAttribute('data-theme') === preferences.theme) {
+                    option.classList.add('border-4', 'border-blue-500');
+                } else {
+                    option.classList.remove('border-4', 'border-blue-500');
+                }
+            });
+
+            // تطبيق الوضع الداكن
+            if (preferences.darkMode) {
+                document.documentElement.classList.add('dark');
+                if (darkModeSwitch) darkModeSwitch.checked = true;
             } else {
-                icon.classList.remove('fa-sun');
-                icon.classList.add('fa-moon');
-                localStorage.setItem('theme', 'dark');
+                document.documentElement.classList.remove('dark');
+                if (darkModeSwitch) darkModeSwitch.checked = false;
             }
         }
 
-        // تحميل السمة المحفوظة
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'light') {
-            document.body.classList.add('light-theme');
-            document.body.classList.remove('dark-theme');
-            themeToggle.querySelector('i').classList.remove('fa-moon');
-            themeToggle.querySelector('i').classList.add('fa-sun');
+        // حفظ التفضيلات في localStorage
+        function savePreferencesToLocalStorage(preferences) {
+            localStorage.setItem('themeColor', preferences.theme);
+            localStorage.setItem('darkMode', preferences.darkMode);
         }
 
-        // عرض الإشعارات
-        function showToast(message, isError = false) {
-            toast.textContent = message;
-            toast.className = 'toast';
+        // تبديل الشريط الجانبي على الجوال
+        function toggleMobileSidebar() {
+            mobileSidebar.classList.remove('hidden');
+        }
+
+        function closeMobileSidebar() {
+            mobileSidebar.classList.add('hidden');
+        }
+
+        // تغيير لون السمة
+        function changeThemeColor(e) {
+            const theme = e.target.getAttribute('data-theme');
+            document.body.setAttribute('data-theme', theme);
             
-            if (isError) {
-                toast.classList.add('error');
+            // تحديث التحديد
+            themeOptions.forEach(option => {
+                option.classList.remove('border-4', 'border-blue-500');
+            });
+            e.target.classList.add('border-4', 'border-blue-500');
+            
+            // حفظ التفضيلات
+            savePreferencesToLocalStorage({
+                theme: theme,
+                darkMode: document.documentElement.classList.contains('dark')
+            });
+        }
+
+        // التبديل بين الوضع الداكن والفاتح
+        function toggleDarkMode() {
+            const isDarkMode = darkModeSwitch.checked;
+            
+            if (isDarkMode) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
             }
             
-            toast.classList.add('show');
-            
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
+            // حفظ التفضيلات
+            savePreferencesToLocalStorage({
+                theme: document.body.getAttribute('data-theme'),
+                darkMode: isDarkMode
+            });
         }
 
-        // بدء التحميل عند تحميل الصفحة
-        document.addEventListener('DOMContentLoaded', startLoading);
+        // إظهار نافذة الثيمات
+        function showThemesModal() {
+            themesModal.classList.remove('hidden');
+        }
+
+        // إخفاء نافذة الثيمات
+        function hideThemesModal() {
+            themesModal.classList.add('hidden');
+        }
     </script>
-
-    <!-- PWA Service Worker Registration - نفس متجر المستقبل -->
+    
     <script>
-        // تسجيل Service Worker
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('service-worker.js')
-                .then(() => console.log('✅ تم تسجيل الـ Service Worker بنجاح'))
-                .catch(err => console.log('❌ خطأ في تسجيل الـ Service Worker:', err));
-        }
+  // تسجيل Service Worker
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js')
+      .then(() => console.log('✅ تم تسجيل الـ Service Worker'))
+      .catch(err => console.log('❌ خطأ في SW:', err));
+  }
 
-        // منطق زر التثبيت - نفس متجر المستقبل
-        let deferredPrompt;
-        const installBtn = document.getElementById('installBtn');
+  // منطق زر التثبيت
+  let deferredPrompt;
+  const installBtn = document.getElementById('installBtn');
 
-        window.addEventListener('beforeinstallprompt', (e) => {
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    installBtn.hidden = false;
+  });
+
+  installBtn.addEventListener('click', async () => {
+    installBtn.hidden = true;
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+      deferredPrompt = null;
+    }
+  });
+      </script>
+        <script>
+(() => {
+
+       // ==============================
+        // 0-0
+    // ==============================
+    document.addEventListener("keydown", (e) => {
+        if (
+            (e.ctrlKey && e.shiftKey && ["I", "C", "J", "L"].includes(e.key.toUpperCase())) ||
+            (e.key === "F12") ||
+            (e.ctrlKey && e.key.toUpperCase() === "U")
+        ) {
             e.preventDefault();
-            deferredPrompt = e;
-            installBtn.hidden = false;
-            
-            // عرض إشعار للمستخدم
-            showToast('يمكنك تثبيت التطبيق الآن!');
-        });
+        }
+    });
 
-        installBtn.addEventListener('click', async () => {
-            installBtn.hidden = true;
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                await deferredPrompt.userChoice;
-                deferredPrompt = null;
-            }
-        });
-    </script>
+    
+    document.addEventListener("copy", e => e.preventDefault());
+    document.addEventListener("cut", e => e.preventDefault());
+    document.addEventListener("contextmenu", e => e.preventDefault());
+    document.addEventListener("selectstart", e => e.preventDefault());
+
+    
+    let detectSize = () => {
+        if (window.outerWidth - window.innerWidth > 200 || 
+            window.outerHeight - window.innerHeight > 200) {
+            block();
+        }
+    };
+    window.addEventListener("resize", detectSize);
+
+    
+    let start = performance.now();
+    console.log("%c ", "font-size:200px;");
+    let end = performance.now();
+    if (end - start > 50) block();
+
+    // mutation observer
+    const observer = new MutationObserver(() => {
+        block();
+    });
+    observer.observe(document.documentElement, { attributes: true, childList: false, subtree: false });
+
+    // debugger trap
+    setInterval(() => {
+        const t = Date.now();
+        debugger;
+        if (Date.now() - t > 100) block();
+    }, 500);
+
+    // دالة block بدون أي تأثير على الصفحة
+    function block() {
+        
+        console.clear(); 
+    }
+
+})();
+</script> 
 </body>
 </html>
