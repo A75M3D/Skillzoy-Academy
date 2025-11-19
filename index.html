@@ -686,7 +686,7 @@
                             </p>
                             <div class="course-meta flex text-gray-600 dark:text-gray-400 mb-4">
                                 <span class="flex items-center ml-4"><i class="far fa-clock ml-1"></i> 40 ساعة</span>
-                                <span class="flex items-center"><i class="far fa-user ml-1"></i> 12,258 طالب</span>
+                                <span class="flex items-center"><i class="far fa-user ml-1"></i> 12,250 طالب</span>
                             </div>
                             <div class="course-certificate-note bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 p-3 rounded-xl mb-4 flex items-center">
                                 <i class="fas fa-award ml-2"></i> بعد إكمال الدورة، ستحصل على شهادتك المعتمدة
@@ -862,15 +862,15 @@
                         <div class="space-y-6">
                             <p class="flex items-center text-gray-700 dark:text-gray-300 text-lg">
                                 <i class="fas fa-map-marker-alt text-primary text-xl ml-4"></i> 
-                                <span>khartoum, Sudan</span>
+                                <span>الرياض، المملكة العربية السعودية</span>
                             </p>
                             <p class="flex items-center text-gray-700 dark:text-gray-300 text-lg">
                                 <i class="fas fa-phone text-primary text-xl ml-4"></i> 
-                                <span>0924299798</span>
+                                <span>+966 123 456 789</span>
                             </p>
                             <p class="flex items-center text-gray-700 dark:text-gray-300 text-lg">
                                 <i class="fas fa-envelope text-primary text-xl ml-4"></i> 
-                                <span>info@skillzoya.com</span>
+                                <span>info@skillzoyacademy.com</span>
                             </p>
                             <p class="flex items-center text-gray-700 dark:text-gray-300 text-lg">
                                 <i class="fas fa-clock text-primary text-xl ml-4"></i> 
@@ -1158,63 +1158,5 @@
     }
   });
       </script>
-        <script>
-(() => {
-
-       // ==============================
-        // 0-0
-    // ==============================
-    document.addEventListener("keydown", (e) => {
-        if (
-            (e.ctrlKey && e.shiftKey && ["I", "C", "J", "L"].includes(e.key.toUpperCase())) ||
-            (e.key === "F12") ||
-            (e.ctrlKey && e.key.toUpperCase() === "U")
-        ) {
-            e.preventDefault();
-        }
-    });
-
-    
-    document.addEventListener("copy", e => e.preventDefault());
-    document.addEventListener("cut", e => e.preventDefault());
-    document.addEventListener("contextmenu", e => e.preventDefault());
-    document.addEventListener("selectstart", e => e.preventDefault());
-
-    
-    let detectSize = () => {
-        if (window.outerWidth - window.innerWidth > 200 || 
-            window.outerHeight - window.innerHeight > 200) {
-            block();
-        }
-    };
-    window.addEventListener("resize", detectSize);
-
-    
-    let start = performance.now();
-    console.log("%c ", "font-size:200px;");
-    let end = performance.now();
-    if (end - start > 50) block();
-
-    // mutation observer
-    const observer = new MutationObserver(() => {
-        block();
-    });
-    observer.observe(document.documentElement, { attributes: true, childList: false, subtree: false });
-
-    // debugger trap
-    setInterval(() => {
-        const t = Date.now();
-        debugger;
-        if (Date.now() - t > 100) block();
-    }, 500);
-
-    // دالة block بدون أي تأثير على الصفحة
-    function block() {
-        
-        console.clear(); 
-    }
-
-})();
-</script> 
 </body>
 </html>
