@@ -1,6 +1,6 @@
 {
-  "name": "SkillZoy-Academy",
-  "short_name": "SkillZoy", 
+  "name": "SkillZoy Academy",
+  "short_name": "SkillZoy",
   "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -9,12 +9,12 @@
   "scope": "/",
   "icons": [
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/2721/2721272.png",
+      "src": "https://cdn-icons-png.flaticon.com/512/422/422591.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/2721/2721272.png", 
+      "src": "https://cdn-icons-png.flaticon.com/512/422/422591.png",
       "sizes": "512x512",
       "type": "image/png"
     }
