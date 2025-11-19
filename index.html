@@ -11,28 +11,13 @@
     <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1e3a8a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Skillzoy Academy">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
-    <!-- CSS والخطوط -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">   
-    
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        primary: 'rgb(var(--color-primary) / <alpha-value>)',
-                        'primary-dark': 'rgb(var(--color-primary-dark) / <alpha-value>)',
-                        'primary-light': 'rgb(var(--color-primary-light) / <alpha-value>)',
-                    }
-                }
-            }
-        }
-    </script>
     
     <style>
         :root {
@@ -301,32 +286,6 @@
             transform: translateX(30px);
         }
         
-        /* زر تثبيت PWA */
-        .install-btn {
-            background: linear-gradient(135deg, #2563eb, #1e3a8a);
-            color: #fff;
-            border: none;
-            padding: 12px 30px;
-            font-size: 18px;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .install-btn:hover {
-            background: linear-gradient(135deg, #1d4ed8, #1e40af);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 14px rgba(30, 58, 138, 0.5);
-        }
-
-        .install-btn:active {
-            transform: scale(0.98);
-        }
-        
         /* تحسينات للجوال */
         @media (max-width: 768px) {
             .container {
@@ -357,11 +316,6 @@
             .footer-content {
                 grid-template-columns: 1fr;
             }
-            
-            .install-btn {
-                padding: 10px 20px;
-                font-size: 16px;
-            }
         }
         
         /* إصلاح الخطوط الشفافة */
@@ -376,17 +330,40 @@
         .container {
             max-width: 100%;
         }
+        
+        /* زر تثبيت PWA */
+        .install-btn {
+            background: linear-gradient(135deg, #2563eb, #1e3a8a);
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+            transition: all 0.3s ease;
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 10000;
+        }
+        
+        .install-btn:hover {
+            background: linear-gradient(135deg, #1d4ed8, #1e40af);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 14px rgba(30, 58, 138, 0.5);
+        }
+        
+        .install-btn:active {
+            transform: scale(0.98);
+        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-950 dark:to-gray-900 theme-transition" data-theme="blue">
-   
-    <!-- زر تثبيت PWA -->
-    <div id="installContainer" class="fixed bottom-4 left-4 z-50 hidden">
-        <button id="installBtn" class="install-btn">
-            <i class="fas fa-download ml-2"></i>
-            تثبيت التطبيق
-        </button>
-    </div>
+    <!-- زر تثبيت التطبيق -->
+    <button id="installBtn" hidden class="install-btn">
+        📥 تثبيت التطبيق
+    </button>
 
     <!-- تأثيرات الخلفية -->
     <ul class="bg-bubbles">
@@ -539,8 +516,7 @@
                     </div>
                     <span class="font-medium">التواصل</span>
                 </a>
-                
-                <!-- قسم طلباتي -->
+               <!-- قسم طلباتي -->
                 <div class="pt-6 mt-6 border-t border-gray-200/30 dark:border-gray-700/30">
                     <a href="https://wa.me/message/6TY5HI5QHOQBA1" class="sidebar-item flex items-center space-x-4 space-x-reverse p-4 rounded-2xl text-gray-700 dark:text-gray-200 hover:bg-gray-100/30 dark:hover:bg-gray-700/30 theme-transition group hover-lift">
                         <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
@@ -550,6 +526,7 @@
                             <span class="font-medium">help center</span>
                             <span class="bg-purple-500 text-white text-xs px-2 py-1 rounded-full shadow-glow"></span>
                         </div>    
+            
                     </a>
                 </div>
             </nav>
@@ -978,7 +955,6 @@
         </footer>
     </div>
 
-    <!-- JavaScript الرئيسي -->
     <script>
         // عناصر DOM
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
@@ -1150,245 +1126,33 @@
         }
     </script>
 
-    <!-- PWA JavaScript -->
+    <!-- PWA Service Worker Registration -->
     <script>
         // تسجيل Service Worker
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('service-worker.js')
-                    .then(function(registration) {
-                        console.log('✅ تم تسجيل الـ Service Worker بنجاح: ', registration.scope);
-                    })
-                    .catch(function(error) {
-                        console.log('❌ فشل تسجيل الـ Service Worker: ', error);
-                    });
-            });
+            navigator.serviceWorker.register('service-worker.js')
+                .then(() => console.log('✅ تم تسجيل الـ Service Worker بنجاح'))
+                .catch(err => console.log('❌ خطأ في تسجيل الـ Service Worker:', err));
         }
 
         // منطق زر التثبيت
         let deferredPrompt;
         const installBtn = document.getElementById('installBtn');
-        const installContainer = document.getElementById('installContainer');
 
         window.addEventListener('beforeinstallprompt', (e) => {
-            console.log('🚀 حدث beforeinstallprompt تم تشغيله');
-            
-            // منع المتصفح من عرض رسالة التثبيت التلقائية
             e.preventDefault();
-            
-            // حفظ الحدث ليتم استخدامه لاحقاً
             deferredPrompt = e;
-            
-            // إظهار زر التثبيت
-            installContainer.classList.remove('hidden');
-            installBtn.classList.add('pulse');
-            
-            console.log('🔔 زر التثبيت ظاهر الآن');
+            installBtn.hidden = false;
         });
 
         installBtn.addEventListener('click', async () => {
-            console.log('👆 تم النقر على زر التثبيت');
-            
-            if (!deferredPrompt) {
-                console.log('❌ لا يوجد حدث تثبيت مخزن');
-                return;
-            }
-            
-            // إخفاء زر التثبيت
-            installContainer.classList.add('hidden');
-            installBtn.classList.remove('pulse');
-            
-            // عرض رسالة التثبيت
-            deferredPrompt.prompt();
-            
-            // انتظار اختيار المستخدم
-            const { outcome } = await deferredPrompt.userChoice;
-            
-            console.log(`📝 المستخدم ${outcome} التثبيت`);
-            
-            // مسح deferredPrompt بعد الاستخدام
-            deferredPrompt = null;
-        });
-
-        // حدث عندما يتم تثبيت التطبيق بنجاح
-        window.addEventListener('appinstalled', (evt) => {
-            console.log('🎉 تم تثبيت التطبيق بنجاح!');
-            installContainer.classList.add('hidden');
-            
-            // عرض رسالة نجاح
-            showInstallSuccess();
-        });
-
-        function showInstallSuccess() {
-            const successMsg = document.createElement('div');
-            successMsg.innerHTML = `
-                <div style="
-                    position: fixed;
-                    top: 20px;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    background: linear-gradient(135deg, #10b981, #059669);
-                    color: white;
-                    padding: 12px 24px;
-                    border-radius: 50px;
-                    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
-                    z-index: 10000;
-                    font-weight: bold;
-                ">
-                    ✅ تم تثبيت التطبيق بنجاح!
-                </div>
-            `;
-            document.body.appendChild(successMsg);
-            
-            // إزالة الرسالة بعد 3 ثواني
-            setTimeout(() => {
-                successMsg.remove();
-            }, 3000);
-        }
-
-        // التحقق من إذا كان التطبيق مثبتاً بالفعل
-        window.addEventListener('load', () => {
-            if (window.matchMedia('(display-mode: standalone)').matches) {
-                console.log('📱 التطبيق يعمل في وضع PWA');
-                installContainer.classList.add('hidden');
+            installBtn.hidden = true;
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                await deferredPrompt.userChoice;
+                deferredPrompt = null;
             }
         });
     </script>
-
-    <!-- Service Worker Inline (بديل إذا لم يكن الملف موجوداً) -->
-    <script>
-        // إنشاء service worker افتراضي إذا لم يكن الملف موجوداً
-        if ('serviceWorker' in navigator) {
-            const swUrl = 'service-worker.js';
-            
-            fetch(swUrl)
-                .then(response => {
-                    if (!response.ok) {
-                        // إذا لم يتم العثور على الملف، قم بإنشاء service worker افتراضي
-                        console.log('⚠️ لم يتم العثور على service-worker.js، سيتم استخدام service worker افتراضي');
-                        registerDefaultServiceWorker();
-                    }
-                })
-                .catch(() => {
-                    // في حالة حدوث خطأ في الجلب، قم بإنشاء service worker افتراضي
-                    console.log('⚠️ خطأ في تحميل service-worker.js، سيتم استخدام service worker افتراضي');
-                    registerDefaultServiceWorker();
-                });
-        }
-
-        function registerDefaultServiceWorker() {
-            const defaultSW = `
-                const CACHE_NAME = 'skillzoy-academy-v1.0';
-                const urlsToCache = [
-                    '/',
-                    '/index.html',
-                    '/manifest.json'
-                ];
-
-                self.addEventListener('install', (event) => {
-                    event.waitUntil(
-                        caches.open(CACHE_NAME)
-                            .then((cache) => cache.addAll(urlsToCache))
-                    );
-                });
-
-                self.addEventListener('fetch', (event) => {
-                    event.respondWith(
-                        caches.match(event.request)
-                            .then((response) => {
-                                if (response) {
-                                    return response;
-                                }
-                                return fetch(event.request);
-                            })
-                    );
-                });
-
-                self.addEventListener('activate', (event) => {
-                    event.waitUntil(
-                        caches.keys().then((cacheNames) => {
-                            return Promise.all(
-                                cacheNames.map((cacheName) => {
-                                    if (cacheName !== CACHE_NAME) {
-                                        return caches.delete(cacheName);
-                                    }
-                                })
-                            );
-                        })
-                    );
-                });
-            `;
-
-            const blob = new Blob([defaultSW], { type: 'application/javascript' });
-            const swUrl = URL.createObjectURL(blob);
-            
-            navigator.serviceWorker.register(swUrl)
-                .then(registration => {
-                    console.log('✅ تم تسجيل Service Worker الافتراضي: ', registration.scope);
-                    URL.revokeObjectURL(swUrl);
-                })
-                .catch(error => {
-                    console.log('❌ فشل تسجيل Service Worker الافتراضي: ', error);
-                });
-        }
-    </script>
-
-    <!-- الحماية من التطفل -->
-    <script>
-        (() => {
-            // ==============================
-            // syber pro v1.2 //
-            // ==============================
-            document.addEventListener("keydown", (e) => {
-                if (
-                    (e.ctrlKey && e.shiftKey && ["I", "C", "J", "L"].includes(e.key.toUpperCase())) ||
-                    (e.key === "F12") ||
-                    (e.ctrlKey && e.key.toUpperCase() === "U")
-                ) {
-                    e.preventDefault();
-                }
-            });
-
-            
-            document.addEventListener("copy", e => e.preventDefault());
-            document.addEventListener("cut", e => e.preventDefault());
-            document.addEventListener("contextmenu", e => e.preventDefault());
-            document.addEventListener("selectstart", e => e.preventDefault());
-
-            
-            let detectSize = () => {
-                if (window.outerWidth - window.innerWidth > 200 || 
-                    window.outerHeight - window.innerHeight > 200) {
-                    block();
-                }
-            };
-            window.addEventListener("resize", detectSize);
-
-            
-            let start = performance.now();
-            console.log("%c ", "font-size:200px;");
-            let end = performance.now();
-            if (end - start > 50) block();
-
-            // mutation observer
-            const observer = new MutationObserver(() => {
-                block();
-            });
-            observer.observe(document.documentElement, { attributes: true, childList: false, subtree: false });
-
-            // debugger trap
-            setInterval(() => {
-                const t = Date.now();
-                debugger;
-                if (Date.now() - t > 100) block();
-            }, 500);
-
-            // دالة block بدون أي تأثير على الصفحة
-            function block() {
-                
-                console.clear(); 
-            }
-        })();
-    </script> 
 </body>
 </html>
