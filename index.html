@@ -3759,31 +3759,35 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
-       // ===== YouTube API via Supabase Edge Function =====
-
-// دالة جديدة تستبدل القديمة بالكامل
-async function fetchPlaylistVideos(playlistId) {
+    async function fetchPlaylistVideos(playlistId) {
     try {
         const response = await fetch(
-            "https://sjipwstkvvrautexigmt.supabase.co/functions/v1/swift-responder",
+            "https://sjipwstkvvrautexigmt.supabase.co/functions/v1/clever-service",
             {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ playlistId })
+                body: JSON.stringify({ playlistId: String(playlistId) })
             }
         );
 
-        if (!response.ok) {
-            throw new Error("Edge function error: " + response.status);
-        }
+        const text = await response.text();
+        console.log("RAW RESPONSE FROM EDGE:", text);
 
-        return await response.json();
+        const data = JSON.parse(text);
+        return data.videos || [];
 
-    } catch (err) {
-        console.error("❌ Error loading playlist from Edge Function:", err);
-        return []; // بدل ما ينهار الموقع
+    } catch (error) {
+        console.error("Frontend parse error:", error);
+        return [];
     }
-}
+}  
+       
+       
+       
+       
+       
+       
+
         // ===== نظام الإشعارات - محسن =====
         function showNotification(title, message, type = 'success') {
             const notificationContainer = document.getElementById('notification-container');
