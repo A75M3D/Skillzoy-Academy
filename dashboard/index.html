@@ -3759,108 +3759,130 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
-        // ===== YouTube API Integration =====
-        const YOUTUBE_API_KEY = "AIzaSyBdEIVHCYgh3Z7CVfPPzdn18Ic8EJOBBTE";
+   
+// ===== إعدادات YouTube API =====
+const YOUTUBE_API_KEYS = [
+     "AIzaSyBVD0Hd3HSA__hgX5JBdbOuKzz5oraohV8",
+     "AIzaSyCcjkDGwv7faHZiOPtF9AdbQBowKTsu-es",
+     "AIzaSyDsxmVDCHNgGgPooBxs10HertPRu4qg-bs",
+     "AIzaSyDOgRQ-Mo-KcFgSjov00CAQrxgTKrurcp8",
+     "AIzaSyBdEIVHCYgh3Z7CVfPPzdn18Ic8EJOBBTE"
+    
+    
+];
+const MAX_PAGES = 20;
+const PAGE_DELAY_MS = 500;
+const CACHE_DURATION_MS = 72 * 60 * 60 * 1000; // 72 ساعة
 
-        // ذاكرة التخزين المؤقت للفيديوهات
-        const playlistCache = new Map();
+// ===== ذاكرة التخزين المؤقت في الجلسة =====
+const playlistCache = new Map();
 
-        // وظيفة محسنة لجلب فيديوهات قائمة التشغيل من YouTube
-        async function fetchPlaylistVideos(playlistId) {
-            try {
-                // التحقق من التخزين المؤقت أولاً
-                if (playlistCache.has(playlistId)) {
-                    console.log(`📺 Returning cached videos for playlist: ${playlistId}`);
-                    return playlistCache.get(playlistId);
-                }
+// ===== مدير API لكل مستخدم =====
+function getUserApiKey() {
+    const storageKey = "user_api_index";
+    let index = parseInt(localStorage.getItem(storageKey));
+    if (isNaN(index)) index = 0; // مستخدم جديد يبدأ من المفتاح الأول
+    localStorage.setItem(storageKey, index); // حفظ الرقم الحالي للمستخدم
+    return YOUTUBE_API_KEYS[index];
+}
 
-                // إذا لم يكن هناك API key، نستخدم بيانات تجريبية
-                if (!YOUTUBE_API_KEY || YOUTUBE_API_KEY.includes('YOUR_API_KEY')) {
-                    console.log('📺 Using fallback video data (no API key)');
-                    const fallbackVideos = [
-                        { id: "video1", title: "مقدمة الدورة", youtubeId: "8BlRT7Ktw1c", duration: "10:00" },
-                        { id: "video2", title: "الدرس الأول", youtubeId: "0Kr1eh1wwb8", duration: "15:30" },
-                        { id: "video3", title: "الدرس الثاني", youtubeId: "Rd6F5wHIysM", duration: "12:45" },
-                        { id: "video4", title: "الدرس الثالث", youtubeId: "DV0Ln7HRyJQ", duration: "18:20" },
-                        { id: "video5", title: "المشروع النهائي", youtubeId: "X_P8xsiSB90", duration: "22:10" }
-                    ];
-                    playlistCache.set(playlistId, fallbackVideos);
-                    return fallbackVideos;
-                }
+function switchToNextUserKey() {
+    const storageKey = "user_api_index";
+    let index = parseInt(localStorage.getItem(storageKey));
+    if (isNaN(index)) index = 0;
+    index = (index + 1) % YOUTUBE_API_KEYS.length; // يوزع بالتتابع
+    localStorage.setItem(storageKey, index);
+    return YOUTUBE_API_KEYS[index];
+}
 
-                console.log(`🎯 Fetching ALL videos for playlist: ${playlistId}`);
-                
-                let allVideos = [];
-                let nextPageToken = null;
-                let pageCount = 0;
-                let totalVideosFetched = 0;
+// ===== دالة جلب الفيديوهات =====
+async function fetchPlaylistVideos(playlistId) {
+    const cacheKey = "playlist_" + playlistId;
 
-                do {
-                    pageCount++;
-                    console.log(`📄 Fetching page ${pageCount} for playlist ${playlistId}`);
-                    
-                    // بناء رابط الطلب مع pageToken إذا موجود
-                    let url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${playlistId}&key=${YOUTUBE_API_KEY}`;
-                    
-                    if (nextPageToken) {
-                        url += `&pageToken=${nextPageToken}`;
-                    }
-                    
-                    const response = await fetch(url);
-                    
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    
-                    const data = await response.json();
-                    
-                    if (data.items && data.items.length > 0) {
-                        const pageVideos = data.items.map(item => ({
-                            id: item.snippet.resourceId.videoId,
-                            title: item.snippet.title,
-                            youtubeId: item.snippet.resourceId.videoId,
-                            duration: "10:00"
-                        }));
-                        
-                        allVideos = [...allVideos, ...pageVideos];
-                        totalVideosFetched += pageVideos.length;
-                        console.log(`✅ Page ${pageCount}: Loaded ${pageVideos.length} videos (Total: ${totalVideosFetched})`);
-                    } else {
-                        console.log(`❌ No videos found on page ${pageCount}`);
-                    }
-                    
-                    nextPageToken = data.nextPageToken;
-                    
-                    // إضافة تأخير لتجنب تجاوز حدود API
-                    if (nextPageToken) {
-                        await new Promise(resolve => setTimeout(resolve, 100));
-                    }
-                    
-                } while (nextPageToken);
-                
-                console.log(`🎉 Successfully loaded ${allVideos.length} videos from playlist ${playlistId}`);
-                
-                // تخزين النتائج في الذاكرة المؤقتة
-                playlistCache.set(playlistId, allVideos);
-                
-                return allVideos;
-            } catch (error) {
-                console.error("❌ Error fetching playlist videos:", error);
-                
-                // استخدام بيانات احتياطية في حالة الفشل
-                const fallbackVideos = [
-                    { id: "video1", title: "مقدمة الدورة", youtubeId: "X_P8xsiSB90", duration: "10:00" },
-                    { id: "video2", title: "الدرس الأول", youtubeId: "8BlRT7Ktw1c", duration: "15:30" },
-                    { id: "video3", title: "الدرس الثاني", youtubeId: "0Kr1eh1wwb8", duration: "12:45" },
-                    { id: "video4", title: "الدرس الثالث", youtubeId: "Rd6F5wHIysM", duration: "18:20" },
-                    { id: "video5", title: "المشروع النهائي", youtubeId: "DV0Ln7HRyJQ", duration: "22:10" }
-                ];
-                
-                playlistCache.set(playlistId, fallbackVideos);
-                return fallbackVideos;
-            }
+    // التحقق أولاً من ذاكرة الجلسة
+    if (playlistCache.has(playlistId)) {
+        console.log(`📺 Returning cached videos from session Map for playlist: ${playlistId}`);
+        return playlistCache.get(playlistId);
+    }
+
+    // التحقق من LocalStorage
+    const cachedStr = localStorage.getItem(cacheKey);
+    if (cachedStr) {
+        const cached = JSON.parse(cachedStr);
+        if (Date.now() - cached.timestamp < CACHE_DURATION_MS) {
+            console.log(`📺 Returning cached videos from LocalStorage for playlist: ${playlistId}`);
+            playlistCache.set(playlistId, cached.videos);
+            return cached.videos;
         }
+    }
 
+    // ===== جلب الفيديوهات من YouTube =====
+    let allVideos = [];
+    let nextPageToken = null;
+    let pageCount = 0;
+
+    try {
+        do {
+            pageCount++;
+            if (pageCount > MAX_PAGES) {
+                console.warn(`⚠️ Reached maximum page limit (${MAX_PAGES}). Stopping fetch.`);
+                break;
+            }
+
+            let apiKey = getUserApiKey(); // اختيار API للمستخدم الحالي
+            let url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${playlistId}&key=${apiKey}&fields=items(snippet(title,resourceId/videoId)),nextPageToken`;
+            if (nextPageToken) url += `&pageToken=${nextPageToken}`;
+
+            const response = await fetch(url);
+            if (!response.ok) {
+                if (response.status === 403) {
+                    console.warn("⚠️ Quota exceeded for this API key. Switching to next key...");
+                    apiKey = switchToNextUserKey(); // المفتاح التالي
+                    continue;
+                }
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            const pageVideos = (data.items || []).map(item => ({
+                id: item.snippet.resourceId.videoId,
+                title: item.snippet.title,
+                youtubeId: item.snippet.resourceId.videoId,
+                duration: "10:00"
+            }));
+
+            allVideos.push(...pageVideos);
+            nextPageToken = data.nextPageToken;
+
+            if (nextPageToken) await new Promise(res => setTimeout(res, PAGE_DELAY_MS));
+
+        } while (nextPageToken);
+
+        console.log(`🎉 Loaded ${allVideos.length} videos from playlist ${playlistId}`);
+
+        // تخزين النتائج في الجلسة و LocalStorage
+        playlistCache.set(playlistId, allVideos);
+        localStorage.setItem(cacheKey, JSON.stringify({ videos: allVideos, timestamp: Date.now() }));
+
+        return allVideos;
+
+    } catch (error) {
+        console.error("❌ Error fetching playlist videos:", error);
+
+        // ===== fallback ثابت =====
+        const fallbackVideos = [
+            { id: "video1", title: "مقدمة الدورة", youtubeId: "8BlRT7Ktw1c", duration: "10:00" },
+            { id: "video2", title: "الدرس الأول", youtubeId: "0Kr1eh1wwb8", duration: "15:30" },
+            { id: "video3", title: "الدرس الثاني", youtubeId: "Rd6F5wHIysM", duration: "12:45" },
+            { id: "video4", title: "الدرس الثالث", youtubeId: "DV0Ln7HRyJQ", duration: "18:20" },
+            { id: "video5", title: "المشروع النهائي", youtubeId: "X_P8xsiSB90", duration: "22:10" }
+        ];
+
+        playlistCache.set(playlistId, fallbackVideos);
+        localStorage.setItem(cacheKey, JSON.stringify({ videos: fallbackVideos, timestamp: Date.now() }));
+        return fallbackVideos;
+    }
+}
         // ===== نظام الإشعارات - محسن =====
         function showNotification(title, message, type = 'success') {
             const notificationContainer = document.getElementById('notification-container');
