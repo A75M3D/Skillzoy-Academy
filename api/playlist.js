@@ -1,165 +1,82 @@
-// استيراد Supabase
-const { createClient } = require('@supabase/supabase-js');
+// ===== إعدادات عامة =====
+const MAX_PAGES = 20;
+const PAGE_DELAY_MS = 500;
+const CACHE_DURATION_MS = 72 * 60 * 60 * 1000; // 50 ساعة
 
-// تهيئة Supabase client
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_ANON_KEY;
-const youtubeApiKey = process.env.YOUTUBE_API_KEY;
+// ===== مخزن كاش داخل السيرفر أثناء عمله =====
+const serverCache = new Map();
 
-const supabase = createClient(supabaseUrl, supabaseKey);
+// ===== اختيار مفتاح API بالتسلسل =====
+let keyIndex = 0;
+function getNextKey() {
+    const keys = process.env.YOUTUBE_API_KEYS.split(",");
+    const key = keys[keyIndex];
+    keyIndex = (keyIndex + 1) % keys.length;
+    return key;
+}
 
+// ===== API Route =====
 export default async function handler(req, res) {
-  // تمكين CORS
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    const playlistId = req.query.id;
+    if (!playlistId) return res.status(400).json({ error: "Missing playlist ID" });
 
-  // معالجة طلبات OPTIONS
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
+    const cacheKey = "playlist_" + playlistId;
 
-  if (req.method !== 'GET') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
-
-  const { playlistId, courseId } = req.query;
-
-  try {
-    // إذا لم يكن هناك playlistId، حاول الحصول من Supabase باستخدام courseId
-    let actualPlaylistId = playlistId;
-    
-    if (!actualPlaylistId && courseId) {
-      console.log(`🔍 Fetching playlist for course: ${courseId}`);
-      const { data: course, error } = await supabase
-        .from('courses')
-        .select('playlist_id')
-        .eq('id', courseId)
-        .single();
-
-      if (error || !course) {
-        return res.status(404).json({ 
-          error: 'Course not found',
-          details: error?.message 
-        });
-      }
-
-      actualPlaylistId = course.playlist_id;
+    // ===== التحقق من الكاش داخل السيرفر =====
+    if (serverCache.has(cacheKey)) {
+        const cached = serverCache.get(cacheKey);
+        if (Date.now() - cached.timestamp < CACHE_DURATION_MS) {
+            return res.status(200).json({ videos: cached.videos, cached: true });
+        }
     }
 
-    if (!actualPlaylistId) {
-      return res.status(400).json({ 
-        error: 'Missing playlistId or courseId' 
-      });
-    }
-
-    console.log(`🎯 Fetching videos for playlist: ${actualPlaylistId}`);
-
-    // إذا لم يكن هناك YouTube API key، أرجع بيانات افتراضية
-    if (!youtubeApiKey || youtubeApiKey.includes('YOUR_API_KEY')) {
-      console.log('📝 Using fallback data (no YouTube API key)');
-      const fallbackVideos = [
-        { id: "video1", title: "مقدمة الدورة", youtubeId: "X_P8xsiSB90", duration: "10:00" },
-        { id: "video2", title: "الدرس الأول", youtubeId: "8BlRT7Ktw1c", duration: "15:30" },
-        { id: "video3", title: "الدرس الثاني", youtubeId: "0Kr1eh1wwb8", duration: "12:45" },
-        { id: "video4", title: "الدرس الثالث", youtubeId: "Rd6F5wHIysM", duration: "18:20" },
-        { id: "video5", title: "المشروع النهائي", youtubeId: "DV0Ln7HRyJQ", duration: "22:10" }
-      ];
-      
-      return res.status(200).json({ 
-        videos: fallbackVideos,
-        total: fallbackVideos.length,
-        source: 'fallback'
-      });
-    }
-
-    // جلب الفيديوهات من YouTube API
     let allVideos = [];
     let nextPageToken = null;
     let pageCount = 0;
 
-    do {
-      pageCount++;
-      console.log(`📄 Fetching page ${pageCount} for playlist ${actualPlaylistId}`);
-      
-      let url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${actualPlaylistId}&key=${youtubeApiKey}`;
-      
-      if (nextPageToken) {
-        url += `&pageToken=${nextPageToken}`;
-      }
+    try {
+        do {
+            pageCount++;
+            if (pageCount > MAX_PAGES) break;
 
-      const response = await fetch(url);
-      
-      if (!response.ok) {
-        // إذا فشل الطلب، استخدم البيانات الافتراضية
-        if (response.status === 403 || response.status === 400) {
-          console.log('⚠️ YouTube API quota exceeded, using fallback data');
-          const fallbackVideos = [
-            { id: "video1", title: "مقدمة الدورة", youtubeId: "X_P8xsiSB90", duration: "10:00" },
-            { id: "video2", title: "الدرس الأول", youtubeId: "8BlRT7Ktw1c", duration: "15:30" },
-            { id: "video3", title: "الدرس الثاني", youtubeId: "0Kr1eh1wwb8", duration: "12:45" },
-            { id: "video4", title: "الدرس الثالث", youtubeId: "Rd6F5wHIysM", duration: "18:20" },
-            { id: "video5", title: "المشروع النهائي", youtubeId: "DV0Ln7HRyJQ", duration: "22:10" }
-          ];
-          
-          return res.status(200).json({ 
-            videos: fallbackVideos,
-            total: fallbackVideos.length,
-            source: 'fallback_quota'
-          });
-        }
-        throw new Error(`YouTube API error: ${response.status}`);
-      }
+            const apiKey = getNextKey();
 
-      const data = await response.json();
+            let url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${playlistId}&key=${apiKey}&fields=items(snippet(title,resourceId/videoId)),nextPageToken`;
 
-      if (data.items && data.items.length > 0) {
-        const pageVideos = data.items.map(item => ({
-          id: item.snippet.resourceId.videoId,
-          title: item.snippet.title,
-          youtubeId: item.snippet.resourceId.videoId,
-          duration: "10:00" // يمكن إضافة API آخر للحصول على المدة
-        }));
+            if (nextPageToken) url += `&pageToken=${nextPageToken}`;
 
-        allVideos = [...allVideos, ...pageVideos];
-      }
+            const response = await fetch(url);
 
-      nextPageToken = data.nextPageToken;
+            // إذا المفتاح انتهت حصته — جرّب مفتاح ثاني
+            if (response.status === 403) continue;
+            if (!response.ok) throw new Error(`YouTube Error ${response.status}`);
 
-      // إضافة تأخير لتجنب rate limiting
-      if (nextPageToken) {
-        await new Promise(resolve => setTimeout(resolve, 100));
-      }
+            const data = await response.json();
 
-    } while (nextPageToken && pageCount < 5); // حد أقصى 5 صفحات للحماية
+            const videos = (data.items || []).map(item => ({
+                id: item.snippet.resourceId.videoId,
+                youtubeId: item.snippet.resourceId.videoId,
+                title: item.snippet.title,
+                duration: "10:00"
+            }));
 
-    console.log(`✅ Successfully loaded ${allVideos.length} videos`);
+            allVideos.push(...videos);
 
-    res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate');
-    
-    return res.status(200).json({ 
-      videos: allVideos,
-      total: allVideos.length,
-      source: 'youtube_api'
-    });
+            nextPageToken = data.nextPageToken;
 
-  } catch (error) {
-    console.error('❌ Error in serverless function:', error);
-    
-    // بيانات احتياطية في حالة الفشل
-    const fallbackVideos = [
-      { id: "video1", title: "مقدمة الدورة", youtubeId: "X_P8xsiSB90", duration: "10:00" },
-      { id: "video2", title: "الدرس الأول", youtubeId: "8BlRT7Ktw1c", duration: "15:30" },
-      { id: "video3", title: "الدرس الثاني", youtubeId: "0Kr1eh1wwb8", duration: "12:45" },
-      { id: "video4", title: "الدرس الثالث", youtubeId: "Rd6F5wHIysM", duration: "18:20" },
-      { id: "video5", title: "المشروع النهائي", youtubeId: "DV0Ln7HRyJQ", duration: "22:10" }
-    ];
-    
-    return res.status(200).json({ 
-      videos: fallbackVideos,
-      total: fallbackVideos.length,
-      source: 'fallback_error',
-      error: error.message
-    });
-  }
+            if (nextPageToken) await new Promise(r => setTimeout(r, PAGE_DELAY_MS));
+
+        } while (nextPageToken);
+
+        // حفظ الكاش في السيرفر
+        serverCache.set(cacheKey, {
+            videos: allVideos,
+            timestamp: Date.now()
+        });
+
+        return res.status(200).json({ videos: allVideos, cached: false });
+
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
 }
