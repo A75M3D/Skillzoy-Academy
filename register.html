@@ -1054,44 +1054,17 @@
         }
 
         // 6. نجاح إنشاء الحساب
-   
-   // 6. نجاح إنشاء الحساب
-if (data.user && data.user.identities && data.user.identities.length === 0) {
-  showAlert('هذا البريد الإلكتروني مسجل مسبقاً', 'error');
-  return;
-}
+        if (data.user && data.user.identities && data.user.identities.length === 0) {
+          showAlert('هذا البريد الإلكتروني مسجل مسبقاً', 'error');
+          return;
+        }
 
-// عرض رسالة نجاح محسنة مع إرشادات واضحة
-showAlert(
-  '<div style="text-align: center; padding: 10px;">' +
-    '<div style="font-size: 2rem; margin-bottom: 10px;">🎉</div>' +
-    '<h3 style="margin: 10px 0; color: #4cc9f0;">تم إنشاء حسابك بنجاح!</h3>' +
-    '<p style="margin: 15px 0; line-height: 1.5;">' +
-      'لقد أرسلنا لك رسالة تأكيد إلى بريدك الإلكتروني.<br>' +
-      '<strong>يرجى التحقق من صندوق الوارد وتفعيل حسابك.</strong>' +
-    '</p>' +
-    '<div style="background: rgba(76, 201, 240, 0.1); padding: 15px; border-radius: 8px; margin: 15px 0; border-right: 4px solid #4cc9f0;">' +
-      '<h4 style="margin: 0 0 10px 0; color: #4cc9f0;">💡 ملاحظة مهمة:</h4>' +
-      '<p style="margin: 0; font-size: 0.9rem;">' +
-        'إذا لم تجد البريد خلال 5 دقائق:<br>' +
-        '• تحقق من مجلد <strong>البريد العشوائي (Spam)</strong><br>' +
-        '• تأكد من صحة عنوان البريد الإلكتروني<br>' +
-        '• حاول إعادة إرسال رسالة التأكيد لاحقاً' +
-      '</p>' +
-    '</div>' +
-    '<p style="font-size: 0.9rem; color: rgba(255, 255, 255, 0.8);">' +
-      'سيتم توجيهك تلقائياً إلى صفحة تسجيل الدخول خلال بضع ثوانٍ...' +
-    '</p>' +
-  '</div>', 
-  'success'
-);
+        showAlert('تم إنشاء حسابك بنجاح! يرجى التحقق من بريدك الإلكتروني لتأكيد الحساب.', 'success');
+        
+        setTimeout(() => {
+          window.location.href = 'login.html';
+        }, 3000);
 
-setTimeout(() => {
-  window.location.href = 'login.html';
-}, 5000);
-   
-   
-   
       } catch (err) {
         console.error('Signup exception:', err);
         showAlert('خطأ غير متوقع. يرجى المحاولة لاحقًا.', 'error');
