@@ -1061,24 +1061,25 @@
 
         // عرض رسالة نجاح محسنة مع إرشادات واضحة
         // عرض رسالة نجاح محسنة مع إرشادات واضحة
+// عرض رسالة نجاح محسنة مع إرشادات واضحة
 showAlert(
-  '<div style="text-align: center; padding: 20px;">' +
-    '<div style="font-size: 3rem; margin-bottom: 15px; color: #4361ee;">✨</div>' +
-    '<h3 style="margin: 10px 0; color: #4361ee; font-weight: 700; font-size: 1.4rem;">تم إنشاء حسابك بنجاح!</h3>' +
-    '<p style="margin: 15px 0; line-height: 1.6; color: #f8f9fa; font-size: 1.05rem;">' +
+  '<div style="text-align: center; padding: 20px; background: #ffeb3b; border-radius: 10px; border: 2px solid #ffc107;">' +
+    '<div style="font-size: 3rem; margin-bottom: 15px;">🎉</div>' +
+    '<h3 style="margin: 10px 0; color: #2196f3; font-weight: 700; font-size: 1.4rem;">تم إنشاء حسابك بنجاح!</h3>' +
+    '<p style="margin: 15px 0; line-height: 1.6; color: #f44336; font-size: 1.05rem;">' +
       'لقد أرسلنا لك رسالة تأكيد إلى بريدك الإلكتروني<br>' +
-      '<strong style="color: #4895ef;">يرجى التحقق من صندوق الوارد وتفعيل حسابك</strong>' +
+      '<strong style="color: #4caf50;">يرجى التحقق من صندوق الوارد وتفعيل حسابك</strong>' +
     '</p>' +
-    '<div style="background: linear-gradient(135deg, rgba(67, 97, 238, 0.1), rgba(114, 9, 183, 0.1)); padding: 15px; border-radius: 10px; margin: 20px 0; border: 1px solid rgba(67, 97, 238, 0.3);">' +
-      '<h4 style="margin: 0 0 12px 0; color: #7209b7; font-size: 1.1rem;">💡 ملاحظة مهمة</h4>' +
-      '<p style="margin: 0; font-size: 0.95rem; color: #e9ecef; line-height: 1.5;">' +
+    '<div style="background: #fff59d; padding: 15px; border-radius: 8px; margin: 20px 0; border: 1px solid #ffd54f;">' +
+      '<h4 style="margin: 0 0 12px 0; color: #e91e63; font-size: 1.1rem;">💡 ملاحظة مهمة</h4>' +
+      '<p style="margin: 0; font-size: 0.95rem; color: #3f51b5; line-height: 1.5;">' +
         'إذا لم تجد البريد خلال 5 دقائق:<br>' +
-        '• تحقق من مجلد <strong style="color: #f4a261;">البريد العشوائي (Spam)</strong><br>' +
+        '• تحقق من مجلد <strong style="color: #ff5722;">البريد العشوائي (Spam)</strong><br>' +
         '• تأكد من صحة عنوان البريد الإلكتروني<br>' +
         '• حاول إعادة إرسال رسالة التأكيد لاحقاً' +
       '</p>' +
     '</div>' +
-    '<p style="font-size: 0.9rem; color: #adb5bd; margin-top: 15px;">' +
+    '<p style="font-size: 0.9rem; color: #9c27b0; margin-top: 15px; font-weight: 600;">' +
       'سيتم توجيهك تلقائياً إلى صفحة تسجيل الدخول خلال بضع ثوانٍ...' +
     '</p>' +
   '</div>', 
@@ -1124,7 +1125,7 @@ showAlert(
       // إزالة التنبيه بعد 5 ثواني
       setTimeout(() => {
         elements.authAlert.innerHTML = '';
-      }, 5000);
+      }, 20000);
     }
 
     function showLoading(loading) {
