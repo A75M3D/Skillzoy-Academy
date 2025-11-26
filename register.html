@@ -487,6 +487,25 @@
     a:hover {
       color: var(--success);
     }
+
+    /* إضافة نمط للإشعار الثابت */
+    .persistent-alert {
+      position: relative;
+      margin-bottom: 20px;
+      animation: none !important;
+    }
+    
+    .persistent-alert .close-btn {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: inherit;
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
   </style>
 </head>
 <body>
@@ -522,6 +541,9 @@
           <div class="step-label">الموافقة</div>
         </div>
       </div>
+      
+      <!-- إشعار ثابت لتأكيد الحساب -->
+      <div id="confirmationAlert" style="display: none;"></div>
       
       <div id="authAlert"></div>
 
@@ -721,6 +743,7 @@
       submitText: document.getElementById('submitText'),
       submitSpinner: document.getElementById('submitSpinner'),
       authAlert: document.getElementById('authAlert'),
+      confirmationAlert: document.getElementById('confirmationAlert'),
       passwordStrength: document.getElementById('passwordStrength'),
       passwordMatch: document.getElementById('passwordMatch'),
       usernameAvailability: document.getElementById('usernameAvailability'),
@@ -973,6 +996,35 @@
       return input.replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
 
+    // ===== إظهار إشعار تأكيد الحساب الثابت =====
+    function showConfirmationAlert(email) {
+      elements.confirmationAlert.style.display = 'block';
+      elements.confirmationAlert.innerHTML = `
+        <div class="alert alert-success persistent-alert">
+          <button class="close-btn" onclick="this.parentElement.style.display='none'">&times;</button>
+          <div style="text-align: center; padding: 10px;">
+            <div style="font-size: 2rem; margin-bottom: 10px;">📧</div>
+            <h3 style="margin: 10px 0; color: #4cc9f0;">تم إرسال رسالة تأكيد الحساب</h3>
+            <p style="margin: 10px 0; line-height: 1.6;">
+              تم إرسال رسالة تأكيد إلى بريدك الإلكتروني: <strong>${email}</strong>
+            </p>
+            <p style="margin: 10px 0; font-size: 0.9rem; color: #ffd166;">
+              <strong>تنبيه:</strong> ستصلك رسالة التأكيد باسم <strong>Supabase Auth</strong>
+            </p>
+            <p style="margin: 10px 0; font-size: 0.9rem;">
+              يرجى التحقق من صندوق الوارد والمجلد <strong>الرسائل غير المرغوب فيها (Spam)</strong> وتفعيل حسابك عن طريق النقر على الرابط الموجود في الرسالة.
+            </p>
+            <p style="margin: 15px 0; font-size: 0.9rem; color: #f4a261;">
+              <strong>ملاحظة:</strong> إذا لم تصلك الرسالة خلال 10 دقائق، يرجى التأكد من:
+              <br>1. صحة عنوان البريد الإلكتروني المدخل
+              <br>2. تفقد مجلد <strong>الرسائل غير المرغوب فيها (Spam)</strong>
+              <br>3. إعادة إنشاء الحساب مرة أخرى للتأكد من صحة البريد الإلكتروني
+            </p>
+          </div>
+        </div>
+      `;
+    }
+
     // ===== إنشاء حساب آمن =====
     async function handleSecureSignup(e) {
       e.preventDefault();
@@ -1059,35 +1111,9 @@
           return;
         }
 
-        // عرض رسالة نجاح محسنة مع إرشادات واضحة
-        // عرض رسالة نجاح محسنة مع إرشادات واضحة
-// عرض رسالة نجاح محسنة مع إرشادات واضحة
-showAlert(
-  '<div style="text-align: center; padding: 20px; background: #ffeb3b; border-radius: 10px; border: 2px solid #ffc107;">' +
-    '<div style="font-size: 3rem; margin-bottom: 15px;">🎉</div>' +
-    '<h3 style="margin: 10px 0; color: #2196f3; font-weight: 700; font-size: 1.4rem;">تم إنشاء حسابك بنجاح!</h3>' +
-    '<p style="margin: 15px 0; line-height: 1.6; color: #f44336; font-size: 1.05rem;">' +
-      'لقد أرسلنا لك رسالة تأكيد إلى بريدك الإلكتروني<br>' +
-      '<strong style="color: #4caf50;">يرجى التحقق من صندوق الوارد وتفعيل حسابك</strong>' +
-    '</p>' +
-    '<div style="background: #fff59d; padding: 15px; border-radius: 8px; margin: 20px 0; border: 1px solid #ffd54f;">' +
-      '<h4 style="margin: 0 0 12px 0; color: #e91e63; font-size: 1.1rem;">💡 ملاحظة مهمة</h4>' +
-      '<p style="margin: 0; font-size: 0.95rem; color: #3f51b5; line-height: 1.5;">' +
-        'إذا لم تجد البريد خلال 5 دقائق:<br>' +
-        '• تحقق من مجلد <strong style="color: #ff5722;">البريد العشوائي (Spam)</strong><br>' +
-        '• تأكد من صحة عنوان البريد الإلكتروني<br>' +
-        '• حاول إعادة إرسال رسالة التأكيد لاحقاً' +
-      '</p>' +
-    '</div>' +
-    '<p style="font-size: 0.9rem; color: #9c27b0; margin-top: 15px; font-weight: 600;">' +
-      'سيتم توجيهك تلقائياً إلى صفحة تسجيل الدخول خلال بضع ثوانٍ...' +
-    '</p>' +
-  '</div>', 
-  'success'
-);
-        setTimeout(() => {
-          window.location.href = 'login.html';
-        }, 10000);
+        // إخفاء النموذج وإظهار رسالة تأكيد الحساب الثابتة
+        elements.signupForm.style.display = 'none';
+        showConfirmationAlert(email);
 
       } catch (err) {
         console.error('Signup exception:', err);
@@ -1122,10 +1148,12 @@ showAlert(
       const icon = type === 'error' ? '⛔' : type === 'warning' ? '⚠️' : '✅';
       elements.authAlert.innerHTML = `<div class="alert alert-${type}">${icon} ${message}</div>`;
       
-      // إزالة التنبيه بعد 5 ثواني
-      setTimeout(() => {
-        elements.authAlert.innerHTML = '';
-      }, 20000);
+      // إزالة التنبيه بعد 5 ثواني (ما عدا الإشعارات الثابتة)
+      if (type !== 'success') {
+        setTimeout(() => {
+          elements.authAlert.innerHTML = '';
+        }, 5000);
+      }
     }
 
     function showLoading(loading) {
