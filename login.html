@@ -873,7 +873,7 @@
       if (error.message && error.message.includes('Invalid login credentials')) {
         message = '❌ البريد الإلكتروني أو كلمة المرور غير صحيحة';
       } else if (error.message && error.message.includes('Email not confirmed')) {
-        message = '⚠️ لم يتم تأكيد البريد الإلكتروني. يرجى التحقق من صندوق الوارد 📥 في بريدك الإلكتروني ستجد رسالة التأكيد بأسم (Supabase auth)';
+        message = '⚠️.(subapase auth)لم يتم تأكيد البريد الإلكتروني. يرجى التحقق من صندوق الوارد 📥 في بريدك الإلكتروني ستجد رسالة التأكيد بأسم';
       } else if (error.message && error.message.includes('Too many requests')) {
         message = '⏳ تم إرسال العديد من الطلبات. يرجى الانتظار قليلاً ثم المحاولة مرة أخرى';
       } else if (error.message && error.message.includes('User not found')) {
@@ -893,7 +893,7 @@
       if (type !== 'success') {
         setTimeout(() => {
           elements.authAlert.innerHTML = '';
-        }, 8000);
+        }, 10000);
       }
     }
 
