@@ -359,9 +359,19 @@
 
     <script>
         // 🔧 تكوين Supabase
-        const SUPABASE_URL = 'https://sjipwstkvvrautexigmt.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNqaXB3c3RrdnZyYXV0ZXhpZ210Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MTE5MDcsImV4cCI6MjA3NDQ4NzkwN30.FSh2yIdZdvdNvtWxK5JB02PIdWOG3707qO-F0c84PnY';
-        
+async function loadSupabaseKeys() {
+  const res = await fetch("/api/env");
+  const env = await res.json();
+
+  const supabase = window.supabase.createClient(
+    env.SUPABASE_URL,
+    env.SUPABASE_ANON_KEY
+  );
+
+  window.supabaseClient = supabase;
+}
+loadSupabaseKeys();
+
         let supabase;
         let isConnected = false;
         
