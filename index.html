@@ -334,7 +334,8 @@
             }
             
             .values-grid,
-            .collaboration-grid {
+            .collaboration-grid,
+            .trainer-features-grid {
                 grid-template-columns: 1fr !important;
             }
         }
@@ -446,6 +447,76 @@
         .contact-button i {
             margin-left: 8px;
         }
+        
+        /* أنماط خاصة بقسم المدربين */
+        .comparison-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .comparison-item:hover {
+            transform: translateX(-5px);
+        }
+        
+        .before-item {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(239, 68, 68, 0.05) 100%);
+            border-right: 4px solid #ef4444;
+        }
+        
+        .after-item {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(34, 197, 94, 0.05) 100%);
+            border-right: 4px solid #22c55e;
+        }
+        
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-left: 15px;
+        }
+        
+        .feature-item {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.15);
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 8px;
+        }
+        
+        .badge-before {
+            background-color: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+        
+        .badge-after {
+            background-color: #f0fdf4;
+            color: #16a34a;
+            border: 1px solid #bbf7d0;
+        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-950 dark:to-gray-900 theme-transition" data-theme="blue">
@@ -512,6 +583,7 @@
                         <li><a href="#certificate" class="text-gray-700 dark:text-gray-200 hover:text-primary py-2 px-4 rounded-2xl transition-all duration-300">الشهادات</a></li>
                         <li><a href="#values" class="text-gray-700 dark:text-gray-200 hover:text-primary py-2 px-4 rounded-2xl transition-all duration-300">قيمنا</a></li>
                         <li><a href="#collaboration" class="text-gray-700 dark:text-gray-200 hover:text-primary py-2 px-4 rounded-2xl transition-all duration-300">التعاون</a></li>
+                        <li><a href="#trainers" class="text-gray-700 dark:text-gray-200 hover:text-primary py-2 px-4 rounded-2xl transition-all duration-300">للمدربين</a></li>
                         <li><a href="#contact" class="text-gray-700 dark:text-gray-200 hover:text-primary py-2 px-4 rounded-2xl transition-all duration-300">التواصل</a></li>
                     </ul>
                 </nav>
@@ -626,6 +698,13 @@
                         <i class="fas fa-handshake text-white text-sm"></i>
                     </div>
                     <span class="font-medium">التعاون</span>
+                </a>
+                
+                <a href="#trainers" class="sidebar-item flex items-center space-x-4 space-x-reverse p-4 rounded-2xl text-gray-700 dark:text-gray-200 hover:bg-gray-100/30 dark:hover:bg-gray-700/30 theme-transition group hover-lift">
+                    <div class="w-10 h-10 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center shadow-glow-primary group-hover:scale-110 transition-transform">
+                        <i class="fas fa-chalkboard-teacher text-white text-sm"></i>
+                    </div>
+                    <span class="font-medium">للمدربين</span>
                 </a>
                 
                 <a href="#contact" class="sidebar-item flex items-center space-x-4 space-x-reverse p-4 rounded-2xl text-gray-700 dark:text-gray-200 hover:bg-gray-100/30 dark:hover:bg-gray-700/30 theme-transition group hover-lift">
@@ -909,7 +988,7 @@
                             <i class="fas fa-star"></i>
                         </div>
                         <p class="testimonial-text text-gray-700 dark:text-gray-300 mb-6 italic">
-                            "الدورة كانت رائعة ومفيدة جداً. الدورة ساعدتني في تطوير مهاراتي وخبراتي . شكراً لـ Skillzoy Academy!"
+                            "الدورة كانت رائعة ومفيدة جداً. الدورة ساعدتني في تطوير مهاراتي وخبراتي. شكراً لـ Skillzoy Academy!"
                         </p>
                         <p class="testimonial-author text-primary font-semibold text-lg">- نورة أحمد</p>
                     </div>
@@ -1098,7 +1177,7 @@
             </div>
         </section>
 
-        <!-- Collaboration Opportunities Section - SAFE VERSION -->
+        <!-- Collaboration Opportunities Section -->
         <section class="collaboration py-16 lg:py-24 bg-gradient-to-br from-green-50 to-teal-50 dark:from-gray-800 dark:to-gray-900" id="collaboration">
             <div class="container mx-auto px-4">
                 <div class="section-title text-center mb-16">
@@ -1293,6 +1372,306 @@
             </div>
         </section>
 
+        <!-- Trainer Features Section -->
+        <section class="trainer-features py-16 lg:py-24 bg-gradient-to-br from-orange-50 to-amber-50 dark:from-gray-800 dark:to-gray-900" id="trainers">
+            <div class="container mx-auto px-4">
+                <div class="section-title text-center mb-16">
+                    <h2 class="text-3xl lg:text-4xl font-bold text-gray-800 dark:text-white mb-4">
+                        <i class="fas fa-chalkboard-teacher text-primary ml-2"></i>
+                        مزايا منصة Skillzoy للمدربين
+                    </h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+                        📌 Skillzoy = وقتك محفوظ، تعبك مربح، هويتك ظاهرة
+                    </p>
+                </div>
+                
+                <!-- مقدمة القسم -->
+                <div class="intro-card card-glass rounded-2xl p-8 mb-12 theme-transition text-center">
+                    <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">
+                        🎓 تجربة مدرب: من فوضى الواتساب إلى احتراف Skillzoy Academy
+                    </h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4">
+                        انضم إلى منصة تحترم وقتك وجهدك، وتوفر لك بيئة احترافية لعرض خبرتك وزيادة دخلك.
+                    </p>
+                </div>
+                
+                <!-- مقارنة بين قبل وبعد -->
+                <div class="comparison-section mb-16">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <!-- قبل Skillzoy -->
+                        <div class="comparison-card card-glass rounded-2xl p-8 theme-transition">
+                            <div class="flex items-center justify-between mb-6">
+                                <h3 class="text-xl font-bold text-gray-800 dark:text-white">
+                                    <span class="badge badge-before">قبل</span>
+                                    معاناة المدرب في قروبات واتساب
+                                </h3>
+                                <div class="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center text-white">
+                                    <i class="fas fa-times"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-3">
+                                <div class="comparison-item before-item">
+                                    <i class="fas fa-redo text-red-500 ml-3"></i>
+                                    <span>تكرار رفع نفس المحتوى كل دورة</span>
+                                </div>
+                                <div class="comparison-item before-item">
+                                    <i class="fas fa-file-alt text-red-500 ml-3"></i>
+                                    <span>ضياع الفيديوهات وسط الرسائل</span>
+                                </div>
+                                <div class="comparison-item before-item">
+                                    <i class="fas fa-ban text-red-500 ml-3"></i>
+                                    <span>لا يوجد ترتيب أو منصة تجمع الدورة</span>
+                                </div>
+                                <div class="comparison-item before-item">
+                                    <i class="fas fa-clock text-red-500 ml-3"></i>
+                                    <span>استنزاف وقت وجهد بلا مقابل</span>
+                                </div>
+                                <div class="comparison-item before-item">
+                                    <i class="fas fa-user-minus text-red-500 ml-3"></i>
+                                    <span>طلاب ينسحبوا بسبب الفوضى</span>
+                                </div>
+                                <div class="comparison-item before-item">
+                                    <i class="fas fa-money-bill-wave text-red-500 ml-3"></i>
+                                    <span>لا دخل ثابت أو نظام متابعة</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- بعد Skillzoy -->
+                        <div class="comparison-card card-glass rounded-2xl p-8 theme-transition">
+                            <div class="flex items-center justify-between mb-6">
+                                <h3 class="text-xl font-bold text-gray-800 dark:text-white">
+                                    <span class="badge badge-after">بعد</span>
+                                    الانضمام إلى Skillzoy Academy
+                                </h3>
+                                <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center text-white">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-3">
+                                <div class="comparison-item after-item">
+                                    <i class="fas fa-upload text-green-500 ml-3"></i>
+                                    <span>ارفع الدورة مرة واحدة... وارتاح</span>
+                                </div>
+                                <div class="comparison-item after-item">
+                                    <i class="fas fa-graduation-cap text-green-500 ml-3"></i>
+                                    <span>الطلاب يتعلمون في منصة مرتبة</span>
+                                </div>
+                                <div class="comparison-item after-item">
+                                    <i class="fas fa-dollar-sign text-green-500 ml-3"></i>
+                                    <span> زيادة الاشتراك في قناتك</span>
+                                </div>
+                                <div class="comparison-item after-item">
+                                    <i class="fas fa-award text-green-500 ml-3"></i>
+                                    <span>شهادات تلقائية باسم المدرب</span>
+                                </div>
+                                <div class="comparison-item after-item">
+                                    <i class="fas fa-user-friends text-green-500 ml-3"></i>
+                                    <span>نظام إحالة يزيد دخلك</span>
+                                </div>
+                                <div class="comparison-item after-item">
+                                    <i class="fas fa-desktop text-green-500 ml-3"></i>
+                                    <span>واجهة احترافية تعكس خبرتك</span>
+                                </div>
+                                <div class="comparison-item after-item">
+                                    <i class="fas fa-comments text-green-500 ml-3"></i>
+                                    <span>مجتمع متفاعل + دعم فني</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- مشاكل المنصات العالمية -->
+                <div class="global-platforms-issues card-glass rounded-2xl p-8 mb-12 theme-transition">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center text-white ml-4">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800 dark:text-white">🌍 مشاكل المنصات العالمية</h3>
+                            <p class="text-gray-600 dark:text-gray-400">لماذا قد لا تكون المنصات العالمية الخيار الأفضل للمدرب العربي</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="feature-item">
+                            <div class="flex items-center mb-3">
+                                <div class="w-10 h-10 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center text-white ml-3">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </div>
+                                <h4 class="text-lg font-semibold text-gray-800 dark:text-white">شروط كثيرة ومعقدة</h4>
+                            </div>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm">متطلبات قبول صعبة وإجراءات مطولة</p>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <div class="flex items-center mb-3">
+                                <div class="w-10 h-10 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center text-white ml-3">
+                                    <i class="fas fa-lock"></i>
+                                </div>
+                                <h4 class="text-lg font-semibold text-gray-800 dark:text-white">تحكم محدود في المحتوى</h4>
+                            </div>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm">قيود على التعديل والتحديث والتسعير</p>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <div class="flex items-center mb-3">
+                                <div class="w-10 h-10 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center text-white ml-3">
+                                    <i class="fas fa-money-bill-alt"></i>
+                                </div>
+                                <h4 class="text-lg font-semibold text-gray-800 dark:text-white">نسبة أرباح ضعيفة</h4>
+                            </div>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm">نسب تقطيع عالية تصل إلى 50% وأكثر</p>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <div class="flex items-center mb-3">
+                                <div class="w-10 h-10 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center text-white ml-3">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <h4 class="text-lg font-semibold text-gray-800 dark:text-white">وقت انتظار طويل</h4>
+                            </div>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm">مراجعات طويلة قد تستغرق أشهر</p>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <div class="flex items-center mb-3">
+                                <div class="w-10 h-10 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center text-white ml-3">
+                                    <i class="fas fa-language"></i>
+                                </div>
+                                <h4 class="text-lg font-semibold text-gray-800 dark:text-white">عوائق لغوية</h4>
+                            </div>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm">صعوبات في الوصول للدورات العربية</p>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <div class="flex items-center mb-3">
+                                <div class="w-10 h-10 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center text-white ml-3">
+                                    <i class="fas fa-times-circle"></i>
+                                </div>
+                                <h4 class="text-lg font-semibold text-gray-800 dark:text-white">متاعب المنح والقبول</h4>
+                            </div>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm">صعوبات في القبول والرفض المتكرر</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ميزات منصة Skillzoy للمدربين -->
+                <div class="platform-features mb-16">
+                    <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-8 text-center">
+                        <i class="fas fa-star text-yellow-500 ml-2"></i>
+                        مميزات منصة Skillzoy الحصرية للمدربين
+                    </h3>
+                    
+                    <div class="trainer-features-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- ميزة 1 -->
+                        <div class="feature-card card-glass rounded-2xl p-8 theme-transition hover-lift text-center">
+                            <div class="feature-icon bg-gradient-to-br from-blue-500 to-blue-600 text-white mx-auto mb-4">
+                                <i class="fas fa-upload"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-gray-800 dark:text-white mb-2">رفع المحتوى مرة واحدة</h4>
+                            <p class="text-gray-600 dark:text-gray-400">
+                                ارفع دورتك مرة واحدة وستظل متاحة دائماً للطلاب الجدد بدون حاجة للتكرار
+                            </p>
+                        </div>
+                        
+                        <!-- ميزة 2 -->
+                        <div class="feature-card card-glass rounded-2xl p-8 theme-transition hover-lift text-center">
+                            <div class="feature-icon bg-gradient-to-br from-green-500 to-green-600 text-white mx-auto mb-4">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-gray-800 dark:text-white mb-2">أرباح مستمرة</h4>
+                            <p class="text-gray-600 dark:text-gray-400">
+                                أرباح من كل اشتراك في قناتك، مع نظام عمولات تنافسي
+                            </p>
+                        </div>
+                        
+                        <!-- ميزة 3 -->
+                        <div class="feature-card card-glass rounded-2xl p-8 theme-transition hover-lift text-center">
+                            <div class="feature-icon bg-gradient-to-br from-purple-500 to-purple-600 text-white mx-auto mb-4">
+                                <i class="fas fa-award"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-gray-800 dark:text-white mb-2">شهادات باسمك</h4>
+                            <p class="text-gray-600 dark:text-gray-400">
+                                شهادات تلقائية تحمل اسمك وتوقيعك، تعزز من مصداقيتك وعلامتك التجارية نوفر نظام كامل لأستخراج الاف الشهادات في ثواني معدودة مع نظام باركود لحماية مجهوداتك وشهاداتك،السرعة،الكفاءة،الحماية،الدعم للمدرب 
+                            </p>
+                        </div>
+                        
+                        <!-- ميزة 4 -->
+                        <div class="feature-card card-glass rounded-2xl p-8 theme-transition hover-lift text-center">
+                            <div class="feature-icon bg-gradient-to-br from-orange-500 to-orange-600 text-white mx-auto mb-4">
+                                <i class="fas fa-user-friends"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-gray-800 dark:text-white mb-2">نظام إحالة مربح</h4>
+                            <p class="text-gray-600 dark:text-gray-400">
+                                كسب عمولات إضافية من خلال إحالة المدربين والطلاب الآخرين
+                            </p>
+                        </div>
+                        
+                        <!-- ميزة 5 -->
+                        <div class="feature-card card-glass rounded-2xl p-8 theme-transition hover-lift text-center">
+                            <div class="feature-icon bg-gradient-to-br from-teal-500 to-teal-600 text-white mx-auto mb-4">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-gray-800 dark:text-white mb-2">تقارير مفصلة</h4>
+                            <p class="text-gray-600 dark:text-gray-400">
+                                إحصائيات دقيقة عن أداء دوراتك، عدد الطلاب، الإيرادات، والتقييمات
+                            </p>
+                        </div>
+                        
+                        <!-- ميزة 6 -->
+                        <div class="feature-card card-glass rounded-2xl p-8 theme-transition hover-lift text-center">
+                            <div class="feature-icon bg-gradient-to-br from-pink-500 to-pink-600 text-white mx-auto mb-4">
+                                <i class="fas fa-headset"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-gray-800 dark:text-white mb-2">دعم فني متكامل</h4>
+                            <p class="text-gray-600 dark:text-gray-400">
+                                فريق دعم فني وإداري لمساعدتك في كل خطوة، 7 أيام في الأسبوع
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- دعوة للانضمام -->
+                <div class="cta-trainer card-glass rounded-2xl p-8 theme-transition text-center">
+                    <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">🎯 حان وقت التحول الاحترافي</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6 max-w-2xl mx-auto">
+                        توقف عن إهدار وقتك وجهدك في قروبات واتساب الفوضوية. انضم إلى منصة تحترم عملك وتحوله إلى مصدر دخل مستقر.
+                    </p>
+                    
+                    <div class="flex flex-col md:flex-row justify-center gap-4">
+                        <a href="https://wa.me/0908280115" target="_blank" class="bg-gradient-to-r from-green-500 to-green-600 text-white hover:shadow-lg py-4 px-8 rounded-2xl transition-all duration-300 flex items-center justify-center space-x-2 space-x-reverse font-medium text-lg">
+                            <i class="fab fa-whatsapp"></i>
+                            <span>انضم كمدرب الآن عبر واتساب</span>
+                        </a>
+                        
+                        <a href="mailto:trainers@skillzoyacademy.com" class="bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:shadow-lg py-4 px-8 rounded-2xl transition-all duration-300 flex items-center justify-center space-x-2 space-x-reverse font-medium text-lg">
+                            <i class="fas fa-envelope"></i>
+                            <span>أرسل سيرتك الذاتية</span>
+                        </a>
+                    </div>
+                    
+                    <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="text-center">
+                            <p class="text-3xl font-bold text-primary">0%</p>
+                            <p class="text-gray-600 dark:text-gray-400">عمولات على المراجعات</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-3xl font-bold text-primary">24/7</p>
+                            <p class="text-gray-600 dark:text-gray-400">دعم فني متواصل</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-3xl font-bold text-primary">+48</p>
+                            <p class="text-gray-600 dark:text-gray-400">ساعة رد على الطلبات</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Contact Section -->
         <section class="contact py-16 lg:py-24" id="contact">
             <div class="container mx-auto px-4">
@@ -1330,13 +1709,13 @@
                         
                         <!-- قسم التعاون في صفحة التواصل -->
                         <div class="mt-8 pt-8 border-t border-gray-200/30 dark:border-gray-700/30">
-                            <h4 class="text-xl font-bold text-gray-800 dark:text-white mb-4">لطلبات التعاون</h4>
+                            <h4 class="text-xl font-bold text-gray-800 dark:text-white mb-4">لطلبات التعاون والانضمام كمدرب</h4>
                             <p class="text-gray-600 dark:text-gray-400 mb-4">
-                                للمدربين والمؤسسات الراغبين في التعاون مع Skillzoy Academy:
+                                للمدربين الراغبين في الانضمام إلى منصتنا كمدربين معتمدين:
                             </p>
-                            <a href="mailto:collaboration@skillzoyacademy.com" class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white hover:shadow-lg py-3 rounded-2xl transition-all duration-300 flex items-center justify-center space-x-2 space-x-reverse font-medium">
-                                <i class="fas fa-handshake"></i>
-                                <span>collaboration@skillzoyacademy.com</span>
+                            <a href="mailto:trainers@skillzoyacademy.com" class="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:shadow-lg py-3 rounded-2xl transition-all duration-300 flex items-center justify-center space-x-2 space-x-reverse font-medium">
+                                <i class="fas fa-chalkboard-teacher"></i>
+                                <span>trainers@skillzoyacademy.com</span>
                             </a>
                         </div>
 
@@ -1352,7 +1731,7 @@
                     </div>
                     
                     <div class="contact-form card-glass rounded-2xl p-8 theme-transition">
- <a href="https://wa.me/0908280115" class="w-full mt-4 bg-gradient-to-r from-purple-500 to-purple-600 text-white hover:shadow-lg py-4 rounded-2xl transition-all duration-300 flex items-center justify-center space-x-2 space-x-reverse font-medium text-lg">
+                        <a href="https://wa.me/0908280115" class="w-full mb-4 bg-gradient-to-r from-purple-500 to-purple-600 text-white hover:shadow-lg py-4 rounded-2xl transition-all duration-300 flex items-center justify-center space-x-2 space-x-reverse font-medium text-lg">
                             <i class="fas fa-sign-in-alt"></i>
                             <span>تواصل مع الدعم</span>
                         </a>
@@ -1363,19 +1742,18 @@
                                     معلومات مهمة
                                 </h4>
                                 <p class="text-gray-700 dark:text-gray-300 mb-4">
-                                  خدمة عملاء مستمرة 7/24 ساعة اذا اردت اي استفسار او واجهة اي مشكلة يمكنك التواصل مع فريق خدمة العملاء فورا نحن في خدمتكم كل الوقت  
+                                    خدمة عملاء مستمرة 7/24 ساعة اذا اردت اي استفسار او واجهة اي مشكلة يمكنك التواصل مع فريق خدمة العملاء فورا نحن في خدمتكم كل الوقت  
                                 </p>
-                 
                             </div>
                             
-                            <!-- قسم للتعاون -->
-                            <div class="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-2xl p-6">
-                                <h4 class="text-xl font-semibold text-green-800 dark:text-green-300 mb-3 flex items-center">
-                                    <i class="fas fa-handshake ml-2"></i>
-                                    لطلبات التعاون
+                            <!-- قسم للمدربين -->
+                            <div class="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-700 rounded-2xl p-6">
+                                <h4 class="text-xl font-semibold text-orange-800 dark:text-orange-300 mb-3 flex items-center">
+                                    <i class="fas fa-chalkboard-teacher ml-2"></i>
+                                    للمدربين الراغبين في الانضمام
                                 </h4>
-                                <p class="text-gray-700 dark:text-gray-300">
-                                    إذا كنت مدرباً أو تمثل مؤسسة تعليمية وترغب في التعاون معنا، يرجى ذكر ذلك في رسالتك مع تفاصيل عن طبيعة التعاون المقترح.
+                                <p class="text-gray-700 dark:text-gray-400">
+                                    إذا كنت مدرباً محترفاً وترغب في الانضمام إلى منصتنا، يرجى ذكر تخصصك وخبرتك في رسالتك مع إرفاق عينات من محتواك التعليمي إن أمكن.
                                 </p>
                             </div>
                         </div>
@@ -1408,6 +1786,7 @@
                             <li><a href="#certificate" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">الشهادات</a></li>
                             <li><a href="#values" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">قيمنا</a></li>
                             <li><a href="#collaboration" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">التعاون</a></li>
+                            <li><a href="#trainers" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">للمدربين</a></li>
                             <li><a href="#contact" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">التواصل</a></li>
                         </ul>
                     </div>
@@ -1420,9 +1799,9 @@
                             <li><a href="#courses" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">اساسيات الشبكات</a></li>
                             <li><a href="#courses" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">دورة التصميم الاحترافي </a></li>
                             <li><a href="#courses" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">إدارة المشاريع</a></li>
-                       <li><a href="#courses" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">البرمجة </a></li>
-                       <li><a href="#courses" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">للمزيد من الدورات انضم الان </a></li>
-                     </ul>
+                            <li><a href="#courses" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">البرمجة </a></li>
+                            <li><a href="#courses" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">للمزيد من الدورات انضم الان </a></li>
+                        </ul>
                     </div>
                     <div class="footer-column">
                         <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-6">النشرة البريدية</h3>
@@ -1689,4 +2068,4 @@
 })();
 </script>  
 </body>
-    </html>
+</html>
