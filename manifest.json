@@ -9,13 +9,33 @@
   "scope": "/",
   "icons": [
     {
-      "src": "/js/Picsart_25-12-16_19-28-40-782.jpg",
+      "src": "/js/ei_1765956848861-removebg-preview.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "/js/ei_1765956848861-removebg-preview.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "/js/ei_1765956848861-removebg-preview.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/js/Picsart_25-12-16_19-28-40-782.jpg",
+      "src": "/js/ei_1765956848861-removebg-preview.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "/js/ei_1765956848861-removebg-preview.png",
       "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/js/ei_1765956848861-removebg-preview.png",
+      "sizes": "1024x1024",
       "type": "image/png"
     }
   ]
