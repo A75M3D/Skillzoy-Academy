@@ -334,7 +334,7 @@
             }
             
             .values-grid,
-            .partners-grid {
+            .collaboration-grid {
                 grid-template-columns: 1fr !important;
             }
         }
@@ -385,8 +385,8 @@
             margin-bottom: 10px;
         }
         
-        /* أنماط خاصة بقسم الشركاء */
-        .partner-icon {
+        /* أنماط خاصة بقسم التعاون */
+        .collaboration-icon {
             width: 80px;
             height: 80px;
             border-radius: 20px;
@@ -398,7 +398,7 @@
             transition: all 0.3s ease;
         }
         
-        .partner-card:hover .partner-icon {
+        .collaboration-card:hover .collaboration-icon {
             transform: scale(1.1) rotate(5deg);
         }
         
@@ -422,6 +422,29 @@
         @keyframes floating {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
+        }
+        
+        /* تصميم زر الاتصال */
+        .contact-button {
+            background: linear-gradient(135deg, #059669, #047857);
+            color: white;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+        
+        .contact-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(5, 150, 105, 0.3);
+        }
+        
+        .contact-button i {
+            margin-left: 8px;
         }
     </style>
 </head>
@@ -488,7 +511,7 @@
                         <li><a href="#testimonials" class="text-gray-700 dark:text-gray-200 hover:text-primary py-2 px-4 rounded-2xl transition-all duration-300">آراء الطلاب</a></li>
                         <li><a href="#certificate" class="text-gray-700 dark:text-gray-200 hover:text-primary py-2 px-4 rounded-2xl transition-all duration-300">الشهادات</a></li>
                         <li><a href="#values" class="text-gray-700 dark:text-gray-200 hover:text-primary py-2 px-4 rounded-2xl transition-all duration-300">قيمنا</a></li>
-                        <li><a href="#partners" class="text-gray-700 dark:text-gray-200 hover:text-primary py-2 px-4 rounded-2xl transition-all duration-300">شركاؤنا</a></li>
+                        <li><a href="#collaboration" class="text-gray-700 dark:text-gray-200 hover:text-primary py-2 px-4 rounded-2xl transition-all duration-300">التعاون</a></li>
                         <li><a href="#contact" class="text-gray-700 dark:text-gray-200 hover:text-primary py-2 px-4 rounded-2xl transition-all duration-300">التواصل</a></li>
                     </ul>
                 </nav>
@@ -598,11 +621,11 @@
                     <span class="font-medium">قيمنا</span>
                 </a>
                 
-                <a href="#partners" class="sidebar-item flex items-center space-x-4 space-x-reverse p-4 rounded-2xl text-gray-700 dark:text-gray-200 hover:bg-gray-100/30 dark:hover:bg-gray-700/30 theme-transition group hover-lift">
-                    <div class="w-10 h-10 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center shadow-glow-primary group-hover:scale-110 transition-transform">
+                <a href="#collaboration" class="sidebar-item flex items-center space-x-4 space-x-reverse p-4 rounded-2xl text-gray-700 dark:text-gray-200 hover:bg-gray-100/30 dark:hover:bg-gray-700/30 theme-transition group hover-lift">
+                    <div class="w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center shadow-glow-primary group-hover:scale-110 transition-transform">
                         <i class="fas fa-handshake text-white text-sm"></i>
                     </div>
-                    <span class="font-medium">شركاؤنا</span>
+                    <span class="font-medium">التعاون</span>
                 </a>
                 
                 <a href="#contact" class="sidebar-item flex items-center space-x-4 space-x-reverse p-4 rounded-2xl text-gray-700 dark:text-gray-200 hover:bg-gray-100/30 dark:hover:bg-gray-700/30 theme-transition group hover-lift">
@@ -717,11 +740,11 @@
                         <!-- إحصائيات سريعة -->
                         <div class="mt-12 grid grid-cols-3 gap-6">
                             <div class="text-center">
-                                <p class="text-2xl font-bold text-primary">389,128+</p>
+                                <p class="text-2xl font-bold text-primary">+389,000</p>
                                 <p class="text-gray-600 dark:text-gray-400">طالب مسجل</p>
                             </div>
                             <div class="text-center">
-                                <p class="text-2xl font-bold text-primary">179+</p>
+                                <p class="text-2xl font-bold text-primary">+179</p>
                                 <p class="text-gray-600 dark:text-gray-400">دورة تدريبية</p>
                             </div>
                             <div class="text-center">
@@ -1075,243 +1098,196 @@
             </div>
         </section>
 
-        <!-- Strategic Partners Section -->
-        <section class="partners py-16 lg:py-24 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-gray-900" id="partners">
+        <!-- Collaboration Opportunities Section - SAFE VERSION -->
+        <section class="collaboration py-16 lg:py-24 bg-gradient-to-br from-green-50 to-teal-50 dark:from-gray-800 dark:to-gray-900" id="collaboration">
             <div class="container mx-auto px-4">
                 <div class="section-title text-center mb-16">
-                    <h2 class="text-3xl lg:text-4xl font-bold text-gray-800 dark:text-white mb-4">انضم إلى شبكة شركاء Skillzoy</h2>
+                    <h2 class="text-3xl lg:text-4xl font-bold text-gray-800 dark:text-white mb-4">فرص التعاون مع Skillzoy</h2>
                     <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-                        نبحث عن شركاء استراتيجيين لتوسيع نطاق تأثيرنا ونشر المعرفة على نطاق أوسع. انضم إلينا في مهمتنا لتمكين الملايين من خلال التعليم الإلكتروني.
+                        نبحث عن فرص للتعاون البناء مع المؤسسات التعليمية والمدربين المحترفين لتقديم محتوى تعليمي متميز
                     </p>
                 </div>
                 
-                <!-- كلمة ترحيبية للشركاء -->
-                <div class="partners-intro card-glass rounded-2xl p-8 mb-12 theme-transition">
+                <!-- كلمة ترحيبية -->
+                <div class="collaboration-intro card-glass rounded-2xl p-8 mb-12 theme-transition">
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
                         <div>
-                            <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">لماذا تختار الشراكة مع Skillzoy Academy؟</h3>
+                            <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">لماذا تتعاون مع Skillzoy Academy؟</h3>
                             <p class="text-gray-600 dark:text-gray-400 mb-4">
-                                نحن نقدم منصة تعليمية متكاملة تصل إلى أكثر من 389,000 متعلم حول العالم. من خلال شراكتنا، يمكنك:
+                                نحن نقدم منصة تعليمية متكاملة تتيح الوصول إلى مجتمع متعلمين نشط. من خلال التعاون معنا، يمكنك:
                             </p>
                             <ul class="space-y-3">
                                 <li class="benefit-item">
-                                    <i class="fas fa-chart-line benefit-icon"></i>
-                                    <span>الوصول إلى جمهور واسع ومتنوع من المتعلمين</span>
+                                    <i class="fas fa-users benefit-icon"></i>
+                                    <span>الوصول إلى مجتمع من المتعلمين المهتمين</span>
+                                </li>
+                                <li class="benefit-item">
+                                    <i class="fas fa-chalkboard-teacher benefit-icon"></i>
+                                    <span>عرض خبرتك ومحتواك التعليمي على منصة رقمية</span>
                                 </li>
                                 <li class="benefit-item">
                                     <i class="fas fa-certificate benefit-icon"></i>
-                                    <span>تقديم شهادات معتمدة تحمل علامتكم التجارية</span>
+                                    <span>تقديم شهادات إكمال للدورات المشتركة</span>
                                 </li>
                                 <li class="benefit-item">
-                                    <i class="fas fa-coins benefit-icon"></i>
-                                    <span>إنشاء مصادر دورة إضافية من خلال برامج الإحالة</span>
-                                </li>
-                                <li class="benefit-item">
-                                    <i class="fas fa-globe-africa benefit-icon"></i>
-                                    <span>توسيع نطاق وصولكم الجغرافي والتأثير المجتمعي</span>
+                                    <i class="fas fa-handshake benefit-icon"></i>
+                                    <span>بناء شراكات استراتيجية في مجال التعليم الإلكتروني</span>
                                 </li>
                             </ul>
                         </div>
                         <div class="text-center">
                             <div class="floating inline-block">
-                                <div class="partner-icon bg-gradient-to-br from-orange-500 to-orange-600 text-white mx-auto">
+                                <div class="collaboration-icon bg-gradient-to-br from-green-500 to-green-600 text-white mx-auto">
                                     <i class="fas fa-handshake"></i>
                                 </div>
                             </div>
-                            <h4 class="text-xl font-bold text-gray-800 dark:text-white mt-6">شراكات مثمرة</h4>
-                            <p class="text-gray-600 dark:text-gray-400 mt-2">نحن نؤمن بأن الشراكات القوية تخلق فرصاً استثنائية للتعلم والنمو المشترك.</p>
+                            <h4 class="text-xl font-bold text-gray-800 dark:text-white mt-6">شراكات بناءة</h4>
+                            <p class="text-gray-600 dark:text-gray-400 mt-2">نؤمن بأن التعاون الجيد يخلق قيمة مضافة للجميع</p>
                         </div>
                     </div>
                 </div>
                 
-                <!-- شركاء محتملون -->
-                <div class="partners-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-                    <!-- المدربين -->
-                    <div class="partner-card card-glass rounded-2xl p-8 theme-transition hover-lift text-center">
-                        <div class="partner-icon bg-gradient-to-br from-blue-500 to-blue-600 text-white mx-auto">
+                <!-- فرص التعاون -->
+                <div class="collaboration-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                    <!-- للمدربين المحترفين -->
+                    <div class="collaboration-card card-glass rounded-2xl p-8 theme-transition hover-lift text-center">
+                        <div class="collaboration-icon bg-gradient-to-br from-blue-500 to-blue-600 text-white mx-auto">
                             <i class="fas fa-chalkboard-teacher"></i>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2">المدربين المحترفين</h3>
+                        <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2">للمدربين المحترفين</h3>
                         <p class="text-gray-600 dark:text-gray-400 mb-4">
-                            <strong>انضم كمدرب معتمد:</strong> عرض خبرتك على منصتنا التي تصل إلى مئات الآلاف من الطلاب.
+                            إذا كنت مدرباً محترفاً ولديك محتوى تعليمي قيم، يمكننا التعاون لعرض دوراتك على منصتنا.
                         </p>
                         <div class="space-y-3 text-right">
                             <div class="benefit-item">
-                                <i class="fas fa-check-circle text-green-500 benefit-icon"></i>
-                                <span class="text-sm">عرض دوراتك على منصة عالمية</span>
+                                <i class="fas fa-check text-green-500 benefit-icon"></i>
+                                <span class="text-sm">عرض دوراتك التعليمية</span>
                             </div>
                             <div class="benefit-item">
-                                <i class="fas fa-check-circle text-green-500 benefit-icon"></i>
-                                <span class="text-sm">شهادات معتمدة تحمل اسمك وتوقيعك</span>
+                                <i class="fas fa-check text-green-500 benefit-icon"></i>
+                                <span class="text-sm">الوصول إلى قاعدة متعلمين واسعة</span>
                             </div>
                             <div class="benefit-item">
-                                <i class="fas fa-check-circle text-green-500 benefit-icon"></i>
-                                <span class="text-sm">نسبة أرباح تنافسية على كل تسجيل</span>
-                            </div>
-                            <div class="benefit-item">
-                                <i class="fas fa-check-circle text-green-500 benefit-icon"></i>
-                                <span class="text-sm">دعم فني وتسويقي متكامل</span>
+                                <i class="fas fa-check text-green-500 benefit-icon"></i>
+                                <span class="text-sm">شهادات إكمال مشتركة</span>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- المراكز التعليمية -->
-                    <div class="partner-card card-glass rounded-2xl p-8 theme-transition hover-lift text-center">
-                        <div class="partner-icon bg-gradient-to-br from-purple-500 to-purple-600 text-white mx-auto">
+                    <!-- للمراكز التعليمية -->
+                    <div class="collaboration-card card-glass rounded-2xl p-8 theme-transition hover-lift text-center">
+                        <div class="collaboration-icon bg-gradient-to-br from-purple-500 to-purple-600 text-white mx-auto">
                             <i class="fas fa-university"></i>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2">المراكز التعليمية</h3>
+                        <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2">للمراكز التعليمية</h3>
                         <p class="text-gray-600 dark:text-gray-400 mb-4">
-                            <strong>دمج منصتنا مع برامجكم:</strong> قدم حلولاً تعليمية إضافية لطلابكم وزبائنكم.
+                            إذا كنت تمثل مركزاً تعليمياً، يمكننا التعاون لتقديم دورات إضافية لطلابكم أو برامج تدريبية مشتركة.
                         </p>
                         <div class="space-y-3 text-right">
                             <div class="benefit-item">
-                                <i class="fas fa-check-circle text-green-500 benefit-icon"></i>
-                                <span class="text-sm">منصة تعليمية جاهزة بدعم فني مستمر 24/7 ساعة </span>
+                                <i class="fas fa-check text-green-500 benefit-icon"></i>
+                                <span class="text-sm">دورات تكميلية لبرامجكم</span>
                             </div>
                             <div class="benefit-item">
-                                <i class="fas fa-check-circle text-green-500 benefit-icon"></i>
-                                <span class="text-sm">شهادات مشتركة تحمل شعار مؤسستكم</span>
+                                <i class="fas fa-check text-green-500 benefit-icon"></i>
+                                <span class="text-sm">برامج تدريبية مشتركة</span>
                             </div>
                             <div class="benefit-item">
-                                <i class="fas fa-check-circle text-green-500 benefit-icon"></i>
-                                <span class="text-sm">تقارير متابعة أداء الطلاب</span>
-                            </div>
-                            <div class="benefit-item">
-                                <i class="fas fa-check-circle text-green-500 benefit-icon"></i>
-                                <span class="text-sm">برامج تدريبية مخصصة لاحتياجاتكم</span>
+                                <i class="fas fa-check text-green-500 benefit-icon"></i>
+                                <span class="text-sm">شهادات تحمل شعار الطرفين</span>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- مراكز التدريب المهني -->
-                    <div class="partner-card card-glass rounded-2xl p-8 theme-transition hover-lift text-center">
-                        <div class="partner-icon bg-gradient-to-br from-green-500 to-green-600 text-white mx-auto">
-                            <i class="fas fa-tools"></i>
+                    <!-- للمؤسسات والمنظمات -->
+                    <div class="collaboration-card card-glass rounded-2xl p-8 theme-transition hover-lift text-center">
+                        <div class="collaboration-icon bg-gradient-to-br from-teal-500 to-teal-600 text-white mx-auto">
+                            <i class="fas fa-building"></i>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2">مراكز التدريب المهني</h3>
+                        <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2">للمؤسسات والمنظمات</h3>
                         <p class="text-gray-600 dark:text-gray-400 mb-4">
-                            <strong>أكمل تدريبكم العملي:</strong> أضف مكوناً نظرياً متقدماً لبرامجكم التدريبية.
+                            للمؤسسات المهتمة بالتعليم والتدريب، نقدم فرصاً للتعاون في تطوير برامج تدريبية متخصصة.
                         </p>
                         <div class="space-y-3 text-right">
                             <div class="benefit-item">
-                                <i class="fas fa-check-circle text-green-500 benefit-icon"></i>
-                                <span class="text-sm">محتوى تدريبي متخصص في مجالات متنوعة</span>
+                                <i class="fas fa-check text-green-500 benefit-icon"></i>
+                                <span class="text-sm">برامج تدريب مخصصة</span>
                             </div>
                             <div class="benefit-item">
-                                <i class="fas fa-check-circle text-green-500 benefit-icon"></i>
-                                <span class="text-sm">تدريب افتراضي يكمّل التدريب العملي</span>
+                                <i class="fas fa-check text-green-500 benefit-icon"></i>
+                                <span class="text-sm">شراكات في تطوير المحتوى</span>
                             </div>
                             <div class="benefit-item">
-                                <i class="fas fa-check-circle text-green-500 benefit-icon"></i>
-                                <span class="text-sm">شهادات معترف بها في سوق العمل</span>
-                            </div>
-                            <div class="benefit-item">
-                                <i class="fas fa-check-circle text-green-500 benefit-icon"></i>
-                                <span class="text-sm">إدارة وتتبع تقدم المتدربين</span>
+                                <i class="fas fa-check text-green-500 benefit-icon"></i>
+                                <span class="text-sm">مشاريع تدريبية مشتركة</span>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- صف ثاني من الشركاء -->
-                <div class="partners-grid grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-                    <!-- المنظمات المحلية والدولية -->
-                    <div class="partner-card card-glass rounded-2xl p-8 theme-transition hover-lift text-center">
-                        <div class="partner-icon bg-gradient-to-br from-red-500 to-red-600 text-white mx-auto">
-                            <i class="fas fa-globe"></i>
+                <!-- آلية التعاون -->
+                <div class="collaboration-process card-glass rounded-2xl p-8 mb-12 theme-transition">
+                    <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-6 text-center">كيف نتعاون معاً؟</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center text-white text-2xl mx-auto mb-4">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <h4 class="text-xl font-semibold text-gray-800 dark:text-white mb-2">التواصل الأولي</h4>
+                            <p class="text-gray-600 dark:text-gray-400">نناقش فكرة التعاون والمحتوى المقترح</p>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2">المنظمات المحلية والدولية</h3>
-                        <p class="text-gray-600 dark:text-gray-400 mb-4">
-                            <strong>تعاون استراتيجي:</strong> شارك في مبادراتنا لتطوير المهارات وبناء القدرات على نطاق واسع.
-                        </p>
-                        <div class="space-y-3 text-right">
-                            <div class="benefit-item">
-                                <i class="fas fa-check-circle text-green-500 benefit-icon"></i>
-                                <span class="text-sm">شراكات لتنفيذ مشاريع تنمية المهارات</span>
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center text-white text-2xl mx-auto mb-4">
+                                <i class="fas fa-handshake"></i>
                             </div>
-                            <div class="benefit-item">
-                                <i class="fas fa-check-circle text-green-500 benefit-icon"></i>
-                                <span class="text-sm">برامج تدريبية مخصصة للمجتمعات المستهدفة</span>
-                            </div>
-                            <div class="benefit-item">
-                                <i class="fas fa-check-circle text-green-500 benefit-icon"></i>
-                                <span class="text-sm">تقارير تأثير وتقييم للمشاريع المشتركة</span>
-                            </div>
-                            <div class="benefit-item">
-                                <i class="fas fa-check-circle text-green-500 benefit-icon"></i>
-                                <span class="text-sm">فرصة للوصول إلى جمهور عالمي</span>
-                            </div>
+                            <h4 class="text-xl font-semibold text-gray-800 dark:text-white mb-2">الاتفاق على الشروط</h4>
+                            <p class="text-gray-600 dark:text-gray-400">نحدد تفاصيل التعاون والأدوار والمسؤوليات</p>
                         </div>
-                    </div>
-                    
-                    <!-- المؤسسات التعليمية -->
-                    <div class="partner-card card-glass rounded-2xl p-8 theme-transition hover-lift text-center">
-                        <div class="partner-icon bg-gradient-to-br from-indigo-500 to-indigo-600 text-white mx-auto">
-                            <i class="fas fa-graduation-cap"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2">المؤسسات التعليمية</h3>
-                        <p class="text-gray-600 dark:text-gray-400 mb-4">
-                            <strong>تكامل تعليمي:</strong> أضف منصتنا كجزء من برامجكم الأكاديمية أو كخدمة تعليمية إضافية.
-                        </p>
-                        <div class="space-y-3 text-right">
-                            <div class="benefit-item">
-                                <i class="fas fa-check-circle text-green-500 benefit-icon"></i>
-                                <span class="text-sm">التطوير الذاتي واكتساب احدث مهارات سوق العمل الحديث</span>
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center text-white text-2xl mx-auto mb-4">
+                                <i class="fas fa-rocket"></i>
                             </div>
-                            <div class="benefit-item">
-                                <i class="fas fa-check-circle text-green-500 benefit-icon"></i>
-                                <span class="text-sm">برامج تطوير مهني للطلاب والخريجين</span>
-                            </div>
-                            <div class="benefit-item">
-                                <i class="fas fa-check-circle text-green-500 benefit-icon"></i>
-                                <span class="text-sm">شهادات مشتركة تحمل شعار المؤسسة</span>
-                            </div>
-                            <div class="benefit-item">
-                                <i class="fas fa-check-circle text-green-500 benefit-icon"></i>
-                                <span class="text-sm">إحصاءات وتقارير عن أداء الطلاب</span>
-                            </div>
+                            <h4 class="text-xl font-semibold text-gray-800 dark:text-white mb-2">بدء التنفيذ</h4>
+                            <p class="text-gray-600 dark:text-gray-400">نطلق المشروع المشترك ونتابع النتائج</p>
                         </div>
                     </div>
                 </div>
                 
-                <!-- دعوة للشراكة -->
-                <div class="cta-partnership card-glass rounded-2xl p-8 theme-transition text-center">
-                    <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">ابدأ شراكتك معنا اليوم!</h3>
+                <!-- دعوة للتواصل -->
+                <div class="cta-collaboration card-glass rounded-2xl p-8 theme-transition text-center">
+                    <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">هل ترغب في التعاون معنا؟</h3>
                     <p class="text-gray-600 dark:text-gray-400 mb-6 max-w-2xl mx-auto">
-                        سواء كنت مدرباً فردياً أو تمثل مؤسسة تعليمية كبيرة، لدينا خيارات شراكة مرنة تناسب احتياجاتك. انضم إلى شبكتنا المتنامية من الشركاء الناجحين.
+                        سواء كنت مدرباً فردياً أو تمثل مؤسسة تعليمية، نحن نرحب بمناقشة أفكار التعاون التي تضيف قيمة للمتعلمين.
                     </p>
                     
                     <div class="flex flex-col md:flex-row justify-center gap-4">
-                        <a href="https://wa.me/0908280115" target="_blank" class="bg-gradient-to-r from-green-500 to-green-600 text-white hover:shadow-lg py-4 px-8 rounded-2xl transition-all duration-300 flex items-center justify-center space-x-2 space-x-reverse font-medium text-lg">
+                        <a href="https://wa.me/0908280115" target="_blank" class="contact-button">
                             <i class="fab fa-whatsapp"></i>
-                            <span>تواصل للشراكة عبر واتساب</span>
+                            <span>تواصل معنا عبر واتساب</span>
                         </a>
                         
-                        <a href="#contact" class="bg-gradient-primary text-white hover:shadow-glow-primary py-4 px-8 rounded-2xl transition-all duration-300 flex items-center justify-center space-x-2 space-x-reverse font-medium text-lg">
+                        <a href="mailto:collaboration@skillzoyacademy.com" class="bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:shadow-lg py-4 px-8 rounded-2xl transition-all duration-300 flex items-center justify-center space-x-2 space-x-reverse font-medium text-lg">
                             <i class="fas fa-envelope"></i>
-                            <span>أرسل لنا بريداً إلكترونياً</span>
+                            <span>أرسل بريداً إلكترونياً</span>
                         </a>
                     </div>
                     
                     <p class="text-gray-500 dark:text-gray-400 mt-6 text-sm">
-                        متوسط وقت الرد: 4 ساعات عمل | فريق متخصص للشراكات متاح 5 أيام في الأسبوع
+                        نحن نرد على جميع رسائل التعاون خلال 24-48 ساعة
                     </p>
                 </div>
                 
-                <!-- إحصائيات الشراكة -->
-                <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="bg-white/50 dark:bg-gray-800/50 rounded-2xl p-6 text-center">
-                        <p class="text-3xl font-bold text-primary">50+</p>
-                        <p class="text-gray-600 dark:text-gray-400">شريك حالي</p>
-                    </div>
-                    <div class="bg-white/50 dark:bg-gray-800/50 rounded-2xl p-6 text-center">
-                        <p class="text-3xl font-bold text-primary">92%</p>
-                        <p class="text-gray-600 dark:text-gray-400">رضا الشركاء</p>
-                    </div>
-                    <div class="bg-white/50 dark:bg-gray-800/50 rounded-2xl p-6 text-center">
-                        <p class="text-3xl font-bold text-primary">15</p>
-                        <p class="text-gray-600 dark:text-gray-400">دولة حول العالم</p>
+                <!-- ملاحظة قانونية -->
+                <div class="legal-note bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-2xl p-6 mt-12">
+                    <div class="flex items-start">
+                        <i class="fas fa-info-circle text-yellow-500 text-xl ml-3 mt-1"></i>
+                        <div>
+                            <h4 class="text-lg font-semibold text-yellow-800 dark:text-yellow-300 mb-2">ملاحظة مهمة</h4>
+                            <p class="text-gray-700 dark:text-gray-300 text-sm">
+                                جميع التعاونات تخضع لاتفاقيات كتابية تحدد تفاصيل التعاون وحقوق الأطراف. 
+                                نحن نتعاون فقط مع المدربين والمؤسسات المؤهلة التي تقدم محتوى تعليمي أصلي وقيم.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1322,7 +1298,7 @@
             <div class="container mx-auto px-4">
                 <div class="section-title text-center mb-16">
                     <h2 class="text-3xl lg:text-4xl font-bold text-gray-800 dark:text-white mb-4">تواصل معنا</h2>
-                    <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">يسعدنا تواصلكم معنا لأي استفسار حول الدورات أو الشهادات أو الشراكة</p>
+                    <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">يسعدنا تواصلكم معنا لأي استفسار حول الدورات أو الشهادات أو التعاون</p>
                 </div>
                 <div class="contact-container grid grid-cols-1 lg:grid-cols-2 gap-12">
                     <div class="contact-info card-glass rounded-2xl p-8 theme-transition">
@@ -1352,15 +1328,15 @@
                             </p>
                         </div>
                         
-                        <!-- قسم الشركاء في صفحة التواصل -->
+                        <!-- قسم التعاون في صفحة التواصل -->
                         <div class="mt-8 pt-8 border-t border-gray-200/30 dark:border-gray-700/30">
-                            <h4 class="text-xl font-bold text-gray-800 dark:text-white mb-4">للشراكات والتعاون</h4>
+                            <h4 class="text-xl font-bold text-gray-800 dark:text-white mb-4">لطلبات التعاون</h4>
                             <p class="text-gray-600 dark:text-gray-400 mb-4">
-                                للمؤسسات والمدربين الراغبين في الشراكة مع Skillzoy Academy، يرجى التواصل مع قسم الشراكات:
+                                للمدربين والمؤسسات الراغبين في التعاون مع Skillzoy Academy:
                             </p>
-                            <a href="mailto:partnerships@skillzoyacademy.com" class="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:shadow-lg py-3 rounded-2xl transition-all duration-300 flex items-center justify-center space-x-2 space-x-reverse font-medium">
+                            <a href="mailto:collaboration@skillzoyacademy.com" class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white hover:shadow-lg py-3 rounded-2xl transition-all duration-300 flex items-center justify-center space-x-2 space-x-reverse font-medium">
                                 <i class="fas fa-handshake"></i>
-                                <span>partnerships@skillzoyacademy.com</span>
+                                <span>collaboration@skillzoyacademy.com</span>
                             </a>
                         </div>
 
@@ -1392,14 +1368,14 @@
                  
                             </div>
                             
-                            <!-- قسم للشركاء -->
+                            <!-- قسم للتعاون -->
                             <div class="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-2xl p-6">
                                 <h4 class="text-xl font-semibold text-green-800 dark:text-green-300 mb-3 flex items-center">
                                     <i class="fas fa-handshake ml-2"></i>
-                                    للشركاء المحتملين
+                                    لطلبات التعاون
                                 </h4>
                                 <p class="text-gray-700 dark:text-gray-300">
-                                    إذا كنت تمثل مؤسسة تعليمية أو مركز تدريب أو منظمة ترغب في الشراكة معنا، يرجى ذكر ذلك في رسالتك وسيقوم فريق الشراكات بالتواصل معك خلال 24 ساعة عمل.
+                                    إذا كنت مدرباً أو تمثل مؤسسة تعليمية وترغب في التعاون معنا، يرجى ذكر ذلك في رسالتك مع تفاصيل عن طبيعة التعاون المقترح.
                                 </p>
                             </div>
                         </div>
@@ -1431,7 +1407,7 @@
                             <li><a href="#testimonials" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">آراء الطلاب</a></li>
                             <li><a href="#certificate" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">الشهادات</a></li>
                             <li><a href="#values" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">قيمنا</a></li>
-                            <li><a href="#partners" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">شركاؤنا</a></li>
+                            <li><a href="#collaboration" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">التعاون</a></li>
                             <li><a href="#contact" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">التواصل</a></li>
                         </ul>
                     </div>
@@ -1443,7 +1419,7 @@
                             <li><a href="#courses" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">إدارة الموارد البشرية</a></li>
                             <li><a href="#courses" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">اساسيات الشبكات</a></li>
                             <li><a href="#courses" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">دورة التصميم الاحترافي </a></li>
-                            <li><a href="#courses" class="text-gray-600 dark:text-gray-400 hover:text-primary transitionall duration-300">إدارة المشاريع</a></li>
+                            <li><a href="#courses" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">إدارة المشاريع</a></li>
                        <li><a href="#courses" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">البرمجة </a></li>
                        <li><a href="#courses" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">للمزيد من الدورات انضم الان </a></li>
                      </ul>
@@ -1713,4 +1689,4 @@
 })();
 </script>  
 </body>
-                            </html>
+    </html>
