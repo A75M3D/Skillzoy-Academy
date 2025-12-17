@@ -332,6 +332,10 @@
             .footer-content {
                 grid-template-columns: 1fr;
             }
+            
+            .values-grid {
+                grid-template-columns: 1fr !important;
+            }
         }
         
         /* إصلاح الخطوط الشفافة */
@@ -345,6 +349,39 @@
         
         .container {
             max-width: 100%;
+        }
+        
+        /* أنماط خاصة بقسم القيم والمبادئ */
+        .value-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .value-card:hover .value-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .value-english {
+            font-size: 18px;
+            font-weight: 600;
+            color: #4b5563;
+        }
+        
+        .dark .value-english {
+            color: #d1d5db;
+        }
+        
+        .value-arabic {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -410,6 +447,7 @@
                         <li><a href="#process" class="text-gray-700 dark:text-gray-200 hover:text-primary py-2 px-4 rounded-2xl transition-all duration-300">الاشتراك</a></li>
                         <li><a href="#testimonials" class="text-gray-700 dark:text-gray-200 hover:text-primary py-2 px-4 rounded-2xl transition-all duration-300">آراء الطلاب</a></li>
                         <li><a href="#certificate" class="text-gray-700 dark:text-gray-200 hover:text-primary py-2 px-4 rounded-2xl transition-all duration-300">الشهادات</a></li>
+                        <li><a href="#values" class="text-gray-700 dark:text-gray-200 hover:text-primary py-2 px-4 rounded-2xl transition-all duration-300">قيمنا</a></li>
                         <li><a href="#contact" class="text-gray-700 dark:text-gray-200 hover:text-primary py-2 px-4 rounded-2xl transition-all duration-300">التواصل</a></li>
                     </ul>
                 </nav>
@@ -510,6 +548,13 @@
                         <i class="fas fa-award text-white text-sm"></i>
                     </div>
                     <span class="font-medium">الشهادات</span>
+                </a>
+                
+                <a href="#values" class="sidebar-item flex items-center space-x-4 space-x-reverse p-4 rounded-2xl text-gray-700 dark:text-gray-200 hover:bg-gray-100/30 dark:hover:bg-gray-700/30 theme-transition group hover-lift">
+                    <div class="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow-primary group-hover:scale-110 transition-transform">
+                        <i class="fas fa-heart text-white text-sm"></i>
+                    </div>
+                    <span class="font-medium">قيمنا</span>
                 </a>
                 
                 <a href="#contact" class="sidebar-item flex items-center space-x-4 space-x-reverse p-4 rounded-2xl text-gray-700 dark:text-gray-200 hover:bg-gray-100/30 dark:hover:bg-gray-700/30 theme-transition group hover-lift">
@@ -856,6 +901,132 @@
             </div>
         </section>
 
+        <!-- Values & Principles Section -->
+        <section class="values py-16 lg:py-24" id="values">
+            <div class="container mx-auto px-4">
+                <div class="section-title text-center mb-16">
+                    <h2 class="text-3xl lg:text-4xl font-bold text-gray-800 dark:text-white mb-4">قيم ومبادئ Skillzoy Academy</h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">نؤمن بأن التعليم يجب أن يكون شاملاً ومتاحًا للجميع، وهذه القيم توجهنا في رحلتنا لتمكين المتعلمين حول العالم</p>
+                </div>
+                
+                <!-- شعار مبدئي (صورة افتراضية) -->
+                <div class="logo-showcase flex justify-center mb-12">
+                    <div class="relative w-64 h-64 bg-gradient-primary rounded-3xl flex items-center justify-center shadow-glow-primary">
+                        <div class="absolute inset-4 bg-white/90 dark:bg-gray-900/90 rounded-2xl flex flex-col items-center justify-center p-6">
+                            <i class="fas fa-graduation-cap text-primary text-5xl mb-4"></i>
+                            <h3 class="text-2xl font-bold text-gray-800 dark:text-white">Skillzoy</h3>
+                            <p class="text-primary font-medium mt-2">Academy</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="values-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- قيمة 1: إمكانية الوصول -->
+                    <div class="value-card card-glass rounded-2xl p-8 theme-transition hover-lift text-center">
+                        <div class="value-icon bg-gradient-to-br from-blue-500 to-blue-600 text-white mx-auto">
+                            <i class="fas fa-universal-access"></i>
+                        </div>
+                        <h3 class="value-arabic text-gray-800 dark:text-white">إمكانية الوصول</h3>
+                        <p class="value-english mb-4">Accessibility</p>
+                        <p class="text-gray-600 dark:text-gray-400">
+                            نضمن أن تكون منصتنا ودوراتنا متاحة للجميع، بغض النظر عن القدرات أو الظروف، مع تصميم واجهات سهلة الاستخدام للجميع.
+                        </p>
+                    </div>
+                    
+                    <!-- قيمة 2: الأمان -->
+                    <div class="value-card card-glass rounded-2xl p-8 theme-transition hover-lift text-center">
+                        <div class="value-icon bg-gradient-to-br from-green-500 to-green-600 text-white mx-auto">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3 class="value-arabic text-gray-800 dark:text-white">الأمان</h3>
+                        <p class="value-english mb-4">Security</p>
+                        <p class="text-gray-600 dark:text-gray-400">
+                            نحافظ على أعلى معايير الأمان لحماية بيانات مستخدمينا، ونوفر بيئة تعلم آمنة خالية من التهديدات والمخاطر الرقمية.
+                        </p>
+                    </div>
+                    
+                    <!-- قيمة 3: التميز -->
+                    <div class="value-card card-glass rounded-2xl p-8 theme-transition hover-lift text-center">
+                        <div class="value-icon bg-gradient-to-br from-yellow-500 to-yellow-600 text-white mx-auto">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <h3 class="value-arabic text-gray-800 dark:text-white">التميز</h3>
+                        <p class="value-english mb-4">Excellence</p>
+                        <p class="text-gray-600 dark:text-gray-400">
+                            نسعى للتميز في كل ما نقدمه، من محتوى تعليمي عالي الجودة إلى تجربة مستخدم استثنائية، لضمان أفضل نتائج تعلمية.
+                        </p>
+                    </div>
+                    
+                    <!-- قيمة 4: الشمولية -->
+                    <div class="value-card card-glass rounded-2xl p-8 theme-transition hover-lift text-center">
+                        <div class="value-icon bg-gradient-to-br from-purple-500 to-purple-600 text-white mx-auto">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3 class="value-arabic text-gray-800 dark:text-white">الشمولية</h3>
+                        <p class="value-english mb-4">Inclusivity</p>
+                        <p class="text-gray-600 dark:text-gray-400">
+                            نؤمن بأن التعليم حق للجميع. نعمل على إنشاء مجتمع تعليمي شامل يرحب بالتنوع ويدعم جميع المتعلمين.
+                        </p>
+                    </div>
+                    
+                    <!-- قيمة 5: التنوع -->
+                    <div class="value-card card-glass rounded-2xl p-8 theme-transition hover-lift text-center">
+                        <div class="value-icon bg-gradient-to-br from-red-500 to-red-600 text-white mx-auto">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h3 class="value-arabic text-gray-800 dark:text-white">التنوع</h3>
+                        <p class="value-english mb-4">Diversity</p>
+                        <p class="text-gray-600 dark:text-gray-400">
+                            نحتفي بالتنوع في خلفيات متعلمينا ومحتوانا التعليمي، مما يثري تجربة التعلم ويفتح آفاقاً جديدة للتفكير والإبداع.
+                        </p>
+                    </div>
+                    
+                    <!-- قيمة 6: المعرفة -->
+                    <div class="value-card card-glass rounded-2xl p-8 theme-transition hover-lift text-center">
+                        <div class="value-icon bg-gradient-to-br from-indigo-500 to-indigo-600 text-white mx-auto">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3 class="value-arabic text-gray-800 dark:text-white">المعرفة</h3>
+                        <p class="value-english mb-4">Knowledge</p>
+                        <p class="text-gray-600 dark:text-gray-400">
+                            نكرس جهودنا لنشر المعرفة القيمة والمهارات العملية التي تمكّن المتعلمين من تحقيق أهدافهم المهنية والشخصية.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- ملخص القيم -->
+                <div class="mt-16 card-glass rounded-2xl p-8 theme-transition">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">رؤيتنا من خلال قيمنا</h3>
+                            <p class="text-gray-600 dark:text-gray-400 mb-4">
+                                في Skillzoy Academy، لا نقدم دورات تعليمية فحسب، بل نخلق تجربة تعلم شاملة تعكس قيمنا الأساسية. نعتقد أن التعليم الجيد يجب أن يكون:
+                            </p>
+                            <ul class="space-y-2 text-gray-600 dark:text-gray-400">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-primary ml-2 mt-1"></i>
+                                    <span>متاحاً للجميع بغض النظر عن موقعهم الجغرافي أو ظروفهم</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-primary ml-2 mt-1"></i>
+                                    <span>آمناً ويحافظ على خصوصية وبيانات المتعلمين</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-primary ml-2 mt-1"></i>
+                                    <span>يتميز بجودة عالية ومواكب لأحدث التطورات</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="bg-gradient-primary rounded-2xl p-8 text-white text-center">
+                            <i class="fas fa-heart text-4xl mb-4"></i>
+                            <h4 class="text-xl font-bold mb-2">التعليم للجميع</h4>
+                            <p>قيمنا هي ما تجعل Skillzoy Academy منصة تعليمية فريدة، ملتزمة بتمكين كل متعلم لتحقيق إمكاناته الكاملة.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Contact Section -->
         <section class="contact py-16 lg:py-24" id="contact">
             <div class="container mx-auto px-4">
@@ -946,6 +1117,7 @@
                             <li><a href="#process" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">كيفية الاشتراك</a></li>
                             <li><a href="#testimonials" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">آراء الطلاب</a></li>
                             <li><a href="#certificate" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">الشهادات</a></li>
+                            <li><a href="#values" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">قيمنا</a></li>
                             <li><a href="#contact" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-all duration-300">التواصل</a></li>
                         </ul>
                     </div>
@@ -1227,4 +1399,4 @@
 })();
 </script>  
 </body>
-</html>
+    </html>
