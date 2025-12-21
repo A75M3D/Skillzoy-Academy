@@ -24,57 +24,195 @@
 <meta http-equiv="X-XSS-Protection" content="1; mode=block">
 <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">
 
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body {
+    font-family: 'Cairo', sans-serif;
+  }
+  
+  .card-hover {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .card-hover:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  }
+  
+  .gradient-text {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .nav-button {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+  
+  .nav-button::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    transition: width 0.3s ease;
+  }
+  
+  .nav-button.active::after {
+    width: 100%;
+  }
+  
+  .glass-effect {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+</style>
 </head>
 
-<body class="bg-gray-100 pb-32 text-gray-800">
+<body class="bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen pb-32 text-gray-800">
 
-<!-- Header -->
-<header class="bg-gradient-to-l from-indigo-700 to-blue-700 text-white p-6 shadow">
-  <h1 class="text-2xl font-bold text-center">منصة التعلم الإلكتروني | Skillzoy academy</h1>
-  <p class="text-center text-sm opacity-90 mt-1">🟢تواصل معنا على زر واتساب اسفله للحصول على شهادتك بعد اكمال الدورة 🟢</p>
+<!-- Header مع تحسينات -->
+<header class="bg-gradient-to-l from-indigo-700 via-blue-600 to-purple-700 text-white shadow-xl relative overflow-hidden">
+  <div class="absolute inset-0 bg-grid-white/10 bg-grid-16 opacity-10"></div>
+  <div class="relative z-10 p-6">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="text-center md:text-right">
+        <h1 class="text-3xl font-extrabold mb-2">Skillzoy Academy</h1>
+        <p class="text-lg opacity-95">منصة التعلم الإلكتروني المتكاملة</p>
+      </div>
+      <div class="flex items-center space-x-2 space-x-reverse bg-white/10 px-4 py-2 rounded-full">
+        <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+        <span class="text-sm font-medium">🟢 متصل الآن</span>
+      </div>
+    </div>
+    <p class="text-center text-sm opacity-90 mt-4 max-w-2xl mx-auto bg-white/10 px-4 py-2 rounded-lg">
+      تواصل معنا على واتساب للحصول على شهادتك المعتمدة بعد إكمال الدورة
+    </p>
+  </div>
 </header>
 
-<main class="max-w-7xl mx-auto p-4">
+<main class="max-w-7xl mx-auto p-4 md:p-6">
 
-<!-- Home Section -->
-<section id="homeSection" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></section>
+<!-- Home Section مع تصميم محسن -->
+<section id="homeSection" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+  <!-- سيتم تعبئتها بالديناميكية -->
+</section>
 
-<!-- My Courses Section -->
+<!-- My Courses Section مع تحسينات -->
 <section id="myCoursesSection" class="hidden">
-  <h2 class="text-xl font-bold mb-6">🎓 دوراتي</h2>
-  <div id="myCoursesList" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+  <div class="flex items-center justify-between mb-8">
+    <div>
+      <h2 class="text-2xl font-bold text-gray-800 flex items-center gap-3">
+        <span class="p-3 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl text-white">
+          🎓
+        </span>
+        دوراتي المسجلة
+      </h2>
+      <p class="text-gray-600 mt-2">الدورات التي قمت بتسجيلها</p>
+    </div>
+  </div>
+  <div id="myCoursesList" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"></div>
 </section>
 
-<!-- Player Section -->
-<section id="playerSection" class="hidden">
-  <button onclick="backToMyCourses()"
-    class="mb-4 text-indigo-600 font-semibold hover:underline transition">
-    ← الرجوع إلى دوراتي
-  </button>
-  <h2 id="playerTitle" class="text-xl font-bold mb-4"></h2>
-  <iframe id="playerFrame"
-    class="w-full h-[420px] rounded-xl shadow"
-    allowfullscreen></iframe>
+<!-- Player Section مع تحسينات -->
+<section id="playerSection" class="hidden glass-effect rounded-3xl p-6 shadow-2xl">
+  <div class="flex items-center justify-between mb-6">
+    <button onclick="backToMyCourses()"
+      class="flex items-center gap-2 px-6 py-3 bg-gradient-to-l from-gray-100 to-white text-gray-700 font-semibold rounded-xl hover:shadow-md transition-all duration-300 border border-gray-200 hover:border-blue-300">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+      </svg>
+      الرجوع إلى دوراتي
+    </button>
+    <div class="flex items-center gap-3">
+      <div class="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full text-sm font-medium">
+        جاري المشاهدة
+      </div>
+    </div>
+  </div>
+  
+  <h2 id="playerTitle" class="text-2xl font-bold mb-6 text-center text-gray-800"></h2>
+  
+  <div class="relative rounded-2xl overflow-hidden shadow-xl mb-6">
+    <div class="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-500 opacity-10"></div>
+    <iframe id="playerFrame"
+      class="relative z-10 w-full h-[480px] md:h-[520px]"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+      frameborder="0">
+    </iframe>
+  </div>
+  
+  <div class="flex flex-wrap gap-4 justify-center mt-8">
+    <div class="flex items-center gap-2 px-4 py-2 bg-green-50 text-green-700 rounded-lg">
+      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+      </svg>
+      <span>تواصل معنا للحصول على الشهادة</span>
+    </div>
+    <div class="flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-700 rounded-lg">
+      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/>
+      </svg>
+      <span>متاح على جميع الأجهزة</span>
+    </div>
+  </div>
 </section>
 
-<!-- WhatsApp Button -->
+<!-- WhatsApp Button مع تحسينات -->
 <a id="whatsappButton" href="https://wa.me/0908280115" target="_blank"
-   class="fixed left-5 bottom-5 bg-green-600 text-white w-14 h-14 flex items-center justify-center
-   rounded-full shadow-lg hover:scale-110 transition z-50 hidden">
-  📞
+   class="fixed left-6 bottom-24 bg-gradient-to-br from-green-500 to-emerald-600 text-white w-16 h-16 flex items-center justify-center
+   rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 z-50 hidden hover:scale-110
+   animate-bounce-slow border-2 border-white">
+  <div class="relative">
+    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.76.982.998-3.675-.236-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.9 6.994c-.004 5.45-4.438 9.88-9.888 9.88m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.333.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.333 11.893-11.893 0-3.18-1.24-6.162-3.495-8.411"/>
+    </svg>
+    <div class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full border-2 border-white"></div>
+  </div>
 </a>
 
 <div id="whatsappTooltip"
-     class="fixed left-24 bottom-5 bg-gray-800 text-white px-4 py-2 rounded shadow opacity-0 transition z-40 pointer-events-none">
-  تواصل معنا للحصول على شهادتك بعد إكمال الدورة ✅
+     class="fixed left-32 bottom-24 bg-gradient-to-r from-gray-800 to-gray-900 text-white px-5 py-3 rounded-xl shadow-2xl opacity-0 transition-all duration-300 z-40 pointer-events-none transform -translate-y-2">
+  <div class="flex items-center gap-3">
+    <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+    <div>
+      <p class="font-medium">تواصل معنا للحصول على شهادتك</p>
+      <p class="text-sm text-gray-300">بعد إكمال الدورة بنجاح ✅</p>
+    </div>
+  </div>
+  <div class="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-1/2 rotate-45 w-3 h-3 bg-gray-900"></div>
 </div>
 
-<!-- Bottom Nav -->
-<nav class="fixed bottom-0 left-0 right-0 bg-white border-t shadow flex justify-around py-3">
-  <button onclick="showHome()" class="font-semibold text-indigo-700">🏠 الرئيسية</button>
-  <button onclick="showMyCourses()" class="text-gray-500">🎓 دوراتي</button>
+<!-- Bottom Nav مع تحسينات -->
+<nav class="fixed bottom-0 left-0 right-0 glass-effect border-t border-gray-200 shadow-2xl flex justify-around py-4 z-40">
+  <button onclick="showHome()" 
+          class="nav-button flex flex-col items-center gap-1 px-6 py-2 text-gray-700 font-semibold transition-all duration-300">
+    <div class="p-2 rounded-full bg-gradient-to-br from-blue-100 to-blue-50">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+      </svg>
+    </div>
+    <span>الرئيسية</span>
+  </button>
+  
+  <button onclick="showMyCourses()" 
+          class="nav-button flex flex-col items-center gap-1 px-6 py-2 text-gray-700 font-semibold transition-all duration-300">
+    <div class="p-2 rounded-full bg-gradient-to-br from-green-100 to-green-50">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/>
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 016.16.547 17.919 17.919 0 01-4.949 6.09A17.919 17.919 0 0112 21.75a17.92 17.92 0 01-6.371-1.435 17.919 17.919 0 01-4.949-6.09 12.083 12.083 0 016.16-.547L12 14z"/>
+      </svg>
+    </div>
+    <span>دوراتي</span>
+  </button>
 </nav>
 
 <script>
@@ -82,181 +220,175 @@
 const courses = [
   {
     id: "react",
-    title: "React.js",
-    desc: "تطوير واجهات المستخدم",
+    title: "React.js المتقدم",
+    desc: "تطوير واجهات المستخدم التفاعلية باستخدام أحدث تقنيات React",
+    category: "تطوير الويب",
+    level: "متقدم",
+    duration: "24 ساعة",
     playlist: "https://www.youtube.com/embed/videoseries?list=PLYyqC4bNbCIdSZ-JayMLl4WO2Cr995vyS"
   },
   {
     id: "excel",
-    title: "Excel المتقدم",
-    desc: "تحليل البيانات",
+    title: "Excel للمحترفين",
+    desc: "تحليل البيانات والمخططات المتقدمة والدوال المتقدمة",
+    category: "أدوات مكتبية",
+    level: "متوسط",
+    duration: "18 ساعة",
     playlist: "https://www.youtube.com/embed/videoseries?list=PLVn5UigDlJB8ZU35J4RyyEwfjJ9RH7-MK"
   },
   {
-    id: "Ai",
-    title: "Ai المتقدم",
-    desc: "تحليل البيانات",
+    id: "ai",
+    title: "الذكاء الاصطناعي",
+    desc: "مقدمة شاملة للذكاء الاصطناعي وتعلم الآلة",
+    category: "التقنية",
+    level: "مبتدئ",
+    duration: "30 ساعة",
     playlist: "https://www.youtube.com/embed/videoseries?list=PLSLMEu6gRp1Zw-4GFG0dFLFX5q48ZYe_T"
   },
-      {
-    id: "react",
-    title: "React.js",
-    desc: "تطوير واجهات المستخدم",
-    playlist: "https://www.youtube.com/embed/videoseries?list=PLYyqC4bNbCIdSZ-JayMLl4WO2Cr995vyS"
+  {
+    id: "web",
+    title: "تطوير الويب الشامل",
+    desc: "HTML, CSS, JavaScript مشاريع عملية",
+    category: "تطوير الويب",
+    level: "مبتدئ",
+    duration: "40 ساعة",
+    playlist: "https://www.youtube.com/embed/videoseries?list=PLDoPjvoNmBAw_t_XWUFbBX-c9MafPk9ji"
   },
   {
-    id: "excel",
-    title: "Excel المتقدم",
-    desc: "تحليل البيانات",
-    playlist: "https://www.youtube.com/embed/videoseries?list=PLVn5UigDlJB8ZU35J4RyyEwfjJ9RH7-MK"
+    id: "python",
+    title: "Python للبيانات",
+    desc: "تحليل البيانات باستخدام Python ومكتباتها",
+    category: "علوم البيانات",
+    level: "متوسط",
+    duration: "28 ساعة",
+    playlist: "https://www.youtube.com/embed/videoseries?list=PLvOO0btloRnuTUGN4XqO85eKPeFSZsEqK"
   },
   {
-    id: "Ai",
-    title: "Ai المتقدم",
-    desc: "تحليل البيانات",
-    playlist: "https://www.youtube.com/embed/videoseries?list=PLSLMEu6gRp1Zw-4GFG0dFLFX5q48ZYe_T"
-  },
-      {
-    id: "react",
-    title: "React.js",
-    desc: "تطوير واجهات المستخدم",
-    playlist: "https://www.youtube.com/embed/videoseries?list=PLYyqC4bNbCIdSZ-JayMLl4WO2Cr995vyS"
-  },
-  {
-    id: "excel",
-    title: "Excel المتقدم",
-    desc: "تحليل البيانات",
-    playlist: "https://www.youtube.com/embed/videoseries?list=PLVn5UigDlJB8ZU35J4RyyEwfjJ9RH7-MK"
-  },
-  {
-    id: "Ai",
-    title: "Ai المتقدم",
-    desc: "تحليل البيانات",
-    playlist: "https://www.youtube.com/embed/videoseries?list=PLSLMEu6gRp1Zw-4GFG0dFLFX5q48ZYe_T"
-  },
-      {
-    id: "react",
-    title: "React.js",
-    desc: "تطوير واجهات المستخدم",
-    playlist: "https://www.youtube.com/embed/videoseries?list=PLYyqC4bNbCIdSZ-JayMLl4WO2Cr995vyS"
-  },
-  {
-    id: "excel",
-    title: "Excel المتقدم",
-    desc: "تحليل البيانات",
-    playlist: "https://www.youtube.com/embed/videoseries?list=PLVn5UigDlJB8ZU35J4RyyEwfjJ9RH7-MK"
-  },
-  {
-    id: "Ai",
-    title: "Ai المتقدم",
-    desc: "تحليل البيانات",
-    playlist: "https://www.youtube.com/embed/videoseries?list=PLSLMEu6gRp1Zw-4GFG0dFLFX5q48ZYe_T"
-  },
-      {
-    id: "react",
-    title: "React.js",
-    desc: "تطوير واجهات المستخدم",
-    playlist: "https://www.youtube.com/embed/videoseries?list=PLYyqC4bNbCIdSZ-JayMLl4WO2Cr995vyS"
-  },
-  {
-    id: "excel",
-    title: "Excel المتقدم",
-    desc: "تحليل البيانات",
-    playlist: "https://www.youtube.com/embed/videoseries?list=PLp22-4PivYmL2wmHCHXvbbZWcQaTXIBTV"
-  },
-  {
-    id: "Ai",
-    title: "Ai المتقدم",
-    desc: "تحليل البيانات",
-    playlist: "https://www.youtube.com/embed/videoseries?list=PLSLMEu6gRp1Zw-4GFG0dFLFX5q48ZYe_T"
-  },
-      {
-    id: "react",
-    title: "React.js",
-    desc: "تطوير واجهات المستخدم",
-    playlist: "https://www.youtube.com/embed/videoseries?list=PLAeuUfwnAxm4bAMXuq9LCXfJfIO9-PtkX"
-  },
-  {
-    id: "excel",
-    title: "Excel المتقدم",
-    desc: "تحليل البيانات",
-    playlist: "https://www.youtube.com/embed/videoseries?list=PLm8I8moAHiH2kkq0S9XGvIbPODrHzXRp6"
-  },
-  {
-    id: "Ai",
-    title: "Ai المتقدم",
-    desc: "تحليل البيانات",
-    playlist: "https://www.youtube.com/embed/videoseries?list=PLSLMEu6gRp1Zw-4GFG0dFLFX5q48ZYe_T"
-  },
-      {
-    id: "react",
-    title: "React.js",
-    desc: "تطوير واجهات المستخدم",
+    id: "design",
+    title: "تصميم UX/UI",
+    desc: "مبادئ تصميم تجربة المستخدم وواجهات التطبيقات",
+    category: "التصميم",
+    level: "مبتدئ",
+    duration: "20 ساعة",
     playlist: "https://www.youtube.com/embed/videoseries?list=PLWPirh4EWFpFB7_wjLoHPnHl68WSxA6gJ"
   },
   {
-    id: "excel",
-    title: "Excel المتقدم",
-    desc: "تحليل البيانات",
-    playlist: "https://www.youtube.com/embed/videoseries?list=PLDoPjvoNmBAx3kiplQR_oeDqLDBUDYwVv"
+    id: "mobile",
+    title: "تطوير تطبيقات الجوال",
+    desc: "React Native لتطوير تطبيقات iOS و Android",
+    category: "تطوير الجوال",
+    level: "متوسط",
+    duration: "35 ساعة",
+    playlist: "https://www.youtube.com/embed/videoseries?list=PLAeuUfwnAxm4bAMXuq9LCXfJfIO9-PtkX"
   },
   {
-    id: "Ai",
-    title: "Ai المتقدم",
-    desc: "تحليل البيانات",
-    playlist: "https://www.youtube.com/embed/videoseries?list=PLSLMEu6gRp1Zw-4GFG0dFLFX5q48ZYe_T"
-  },
-      {
-    id: "react",
-    title: "React.js",
-    desc: "تطوير واجهات المستخدم",
-    playlist: "https://www.youtube.com/embed/videoseries?list=PLYyqC4bNbCIdSZ-JayMLl4WO2Cr995vyS"
-  },
-  {
-    id: "excel",
-    title: "Excel المتقدم",
-    desc: "تحليل البيانات",
-    playlist: "https://www.youtube.com/embed/videoseries?list=PLVn5UigDlJB8ZU35J4RyyEwfjJ9RH7-MK"
-  },
-  {
-    id: "Ai",
-    title: "Ai المتقدم",
-    desc: "تحليل البيانات",
+    id: "security",
+    title: "أمن المعلومات",
+    desc: "مبادئ أساسية في أمن وحماية المعلومات",
+    category: "الأمن السيبراني",
+    level: "مبتدئ",
+    duration: "22 ساعة",
     playlist: "https://www.youtube.com/embed/videoseries?list=PLzMXToX8KzqhKrURIhVTJMb0v-HeDM3gs"
+  },
+  {
+    id: "marketing",
+    title: "التسويق الرقمي",
+    desc: "استراتيجيات التسويق عبر وسائل التواصل الاجتماعي",
+    category: "التسويق",
+    level: "مبتدئ",
+    duration: "25 ساعة",
+    playlist: "https://www.youtube.com/embed/videoseries?list=PLm8I8moAHiH2kkq0S9XGvIbPODrHzXRp6"
   }
-
 ];
 
 let myCourses = JSON.parse(localStorage.getItem("myCourses")) || [];
 
 /* ====== HOME ====== */
 function renderHome() {
+  const homeSection = document.getElementById('homeSection');
   homeSection.innerHTML = "";
+  
   courses.forEach(c => {
     const enrolled = myCourses.includes(c.id);
+    
     homeSection.innerHTML += `
-      <div class="bg-white rounded-2xl shadow hover:shadow-xl transition overflow-hidden">
-        <iframe class="w-full h-52" src="${c.playlist}" allowfullscreen></iframe>
-        <div class="p-5">
-          <h3 class="font-bold text-lg mb-1">${c.title}</h3>
-          <p class="text-sm text-gray-600 mb-4">${c.desc}</p>
+      <div class="card-hover bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100">
+        <div class="relative">
+          <div class="aspect-video bg-gradient-to-r from-blue-400 to-purple-500 relative overflow-hidden">
+            <iframe class="absolute inset-0 w-full h-full" 
+                    src="${c.playlist.replace('embed/videoseries?list=', 'embed?listType=playlist&list=')}&index=1"
+                    allowfullscreen
+                    loading="lazy">
+            </iframe>
+            <div class="absolute top-3 left-3">
+              <span class="px-3 py-1 text-xs font-semibold rounded-full ${getLevelClass(c.level)}">
+                ${c.level}
+              </span>
+            </div>
+          </div>
+          <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/50 to-transparent p-4">
+            <span class="text-white text-sm font-medium">${c.category}</span>
+          </div>
+        </div>
+        
+        <div class="p-6">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="font-bold text-xl text-gray-800">${c.title}</h3>
+            <span class="text-sm text-gray-500 flex items-center gap-1">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+              </svg>
+              ${c.duration}
+            </span>
+          </div>
+          
+          <p class="text-gray-600 mb-6 leading-relaxed">${c.desc}</p>
+          
           <button onclick="handleCourse('${c.id}')"
-            class="w-full py-3 rounded-xl font-semibold text-white transition
-            ${enrolled ? 'bg-green-600 hover:bg-green-700' : 'bg-blue-600 hover:bg-blue-700'}
-            active:scale-95">
-            ${enrolled ? '🚀 ابدأ التعلّم' : 'تسجيل في الدورة'}
+            class="w-full py-4 rounded-xl font-bold text-white transition-all duration-300
+            ${enrolled ? 
+              'bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 shadow-lg hover:shadow-xl' : 
+              'bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 shadow-lg hover:shadow-xl'
+            }
+            active:scale-[0.98] transform flex items-center justify-center gap-3">
+            ${enrolled ? 
+              `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+              <span>استئناف التعلم</span>` : 
+              `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"/>
+              </svg>
+              <span>تسجيل في الدورة</span>`
+            }
           </button>
         </div>
       </div>`;
   });
 }
 
+function getLevelClass(level) {
+  const classes = {
+    'مبتدئ': 'bg-blue-100 text-blue-700',
+    'متوسط': 'bg-yellow-100 text-yellow-700',
+    'متقدم': 'bg-red-100 text-red-700'
+  };
+  return classes[level] || 'bg-gray-100 text-gray-700';
+}
+
 /* ====== HANDLE COURSE ====== */
 function handleCourse(id) {
+  const course = courses.find(c => c.id === id);
+  if (!course) return;
+  
   if (!myCourses.includes(id)) {
     myCourses.push(id);
     localStorage.setItem("myCourses", JSON.stringify(myCourses));
+    
+    // إشعار بصوتي مرئي
+    showNotification(`تم تسجيلك في دورة ${course.title} بنجاح!`, 'success');
   }
+  
   renderHome();
   renderMyCourses();
   showMyCourses();
@@ -265,72 +397,158 @@ function handleCourse(id) {
 
 /* ====== MY COURSES ====== */
 function renderMyCourses() {
+  const myCoursesList = document.getElementById('myCoursesList');
   myCoursesList.innerHTML = "";
+  
   if (myCourses.length === 0) {
-    myCoursesList.innerHTML = "<p class='text-gray-500'>لم تسجل في أي دورة بعد</p>";
+    myCoursesList.innerHTML = `
+      <div class="col-span-3 py-20 text-center">
+        <div class="w-24 h-24 mx-auto mb-6 text-gray-300">
+          <svg fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
+            <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-500 mb-2">لا توجد دورات مسجلة</h3>
+        <p class="text-gray-400 mb-6">سجل في دورة من الصفحة الرئيسية لتبدأ رحلة التعلم</p>
+        <button onclick="showHome()"
+          class="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl font-semibold hover:shadow-lg transition">
+          تصفح الدورات
+        </button>
+      </div>`;
     hideWhatsApp();
     return;
   }
+  
   myCourses.forEach(id => {
     const c = courses.find(course => course.id === id);
     if (!c) return;
+    
     myCoursesList.innerHTML += `
-      <div class="bg-white rounded-xl shadow p-5">
-        <h3 class="font-semibold mb-4">${c.title}</h3>
-        <button onclick="openCourse('${id}')"
-          class="w-full mb-3 bg-green-600 text-white py-2 rounded-xl
-          hover:bg-green-700 transition active:scale-95">
-          🚀 ابدأ التعلّم
-        </button>
-        <button onclick="removeCourse('${id}')"
-          class="w-full border border-red-400 text-red-600 py-2 rounded-xl
-          hover:bg-red-500 hover:text-white transition active:scale-95">
-          ❌ إلغاء التسجيل
-        </button>
+      <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-300">
+        <div class="flex items-start justify-between mb-4">
+          <div class="flex-1">
+            <div class="flex items-center gap-3 mb-2">
+              <span class="p-2 rounded-lg ${getCategoryColor(c.category)}">
+                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                </svg>
+              </span>
+              <h3 class="font-bold text-lg text-gray-800">${c.title}</h3>
+            </div>
+            <p class="text-sm text-gray-600 mb-4">${c.desc.substring(0, 80)}...</p>
+          </div>
+        </div>
+        
+        <div class="space-y-4">
+          <div class="flex items-center justify-between text-sm text-gray-600">
+            <span class="flex items-center gap-1">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+              </svg>
+              ${c.duration}
+            </span>
+            <span class="px-3 py-1 text-xs font-semibold rounded-full ${getLevelClass(c.level)}">
+              ${c.level}
+            </span>
+          </div>
+          
+          <div class="flex gap-3">
+            <button onclick="openCourse('${id}')"
+              class="flex-1 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-xl
+              hover:from-blue-600 hover:to-purple-700 transition-all duration-300 active:scale-[0.98]
+              flex items-center justify-center gap-2 shadow-lg hover:shadow-xl">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
+              </svg>
+              ابدأ التعلم
+            </button>
+            
+            <button onclick="removeCourse('${id}')"
+              class="px-5 py-3 border border-red-200 text-red-600 font-semibold rounded-xl
+              hover:bg-red-50 transition-all duration-300 active:scale-[0.98]
+              flex items-center justify-center">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"/>
+              </svg>
+            </button>
+          </div>
+        </div>
       </div>`;
   });
-  if (myCourses.length > 0) showWhatsApp();
-  else hideWhatsApp();
+  
+  showWhatsApp();
+}
+
+function getCategoryColor(category) {
+  const colors = {
+    'تطوير الويب': 'bg-blue-500',
+    'أدوات مكتبية': 'bg-green-500',
+    'التقنية': 'bg-purple-500',
+    'علوم البيانات': 'bg-pink-500',
+    'التصميم': 'bg-yellow-500',
+    'تطوير الجوال': 'bg-indigo-500',
+    'الأمن السيبراني': 'bg-red-500',
+    'التسويق': 'bg-teal-500'
+  };
+  return colors[category] || 'bg-gray-500';
 }
 
 /* ====== PLAYER ====== */
 function openCourse(id) {
   const c = courses.find(course => course.id === id);
   if (!c) return;
-  playerTitle.textContent = c.title;
-  playerFrame.src = c.playlist;
+  
+  document.getElementById('playerTitle').textContent = c.title;
+  document.getElementById('playerFrame').src = c.playlist;
 
-  homeSection.classList.add("hidden");
-  myCoursesSection.classList.add("hidden");
-  playerSection.classList.remove("hidden");
+  document.getElementById('homeSection').classList.add("hidden");
+  document.getElementById('myCoursesSection').classList.add("hidden");
+  document.getElementById('playerSection').classList.remove("hidden");
 }
 
 /* ====== BACK ====== */
 function backToMyCourses() {
-  playerSection.classList.add("hidden");
+  document.getElementById('playerSection').classList.add("hidden");
   showMyCourses();
 }
 
 /* ====== REMOVE COURSE ====== */
 function removeCourse(id) {
-  myCourses = myCourses.filter(course => course !== id);
-  localStorage.setItem("myCourses", JSON.stringify(myCourses));
-  renderHome();
-  renderMyCourses();
+  if (confirm('هل أنت متأكد من إلغاء التسجيل في هذه الدورة؟')) {
+    myCourses = myCourses.filter(course => course !== id);
+    localStorage.setItem("myCourses", JSON.stringify(myCourses));
+    
+    const course = courses.find(c => c.id === id);
+    showNotification(`تم إلغاء التسجيل في دورة ${course.title}`, 'info');
+    
+    renderHome();
+    renderMyCourses();
+  }
 }
 
 /* ====== NAV ====== */
 function showHome() {
-  homeSection.classList.remove("hidden");
-  myCoursesSection.classList.add("hidden");
-  playerSection.classList.add("hidden");
+  document.getElementById('homeSection').classList.remove("hidden");
+  document.getElementById('myCoursesSection').classList.add("hidden");
+  document.getElementById('playerSection').classList.add("hidden");
+  
+  // تحديث حالة الأزرار
+  document.querySelectorAll('.nav-button').forEach(btn => btn.classList.remove('active', 'text-blue-600'));
+  document.querySelectorAll('.nav-button')[0].classList.add('active', 'text-blue-600');
+  
   renderHome();
 }
 
 function showMyCourses() {
-  homeSection.classList.add("hidden");
-  myCoursesSection.classList.remove("hidden");
-  playerSection.classList.add("hidden");
+  document.getElementById('homeSection').classList.add("hidden");
+  document.getElementById('myCoursesSection').classList.remove("hidden");
+  document.getElementById('playerSection').classList.add("hidden");
+  
+  // تحديث حالة الأزرار
+  document.querySelectorAll('.nav-button').forEach(btn => btn.classList.remove('active', 'text-blue-600'));
+  document.querySelectorAll('.nav-button')[1].classList.add('active', 'text-blue-600');
+  
   renderMyCourses();
 }
 
@@ -338,24 +556,91 @@ function showMyCourses() {
 function showWhatsApp() {
   const btn = document.getElementById("whatsappButton");
   const tooltip = document.getElementById("whatsappTooltip");
-  btn.classList.remove("hidden");
-  btn.addEventListener("mouseenter", () => tooltip.classList.add("opacity-100"));
-  btn.addEventListener("mouseleave", () => tooltip.classList.remove("opacity-100"));
+  if (btn) {
+    btn.classList.remove("hidden");
+    btn.addEventListener("mouseenter", () => {
+      tooltip.classList.remove("opacity-0", "-translate-y-2");
+      tooltip.classList.add("opacity-100", "translate-y-0");
+    });
+    btn.addEventListener("mouseleave", () => {
+      tooltip.classList.remove("opacity-100", "translate-y-0");
+      tooltip.classList.add("opacity-0", "-translate-y-2");
+    });
+  }
 }
 
 function hideWhatsApp() {
   const btn = document.getElementById("whatsappButton");
   const tooltip = document.getElementById("whatsappTooltip");
-  btn.classList.add("hidden");
-  tooltip.classList.remove("opacity-100");
+  if (btn) {
+    btn.classList.add("hidden");
+    tooltip.classList.remove("opacity-100", "translate-y-0");
+    tooltip.classList.add("opacity-0", "-translate-y-2");
+  }
+}
+
+/* ====== إشعارات ====== */
+function showNotification(message, type = 'info') {
+  const notification = document.createElement('div');
+  notification.className = `fixed top-6 left-6 px-6 py-4 rounded-xl shadow-2xl z-50 transform transition-all duration-300 ${
+    type === 'success' ? 'bg-gradient-to-r from-green-500 to-emerald-600' :
+    type === 'error' ? 'bg-gradient-to-r from-red-500 to-pink-600' :
+    'bg-gradient-to-r from-blue-500 to-purple-600'
+  } text-white`;
+  notification.innerHTML = `
+    <div class="flex items-center gap-3">
+      <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+      </svg>
+      <span class="font-medium">${message}</span>
+    </div>
+  `;
+  
+  document.body.appendChild(notification);
+  
+  setTimeout(() => {
+    notification.classList.add('opacity-0', 'translate-x-full');
+    setTimeout(() => notification.remove(), 300);
+  }, 3000);
 }
 
 /* ====== INIT ====== */
-renderHome();
-renderMyCourses();
-if (myCourses.length > 0) showWhatsApp();
+document.addEventListener('DOMContentLoaded', () => {
+  renderHome();
+  renderMyCourses();
+  
+  if (myCourses.length > 0) {
+    showWhatsApp();
+    document.querySelectorAll('.nav-button')[1].classList.add('active', 'text-blue-600');
+  } else {
+    document.querySelectorAll('.nav-button')[0].classList.add('active', 'text-blue-600');
+  }
+  
+  // إضافة أنيميشن للصفحة
+  setTimeout(() => {
+    document.body.classList.add('opacity-100');
+  }, 100);
+});
+
+// إضافة أنيميشن عند التمرير
+let lastScroll = 0;
+window.addEventListener('scroll', () => {
+  const currentScroll = window.pageYOffset;
+  const whatsappBtn = document.getElementById('whatsappButton');
+  
+  if (whatsappBtn && !whatsappBtn.classList.contains('hidden')) {
+    if (currentScroll > lastScroll && currentScroll > 100) {
+      whatsappBtn.style.transform = 'translateY(100px)';
+    } else {
+      whatsappBtn.style.transform = 'translateY(0)';
+    }
+  }
+  
+  lastScroll = currentScroll;
+});
 </script>
-      <script>
+
+<script>
 // =====Syber=====
     (() => {
       document.addEventListener("keydown", (e) => {
@@ -402,5 +687,34 @@ if (myCourses.length > 0) showWhatsApp();
       }, 500);
     })();
 </script>
+
+<style>
+  /* إضافة أنيميشن مخصصة */
+  @keyframes bounce-slow {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  
+  .animate-bounce-slow {
+    animation: bounce-slow 3s infinite;
+  }
+  
+  body {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  
+  /* تحسين مظهر الـ iframe */
+  iframe {
+    border: none;
+  }
+  
+  /* تأثيرات التدرج */
+  .gradient-border {
+    border: 2px solid transparent;
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(135deg, #667eea, #764ba2) border-box;
+  }
+</style>
 </body>
 </html>
