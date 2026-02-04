@@ -11,6 +11,39 @@
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1e3a8a">
     
+    <!-- زر التثبيت في CSS -->
+    <style>
+        .install-btn {
+            background: linear-gradient(135deg, #2563eb, #1e3a8a);
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+            transition: all 0.3s ease;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 9999;
+        }
+
+        .install-btn:hover {
+            background: linear-gradient(135deg, #1d4ed8, #1e40af);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 14px rgba(30, 58, 138, 0.5);
+        }
+
+        .install-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .install-btn.hidden {
+            display: none;
+        }
+    </style>
+    
     <!-- إضافة Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -464,6 +497,13 @@
             .modern-footer {
                 border-radius: 30px 30px 0 0;
             }
+            
+            .install-btn {
+                top: 10px;
+                left: 10px;
+                padding: 10px 20px;
+                font-size: 16px;
+            }
         }
         
         /* تصميم الشريط الجانبي */
@@ -816,6 +856,12 @@
 </head>
 <body class="dark:bg-gray-900 theme-transition" data-theme="blue">
     
+    <!-- زر تثبيت التطبيق بنفس الطريقة في الكود الأول -->
+    <button id="installBtn" class="install-btn hidden">
+        <i class="fas fa-download ml-2"></i>
+        تثبيت التطبيق
+    </button>
+
     <!-- تأثيرات خلفية متطورة -->
     <div class="fixed inset-0 z-[-2] grid-background opacity-50"></div>
     <div class="fixed inset-0 z-[-1] bg-gradient-to-br from-blue-50/30 via-white/30 to-accent/30 dark:from-gray-900/30 dark:via-gray-800/30 dark:to-blue-900/30"></div>
@@ -1537,6 +1583,34 @@
     </footer>
 
     <script>
+        // ===== PWA Installation Logic =====
+        // تسجيل Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js')
+                .then(() => console.log('✅ تم تسجيل الـ Service Worker'))
+                .catch(err => console.log('❌ خطأ في SW:', err));
+        }
+
+        // منطق زر التثبيت
+        let deferredPrompt;
+        const installBtn = document.getElementById('installBtn');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installBtn.classList.remove('hidden');
+            console.log('📍 حدث beforeinstallprompt تم تشغيله - زر التثبيت ظاهر');
+        });
+
+        installBtn.addEventListener('click', async () => {
+            installBtn.classList.add('hidden');
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                await deferredPrompt.userChoice;
+                deferredPrompt = null;
+            }
+        });
+        
         // تهيئة GSAP للانيميشنات
         document.addEventListener('DOMContentLoaded', function() {
             // تهيئة التمرير السلس
