@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- YouTube IFrame API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
     
     <style>
         :root {
@@ -328,6 +330,14 @@
             inset: 0;
             background: linear-gradient(135deg, rgba(30, 58, 138, 0.2), rgba(59, 130, 246, 0.1));
             z-index: 1;
+        }
+        
+        /* حاوية فيديو اليوتيوب */
+        .youtube-player {
+            width: 100%;
+            height: 100%;
+            border-radius: 24px;
+            background-color: #000;
         }
         
         /* تأثيرات الإحصائيات محسنة */
@@ -723,6 +733,64 @@
                 max-width: calc(100% - 20px);
             }
         }
+
+        /* تحسينات زر تشغيل الفيديو */
+        .video-play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .dark .video-play-button {
+            background: rgba(255, 255, 255, 0.95);
+        }
+        
+        .video-play-button:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+            background: white;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        .video-play-button i {
+            font-size: 24px;
+            color: #1e3a8a;
+            margin-right: -3px;
+        }
+        
+        /* حالة تحميل الفيديو */
+        .video-loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 5;
+        }
+        
+        .video-loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #1e3a8a;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
     
     <script>
@@ -947,48 +1015,30 @@
                         </div>
                     </div>
                 </div>
-         <div class="hero-video-container relative">
-    <div class="video-container card-glass rounded-2xl shadow-glow p-4 theme-transition hover-lift">
-        <div class="video-wrapper relative rounded-2xl overflow-hidden">
-            <!-- تغيير مهم: إضافة id للفيديو -->
-            <iframe 
-                id="hero-video"
-                class="w-full h-64 lg:h-96 rounded-2xl"
-                src="https://www.youtube.com/embed/vjjxP5v4NfU?rel=0&modestbranding=1&autoplay=0&controls=0&enablejsapi=1"
-                title="مقدمة عن Skillzoy Academy"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen>
-            </iframe>
-            
-            <!-- إضافة زر التشغيل الجديد -->
-            <div id="play-video-btn" class="absolute inset-0 flex items-center justify-center cursor-pointer bg-gradient-to-t from-black/40 to-transparent rounded-2xl transition-all duration-300 hover:from-black/50">
-                <div class="w-20 h-20 bg-white/95 rounded-full flex items-center justify-center shadow-2xl transform transition-transform hover:scale-110 hover:bg-white">
-                    <i class="fas fa-play text-primary text-3xl ml-1"></i>
+                
+                <!-- Hero Video -->
+                <div class="fade-in-up" style="animation-delay: 0.2s;">
+                    <div class="video-container relative" style="height: 384px;">
+                        <div class="absolute inset-0 bg-gradient-to-br from-primary/20 to-blue-300/10 rounded-3xl"></div>
+                        <!-- حاوية فيديو اليوتيوب -->
+                        <div id="youtube-player" class="youtube-player"></div>
+                        
+                        <!-- زر تشغيل الفيديو -->
+                        <div class="video-play-button" id="play-video">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        
+                        <!-- مؤشر التحميل -->
+                        <div class="video-loading hidden" id="video-loading">
+                            <div class="video-loading-spinner"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            
-            <!-- معلومات الفيديو (اختياري) -->
-            <div class="absolute bottom-4 right-4 left-4 bg-black/60 backdrop-blur-sm rounded-xl p-3">
-                <p class="text-white font-medium text-sm">مقدمة عن Skillzoy Academy</p>
-                <div class="flex items-center text-white/80 text-xs mt-1">
-                    <i class="fas fa-clock ml-1"></i>
-                    <span>2:30 دقيقة</span>
-                    <i class="fas fa-eye mr-4 ml-2"></i>
-                    <span>+10,000 مشاهدة</span>
-                </div>
-                  
-
-
-
-                
-                        </div>
-                    </div
-                </div>
-         </div>
         </div>
     </section>
 
+    <!-- باقي الأقسام تبقى كما هي -->
     <!-- Courses Section -->
     <section id="courses" class="py-24 bg-white/50 dark:bg-gray-900/50">
         <div class="container mx-auto px-4">
@@ -1608,16 +1658,6 @@
                 ease: 'power2.inOut'
             });
             
-            // تشغيل الفيديو عند الضغط على زر التشغيل
-            const playVideoBtn = document.getElementById('play-video');
-            const videoIframe = document.querySelector('iframe');
-            
-            playVideoBtn.addEventListener('click', () => {
-                const src = videoIframe.src;
-                videoIframe.src = src.replace('autoplay=0', 'autoplay=1');
-                playVideoBtn.style.display = 'none';
-            });
-            
             // انيميشن للإحصائيات مع العدّاد المتحرك
             function animateCounters() {
                 const counters = document.querySelectorAll('.counting-number');
@@ -1690,19 +1730,22 @@
             // تأثيرات للفيديو
             const videoContainers = document.querySelectorAll('.video-container');
             videoContainers.forEach(container => {
-                container.addEventListener('mouseenter', () => {
-                    gsap.to(container.querySelector('i'), {
-                        scale: 1.2,
-                        duration: 0.3
+                const playBtn = container.querySelector('#play-video');
+                if (playBtn) {
+                    playBtn.addEventListener('mouseenter', () => {
+                        gsap.to(playBtn.querySelector('i'), {
+                            scale: 1.2,
+                            duration: 0.3
+                        });
                     });
-                });
-                
-                container.addEventListener('mouseleave', () => {
-                    gsap.to(container.querySelector('i'), {
-                        scale: 1,
-                        duration: 0.3
+                    
+                    playBtn.addEventListener('mouseleave', () => {
+                        gsap.to(playBtn.querySelector('i'), {
+                            scale: 1,
+                            duration: 0.3
+                        });
                     });
-                });
+                }
             });
             
             // تأثيرات التمرير للهيدر
@@ -1748,44 +1791,207 @@
         setTimeout(() => {
             closeWelcomeNotification();
         }, 5000);
-// ============ تشغيل الفيديو (إضافة هذا الكود) ============
-document.addEventListener('DOMContentLoaded', function() {
-    // تشغيل الفيديو عند الضغط على زر التشغيل
-    const playVideoBtn = document.getElementById('play-video-btn');
-    const heroVideo = document.getElementById('hero-video');
-    
-    if (playVideoBtn && heroVideo) {
-        playVideoBtn.addEventListener('click', function() {
-            // إخفاء زر التشغيل
-            playVideoBtn.style.opacity = '0';
-            setTimeout(() => {
-                playVideoBtn.style.display = 'none';
-            }, 300);
-            
-            // تشغيل الفيديو
-            const newSrc = heroVideo.src.replace('autoplay=0', 'autoplay=1');
-            heroVideo.src = newSrc;
-            
-            // استخدام YouTube API للتشغيل المباشر
-            try {
-                heroVideo.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-            } catch(e) {
-                // الطريقة البديلة
-                console.log('YouTube API Error:', e);
-            }
-        });
         
-        // تحسين التصميم على الجوال
-        if (window.innerWidth < 768) {
-            const playIcon = playVideoBtn.querySelector('div');
-            if (playIcon) {
-                playIcon.style.width = '60px';
-                playIcon.style.height = '60px';
+        // === YouTube Player API Implementation ===
+        let player;
+        let isPlayerReady = false;
+        
+        // تهيئة مشغل YouTube
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-player', {
+                height: '384',
+                width: '100%',
+                videoId: 'vjjxP5v4NfU',
+                playerVars: {
+                    'rel': 0,
+                    'modestbranding': 1,
+                    'controls': 1,
+                    'showinfo': 0,
+                    'iv_load_policy': 3
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange,
+                    'onError': onPlayerError
+                }
+            });
+        }
+        
+        // عند جاهزية المشغل
+        function onPlayerReady(event) {
+            isPlayerReady = true;
+            console.log('YouTube player is ready');
+            
+            // إخفاء مؤشر التحميل
+            const loadingElement = document.getElementById('video-loading');
+            if (loadingElement) {
+                loadingElement.classList.add('hidden');
             }
         }
-    }
-});
-// ============ نهاية إضافة كود الفيديو ============
+        
+        // تغيير حالة الفيديو
+        function onPlayerStateChange(event) {
+            const playButton = document.getElementById('play-video');
+            const loadingElement = document.getElementById('video-loading');
+            
+            switch(event.data) {
+                case YT.PlayerState.PLAYING:
+                    // إخفاء زر التشغيل عند بدء التشغيل
+                    if (playButton) {
+                        playButton.style.display = 'none';
+                    }
+                    // إخفاء مؤشر التحميل
+                    if (loadingElement) {
+                        loadingElement.classList.add('hidden');
+                    }
+                    break;
+                    
+                case YT.PlayerState.PAUSED:
+                case YT.PlayerState.ENDED:
+                    // إظهار زر التشغيل عند التوقف أو الانتهاء
+                    if (playButton) {
+                        playButton.style.display = 'flex';
+                    }
+                    break;
+                    
+                case YT.PlayerState.BUFFERING:
+                    // إظهار مؤشر التحميل عند التخزين المؤقت
+                    if (loadingElement) {
+                        loadingElement.classList.remove('hidden');
+                    }
+                    break;
+            }
+        }
+        
+        // عند حدوث خطأ في المشغل
+        function onPlayerError(event) {
+            console.error('YouTube player error:', event.data);
+            const loadingElement = document.getElementById('video-loading');
+            const playButton = document.getElementById('play-video');
+            
+            if (loadingElement) {
+                loadingElement.classList.add('hidden');
+            }
+            
+            if (playButton) {
+                playButton.style.display = 'flex';
+                playButton.innerHTML = '<i class="fas fa-redo"></i>';
+                playButton.title = 'إعادة المحاولة';
+                playButton.onclick = retryVideoLoad;
+            }
+        }
+        
+        // إعادة تحميل الفيديو
+        function retryVideoLoad() {
+            const playButton = document.getElementById('play-video');
+            const loadingElement = document.getElementById('video-loading');
+            
+            if (playButton) {
+                playButton.innerHTML = '<i class="fas fa-play"></i>';
+                playButton.title = 'تشغيل الفيديو';
+                playButton.onclick = playVideo;
+                playButton.style.display = 'none';
+            }
+            
+            if (loadingElement) {
+                loadingElement.classList.remove('hidden');
+            }
+            
+            // إعادة تحميل الفيديو
+            if (player && typeof player.loadVideoById === 'function') {
+                player.loadVideoById('vjjxP5v4NfU');
+            }
+        }
+        
+        // تشغيل الفيديو
+        function playVideo() {
+            const playButton = document.getElementById('play-video');
+            const loadingElement = document.getElementById('video-loading');
+            
+            if (!isPlayerReady) {
+                console.log('Player not ready yet');
+                if (loadingElement) {
+                    loadingElement.classList.remove('hidden');
+                }
+                return;
+            }
+            
+            if (playButton) {
+                playButton.style.display = 'none';
+            }
+            
+            if (loadingElement) {
+                loadingElement.classList.remove('hidden');
+            }
+            
+            // استخدام API لتشغيل الفيديو
+            if (player && typeof player.playVideo === 'function') {
+                player.playVideo();
+            }
+        }
+        
+        // إضافة حدث النقر على زر التشغيل
+        document.addEventListener('DOMContentLoaded', function() {
+            const playButton = document.getElementById('play-video');
+            if (playButton) {
+                playButton.addEventListener('click', playVideo);
+            }
+            
+            // التحقق من حالة المشغل بشكل دوري
+            const checkPlayerReady = setInterval(function() {
+                if (isPlayerReady) {
+                    clearInterval(checkPlayerReady);
+                    // إخفاء مؤشر التحميل إذا كان المشغل جاهزًا
+                    const loadingElement = document.getElementById('video-loading');
+                    if (loadingElement) {
+                        loadingElement.classList.add('hidden');
+                    }
+                }
+            }, 500);
+        });
+        
+        // تحسين تجربة المستخدم على الجوال
+        function optimizeForMobile() {
+            if (window.innerWidth <= 768) {
+                // تحسين حجم وعرض الفيديو على الجوال
+                const videoContainer = document.querySelector('.video-container');
+                if (videoContainer) {
+                    videoContainer.style.height = '300px';
+                }
+                
+                // تحسين حجم زر التشغيل على الجوال
+                const playButton = document.getElementById('play-video');
+                if (playButton) {
+                    playButton.style.width = '60px';
+                    playButton.style.height = '60px';
+                }
+            }
+        }
+        
+        // استدعاء تحسينات الجوال عند تحميل الصفحة وعند تغيير الحجم
+        window.addEventListener('load', optimizeForMobile);
+        window.addEventListener('resize', optimizeForMobile);
+        
+        // تحسين أداء الفيديو
+        function improveVideoPerformance() {
+            // تأخير تحميل الفيديو حتى يصبح مرئيًا
+            const videoSection = document.getElementById('home');
+            if (videoSection) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            // هنا يمكنك إضافة أي تحسينات إضافية
+                            console.log('Video section is visible');
+                        }
+                    });
+                }, { threshold: 0.3 });
+                
+                observer.observe(videoSection);
+            }
+        }
+        
+        // استدعاء تحسينات الأداء
+        window.addEventListener('load', improveVideoPerformance);
         
     // =====Sybergurd =====
     (() => {
