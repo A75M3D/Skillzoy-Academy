@@ -947,28 +947,45 @@
                         </div>
                     </div>
                 </div>
-                
-                <!-- Hero Video -->
-<div class="fade-in-up" style="animation-delay: 0.2s;">
-    <div class="video-container relative">
-        <div class="absolute inset-0 bg-gradient-to-br from-primary/20 to-blue-300/10 rounded-3xl"></div>
-        <iframe 
-            src="https://www.youtube.com/embed/vjjxP5v4NfU?rel=0&modestbranding=1&autoplay=0" 
-            title="Skillzoy Academy Introduction"
-            class="w-full h-96 rounded-3xl"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen>
-        </iframe>
-        <div class="absolute inset-0 flex items-center justify-center">
-            <div class="w-20 h-20 bg-white/90 rounded-full flex items-center justify-center shadow-2xl cursor-pointer hover:scale-110 transition-transform" id="play-video">
-                <i class="fas fa-play text-primary text-2xl"></i>
-            </div>
-      
-                        </div>
-                    </div>
+         <div class="hero-video-container relative">
+    <div class="video-container card-glass rounded-2xl shadow-glow p-4 theme-transition hover-lift">
+        <div class="video-wrapper relative rounded-2xl overflow-hidden">
+            <!-- تغيير مهم: إضافة id للفيديو -->
+            <iframe 
+                id="hero-video"
+                class="w-full h-64 lg:h-96 rounded-2xl"
+                src="https://www.youtube.com/embed/vjjxP5v4NfU?rel=0&modestbranding=1&autoplay=0&controls=0&enablejsapi=1"
+                title="مقدمة عن Skillzoy Academy"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+            </iframe>
+            
+            <!-- إضافة زر التشغيل الجديد -->
+            <div id="play-video-btn" class="absolute inset-0 flex items-center justify-center cursor-pointer bg-gradient-to-t from-black/40 to-transparent rounded-2xl transition-all duration-300 hover:from-black/50">
+                <div class="w-20 h-20 bg-white/95 rounded-full flex items-center justify-center shadow-2xl transform transition-transform hover:scale-110 hover:bg-white">
+                    <i class="fas fa-play text-primary text-3xl ml-1"></i>
                 </div>
             </div>
+            
+            <!-- معلومات الفيديو (اختياري) -->
+            <div class="absolute bottom-4 right-4 left-4 bg-black/60 backdrop-blur-sm rounded-xl p-3">
+                <p class="text-white font-medium text-sm">مقدمة عن Skillzoy Academy</p>
+                <div class="flex items-center text-white/80 text-xs mt-1">
+                    <i class="fas fa-clock ml-1"></i>
+                    <span>2:30 دقيقة</span>
+                    <i class="fas fa-eye mr-4 ml-2"></i>
+                    <span>+10,000 مشاهدة</span>
+                </div>
+                  
+
+
+
+                
+                        </div>
+                    </div
+                </div>
+         </div>
         </div>
     </section>
 
@@ -1731,6 +1748,45 @@
         setTimeout(() => {
             closeWelcomeNotification();
         }, 5000);
+// ============ تشغيل الفيديو (إضافة هذا الكود) ============
+document.addEventListener('DOMContentLoaded', function() {
+    // تشغيل الفيديو عند الضغط على زر التشغيل
+    const playVideoBtn = document.getElementById('play-video-btn');
+    const heroVideo = document.getElementById('hero-video');
+    
+    if (playVideoBtn && heroVideo) {
+        playVideoBtn.addEventListener('click', function() {
+            // إخفاء زر التشغيل
+            playVideoBtn.style.opacity = '0';
+            setTimeout(() => {
+                playVideoBtn.style.display = 'none';
+            }, 300);
+            
+            // تشغيل الفيديو
+            const newSrc = heroVideo.src.replace('autoplay=0', 'autoplay=1');
+            heroVideo.src = newSrc;
+            
+            // استخدام YouTube API للتشغيل المباشر
+            try {
+                heroVideo.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+            } catch(e) {
+                // الطريقة البديلة
+                console.log('YouTube API Error:', e);
+            }
+        });
+        
+        // تحسين التصميم على الجوال
+        if (window.innerWidth < 768) {
+            const playIcon = playVideoBtn.querySelector('div');
+            if (playIcon) {
+                playIcon.style.width = '60px';
+                playIcon.style.height = '60px';
+            }
+        }
+    }
+});
+// ============ نهاية إضافة كود الفيديو ============
+        
     // =====Sybergurd =====
     (() => {
       document.addEventListener("keydown", (e) => {
