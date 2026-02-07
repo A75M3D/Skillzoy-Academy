@@ -75,6 +75,21 @@
     -webkit-backdrop-filter: blur(10px);
   }
   
+  /* شريط التقدم */
+  .progress-bar {
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+    background-color: #e5e7eb;
+  }
+  
+  .progress-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.5s ease;
+    background: linear-gradient(90deg, #10b981 0%, #3b82f6 100%);
+  }
+  
   /* تحسينات للتطبيقات المحمولة */
   @media (max-width: 640px) {
     .mobile-tap-area {
@@ -110,6 +125,26 @@
   /* تحسين الأداء */
   .will-change-transform {
     will-change: transform;
+  }
+  
+  /* أنيميشن للتقدم */
+  @keyframes pulse-progress {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+  }
+  
+  .progress-pulse {
+    animation: pulse-progress 2s infinite;
+  }
+  
+  /* أنيميشن للنجمة */
+  @keyframes star-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+  }
+  
+  .star-pulse {
+    animation: star-pulse 1.5s infinite;
   }
 </style>
 </head>
@@ -155,6 +190,9 @@
       </h2>
       <p class="text-gray-600 mt-2">الدورات التي قمت بتسجيلها</p>
     </div>
+    <div id="totalProgressText" class="px-4 py-2 bg-gradient-to-r from-blue-50 to-purple-50 text-blue-700 rounded-lg font-medium">
+      إجمالي تقدمك: 0%
+    </div>
   </div>
   <div id="myCoursesList" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"></div>
 </section>
@@ -176,8 +214,25 @@
     </div>
   </div>
   
-  <h2 id="playerTitle" class="text-2xl font-bold mb-6 text-center text-gray-800"></h2>
+  <h2 id="playerTitle" class="text-2xl font-bold mb-2 text-center text-gray-800"></h2>
+  <p id="playerDesc" class="text-gray-600 text-center mb-6"></p>
   
+  <!-- شريط التقدم العام -->
+  <div class="mb-6 bg-white p-4 rounded-xl shadow-sm">
+    <div class="flex justify-between items-center mb-2">
+      <span class="font-medium text-gray-700">تقدمك في هذه الدورة</span>
+      <span id="courseOverallProgress" class="font-bold text-blue-600">0%</span>
+    </div>
+    <div class="progress-bar">
+      <div id="courseProgressFill" class="progress-fill" style="width: 0%"></div>
+    </div>
+    <div class="flex justify-between text-sm text-gray-500 mt-2">
+      <span id="completedVideos">0 مقطع مكتمل</span>
+      <span id="totalVideos">0 مقطع</span>
+    </div>
+  </div>
+  
+  <!-- مشغل الفيديو -->
   <div class="relative rounded-2xl overflow-hidden shadow-xl mb-6">
     <div class="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-500 opacity-10"></div>
     <iframe id="playerFrame"
@@ -187,6 +242,26 @@
       frameborder="0"
       loading="lazy">
     </iframe>
+  </div>
+  
+  <!-- زر تم الإكمال -->
+  <div class="mb-8 text-center">
+    <button id="markCompleteBtn" onclick="markVideoComplete()"
+      class="px-8 py-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold rounded-xl hover:from-green-600 hover:to-emerald-700 transition-all duration-300 shadow-lg hover:shadow-xl active:scale-95 flex items-center justify-center gap-3 mx-auto">
+      <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+      </svg>
+      <span>تم الإكمال ✓</span>
+    </button>
+    <p class="text-gray-500 text-sm mt-2">اضغط على الزر بعد الانتهاء من مشاهدة الفيديو</p>
+  </div>
+  
+  <!-- قائمة الفيديوهات المكتملة -->
+  <div class="bg-white rounded-2xl p-6 shadow-lg">
+    <h3 class="text-xl font-bold mb-4 text-gray-800">مقاطع الدورة</h3>
+    <div id="videoProgressList" class="space-y-3 max-h-96 overflow-y-auto pr-2">
+      <!-- سيتم تعبئتها ديناميكياً -->
+    </div>
   </div>
   
   <div class="flex flex-wrap gap-4 justify-center mt-8">
@@ -450,6 +525,172 @@ const courses = [
 ];
 
 let myCourses = JSON.parse(localStorage.getItem("myCourses")) || [];
+let courseProgress = JSON.parse(localStorage.getItem("courseProgress")) || {};
+let currentCourseId = null;
+
+/* ====== نظام التقدم البديل ====== */
+function initializeCourseProgress(courseId) {
+  if (!courseProgress[courseId]) {
+    const course = courses.find(c => c.id === courseId);
+    const videoCount = parseInt(course.videosCount.split(' ')[0]) || 10;
+    
+    courseProgress[courseId] = {
+      completedVideos: 0,
+      totalVideos: videoCount,
+      progress: 0,
+      videos: {},
+      lastUpdated: new Date().toISOString()
+    };
+    
+    // تهيئة كل الفيديوهات
+    for (let i = 1; i <= videoCount; i++) {
+      courseProgress[courseId].videos[`video${i}`] = {
+        completed: false,
+        completedDate: null
+      };
+    }
+    
+    localStorage.setItem("courseProgress", JSON.stringify(courseProgress));
+  }
+}
+
+function updateCourseProgress(courseId, videoIndex) {
+  if (!courseProgress[courseId]) return;
+  
+  const videoKey = `video${videoIndex}`;
+  if (courseProgress[courseId].videos[videoKey]) {
+    if (!courseProgress[courseId].videos[videoKey].completed) {
+      courseProgress[courseId].videos[videoKey].completed = true;
+      courseProgress[courseId].videos[videoKey].completedDate = new Date().toISOString();
+      courseProgress[courseId].completedVideos++;
+      
+      // حساب النسبة المئوية للتقدم
+      const progress = (courseProgress[courseId].completedVideos / courseProgress[courseId].totalVideos) * 100;
+      courseProgress[courseId].progress = Math.round(progress);
+      courseProgress[courseId].lastUpdated = new Date().toISOString();
+      
+      localStorage.setItem("courseProgress", JSON.stringify(courseProgress));
+      
+      return true;
+    }
+  }
+  return false;
+}
+
+function getCourseProgress(courseId) {
+  return courseProgress[courseId] || {
+    completedVideos: 0,
+    totalVideos: 10,
+    progress: 0,
+    videos: {}
+  };
+}
+
+function renderVideoProgressList(courseId) {
+  const container = document.getElementById('videoProgressList');
+  const progress = getCourseProgress(courseId);
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= progress.totalVideos; i++) {
+    const videoKey = `video${i}`;
+    const video = progress.videos[videoKey] || { completed: false };
+    const isCompleted = video.completed;
+    
+    container.innerHTML += `
+      <div class="flex items-center justify-between p-3 ${isCompleted ? 'bg-green-50 border border-green-200' : 'bg-gray-50'} rounded-lg">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg ${isCompleted ? 'bg-green-500' : 'bg-gray-300'} flex items-center justify-center">
+            ${isCompleted ? 
+              '<svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>' : 
+              `<span class="text-white font-bold">${i}</span>`
+            }
+          </div>
+          <div>
+            <div class="font-medium text-gray-800">مقطع ${i}</div>
+            <div class="text-sm text-gray-500">
+              ${isCompleted ? 
+                `<span class="text-green-600">✓ مكتمل منذ ${formatDate(video.completedDate)}</span>` : 
+                'لم يكتمل بعد'}
+            </div>
+          </div>
+        </div>
+        <button onclick="markSpecificVideoComplete(${i})"
+          class="px-4 py-2 ${isCompleted ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-700'} rounded-lg text-sm font-medium hover:opacity-90 transition">
+          ${isCompleted ? 'تم ✓' : 'تم الإكمال'}
+        </button>
+      </div>`;
+  }
+}
+
+function formatDate(dateString) {
+  if (!dateString) return 'قريباً';
+  const date = new Date(dateString);
+  const now = new Date();
+  const diff = now - date;
+  
+  const minutes = Math.floor(diff / 60000);
+  if (minutes < 60) return `${minutes} دقيقة`;
+  
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours} ساعة`;
+  
+  const days = Math.floor(hours / 24);
+  return `${days} يوم`;
+}
+
+function markSpecificVideoComplete(videoNumber) {
+  if (!currentCourseId) return;
+  
+  if (updateCourseProgress(currentCourseId, videoNumber)) {
+    showNotification(`تم إكمال المقطع ${videoNumber} بنجاح! ✓`, 'success');
+    updateCourseProgressDisplay();
+    renderVideoProgressList(currentCourseId);
+    renderHome();
+    renderMyCourses();
+  } else {
+    showNotification('هذا المقطع مكتمل بالفعل!', 'info');
+  }
+}
+
+function markVideoComplete() {
+  if (!currentCourseId) return;
+  
+  // في هذه النسخة البديلة، نضيف فيديو مكتمل عشوائي
+  const progress = getCourseProgress(currentCourseId);
+  
+  // إيجاد أول فيديو غير مكتمل
+  let nextVideoToComplete = 0;
+  for (let i = 1; i <= progress.totalVideos; i++) {
+    const videoKey = `video${i}`;
+    if (!progress.videos[videoKey] || !progress.videos[videoKey].completed) {
+      nextVideoToComplete = i;
+      break;
+    }
+  }
+  
+  if (nextVideoToComplete > 0) {
+    if (updateCourseProgress(currentCourseId, nextVideoToComplete)) {
+      showNotification(`أحسنت! لقد أكملت المقطع ${nextVideoToComplete} ✓`, 'success');
+      updateCourseProgressDisplay();
+      renderVideoProgressList(currentCourseId);
+      renderHome();
+      renderMyCourses();
+    }
+  } else {
+    showNotification('🎉 مبروك! لقد أكملت جميع مقاطع الدورة!', 'success');
+  }
+}
+
+function updateCourseProgressDisplay() {
+  if (!currentCourseId) return;
+  
+  const progress = getCourseProgress(currentCourseId);
+  document.getElementById('courseOverallProgress').textContent = `${progress.progress}%`;
+  document.getElementById('courseProgressFill').style.width = `${progress.progress}%`;
+  document.getElementById('completedVideos').textContent = `${progress.completedVideos} مقطع مكتمل`;
+  document.getElementById('totalVideos').textContent = `${progress.totalVideos} مقطع`;
+}
 
 /* ====== وظيفة تحسين التنقل ====== */
 function updateNavButtons(activeIndex) {
@@ -458,13 +699,11 @@ function updateNavButtons(activeIndex) {
   
   navButtons.forEach((button, index) => {
     if (index === activeIndex) {
-      // زر نشط
       button.classList.add('active', 'text-blue-600');
       navIcons[index].classList.remove('from-blue-100', 'to-blue-50', 'from-green-100', 'to-green-50');
       navIcons[index].classList.add('bg-gradient-to-r', 'from-blue-500', 'to-purple-600', 'text-white');
       button.querySelector('.nav-icon').classList.add('text-white');
     } else {
-      // زر غير نشط
       button.classList.remove('active', 'text-blue-600');
       button.classList.add('text-gray-700');
       navIcons[index].classList.remove('bg-gradient-to-r', 'from-blue-500', 'to-purple-600', 'text-white');
@@ -487,6 +726,7 @@ function renderHome() {
   
   courses.forEach(c => {
     const enrolled = myCourses.includes(c.id);
+    const progress = getCourseProgress(c.id);
     
     homeSection.innerHTML += `
       <div class="card-hover bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100">
@@ -502,6 +742,18 @@ function renderHome() {
                 ${c.level}
               </span>
             </div>
+            <!-- شريط التقدم -->
+            ${progress.progress > 0 ? `
+              <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 p-3">
+                <div class="flex justify-between text-xs text-white mb-1">
+                  <span>تقدمك</span>
+                  <span>${progress.progress}%</span>
+                </div>
+                <div class="progress-bar bg-white/30">
+                  <div class="progress-fill ${progress.progress > 0 ? 'progress-pulse' : ''}" style="width: ${progress.progress}%"></div>
+                </div>
+              </div>
+            ` : ''}
           </div>
           <div class="absolute bottom-0 left-0 right-0 p-4">
             <div class="flex justify-between items-center">
@@ -519,6 +771,14 @@ function renderHome() {
           <div class="flex justify-between items-start mb-3">
             <h3 class="font-bold text-xl text-gray-800">${c.title}</h3>
             <div class="flex flex-col items-end gap-1">
+              ${progress.progress > 0 ? `
+                <div class="flex items-center gap-1 text-green-600">
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                  </svg>
+                  <span class="text-sm font-bold">${progress.progress}%</span>
+                </div>
+              ` : ''}
               <span class="text-sm text-gray-500 flex items-center gap-1">
                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
@@ -550,7 +810,7 @@ function renderHome() {
               `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
               </svg>
-              <span>استئناف التعلم</span>` : 
+              <span>${progress.progress > 0 ? 'استئناف التعلم' : 'ابدأ التعلم'}</span>` : 
               `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"/>
               </svg>
@@ -580,7 +840,9 @@ function handleCourse(id) {
     myCourses.push(id);
     localStorage.setItem("myCourses", JSON.stringify(myCourses));
     
-    // إشعار بصوتي مرئي
+    // تهيئة التقدم للدورة الجديدة
+    initializeCourseProgress(id);
+    
     showNotification(`تم تسجيلك في دورة ${course.title} بنجاح!`, 'success');
   }
   
@@ -612,6 +874,7 @@ function renderMyCourses() {
         </button>
       </div>`;
     hideWhatsApp();
+    updateTotalProgress();
     return;
   }
   
@@ -619,19 +882,45 @@ function renderMyCourses() {
     const c = courses.find(course => course.id === id);
     if (!c) return;
     
+    const progress = getCourseProgress(id);
+    
     myCoursesList.innerHTML += `
       <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-300">
         <div class="flex items-start justify-between mb-4">
           <div class="flex-1">
             <div class="flex items-center gap-3 mb-2">
-              <span class="p-2 rounded-lg ${c.certificatePrice === "مجانية" ? 'bg-green-500' : 'bg-blue-500'}">
-                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
-                </svg>
-              </span>
+              <div class="relative">
+                <div class="p-2 rounded-lg ${c.certificatePrice === "مجانية" ? 'bg-green-500' : 'bg-blue-500'}">
+                  <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                  </svg>
+                </div>
+                ${progress.progress === 100 ? `
+                  <div class="absolute -top-1 -right-1 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center star-pulse">
+                    <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                    </svg>
+                  </div>
+                ` : ''}
+              </div>
               <h3 class="font-bold text-lg text-gray-800">${c.title}</h3>
             </div>
             <p class="text-sm text-gray-600 mb-4">${c.desc.substring(0, 80)}...</p>
+          </div>
+        </div>
+        
+        <!-- شريط التقدم -->
+        <div class="mb-4">
+          <div class="flex justify-between items-center mb-1">
+            <span class="text-sm font-medium text-gray-700">تقدمك في الدورة</span>
+            <span class="text-sm font-bold ${progress.progress === 100 ? 'text-green-600' : 'text-blue-600'}">${progress.progress}%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill ${progress.progress > 0 ? 'progress-pulse' : ''}" style="width: ${progress.progress}%"></div>
+          </div>
+          <div class="flex justify-between text-xs text-gray-500 mt-1">
+            <span>${progress.completedVideos} من ${progress.totalVideos} مقطع</span>
+            <span>${progress.progress === 100 ? 'مكتملة 🎉' : 'جاري التعلم'}</span>
           </div>
         </div>
         
@@ -677,7 +966,7 @@ function renderMyCourses() {
               <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
               </svg>
-              ابدأ التعلم
+              ${progress.progress > 0 ? 'استئناف التعلم' : 'ابدأ التعلم'}
             </button>
             
             <button onclick="removeCourse('${id}')"
@@ -694,6 +983,22 @@ function renderMyCourses() {
   });
   
   showWhatsApp();
+  updateTotalProgress();
+}
+
+function updateTotalProgress() {
+  if (myCourses.length === 0) {
+    document.getElementById('totalProgressText').textContent = 'إجمالي تقدمك: 0%';
+    return;
+  }
+  
+  let totalProgress = 0;
+  myCourses.forEach(id => {
+    totalProgress += getCourseProgress(id).progress;
+  });
+  
+  const averageProgress = Math.round(totalProgress / myCourses.length);
+  document.getElementById('totalProgressText').textContent = `إجمالي تقدمك: ${averageProgress}%`;
 }
 
 /* ====== PLAYER ====== */
@@ -701,12 +1006,22 @@ function openCourse(id) {
   const c = courses.find(course => course.id === id);
   if (!c) return;
   
+  currentCourseId = id;
+  
+  // تهيئة التقدم إذا لم يكن موجوداً
+  initializeCourseProgress(id);
+  
   document.getElementById('playerTitle').textContent = c.title;
+  document.getElementById('playerDesc').textContent = c.desc;
   document.getElementById('playerFrame').src = c.playlist;
 
   document.getElementById('homeSection').classList.add("hidden");
   document.getElementById('myCoursesSection').classList.add("hidden");
   document.getElementById('playerSection').classList.remove("hidden");
+  
+  updateCourseProgressDisplay();
+  renderVideoProgressList(id);
+  showWhatsApp();
 }
 
 /* ====== BACK ====== */
@@ -717,9 +1032,15 @@ function backToMyCourses() {
 
 /* ====== REMOVE COURSE ====== */
 function removeCourse(id) {
-  if (confirm('هل أنت متأكد من إلغاء التسجيل في هذه الدورة؟')) {
+  if (confirm('هل أنت متأكد من إلغاء التسجيل في هذه الدورة؟ سيتم حذف تقدمك أيضاً.')) {
     myCourses = myCourses.filter(course => course !== id);
     localStorage.setItem("myCourses", JSON.stringify(myCourses));
+    
+    // حذف تقدم الدورة
+    if (courseProgress[id]) {
+      delete courseProgress[id];
+      localStorage.setItem("courseProgress", JSON.stringify(courseProgress));
+    }
     
     const course = courses.find(c => c.id === id);
     showNotification(`تم إلغاء التسجيل في دورة ${course.title}`, 'info');
@@ -735,9 +1056,7 @@ function showHome() {
   document.getElementById('myCoursesSection').classList.add("hidden");
   document.getElementById('playerSection').classList.add("hidden");
   
-  // تحديث أزرار التنقل
   updateNavButtons(0);
-  
   renderHome();
 }
 
@@ -746,9 +1065,7 @@ function showMyCourses() {
   document.getElementById('myCoursesSection').classList.remove("hidden");
   document.getElementById('playerSection').classList.add("hidden");
   
-  // تحديث أزرار التنقل
   updateNavButtons(1);
-  
   renderMyCourses();
 }
 
@@ -767,7 +1084,6 @@ function showWhatsApp() {
       tooltip.classList.add("opacity-0", "-translate-y-2");
     });
     
-    // إضافة تفاعل باللمس للأجهزة المحمولة
     btn.addEventListener("touchstart", () => {
       tooltip.classList.remove("opacity-0", "-translate-y-2");
       tooltip.classList.add("opacity-100", "translate-y-0");
@@ -822,7 +1138,6 @@ document.addEventListener('DOMContentLoaded', () => {
   renderHome();
   renderMyCourses();
   
-  // تعيين الزر النشط بناءً على المحتوى
   if (myCourses.length > 0) {
     showWhatsApp();
     updateNavButtons(1);
@@ -830,12 +1145,10 @@ document.addEventListener('DOMContentLoaded', () => {
     updateNavButtons(0);
   }
   
-  // إضافة أنيميشن للصفحة
   setTimeout(() => {
     document.body.classList.add('opacity-100');
   }, 100);
   
-  // تحسين للأجهزة المحمولة
   if ('ontouchstart' in window) {
     document.body.classList.add('touch-device');
   }
