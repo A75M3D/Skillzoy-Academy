@@ -314,12 +314,6 @@
 <script>
     // --- Configuration ---
     // !!! هام: لا تقم بحذف أو تغيير اسم المتغير هذا، فقط ضع بياناتك داخله !!!
-    
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
-import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app-check.js";
-
 const firebaseConfig = {
   apiKey: "AIzaSyDgFy0-QL0YuGgqgtcx9541Cs7QxBewRKQ",
   authDomain: "skillzoy-5ba3c.firebaseapp.com",
@@ -330,18 +324,6 @@ const firebaseConfig = {
   measurementId: "G-WVHTQ4BGNJ"     
 };
 
-const app = initializeApp(firebaseConfig);
-
-initializeAppCheck(app, {
-  provider: new ReCaptchaV3Provider("6LdzPWcsAAAAAMVoYBW_8Sk2C2PvRViVqlW3LKXh"),
-  isTokenAutoRefreshEnabled: true,
-});
-
-export const db = getFirestore(app);
-
-
-
-    
     if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
@@ -840,6 +822,6 @@ export const db = getFirestore(app);
       }, 500);
     })();
 </script>
-    <script type="module" src="/dashboard/firebase.js"></script>
+    
 </body>
 </html>
