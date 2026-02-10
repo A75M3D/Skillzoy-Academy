@@ -321,8 +321,19 @@
   storageBucket: "skillzoy-5ba3c.firebasestorage.app",
   messagingSenderId: "622606995088",
   appId: "1:622606995088:web:999c8a6790e7aa30651215",
-  measurementId: "G-WVHTQ4BGNJ"
+  measurementId: "G-WVHTQ4BGNJ"     
 };
+    import { initializeApp } from "firebase/app";
+import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
+
+const firebaseConfig = { ... };
+
+export const app = initializeApp(firebaseConfig);
+
+initializeAppCheck(app, {
+  provider: new ReCaptchaV3Provider("6LdzPWcsAAAAAMVoYBW_8Sk2C2PvRViVqlW3LKXh"),
+  isTokenAutoRefreshEnabled: true
+});
 
     if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
