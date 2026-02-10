@@ -1,1171 +1,1263 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduSphere Pro | منصة التعليم الذكي</title>
+<meta charset="UTF-8">
+<title>Skillzoy Academy - منصة التعليم الالكتروني</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- CSP مبسط ومتوافق مع يوتيوب فقط -->
+<meta http-equiv="Content-Security-Policy" 
+      content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com;
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+        font-src 'self' https://fonts.gstatic.com https://fonts.googleapis.com;
+        img-src 'self' data: https://i.ytimg.com https://img.youtube.com;
+        connect-src 'self' https://www.googleapis.com https://youtube.googleapis.com;
+        frame-src https://www.youtube.com https://youtube.com https://*.youtube.com;
+        object-src 'none';
+        base-uri 'self';
+        form-action 'self';
+        upgrade-insecure-requests;">
+<meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="X-XSS-Protection" content="1; mode=block">
+<meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body {
+    font-family: 'Cairo', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  .card-hover {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .card-hover:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  }
+  
+  .gradient-text {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .nav-button {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+  
+  .nav-button::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    transition: width 0.3s ease;
+  }
+  
+  .nav-button.active::after {
+    width: 100%;
+  }
+  
+  .glass-effect {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  
+  /* شريط التقدم */
+  .progress-bar {
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+    background-color: #e5e7eb;
+  }
+  
+  .progress-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.5s ease;
+    background: linear-gradient(90deg, #10b981 0%, #3b82f6 100%);
+  }
+  
+  /* تحسينات للتطبيقات المحمولة */
+  @media (max-width: 640px) {
+    .mobile-tap-area {
+      min-height: 48px;
+      min-width: 48px;
+    }
     
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    .nav-button {
+      padding: 12px 8px;
+    }
     
-    <style>
-        :root {
-            --primary: #4F46E5;
-            --primary-dark: #4338CA;
-            --secondary: #7C3AED;
-            --accent: #06B6D4;
-            --success: #10B981;
-            --warning: #F59E0B;
-            --danger: #EF4444;
-            --dark: #1F2937;
-            --light: #F9FAFB;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Cairo', sans-serif;
-            background-color: #f8fafc;
-            color: #1f2937;
-            line-height: 1.6;
-        }
-        
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        @keyframes slideIn {
-            from { transform: translateX(100px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-        
-        .animate-fade-in {
-            animation: fadeIn 0.5s ease-out;
-        }
-        
-        .animate-slide-in {
-            animation: slideIn 0.6s ease-out;
-        }
-        
-        .animate-pulse {
-            animation: pulse 2s infinite;
-        }
-        
-        /* Custom Utilities */
-        .glass-effect {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .gradient-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        
-        .gradient-text {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .shadow-soft {
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-        }
-        
-        .shadow-hard {
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-        }
-        
-        .hover-lift {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .hover-lift:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-        }
-        
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: var(--primary);
-            border-radius: 4px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--primary-dark);
-        }
-        
-        /* Loading Spinner */
-        .spinner {
-            border: 3px solid rgba(79, 70, 229, 0.1);
-            border-radius: 50%;
-            border-top: 3px solid var(--primary);
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        /* Card Styles */
-        .course-card {
-            transition: all 0.3s ease;
-            border-radius: 16px;
-            overflow: hidden;
-            background: white;
-        }
-        
-        .course-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
-        }
-        
-        .course-card-image {
-            height: 200px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .course-card-image::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.1) 100%);
-        }
-        
-        /* Badge Styles */
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .badge-primary {
-            background: rgba(79, 70, 229, 0.1);
-            color: var(--primary);
-        }
-        
-        .badge-success {
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--success);
-        }
-        
-        .badge-warning {
-            background: rgba(245, 158, 11, 0.1);
-            color: var(--warning);
-        }
-        
-        /* Button Styles */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 12px 24px;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: none;
-            outline: none;
-            gap: 8px;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary) 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
-        }
-        
-        .btn-secondary {
-            background: var(--light);
-            color: var(--dark);
-            border: 1px solid #e5e7eb;
-        }
-        
-        .btn-secondary:hover {
-            background: #f3f4f6;
-            border-color: #d1d5db;
-        }
-        
-        /* Modal Overlay */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            backdrop-filter: blur(5px);
-        }
-        
-        .modal-content {
-            background: white;
-            border-radius: 20px;
-            padding: 32px;
-            max-width: 500px;
-            width: 90%;
-            max-height: 90vh;
-            overflow-y: auto;
-            animation: fadeIn 0.3s ease-out;
-        }
-        
-        /* Toast Notification */
-        .toast {
-            position: fixed;
-            bottom: 24px;
-            left: 24px;
-            background: white;
-            border-radius: 12px;
-            padding: 16px 24px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            z-index: 1000;
-            transform: translateY(100px);
-            opacity: 0;
-            transition: all 0.3s ease;
-        }
-        
-        .toast.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
-        
-        .toast-success {
-            border-right: 4px solid var(--success);
-        }
-        
-        .toast-error {
-            border-right: 4px solid var(--danger);
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .container {
-                padding-left: 16px;
-                padding-right: 16px;
-            }
-            
-            .modal-content {
-                width: 95%;
-                padding: 24px;
-            }
-            
-            .course-card-image {
-                height: 180px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .btn {
-                padding: 10px 20px;
-                font-size: 0.875rem;
-            }
-            
-            .course-card-image {
-                height: 160px;
-            }
-        }
-        
-        /* Player Section */
-        .player-container {
-            transition: all 0.3s ease;
-        }
-        
-        .player-enter {
-            animation: fadeIn 0.5s ease-out;
-        }
-        
-        /* Course Grid */
-        .courses-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 24px;
-        }
-        
-        /* Loading States */
-        .loading-shimmer {
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-        }
-        
-        @keyframes shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-        
-        /* Filter Buttons */
-        .filter-btn {
-            padding: 8px 16px;
-            border-radius: 20px;
-            border: 2px solid transparent;
-            background: var(--light);
-            color: var(--dark);
-            font-weight: 500;
-            transition: all 0.2s ease;
-            cursor: pointer;
-        }
-        
-        .filter-btn.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-        
-        .filter-btn:hover:not(.active) {
-            border-color: #d1d5db;
-        }
-        
-        /* Typography */
-        h1, h2, h3, h4, h5, h6 {
-            font-weight: 700;
-            line-height: 1.2;
-        }
-        
-        .text-gradient {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        /* Utility Classes */
-        .line-clamp-2 {
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        
-        .line-clamp-3 {
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-    </style>
+    .nav-icon {
+      width: 24px;
+      height: 24px;
+    }
+  }
+  
+  /* تحسينات للتفاعل باللمس */
+  .nav-button:active {
+    transform: scale(0.95);
+  }
+  
+  /* إخفاء شريط التمرير لبعض العناصر */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* تحسين الأداء */
+  .will-change-transform {
+    will-change: transform;
+  }
+  
+  /* أنيميشن للتقدم */
+  @keyframes pulse-progress {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+  }
+  
+  .progress-pulse {
+    animation: pulse-progress 2s infinite;
+  }
+  
+  /* أنيميشن للنجمة */
+  @keyframes star-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+  }
+  
+  .star-pulse {
+    animation: star-pulse 1.5s infinite;
+  }
+</style>
 </head>
-<body class="min-h-screen bg-gray-50">
-    <!-- Navigation -->
-    <nav class="glass-effect fixed top-0 left-0 right-0 z-50 border-b border-gray-100">
-        <div class="container mx-auto px-4">
-            <div class="flex items-center justify-between h-20">
-                <!-- Logo -->
-                <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 rounded-xl gradient-bg flex items-center justify-center">
-                        <i class="fas fa-graduation-cap text-white text-xl"></i>
-                    </div>
-                    <div>
-                        <h1 class="text-2xl font-bold gradient-text">EduSphere<span class="text-primary">Pro</span></h1>
-                        <p class="text-xs text-gray-500">منصة التعليم الذكي</p>
-                    </div>
-                </div>
-                
-                <!-- Navigation Links -->
-                <div class="hidden md:flex items-center space-x-6">
-                    <a href="#courses" class="text-gray-700 hover:text-primary font-medium transition-colors">
-                        <i class="fas fa-book ml-2"></i>الدورات
-                    </a>
-                    <a href="#features" class="text-gray-700 hover:text-primary font-medium transition-colors">
-                        <i class="fas fa-star ml-2"></i>المميزات
-                    </a>
-                    <a href="#about" class="text-gray-700 hover:text-primary font-medium transition-colors">
-                        <i class="fas fa-info-circle ml-2"></i>عن المنصة
-                    </a>
-                </div>
-                
-                <!-- Mobile Menu Button -->
-                <button id="mobileMenuBtn" class="md:hidden text-gray-700">
-                    <i class="fas fa-bars text-xl"></i>
-                </button>
-            </div>
-        </div>
-        
-        <!-- Mobile Menu -->
-        <div id="mobileMenu" class="md:hidden bg-white border-t border-gray-100 hidden">
-            <div class="container mx-auto px-4 py-4">
-                <div class="flex flex-col space-y-4">
-                    <a href="#courses" class="text-gray-700 hover:text-primary font-medium py-2">
-                        <i class="fas fa-book ml-2"></i>الدورات
-                    </a>
-                    <a href="#features" class="text-gray-700 hover:text-primary font-medium py-2">
-                        <i class="fas fa-star ml-2"></i>المميزات
-                    </a>
-                    <a href="#about" class="text-gray-700 hover:text-primary font-medium py-2">
-                        <i class="fas fa-info-circle ml-2"></i>عن المنصة
-                    </a>
-                </div>
-            </div>
-        </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <section class="pt-32 pb-20 relative overflow-hidden">
-        <div class="absolute inset-0 gradient-bg opacity-5"></div>
-        <div class="container mx-auto px-4 relative">
-            <div class="max-w-4xl mx-auto text-center">
-                <h1 class="text-4xl md:text-5xl font-bold mb-6 animate-fade-in">
-                    <span class="text-gradient">اكتشف عالم التعلم</span><br>
-                    <span class="text-gray-800">بأسلوب عصري مبتكر</span>
-                </h1>
-                <p class="text-xl text-gray-600 mb-8 animate-fade-in" style="animation-delay: 0.1s">
-                    منصة تعليمية متكاملة تقدم دورات عالية الجودة في مختلف المجالات، مصممة لتواكب احتياجات العصر الرقمي
-                </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in" style="animation-delay: 0.2s">
-                    <button onclick="showAllCourses()" class="btn btn-primary">
-                        <i class="fas fa-play ml-2"></i>
-                        ابدأ التعلم الآن
-                    </button>
-                    <a href="#courses" class="btn btn-secondary">
-                        <i class="fas fa-eye ml-2"></i>
-                        استعرض الدورات
-                    </a>
-                </div>
-            </div>
-            
-            <!-- Stats -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16">
-                <div class="bg-white rounded-xl p-6 text-center shadow-soft hover-lift">
-                    <div class="text-3xl font-bold gradient-text mb-2" id="totalCourses">0</div>
-                    <div class="text-gray-600">دورة متاحة</div>
-                </div>
-                <div class="bg-white rounded-xl p-6 text-center shadow-soft hover-lift">
-                    <div class="text-3xl font-bold gradient-text mb-2" id="activeStudents">+2K</div>
-                    <div class="text-gray-600">طالب نشط</div>
-                </div>
-                <div class="bg-white rounded-xl p-6 text-center shadow-soft hover-lift">
-                    <div class="text-3xl font-bold gradient-text mb-2">١٠٠%</div>
-                    <div class="text-gray-600">رضا العملاء</div>
-                </div>
-                <div class="bg-white rounded-xl p-6 text-center shadow-soft hover-lift">
-                    <div class="text-3xl font-bold gradient-text mb-2">٢٤/٧</div>
-                    <div class="text-gray-600">دعم فني</div>
-                </div>
-            </div>
-        </div>
-    </section>
+<body class="bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen pb-32 text-gray-800">
 
-    <!-- Courses Section -->
-    <section id="courses" class="py-20 bg-gray-50">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold mb-4">الدورات التعليمية</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">
-                    اختر من بين مجموعة متنوعة من الدورات المصممة بواسطة خبراء الصناعة
-                </p>
-            </div>
-            
-            <!-- Filter Buttons -->
-            <div class="flex flex-wrap gap-2 justify-center mb-8" id="filterButtons">
-                <!-- Will be populated dynamically -->
-            </div>
-            
-            <!-- Courses Grid -->
-            <div class="courses-grid" id="coursesGrid">
-                <!-- Loading Skeleton -->
-                <div id="loadingSkeleton" class="space-y-4">
-                    <div class="course-card">
-                        <div class="course-card-image loading-shimmer"></div>
-                        <div class="p-6">
-                            <div class="h-6 w-3/4 mb-4 loading-shimmer rounded"></div>
-                            <div class="h-4 w-full mb-2 loading-shimmer rounded"></div>
-                            <div class="h-4 w-2/3 mb-6 loading-shimmer rounded"></div>
-                            <div class="flex justify-between">
-                                <div class="h-8 w-24 loading-shimmer rounded"></div>
-                                <div class="h-8 w-32 loading-shimmer rounded"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- No Courses Message -->
-            <div id="noCourses" class="text-center py-12 hidden">
-                <div class="w-24 h-24 mx-auto mb-6 bg-gray-100 rounded-full flex items-center justify-center">
-                    <i class="fas fa-book-open text-gray-400 text-3xl"></i>
-                </div>
-                <h3 class="text-xl font-semibold mb-2">لا توجد دورات متاحة</h3>
-                <p class="text-gray-600">سيتم إضافة دورات جديدة قريباً</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Player Section (Hidden by default) -->
-    <section id="playerSection" class="hidden fixed inset-0 z-50 bg-white">
-        <div class="h-full flex flex-col">
-            <!-- Player Header -->
-            <div class="glass-effect border-b border-gray-200 p-4">
-                <div class="container mx-auto">
-                    <div class="flex items-center justify-between">
-                        <button onclick="backToCourses()" class="btn btn-secondary">
-                            <i class="fas fa-arrow-right ml-2"></i>
-                            العودة للدورات
-                        </button>
-                        <h2 id="playerTitle" class="text-xl font-bold text-center flex-1">مشغل الدورة</h2>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Player Content -->
-            <div class="flex-1 overflow-auto">
-                <div class="container mx-auto p-4">
-                    <!-- Course Info -->
-                    <div class="bg-white rounded-xl shadow-soft p-6 mb-6">
-                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                            <div class="lg:col-span-2">
-                                <h3 id="courseTitle" class="text-2xl font-bold mb-4"></h3>
-                                <p id="courseDescription" class="text-gray-600 mb-6"></p>
-                                <div class="flex flex-wrap gap-4">
-                                    <div class="flex items-center">
-                                        <i class="fas fa-tag text-primary ml-2"></i>
-                                        <span id="courseCategory" class="text-gray-700"></span>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <i class="fas fa-clock text-success ml-2"></i>
-                                        <span id="courseDuration" class="text-gray-700"></span>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <i class="fas fa-certificate text-secondary ml-2"></i>
-                                        <span id="coursePrice" class="text-gray-700"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="lg:col-span-1">
-                                <div class="bg-gradient-to-br from-primary to-secondary rounded-xl p-6 text-white">
-                                    <h4 class="font-bold mb-4">تفاصيل الدورة</h4>
-                                    <div class="space-y-3">
-                                        <div class="flex justify-between">
-                                            <span>نوع الشهادة:</span>
-                                            <span id="certificateType" class="font-bold">معتمدة</span>
-                                        </div>
-                                        <div class="flex justify-between">
-                                            <span>مدة الوصول:</span>
-                                            <span id="accessDuration" class="font-bold">مدى الحياة</span>
-                                        </div>
-                                        <div class="flex justify-between">
-                                            <span>مستوى الصعوبة:</span>
-                                            <span id="courseLevel" class="font-bold">متوسط</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Video Player -->
-                    <div class="bg-black rounded-2xl overflow-hidden shadow-hard mb-6">
-                        <div id="youtubePlayer" class="aspect-video">
-                            <!-- YouTube iframe will be inserted here -->
-                        </div>
-                    </div>
-                    
-                    <!-- Course Details -->
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <div class="lg:col-span-2">
-                            <div class="bg-white rounded-xl shadow-soft p-6">
-                                <h4 class="text-xl font-bold mb-4">محتوى الدورة</h4>
-                                <p id="courseFullDescription" class="text-gray-700"></p>
-                                
-                                <div class="mt-8">
-                                    <h5 class="font-bold mb-4">ماذا ستتعلم؟</h5>
-                                    <ul class="space-y-3">
-                                        <li class="flex items-center">
-                                            <i class="fas fa-check-circle text-success ml-3"></i>
-                                            <span>مهارات عملية قابلة للتطبيق مباشرة</span>
-                                        </li>
-                                        <li class="flex items-center">
-                                            <i class="fas fa-check-circle text-success ml-3"></i>
-                                            <span>أساليب تعلم حديثة وفعالة</span>
-                                        </li>
-                                        <li class="flex items-center">
-                                            <i class="fas fa-check-circle text-success ml-3"></i>
-                                            <span>نصائح وتوجيهات من خبراء المجال</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Course Actions -->
-                        <div class="lg:col-span-1">
-                            <div class="bg-white rounded-xl shadow-soft p-6">
-                                <h5 class="font-bold mb-6">ابدأ التعلم الآن</h5>
-                                <div class="space-y-4">
-                                    <button onclick="startLearning()" class="btn btn-primary w-full">
-                                        <i class="fas fa-play ml-2"></i>
-                                        ابدأ المشاهدة
-                                    </button>
-                                    <button onclick="shareCourse()" class="btn btn-secondary w-full">
-                                        <i class="fas fa-share ml-2"></i>
-                                        مشاركة الدورة
-                                    </button>
-                                    <div class="border-t border-gray-200 pt-4">
-                                        <h6 class="font-bold mb-3">الدعم الفني</h6>
-                                        <p class="text-sm text-gray-600 mb-3">
-                                            لديك استفسار أو تحتاج مساعدة؟
-                                        </p>
-                                        <a href="https://wa.me/1234567890" target="_blank" 
-                                           class="inline-flex items-center justify-center w-full bg-green-500 hover:bg-green-600 text-white py-3 px-4 rounded-lg font-medium transition-colors">
-                                            <i class="fab fa-whatsapp ml-2"></i>
-                                            تواصل عبر واتساب
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section id="features" class="py-20 bg-white">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold mb-4">لماذا تختار منصتنا؟</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">
-                    نقدم تجربة تعليمية فريدة تجمع بين الجودة والمرونة والابتكار
-                </p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="text-center animate-fade-in">
-                    <div class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center mx-auto mb-6">
-                        <i class="fas fa-video text-white text-2xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">دروس عالية الجودة</h3>
-                    <p class="text-gray-600">محتوى مرئي مصمم بعناية بأعلى معايير الجودة</p>
-                </div>
-                
-                <div class="text-center animate-fade-in" style="animation-delay: 0.1s">
-                    <div class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center mx-auto mb-6">
-                        <i class="fas fa-certificate text-white text-2xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">شهادات معتمدة</h3>
-                    <p class="text-gray-600">احصل على شهادات مهنية معترف بها دولياً</p>
-                </div>
-                
-                <div class="text-center animate-fade-in" style="animation-delay: 0.2s">
-                    <div class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center mx-auto mb-6">
-                        <i class="fas fa-headset text-white text-2xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">دعم فني متكامل</h3>
-                    <p class="text-gray-600">فريق دعم فني على مدار الساعة لمساعدتك</p>
-                </div>
-                
-                <div class="text-center animate-fade-in" style="animation-delay: 0.3s">
-                    <div class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center mx-auto mb-6">
-                        <i class="fas fa-mobile-alt text-white text-2xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">متوافق مع جميع الأجهزة</h3>
-                    <p class="text-gray-600">تعلم من أي جهاز وفي أي وقت يناسبك</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="py-20 bg-gray-50">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div class="animate-slide-in">
-                    <h2 class="text-3xl font-bold mb-6">منصة التعليم الذكي</h2>
-                    <p class="text-gray-600 mb-6">
-                        نحن منصة تعليمية رائدة تهدف إلى تقديم تجربة تعلم استثنائية من خلال دمج أحدث التقنيات مع أفضل الممارسات التعليمية.
-                    </p>
-                    <div class="space-y-4">
-                        <div class="flex items-center">
-                            <i class="fas fa-check-circle text-success text-xl ml-3"></i>
-                            <span>خبرة تعليمية تفاعلية</span>
-                        </div>
-                        <div class="flex items-center">
-                            <i class="fas fa-check-circle text-success text-xl ml-3"></i>
-                            <span>محتوى مصمم بواسطة خبراء</span>
-                        </div>
-                        <div class="flex items-center">
-                            <i class="fas fa-check-circle text-success text-xl ml-3"></i>
-                            <span>تحديث مستمر للمحتوى</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="relative animate-slide-in" style="animation-delay: 0.2s">
-                    <div class="bg-gradient-to-br from-primary to-secondary rounded-3xl p-8 text-white">
-                        <h3 class="text-2xl font-bold mb-6">انضم إلينا الآن</h3>
-                        <p class="mb-8">
-                            ابدأ رحلة التعلم الخاصة بك اليوم وانضم إلى آلاف الطلاب الناجحين
-                        </p>
-                        <button onclick="showAllCourses()" class="btn bg-white text-primary hover:bg-gray-100">
-                            <i class="fas fa-user-plus ml-2"></i>
-                            انضم مجاناً
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div>
-                    <div class="flex items-center mb-6">
-                        <div class="w-10 h-10 rounded-xl gradient-bg flex items-center justify-center mr-3">
-                            <i class="fas fa-graduation-cap text-white text-xl"></i>
-                        </div>
-                        <h3 class="text-xl font-bold">EduSphere<span class="text-primary">Pro</span></h3>
-                    </div>
-                    <p class="text-gray-400">
-                        منصة التعليم الذكي التي تواكب متطلبات العصر الرقمي
-                    </p>
-                </div>
-                
-                <div>
-                    <h4 class="text-lg font-bold mb-6">روابط سريعة</h4>
-                    <ul class="space-y-3">
-                        <li><a href="#courses" class="text-gray-400 hover:text-white transition-colors">الدورات</a></li>
-                        <li><a href="#features" class="text-gray-400 hover:text-white transition-colors">المميزات</a></li>
-                        <li><a href="#about" class="text-gray-400 hover:text-white transition-colors">عن المنصة</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="text-lg font-bold mb-6">الدعم</h4>
-                    <ul class="space-y-3">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">الأسئلة الشائعة</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">تواصل معنا</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">الشروط والأحكام</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="text-lg font-bold mb-6">تابعنا</h4>
-                    <div class="flex space-x-4">
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition-colors">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-400 transition-colors">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-red-600 transition-colors">
-                            <i class="fab fa-youtube"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-                <p>© 2024 EduSphere Pro. جميع الحقوق محفوظة.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Toast Notification -->
-    <div id="toast" class="toast hidden">
-        <div id="toastIcon" class="text-xl">
-            <i class="fas fa-check-circle text-success"></i>
-        </div>
-        <div>
-            <div id="toastTitle" class="font-bold">تمت العملية بنجاح</div>
-            <div id="toastMessage" class="text-sm text-gray-600">تم تنفيذ العملية بنجاح</div>
-        </div>
-        <button onclick="hideToast()" class="mr-auto text-gray-400 hover:text-gray-600">
-            <i class="fas fa-times"></i>
-        </button>
+<!-- Header مع تحسينات -->
+<header class="bg-gradient-to-l from-indigo-700 via-blue-600 to-purple-700 text-white shadow-xl relative overflow-hidden">
+  <div class="absolute inset-0 bg-grid-white/10 bg-grid-16 opacity-10"></div>
+  <div class="relative z-10 p-6">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="text-center md:text-right">
+        <h1 class="text-3xl font-extrabold mb-2">Skillzoy Academy</h1>
+        <p class="text-lg opacity-95">منصة التعلم الإلكتروني المتكاملة</p>
+      </div>
+      <div class="flex items-center space-x-2 space-x-reverse bg-white/10 px-4 py-2 rounded-full">
+        <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+        <span class="text-sm font-medium">🟢 متصل الآن</span>
+      </div>
     </div>
+    <p class="text-center text-sm opacity-90 mt-4 max-w-2xl mx-auto bg-white/10 px-4 py-2 rounded-lg">
+      تواصل معنا على واتساب للحصول على شهادتك المعتمدة بعد إكمال الدورة
+    </p>
+  </div>
+</header>
 
-    <!-- Firebase Configuration -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<main class="max-w-7xl mx-auto p-4 md:p-6">
+
+<!-- Home Section مع تصميم محسن -->
+<section id="homeSection" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+  <!-- سيتم تعبئتها بالديناميكية -->
+</section>
+
+<!-- My Courses Section مع تحسينات -->
+<section id="myCoursesSection" class="hidden">
+  <div class="flex items-center justify-between mb-8">
+    <div>
+      <h2 class="text-2xl font-bold text-gray-800 flex items-center gap-3">
+        <span class="p-3 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl text-white">
+          🎓
+        </span>
+        دوراتي المسجلة
+      </h2>
+      <p class="text-gray-600 mt-2">الدورات التي قمت بتسجيلها</p>
+    </div>
+    <div id="totalProgressText" class="px-4 py-2 bg-gradient-to-r from-blue-50 to-purple-50 text-blue-700 rounded-lg font-medium">
+      إجمالي تقدمك: 0%
+    </div>
+  </div>
+  <div id="myCoursesList" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"></div>
+</section>
+
+<!-- Player Section مع تحسينات -->
+<section id="playerSection" class="hidden glass-effect rounded-3xl p-6 shadow-2xl">
+  <div class="flex items-center justify-between mb-6">
+    <button onclick="backToMyCourses()"
+      class="flex items-center gap-2 px-6 py-3 bg-gradient-to-l from-gray-100 to-white text-gray-700 font-semibold rounded-xl hover:shadow-md transition-all duration-300 border border-gray-200 hover:border-blue-300 active:scale-95">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+      </svg>
+      الرجوع إلى دوراتي
+    </button>
+    <div class="flex items-center gap-3">
+      <div class="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full text-sm font-medium">
+        جاري المشاهدة
+      </div>
+    </div>
+  </div>
+  
+  <h2 id="playerTitle" class="text-2xl font-bold mb-2 text-center text-gray-800"></h2>
+  <p id="playerDesc" class="text-gray-600 text-center mb-6"></p>
+  
+  <!-- شريط التقدم العام -->
+  <div class="mb-6 bg-white p-4 rounded-xl shadow-sm">
+    <div class="flex justify-between items-center mb-2">
+      <span class="font-medium text-gray-700">تقدمك في هذه الدورة</span>
+      <span id="courseOverallProgress" class="font-bold text-blue-600">0%</span>
+    </div>
+    <div class="progress-bar">
+      <div id="courseProgressFill" class="progress-fill" style="width: 0%"></div>
+    </div>
+    <div class="flex justify-between text-sm text-gray-500 mt-2">
+      <span id="completedVideos">0 مقطع مكتمل</span>
+      <span id="totalVideos">0 مقطع</span>
+    </div>
+  </div>
+  
+  <!-- مشغل الفيديو -->
+  <div class="relative rounded-2xl overflow-hidden shadow-xl mb-6">
+    <div class="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-500 opacity-10"></div>
+    <iframe id="playerFrame"
+      class="relative z-10 w-full h-[480px] md:h-[520px]"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+      frameborder="0"
+      loading="lazy">
+    </iframe>
+  </div>
+  
+  <!-- زر تم الإكمال -->
+  <div class="mb-8 text-center">
+    <button id="markCompleteBtn" onclick="markVideoComplete()"
+      class="px-8 py-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold rounded-xl hover:from-green-600 hover:to-emerald-700 transition-all duration-300 shadow-lg hover:shadow-xl active:scale-95 flex items-center justify-center gap-3 mx-auto">
+      <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+      </svg>
+      <span>تم الإكمال ✓</span>
+    </button>
+    <p class="text-gray-500 text-sm mt-2">اضغط على الزر بعد الانتهاء من مشاهدة الفيديو</p>
+  </div>
+  
+  <!-- قائمة الفيديوهات المكتملة -->
+  <div class="bg-white rounded-2xl p-6 shadow-lg">
+    <h3 class="text-xl font-bold mb-4 text-gray-800">مقاطع الدورة</h3>
+    <div id="videoProgressList" class="space-y-3 max-h-96 overflow-y-auto pr-2">
+      <!-- سيتم تعبئتها ديناميكياً -->
+    </div>
+  </div>
+  
+  <div class="flex flex-wrap gap-4 justify-center mt-8">
+    <div class="flex items-center gap-2 px-4 py-2 bg-green-50 text-green-700 rounded-lg">
+      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+      </svg>
+      <span>تواصل معنا للحصول على الشهادة</span>
+    </div>
+    <div class="flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-700 rounded-lg">
+      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/>
+      </svg>
+      <span>متاح على جميع الأجهزة</span>
+    </div>
+  </div>
+</section>
+
+<!-- WhatsApp Button مع تحسينات -->
+<a id="whatsappButton" href="https://wa.me/0908280115" target="_blank"
+   class="fixed left-6 bottom-24 bg-gradient-to-br from-green-500 to-emerald-600 text-white w-16 h-16 flex items-center justify-center
+   rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 z-50 hidden hover:scale-110
+   animate-bounce-slow border-2 border-white active:scale-95 will-change-transform">
+  <div class="relative">
+    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.76.982.998-3.675-.236-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.9 6.994c-.004 5.45-4.438 9.88-9.888 9.88m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.333.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.333 11.893-11.893 0-3.18-1.24-6.162-3.495-8.411"/>
+    </svg>
+    <div class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full border-2 border-white"></div>
+  </div>
+</a>
+
+<div id="whatsappTooltip"
+     class="fixed left-32 bottom-24 bg-gradient-to-r from-gray-800 to-gray-900 text-white px-5 py-3 rounded-xl shadow-2xl opacity-0 transition-all duration-300 z-40 pointer-events-none transform -translate-y-2">
+  <div class="flex items-center gap-3">
+    <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+    <div>
+      <p class="font-medium">تواصل معنا للحصول على شهادتك</p>
+      <p class="text-sm text-gray-300">بعد إكمال الدورة بنجاح ✅</p>
+    </div>
+  </div>
+  <div class="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-1/2 rotate-45 w-3 h-3 bg-gray-900"></div>
+</div>
+
+<!-- Bottom Nav مع تحسينات متقدمة -->
+<nav class="fixed bottom-0 left-0 right-0 glass-effect border-t border-gray-200 shadow-2xl flex justify-around py-4 z-40">
+  <button onclick="showHome()" 
+          class="nav-button mobile-tap-area flex flex-col items-center gap-1 px-6 py-2 text-gray-700 font-semibold transition-all duration-300 active:scale-95 will-change-transform">
+    <div class="nav-icon-container p-2 rounded-full bg-gradient-to-br from-blue-100 to-blue-50 transition-all duration-300">
+      <svg class="w-6 h-6 nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+      </svg>
+    </div>
+    <span class="text-sm font-medium">الرئيسية</span>
+  </button>
+  
+  <button onclick="showMyCourses()" 
+          class="nav-button mobile-tap-area flex flex-col items-center gap-1 px-6 py-2 text-gray-700 font-semibold transition-all duration-300 active:scale-95 will-change-transform">
+    <div class="nav-icon-container p-2 rounded-full bg-gradient-to-br from-green-100 to-green-50 transition-all duration-300">
+      <svg class="w-6 h-6 nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/>
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 016.16.547 17.919 17.919 0 01-4.949 6.09A17.919 17.919 0 0112 21.75a17.92 17.92 0 01-6.371-1.435 17.919 17.919 0 01-4.949-6.09 12.083 12.083 0 016.16-.547L12 14z"/>
+      </svg>
+    </div>
+    <span class="text-sm font-medium">دوراتي</span>
+  </button>
+</nav>
+      
+<script>
+/* ====== DATA ====== */
+const courses = [
+  {
+    id: "cV",
+    title:"تدريب شهادات UN",
+    desc: "تقديم:أحمد عبدالكريم",
+    level: "مبتدئ",
+    duration: "15 دقيقة",
+    videosCount: "3 فيديو",
+    certificatePrice: "مجانية",
+    playlist: "https://www.youtube.com/embed/videoseries?list=PLSLMEu6gRp1baruwcEO8WyM10Ufx4v6ME&si=5HFPwyg4CfFjaCEX"
+  },
+  {
+    id: "c",
+    title:"دورة مسار التسويق بالعمولة",
+    desc: "تقديم:Muzan Musa",
+    level: "مبتدئ",
+    duration: "ساعة",
+    videosCount: "6 فيديو",
+    certificatePrice: "ج.س 5,000",
+    playlist: "https://www.youtube.com/embed/videoseries?list=PLfzK0MVv07xJBtefCUPeimWCEkKCKJ47I&si=K2UIb_GU5tOrYhxa"
+  },
+  {
+    id: "rc",
+    title:"TOT دورة",
+    desc: "تقديم: علاء سورفار",
+    level: "مبتدئ",
+    duration: "ساعة",
+    videosCount: "26 فيديو",
+    certificatePrice: "ج.س 7,000",
+    playlist: "https://www.youtube.com/embed/videoseries?list=PLuUY-uehQ3QXuyiJ1h6nKzPYYGfX5p3Uw&si=fnJWdkjIIzsq3LAV"
+  },
+  {
+    id: "r",
+    title:"ورشة تطوير الذات",
+    desc: "تقديم المدربة:هبة محمد",
+    level: "مبتدئ",
+    duration: "ربع ساعة",
+    videosCount: "6 فيديو",
+    certificatePrice: "مجانية",
+    playlist: "https://www.youtube.com/embed/videoseries?list=PLTFZ4qdUff8SyIY6e-KryllUjZdDLmN4k&si=COD_uxzbrorsq0pS"
+  },
+  {
+    id: "re",
+    title: "ورشة التشافي الذاتي",
+    desc: "تقديم المدربة: يثرب سر الختم",
+    level: "مبتدئ",
+    duration: "ربع ساعة",
+    videosCount: "4 فيديو",
+    certificatePrice: "مجانية",
+    playlist: "https://www.youtube.com/embed/videoseries?list=PLSLMEu6gRp1YdOGrK2XyTR7Fg52TfL1Wp&si=jACyuPUbRVOZk6En"
+  },
+  {
+    id: "react",
+    title: "React.js المتقدم",
+    desc: "تطوير واجهات المستخدم التفاعلية باستخدام أحدث تقنيات React",
+    level: "متقدم",
+    duration: "18 ساعة",
+    videosCount: "131 فيديو",
+    certificatePrice: "7,000 ج.س",
+    playlist: "https://www.youtube.com/embed/videoseries?list=PLYyqC4bNbCIdSZ-JayMLl4WO2Cr995vyS"
+  },
+  {
+    id: "excel",
+    title: "Excel للمحترفين",
+    desc: "تحليل البيانات والمخططات المتقدمة والدوال المتقدمة",
+    level: "متوسط",
+    duration: "18 ساعة",
+    videosCount: "50 فيديو",
+    certificatePrice: "5,000 ج.س",
+    playlist: "https://www.youtube.com/embed/videoseries?list=PLVn5UigDlJB8ZU35J4RyyEwfjJ9RH7-MK"
+  },
+  {
+    id: "ai",
+    title: "Css course",
+    desc: "من الصفر الى الاحتراف",
+    level: "مبتدئ",
+    duration: "5 ساعة",
+    videosCount: "31 فيديو",
+    certificatePrice: "مجانية",
+    playlist: "https://www.youtube.com/embed/videoseries?list=PLYyqC4bNbCIdES52srHE6xTiIgvgMkBWu&si=Gp1p-kO3WglrEPT-"
+  },
+  {
+    id: "web",
+    title: "تطوير الويب الشامل",
+    desc: "HTML, CSS, JavaScript مشاريع عملية",
+    level: "مبتدئ",
+    duration: "40 ساعة",
+    videosCount: "80 فيديو",
+    certificatePrice: "8,000 ج.س",
+    playlist: "https://www.youtube.com/embed/videoseries?list=PLDoPjvoNmBAw_t_XWUFbBX-c9MafPk9ji"
+  },
+  {
+    id: "python",
+    title: "Python للبيانات",
+    desc: "تحليل البيانات باستخدام Python ومكتباتها",
+    level: "متوسط",
+    duration: "28 ساعة",
+    videosCount: "56 فيديو",
+    certificatePrice: "6,000 ج.س",
+    playlist: "https://www.youtube.com/embed/videoseries?list=PLvOO0btloRnuTUGN4XqO85eKPeFSZsEqK"
+  },
+  {
+    id: "desig",
+    title: "علم النفس السلوكي",
+    desc: "تدريب احترافي",
+    level: "مبتدئ",
+    duration: "1 ساعة",
+    videosCount: "10 فيديو",
+    certificatePrice: "5,000 ج.س",
+    playlist: "https://www.youtube.com/embed/videoseries?list=PLgFSsTWkRmoLSnxBNHODoQlDPUnOwo_YD"
+  },
+  {
+    id: "دورة",
+    title: "Ai | Vibe Coding",
+    desc: "انشئ تطبيقك وموقعك بدون كود",
+    level: "مبتدئ",
+    duration: "5 ساعة",
+    videosCount: "99 فيديو",
+    certificatePrice: "مجانية",
+    playlist: "https://www.youtube.com/embed/videoseries?list=PLPQWeyelFrIYpGHJs2UmHSRMoKZ9uQbp6&si"
+  },
+  {
+    id: "English B",
+    title: "دورة خدمة العملاء",
+    desc: "تدريب احترافي",
+    level: "مبتدئ",
+    duration: "1 ساعة",
+    videosCount: "9 فيديو",
+    certificatePrice: "مجانية",
+    playlist: "https://www.youtube.com/embed/videoseries?list=PLz8ax6_pdePGTvDEqXkfpp1s7jYXbuBrP"
+  },
+  {
+    id: "English B2",
+    title: "الدعم النفسي",
+    desc: "تدريب بواسطة الهلال الاحمر القطري",
+    level: "مبتدئ",
+    duration: "1 ساعة",
+    videosCount: "10 فيديو",
+    certificatePrice: "مجانية",
+    playlist: "https://www.youtube.com/embed/videoseries?list=PL3gFTybfJ-x-3JZNfbVlMm1RptuVG_5k-"
+  },
+  {
+    id: "Excel2",
+    title: "Excel",
+    desc: "تدريب عملي",
+    level: "مبتدئ",
+    duration: "4 ساعة",
+    videosCount: "26 فيديو",
+    certificatePrice: "6,000 ج.س",
+    playlist: "https://www.youtube.com/embed/videoseries?list=PLm8I8moAHiH2kkq0S9XGvIbPODrHzXRp6"
+  },
+  {
+    id: "javascript",
+    title: "javascript",
+    desc: "متوفر شهادة مجانية بعد الاكمال",
+    level: "مبتدئ",
+    duration: "5 ساعة",
+    videosCount: "57 فيديو",
+    certificatePrice: "مجانية",
+    playlist: "https://www.youtube.com/embed/videoseries?list=PLYyqC4bNbCIeLEjcSPO61bsGPKEvYceb0&si=6Fgny8XzIL3An7jP"
+  },
+  {
+    id: "design2",
+    title: "Communcation Skills",
+    desc: "اتقن مهارات التواصل واحصل على شهادتك",
+    level: "مبتدئ",
+    duration: "5 ساعة",
+    videosCount: "5 فيديو",
+    certificatePrice: "5,000 ج.س",
+    playlist: "https://www.youtube.com/embed/videoseries?list=PLWPirh4EWFpFB7_wjLoHPnHl68WSxA6gJ"
+  },
+  {
+    id: "Canva2",
+    title: "Canva full course",
+    desc: "سعر الشهادة 5,000 ج.س شهادة معتمدة",
+    level: "متقدم",
+    duration: "3 ساعة",
+    videosCount: "24 فيديو",
+    certificatePrice: "5,000 ج.س",
+    playlist: "https://www.youtube.com/embed/videoseries?list=PLAeuUfwnAxm4bAMXuq9LCXfJfIO9-PtkX"
+  },
+  {
+    id: "English B22",
+    title: "English B2",
+    desc: "master english B2 level",
+    level: "متوسط",
+    duration: "12 ساعة",
+    videosCount: "87 فيديو",
+    certificatePrice: "9,000 ج.س",
+    playlist: "https://www.youtube.com/embed/videoseries?list=PLzMXToX8KzqhKrURIhVTJMb0v-HeDM3gs"
+  }
+];
+
+let myCourses = JSON.parse(localStorage.getItem("myCourses")) || [];
+let courseProgress = JSON.parse(localStorage.getItem("courseProgress")) || {};
+let currentCourseId = null;
+
+/* ====== نظام التقدم البديل ====== */
+function initializeCourseProgress(courseId) {
+  if (!courseProgress[courseId]) {
+    const course = courses.find(c => c.id === courseId);
+    const videoCount = parseInt(course.videosCount.split(' ')[0]) || 10;
     
-    <script>
-        // ==================== Firebase Configuration ====================
-        const firebaseConfig = {
-            apiKey: "AIzaSyDgFy0-QL0YuGgqgtcx9541Cs7QxBewRKQ",
-            authDomain: "skillzoy-5ba3c.firebaseapp.com",
-            projectId: "skillzoy-5ba3c",
-            storageBucket: "skillzoy-5ba3c.firebasestorage.app",
-            messagingSenderId: "622606995088",
-            appId: "1:622606995088:web:999c8a6790e7aa30651215",
-            measurementId: "G-WVHTQ4BGNJ"
-        };
+    courseProgress[courseId] = {
+      completedVideos: 0,
+      totalVideos: videoCount,
+      progress: 0,
+      videos: {},
+      lastUpdated: new Date().toISOString()
+    };
+    
+    // تهيئة كل الفيديوهات
+    for (let i = 1; i <= videoCount; i++) {
+      courseProgress[courseId].videos[`video${i}`] = {
+        completed: false,
+        completedDate: null
+      };
+    }
+    
+    localStorage.setItem("courseProgress", JSON.stringify(courseProgress));
+  }
+}
 
-        // Initialize Firebase
-        if (!firebase.apps.length) {
-            firebase.initializeApp(firebaseConfig);
-        }
+function updateCourseProgress(courseId, videoIndex) {
+  if (!courseProgress[courseId]) return;
+  
+  const videoKey = `video${videoIndex}`;
+  if (courseProgress[courseId].videos[videoKey]) {
+    if (!courseProgress[courseId].videos[videoKey].completed) {
+      courseProgress[courseId].videos[videoKey].completed = true;
+      courseProgress[courseId].videos[videoKey].completedDate = new Date().toISOString();
+      courseProgress[courseId].completedVideos++;
+      
+      // حساب النسبة المئوية للتقدم
+      const progress = (courseProgress[courseId].completedVideos / courseProgress[courseId].totalVideos) * 100;
+      courseProgress[courseId].progress = Math.round(progress);
+      courseProgress[courseId].lastUpdated = new Date().toISOString();
+      
+      localStorage.setItem("courseProgress", JSON.stringify(courseProgress));
+      
+      return true;
+    }
+  }
+  return false;
+}
+
+function getCourseProgress(courseId) {
+  return courseProgress[courseId] || {
+    completedVideos: 0,
+    totalVideos: 10,
+    progress: 0,
+    videos: {}
+  };
+}
+
+function renderVideoProgressList(courseId) {
+  const container = document.getElementById('videoProgressList');
+  const progress = getCourseProgress(courseId);
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= progress.totalVideos; i++) {
+    const videoKey = `video${i}`;
+    const video = progress.videos[videoKey] || { completed: false };
+    const isCompleted = video.completed;
+    
+    container.innerHTML += `
+      <div class="flex items-center justify-between p-3 ${isCompleted ? 'bg-green-50 border border-green-200' : 'bg-gray-50'} rounded-lg">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg ${isCompleted ? 'bg-green-500' : 'bg-gray-300'} flex items-center justify-center">
+            ${isCompleted ? 
+              '<svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>' : 
+              `<span class="text-white font-bold">${i}</span>`
+            }
+          </div>
+          <div>
+            <div class="font-medium text-gray-800">مقطع ${i}</div>
+            <div class="text-sm text-gray-500">
+              ${isCompleted ? 
+                `<span class="text-green-600">✓ مكتمل منذ ${formatDate(video.completedDate)}</span>` : 
+                'لم يكتمل بعد'}
+            </div>
+          </div>
+        </div>
+        <button onclick="markSpecificVideoComplete(${i})"
+          class="px-4 py-2 ${isCompleted ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-700'} rounded-lg text-sm font-medium hover:opacity-90 transition">
+          ${isCompleted ? 'تم ✓' : 'تم الإكمال'}
+        </button>
+      </div>`;
+  }
+}
+
+function formatDate(dateString) {
+  if (!dateString) return 'قريباً';
+  const date = new Date(dateString);
+  const now = new Date();
+  const diff = now - date;
+  
+  const minutes = Math.floor(diff / 60000);
+  if (minutes < 60) return `${minutes} دقيقة`;
+  
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours} ساعة`;
+  
+  const days = Math.floor(hours / 24);
+  return `${days} يوم`;
+}
+
+function markSpecificVideoComplete(videoNumber) {
+  if (!currentCourseId) return;
+  
+  if (updateCourseProgress(currentCourseId, videoNumber)) {
+    showNotification(`تم إكمال المقطع ${videoNumber} بنجاح! ✓`, 'success');
+    updateCourseProgressDisplay();
+    renderVideoProgressList(currentCourseId);
+    renderHome();
+    renderMyCourses();
+  } else {
+    showNotification('هذا المقطع مكتمل بالفعل!', 'info');
+  }
+}
+
+function markVideoComplete() {
+  if (!currentCourseId) return;
+  
+  // في هذه النسخة البديلة، نضيف فيديو مكتمل عشوائي
+  const progress = getCourseProgress(currentCourseId);
+  
+  // إيجاد أول فيديو غير مكتمل
+  let nextVideoToComplete = 0;
+  for (let i = 1; i <= progress.totalVideos; i++) {
+    const videoKey = `video${i}`;
+    if (!progress.videos[videoKey] || !progress.videos[videoKey].completed) {
+      nextVideoToComplete = i;
+      break;
+    }
+  }
+  
+  if (nextVideoToComplete > 0) {
+    if (updateCourseProgress(currentCourseId, nextVideoToComplete)) {
+      showNotification(`أحسنت! لقد أكملت المقطع ${nextVideoToComplete} ✓`, 'success');
+      updateCourseProgressDisplay();
+      renderVideoProgressList(currentCourseId);
+      renderHome();
+      renderMyCourses();
+    }
+  } else {
+    showNotification('🎉 مبروك! لقد أكملت جميع مقاطع الدورة!', 'success');
+  }
+}
+
+function updateCourseProgressDisplay() {
+  if (!currentCourseId) return;
+  
+  const progress = getCourseProgress(currentCourseId);
+  document.getElementById('courseOverallProgress').textContent = `${progress.progress}%`;
+  document.getElementById('courseProgressFill').style.width = `${progress.progress}%`;
+  document.getElementById('completedVideos').textContent = `${progress.completedVideos} مقطع مكتمل`;
+  document.getElementById('totalVideos').textContent = `${progress.totalVideos} مقطع`;
+}
+
+/* ====== وظيفة تحسين التنقل ====== */
+function updateNavButtons(activeIndex) {
+  const navButtons = document.querySelectorAll('.nav-button');
+  const navIcons = document.querySelectorAll('.nav-icon-container');
+  
+  navButtons.forEach((button, index) => {
+    if (index === activeIndex) {
+      button.classList.add('active', 'text-blue-600');
+      navIcons[index].classList.remove('from-blue-100', 'to-blue-50', 'from-green-100', 'to-green-50');
+      navIcons[index].classList.add('bg-gradient-to-r', 'from-blue-500', 'to-purple-600', 'text-white');
+      button.querySelector('.nav-icon').classList.add('text-white');
+    } else {
+      button.classList.remove('active', 'text-blue-600');
+      button.classList.add('text-gray-700');
+      navIcons[index].classList.remove('bg-gradient-to-r', 'from-blue-500', 'to-purple-600', 'text-white');
+      
+      if (index === 0) {
+        navIcons[index].classList.add('bg-gradient-to-br', 'from-blue-100', 'to-blue-50');
+      } else {
+        navIcons[index].classList.add('bg-gradient-to-br', 'from-green-100', 'to-green-50');
+      }
+      
+      button.querySelector('.nav-icon').classList.remove('text-white');
+    }
+  });
+}
+
+/* ====== HOME ====== */
+function renderHome() {
+  const homeSection = document.getElementById('homeSection');
+  homeSection.innerHTML = "";
+  
+  courses.forEach(c => {
+    const enrolled = myCourses.includes(c.id);
+    const progress = getCourseProgress(c.id);
+    
+    homeSection.innerHTML += `
+      <div class="card-hover bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100">
+        <div class="relative">
+          <div class="aspect-video bg-gradient-to-r from-blue-400 to-purple-500 relative overflow-hidden">
+            <iframe class="absolute inset-0 w-full h-full" 
+                    src="${c.playlist.replace('embed/videoseries?list=', 'embed?listType=playlist&list=')}&index=1"
+                    allowfullscreen
+                    loading="lazy">
+            </iframe>
+            <div class="absolute top-3 left-3">
+              <span class="px-3 py-1 text-xs font-semibold rounded-full ${getLevelClass(c.level)}">
+                ${c.level}
+              </span>
+            </div>
+            <!-- شريط التقدم -->
+            ${progress.progress > 0 ? `
+              <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 p-3">
+                <div class="flex justify-between text-xs text-white mb-1">
+                  <span>تقدمك</span>
+                  <span>${progress.progress}%</span>
+                </div>
+                <div class="progress-bar bg-white/30">
+                  <div class="progress-fill ${progress.progress > 0 ? 'progress-pulse' : ''}" style="width: ${progress.progress}%"></div>
+                </div>
+              </div>
+            ` : ''}
+          </div>
+          <div class="absolute bottom-0 left-0 right-0 p-4">
+            <div class="flex justify-between items-center">
+              <span class="px-3 py-1 bg-black/70 text-white text-xs font-semibold rounded-full">
+                ${c.certificatePrice === "مجانية" ? "شهادة مجانية 🎉" : `الشهادة: ${c.certificatePrice}`}
+              </span>
+              <span class="px-3 py-1 bg-blue-600/80 text-white text-xs font-semibold rounded-full">
+                ${c.videosCount}
+              </span>
+            </div>
+          </div>
+        </div>
         
-        const db = firebase.firestore();
-
-        // ==================== Application State ====================
-        let courses = [];
-        let categories = [];
-        let currentCourse = null;
-
-        // ==================== DOM Elements ====================
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const filterButtonsEl = document.getElementById('filterButtons');
-        const coursesGridEl = document.getElementById('coursesGrid');
-        const loadingSkeleton = document.getElementById('loadingSkeleton');
-        const noCoursesEl = document.getElementById('noCourses');
-        const playerSection = document.getElementById('playerSection');
-        const mainContent = document.body;
-        const toast = document.getElementById('toast');
-
-        // ==================== Mobile Menu Toggle ====================
-        mobileMenuBtn?.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-
-        // ==================== Toast Functions ====================
-        function showToast(title, message, type = 'success') {
-            const toastIcon = document.getElementById('toastIcon');
-            const toastTitle = document.getElementById('toastTitle');
-            const toastMessage = document.getElementById('toastMessage');
-            
-            toastTitle.textContent = title;
-            toastMessage.textContent = message;
-            
-            if (type === 'success') {
-                toastIcon.innerHTML = '<i class="fas fa-check-circle text-success"></i>';
-                toast.className = 'toast toast-success';
-            } else if (type === 'error') {
-                toastIcon.innerHTML = '<i class="fas fa-exclamation-circle text-danger"></i>';
-                toast.className = 'toast toast-error';
+        <div class="p-6">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="font-bold text-xl text-gray-800">${c.title}</h3>
+            <div class="flex flex-col items-end gap-1">
+              ${progress.progress > 0 ? `
+                <div class="flex items-center gap-1 text-green-600">
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                  </svg>
+                  <span class="text-sm font-bold">${progress.progress}%</span>
+                </div>
+              ` : ''}
+              <span class="text-sm text-gray-500 flex items-center gap-1">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                </svg>
+                ${c.duration}
+              </span>
+            </div>
+          </div>
+          
+          <p class="text-gray-600 mb-6 leading-relaxed">${c.desc}</p>
+          
+          <div class="mb-4">
+            <div class="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
+              <span class="text-sm font-medium text-gray-700">سعر الشهادة:</span>
+              <span class="text-lg font-bold ${c.certificatePrice === "مجانية" ? 'text-green-600' : 'text-blue-600'}">
+                ${c.certificatePrice === "مجانية" ? '🎉 مجانية 🎉' : c.certificatePrice}
+              </span>
+            </div>
+          </div>
+          
+          <button onclick="handleCourse('${c.id}')"
+            class="w-full py-4 rounded-xl font-bold text-white transition-all duration-300 active:scale-95
+            ${enrolled ? 
+              'bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 shadow-lg hover:shadow-xl' : 
+              'bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 shadow-lg hover:shadow-xl'
             }
-            
-            toast.classList.add('show');
-            
-            setTimeout(() => {
-                hideToast();
-            }, 5000);
-        }
-
-        function hideToast() {
-            toast.classList.remove('show');
-        }
-
-        // ==================== Course Functions ====================
-        async function fetchCourses() {
-            try {
-                const querySnapshot = await db.collection('courses').get();
-                courses = [];
-                
-                querySnapshot.forEach(doc => {
-                    courses.push({
-                        id: doc.id,
-                        ...doc.data()
-                    });
-                });
-                
-                if (courses.length > 0) {
-                    extractUniqueCategories();
-                    createFilterButtons();
-                    renderCourses();
-                    loadingSkeleton.style.display = 'none';
-                    noCoursesEl.classList.add('hidden');
-                } else {
-                    loadingSkeleton.style.display = 'none';
-                    noCoursesEl.classList.remove('hidden');
-                }
-                
-                // Update stats
-                document.getElementById('totalCourses').textContent = courses.length;
-                
-            } catch (error) {
-                console.error('Error fetching courses:', error);
-                showToast('خطأ في تحميل البيانات', 'حدث خطأ أثناء تحميل الدورات', 'error');
+            flex items-center justify-center gap-3">
+            ${enrolled ? 
+              `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+              <span>${progress.progress > 0 ? 'استئناف التعلم' : 'ابدأ التعلم'}</span>` : 
+              `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"/>
+              </svg>
+              <span>تسجيل في الدورة</span>`
             }
-        }
+          </button>
+        </div>
+      </div>`;
+  });
+}
 
-        function extractUniqueCategories() {
-            const allCategories = courses.map(course => course.category);
-            categories = [...new Set(allCategories)];
-        }
+function getLevelClass(level) {
+  const classes = {
+    'مبتدئ': 'bg-blue-100 text-blue-700',
+    'متوسط': 'bg-yellow-100 text-yellow-700',
+    'متقدم': 'bg-red-100 text-red-700'
+  };
+  return classes[level] || 'bg-gray-100 text-gray-700';
+}
 
-        function createFilterButtons() {
-            filterButtonsEl.innerHTML = '';
-            
-            // All button
-            const allButton = document.createElement('button');
-            allButton.className = 'filter-btn active';
-            allButton.textContent = 'الكل';
-            allButton.addEventListener('click', () => {
-                document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-                allButton.classList.add('active');
-                filterCourses('all');
-            });
-            filterButtonsEl.appendChild(allButton);
-            
-            // Category buttons
-            categories.forEach(category => {
-                const button = document.createElement('button');
-                button.className = 'filter-btn';
-                button.textContent = category;
-                button.addEventListener('click', () => {
-                    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-                    filterCourses(category);
-                });
-                filterButtonsEl.appendChild(button);
-            });
-        }
+/* ====== HANDLE COURSE ====== */
+function handleCourse(id) {
+  const course = courses.find(c => c.id === id);
+  if (!course) return;
+  
+  if (!myCourses.includes(id)) {
+    myCourses.push(id);
+    localStorage.setItem("myCourses", JSON.stringify(myCourses));
+    
+    // تهيئة التقدم للدورة الجديدة
+    initializeCourseProgress(id);
+    
+    showNotification(`تم تسجيلك في دورة ${course.title} بنجاح!`, 'success');
+  }
+  
+  renderHome();
+  renderMyCourses();
+  showMyCourses();
+  showWhatsApp();
+}
 
-        function filterCourses(category) {
-            const courseCards = document.querySelectorAll('.course-card');
-            
-            courseCards.forEach(card => {
-                if (category === 'all') {
-                    card.style.display = 'block';
-                } else {
-                    const cardCategory = card.getAttribute('data-category');
-                    if (cardCategory === category) {
-                        card.style.display = 'block';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                }
-            });
-        }
-
-        function renderCourses() {
-            coursesGridEl.innerHTML = '';
-            
-            courses.forEach(course => {
-                const courseCard = document.createElement('div');
-                courseCard.className = 'course-card animate-fade-in';
-                courseCard.setAttribute('data-category', course.category);
-                
-                // Determine badge based on price
-                let badgeContent = '';
-                if (course.price === 'مجانية') {
-                    badgeContent = '<span class="badge badge-success">مجانية</span>';
-                } else {
-                    badgeContent = `<span class="badge badge-primary">${course.price}</span>`;
-                }
-                
-                courseCard.innerHTML = `
-                    <div class="course-card-image">
-                        <div class="relative z-10 text-center">
-                            <i class="fas fa-graduation-cap text-white text-5xl mb-4"></i>
-                            <h4 class="text-white font-bold text-lg">${course.category}</h4>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-4">
-                            <h3 class="text-xl font-bold line-clamp-2">${course.title}</h3>
-                            ${badgeContent}
-                        </div>
-                        <p class="text-gray-600 mb-6 line-clamp-3">${course.description}</p>
-                        <div class="flex justify-between items-center">
-                            <div class="flex items-center text-gray-500">
-                                <i class="fas fa-clock ml-2"></i>
-                                <span>${course.duration}</span>
-                            </div>
-                            <button class="btn btn-primary" onclick="loadCourse('${course.id}')">
-                                <i class="fas fa-play ml-2"></i>
-                                ابدأ التعلم
-                            </button>
-                        </div>
-                    </div>
-                `;
-                
-                coursesGridEl.appendChild(courseCard);
-            });
-        }
-
-        function loadCourse(courseId) {
-            currentCourse = courses.find(course => course.id === courseId);
-            
-            if (!currentCourse) {
-                showToast('خطأ', 'الدورة غير موجودة', 'error');
-                return;
+/* ====== MY COURSES ====== */
+function renderMyCourses() {
+  const myCoursesList = document.getElementById('myCoursesList');
+  myCoursesList.innerHTML = "";
+  
+  if (myCourses.length === 0) {
+    myCoursesList.innerHTML = `
+      <div class="col-span-3 py-20 text-center">
+        <div class="w-24 h-24 mx-auto mb-6 text-gray-300">
+          <svg fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
+            <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-500 mb-2">لا توجد دورات مسجلة</h3>
+        <p class="text-gray-400 mb-6">سجل في دورة من الصفحة الرئيسية لتبدأ رحلة التعلم</p>
+        <button onclick="showHome()"
+          class="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl font-semibold hover:shadow-lg transition active:scale-95">
+          تصفح الدورات
+        </button>
+      </div>`;
+    hideWhatsApp();
+    updateTotalProgress();
+    return;
+  }
+  
+  myCourses.forEach(id => {
+    const c = courses.find(course => course.id === id);
+    if (!c) return;
+    
+    const progress = getCourseProgress(id);
+    
+    myCoursesList.innerHTML += `
+      <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-300">
+        <div class="flex items-start justify-between mb-4">
+          <div class="flex-1">
+            <div class="flex items-center gap-3 mb-2">
+              <div class="relative">
+                <div class="p-2 rounded-lg ${c.certificatePrice === "مجانية" ? 'bg-green-500' : 'bg-blue-500'}">
+                  <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                  </svg>
+                </div>
+                ${progress.progress === 100 ? `
+                  <div class="absolute -top-1 -right-1 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center star-pulse">
+                    <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                    </svg>
+                  </div>
+                ` : ''}
+              </div>
+              <h3 class="font-bold text-lg text-gray-800">${c.title}</h3>
+            </div>
+            <p class="text-sm text-gray-600 mb-4">${c.desc.substring(0, 80)}...</p>
+          </div>
+        </div>
+        
+        <!-- شريط التقدم -->
+        <div class="mb-4">
+          <div class="flex justify-between items-center mb-1">
+            <span class="text-sm font-medium text-gray-700">تقدمك في الدورة</span>
+            <span class="text-sm font-bold ${progress.progress === 100 ? 'text-green-600' : 'text-blue-600'}">${progress.progress}%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill ${progress.progress > 0 ? 'progress-pulse' : ''}" style="width: ${progress.progress}%"></div>
+          </div>
+          <div class="flex justify-between text-xs text-gray-500 mt-1">
+            <span>${progress.completedVideos} من ${progress.totalVideos} مقطع</span>
+            <span>${progress.progress === 100 ? 'مكتملة 🎉' : 'جاري التعلم'}</span>
+          </div>
+        </div>
+        
+        <div class="space-y-4">
+          <div class="flex items-center justify-between text-sm text-gray-600">
+            <div class="flex flex-col gap-1">
+              <span class="flex items-center gap-1">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                </svg>
+                ${c.duration}
+              </span>
+              <span class="flex items-center gap-1 text-gray-500">
+                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
+                </svg>
+                ${c.videosCount}
+              </span>
+            </div>
+            <span class="px-3 py-1 text-xs font-semibold rounded-full ${getLevelClass(c.level)}">
+              ${c.level}
+            </span>
+          </div>
+          
+          <div class="bg-gradient-to-r ${c.certificatePrice === "مجانية" ? 'from-green-50 to-emerald-50' : 'from-blue-50 to-purple-50'} p-3 rounded-lg border ${c.certificatePrice === "مجانية" ? 'border-green-200' : 'border-blue-200'}">
+            <div class="flex justify-between items-center">
+              <span class="font-medium text-gray-700">سعر الشهادة:</span>
+              <span class="text-lg font-bold ${c.certificatePrice === "مجانية" ? 'text-green-600' : 'text-blue-600'}">
+                ${c.certificatePrice === "مجانية" ? '🎉 مجانية 🎉' : c.certificatePrice}
+              </span>
+            </div>
+            ${c.certificatePrice === "مجانية" ? 
+              '<p class="text-xs text-green-500 mt-1">شهادة معتمدة مجانية بعد الإكمال</p>' : 
+              '<p class="text-xs text-blue-500 mt-1">شهادة معتمدة بعد دفع الرسوم</p>'
             }
+          </div>
+          
+          <div class="flex gap-3">
+            <button onclick="openCourse('${id}')"
+              class="flex-1 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-xl
+              hover:from-blue-600 hover:to-purple-700 transition-all duration-300 active:scale-95
+              flex items-center justify-center gap-2 shadow-lg hover:shadow-xl">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
+              </svg>
+              ${progress.progress > 0 ? 'استئناف التعلم' : 'ابدأ التعلم'}
+            </button>
             
-            // Update player section
-            document.getElementById('playerTitle').textContent = currentCourse.title;
-            document.getElementById('courseTitle').textContent = currentCourse.title;
-            document.getElementById('courseDescription').textContent = currentCourse.description;
-            document.getElementById('courseFullDescription').textContent = currentCourse.description;
-            document.getElementById('courseCategory').textContent = currentCourse.category;
-            document.getElementById('courseDuration').textContent = currentCourse.duration;
-            document.getElementById('coursePrice').textContent = currentCourse.price;
-            
-            // Load YouTube playlist
-            const youtubePlayer = document.getElementById('youtubePlayer');
-            if (currentCourse.playlist_id) {
-                youtubePlayer.innerHTML = `
-                    <iframe 
-                        src="https://www.youtube.com/embed/videoseries?list=${currentCourse.playlist_id}&autoplay=1&rel=0&showinfo=0"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen
-                        class="w-full h-full"
-                    ></iframe>
-                `;
-            }
-            
-            // Show player section
-            playerSection.classList.remove('hidden');
-            playerSection.classList.add('player-enter');
-            
-            // Hide main content
-            document.querySelectorAll('section:not(#playerSection)').forEach(section => {
-                section.style.display = 'none';
-            });
-            
-            showToast('تم التحميل', 'جاري تشغيل الدورة...', 'success');
+            <button onclick="removeCourse('${id}')"
+              class="px-5 py-3 border border-red-200 text-red-600 font-semibold rounded-xl
+              hover:bg-red-50 transition-all duration-300 active:scale-95
+              flex items-center justify-center">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>`;
+  });
+  
+  showWhatsApp();
+  updateTotalProgress();
+}
+
+function updateTotalProgress() {
+  if (myCourses.length === 0) {
+    document.getElementById('totalProgressText').textContent = 'إجمالي تقدمك: 0%';
+    return;
+  }
+  
+  let totalProgress = 0;
+  myCourses.forEach(id => {
+    totalProgress += getCourseProgress(id).progress;
+  });
+  
+  const averageProgress = Math.round(totalProgress / myCourses.length);
+  document.getElementById('totalProgressText').textContent = `إجمالي تقدمك: ${averageProgress}%`;
+}
+
+/* ====== PLAYER ====== */
+function openCourse(id) {
+  const c = courses.find(course => course.id === id);
+  if (!c) return;
+  
+  currentCourseId = id;
+  
+  // تهيئة التقدم إذا لم يكن موجوداً
+  initializeCourseProgress(id);
+  
+  document.getElementById('playerTitle').textContent = c.title;
+  document.getElementById('playerDesc').textContent = c.desc;
+  document.getElementById('playerFrame').src = c.playlist;
+
+  document.getElementById('homeSection').classList.add("hidden");
+  document.getElementById('myCoursesSection').classList.add("hidden");
+  document.getElementById('playerSection').classList.remove("hidden");
+  
+  updateCourseProgressDisplay();
+  renderVideoProgressList(id);
+  showWhatsApp();
+}
+
+/* ====== BACK ====== */
+function backToMyCourses() {
+  document.getElementById('playerSection').classList.add("hidden");
+  showMyCourses();
+}
+
+/* ====== REMOVE COURSE ====== */
+function removeCourse(id) {
+  if (confirm('هل أنت متأكد من إلغاء التسجيل في هذه الدورة؟ سيتم حذف تقدمك أيضاً.')) {
+    myCourses = myCourses.filter(course => course !== id);
+    localStorage.setItem("myCourses", JSON.stringify(myCourses));
+    
+    // حذف تقدم الدورة
+    if (courseProgress[id]) {
+      delete courseProgress[id];
+      localStorage.setItem("courseProgress", JSON.stringify(courseProgress));
+    }
+    
+    const course = courses.find(c => c.id === id);
+    showNotification(`تم إلغاء التسجيل في دورة ${course.title}`, 'info');
+    
+    renderHome();
+    renderMyCourses();
+  }
+}
+
+/* ====== NAV ====== */
+function showHome() {
+  document.getElementById('homeSection').classList.remove("hidden");
+  document.getElementById('myCoursesSection').classList.add("hidden");
+  document.getElementById('playerSection').classList.add("hidden");
+  
+  updateNavButtons(0);
+  renderHome();
+}
+
+function showMyCourses() {
+  document.getElementById('homeSection').classList.add("hidden");
+  document.getElementById('myCoursesSection').classList.remove("hidden");
+  document.getElementById('playerSection').classList.add("hidden");
+  
+  updateNavButtons(1);
+  renderMyCourses();
+}
+
+/* ====== WHATSAPP ====== */
+function showWhatsApp() {
+  const btn = document.getElementById("whatsappButton");
+  const tooltip = document.getElementById("whatsappTooltip");
+  if (btn) {
+    btn.classList.remove("hidden");
+    btn.addEventListener("mouseenter", () => {
+      tooltip.classList.remove("opacity-0", "-translate-y-2");
+      tooltip.classList.add("opacity-100", "translate-y-0");
+    });
+    btn.addEventListener("mouseleave", () => {
+      tooltip.classList.remove("opacity-100", "translate-y-0");
+      tooltip.classList.add("opacity-0", "-translate-y-2");
+    });
+    
+    btn.addEventListener("touchstart", () => {
+      tooltip.classList.remove("opacity-0", "-translate-y-2");
+      tooltip.classList.add("opacity-100", "translate-y-0");
+    });
+    
+    btn.addEventListener("touchend", () => {
+      setTimeout(() => {
+        tooltip.classList.remove("opacity-100", "translate-y-0");
+        tooltip.classList.add("opacity-0", "-translate-y-2");
+      }, 2000);
+    });
+  }
+}
+
+function hideWhatsApp() {
+  const btn = document.getElementById("whatsappButton");
+  const tooltip = document.getElementById("whatsappTooltip");
+  if (btn) {
+    btn.classList.add("hidden");
+    tooltip.classList.remove("opacity-100", "translate-y-0");
+    tooltip.classList.add("opacity-0", "-translate-y-2");
+  }
+}
+
+/* ====== إشعارات ====== */
+function showNotification(message, type = 'info') {
+  const notification = document.createElement('div');
+  notification.className = `fixed top-6 left-6 px-6 py-4 rounded-xl shadow-2xl z-50 transform transition-all duration-300 ${
+    type === 'success' ? 'bg-gradient-to-r from-green-500 to-emerald-600' :
+    type === 'error' ? 'bg-gradient-to-r from-red-500 to-pink-600' :
+    'bg-gradient-to-r from-blue-500 to-purple-600'
+  } text-white`;
+  notification.innerHTML = `
+    <div class="flex items-center gap-3">
+      <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+      </svg>
+      <span class="font-medium">${message}</span>
+    </div>
+  `;
+  
+  document.body.appendChild(notification);
+  
+  setTimeout(() => {
+    notification.classList.add('opacity-0', 'translate-x-full');
+    setTimeout(() => notification.remove(), 300);
+  }, 3000);
+}
+
+/* ====== INIT ====== */
+document.addEventListener('DOMContentLoaded', () => {
+  renderHome();
+  renderMyCourses();
+  
+  if (myCourses.length > 0) {
+    showWhatsApp();
+    updateNavButtons(1);
+  } else {
+    updateNavButtons(0);
+  }
+  
+  setTimeout(() => {
+    document.body.classList.add('opacity-100');
+  }, 100);
+  
+  if ('ontouchstart' in window) {
+    document.body.classList.add('touch-device');
+  }
+});
+
+// إضافة أنيميشن عند التمرير
+let lastScroll = 0;
+window.addEventListener('scroll', () => {
+  const currentScroll = window.pageYOffset;
+  const whatsappBtn = document.getElementById('whatsappButton');
+  
+  if (whatsappBtn && !whatsappBtn.classList.contains('hidden')) {
+    if (currentScroll > lastScroll && currentScroll > 100) {
+      whatsappBtn.style.transform = 'translateY(100px)';
+    } else {
+      whatsappBtn.style.transform = 'translateY(0)';
+    }
+  }
+  
+  lastScroll = currentScroll;
+});
+</script>
+
+<script>
+// =====Syber=====
+    (() => {
+      document.addEventListener("keydown", (e) => {
+        if (
+          (e.ctrlKey && e.shiftKey && ["I", "C", "J", "L"].includes(e.key.toUpperCase())) ||
+          (e.key === "F12") ||
+          (e.ctrlKey && e.key.toUpperCase() === "U")
+        ) {
+          e.preventDefault();
         }
+      });
 
-        function backToCourses() {
-            playerSection.classList.add('hidden');
-            document.querySelectorAll('section:not(#playerSection)').forEach(section => {
-                section.style.display = 'block';
-            });
-            
-            // Reset YouTube player
-            const youtubePlayer = document.getElementById('youtubePlayer');
-            youtubePlayer.innerHTML = '';
+      document.addEventListener("copy", e => e.preventDefault());
+      document.addEventListener("cut", e => e.preventDefault());
+      document.addEventListener("contextmenu", e => e.preventDefault());
+      document.addEventListener("selectstart", e => e.preventDefault());
+
+      let detectSize = () => {
+        if (window.outerWidth - window.innerWidth > 200 || 
+            window.outerHeight - window.innerHeight > 200) {
+          console.clear();
         }
+      };
+      window.addEventListener("resize", detectSize);
 
-        function startLearning() {
-            const iframe = document.querySelector('#youtubePlayer iframe');
-            if (iframe) {
-                iframe.src += '&autoplay=1';
-            }
-            showToast('بدأ التعلم', 'تم بدء تشغيل الدورة', 'success');
-        }
+      let start = performance.now();
+      console.log("%c ", "font-size:200px;");
+      let end = performance.now();
+      if (end - start > 50) console.clear();
 
-        function shareCourse() {
-            if (navigator.share && currentCourse) {
-                navigator.share({
-                    title: currentCourse.title,
-                    text: currentCourse.description,
-                    url: window.location.href,
-                });
-            } else {
-                // Fallback
-                const url = window.location.href;
-                navigator.clipboard.writeText(url);
-                showToast('تم النسخ', 'تم نسخ رابط الدورة للحافظة', 'success');
-            }
-        }
+      const observer = new MutationObserver(() => {
+        console.clear();
+      });
+      observer.observe(document.documentElement, { 
+        attributes: true, 
+        childList: false, 
+        subtree: false 
+      });
 
-        function showAllCourses() {
-            const coursesSection = document.getElementById('courses');
-            if (coursesSection) {
-                coursesSection.scrollIntoView({ behavior: 'smooth' });
-            }
-        }
+      setInterval(() => {
+        const t = Date.now();
+        debugger;
+        if (Date.now() - t > 100) console.clear();
+      }, 500);
+    })();
+</script>
 
-        // ==================== Initialize Application ====================
-        document.addEventListener('DOMContentLoaded', function() {
-            // Fetch courses on load
-            fetchCourses();
-            
-            // Smooth scroll for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
-                    
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        targetElement.scrollIntoView({
-                            behavior: 'smooth'
-                        });
-                        
-                        // Close mobile menu if open
-                        if (!mobileMenu.classList.contains('hidden')) {
-                            mobileMenu.classList.add('hidden');
-                        }
-                    }
-                });
-            });
-            
-            // Close mobile menu when clicking outside
-            document.addEventListener('click', (e) => {
-                if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
-                    mobileMenu.classList.add('hidden');
-                }
-            });
-        });
-
-        // ==================== Intersection Observer for Animations ====================
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate-fade-in');
-                }
-            });
-        }, observerOptions);
-
-        // Observe all sections for animation
-        document.querySelectorAll('section').forEach(section => {
-            observer.observe(section);
-        });
-    </script>
+<style>
+  /* إضافة أنيميشن مخصصة */
+  @keyframes bounce-slow {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  
+  .animate-bounce-slow {
+    animation: bounce-slow 3s infinite;
+  }
+  
+  body {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  
+  /* تحسين مظهر الـ iframe */
+  iframe {
+    border: none;
+  }
+  
+  /* تأثيرات التدرج */
+  .gradient-border {
+    border: 2px solid transparent;
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(135deg, #667eea, #764ba2) border-box;
+  }
+  
+  /* تحسينات للأجهزة المحمولة */
+  @media (max-width: 640px) {
+    .touch-device .nav-button:active {
+      transform: scale(0.92);
+    }
+    
+    .touch-device button:active {
+      transform: scale(0.97);
+    }
+  }
+</style>
 </body>
 </html>
