@@ -314,8 +314,8 @@
 <script>
     // --- Configuration ---
     // !!! هام: لا تقم بحذف أو تغيير اسم المتغير هذا، فقط ضع بياناتك داخله !!!
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app-check.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -329,12 +329,6 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-
-initializeAppCheck(app, {
-  provider: new ReCaptchaV3Provider("6LdzPWcsAAAAAMVoYBW_8Sk2C2PvRViVqlW3LKXh"),
-  isTokenAutoRefreshEnabled: true,
-});
-
 export const db = getFirestore(app);
 
     
