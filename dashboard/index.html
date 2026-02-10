@@ -245,7 +245,7 @@
         <div id="playerOverlay" class="fixed inset-0 z-[60] bg-white dark:bg-gray-900 transform translate-y-full transition-transform duration-300 overflow-y-auto">
             <div class="sticky top-0 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md z-10 px-4 py-4 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between">
                 <button onclick="closePlayer()" class="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:scale-110 trans-all">
-                    <i class="fas fa-chevron-down"></i>
+                    <i class="fas fa-arrow-right"></i>
                 </button>
                 <span class="font-bold text-gray-800 dark:text-gray-200">مشاهدة الدورة</span>
                 <div class="w-10"></div> </div>
@@ -433,7 +433,25 @@
             'برمجة': '<i class="fas fa-code"></i>',
             'تصميم': '<i class="fas fa-paint-brush"></i>',
             'تسويق': '<i class="fas fa-bullhorn"></i>',
-            'لغات': '<i class="fas fa-language"></i>'
+            'لغات': '<i class="fas fa-language"></i>',
+            'طب وصحة': '<i class="fas fa-heartbeat"></i>',
+            'أعمال': '<i class="fas fa-briefcase"></i>',
+            'تطوير الذات': '<i class="fas fa-lightbulb"></i>',
+            'مهارات تقنية': '<i class="fas fa-laptop-code"></i>',
+            'إدارة': '<i class="fas fa-chart-line"></i>',
+            'محاسبة': '<i class="fas fa-calculator"></i>',
+            'تصوير': '<i class="fas fa-camera"></i>',
+            'طبخ': '<i class="fas fa-utensils"></i>',
+            'لياقة بدنية': '<i class="fas fa-dumbbell"></i>',
+            'فنون': '<i class="fas fa-palette"></i>',
+            'موسيقى': '<i class="fas fa-music"></i>',
+            'قيادة': '<i class="fas fa-car"></i>',
+            'تعليم': '<i class="fas fa-chalkboard-teacher"></i>',
+            'استشارات': '<i class="fas fa-handshake"></i>',
+            'سفر': '<i class="fas fa-plane"></i>',
+            'عقارات': '<i class="fas fa-home"></i>',
+            'تداول': '<i class="fas fa-chart-bar"></i>',
+            'زراعة': '<i class="fas fa-leaf"></i>'
         };
         return map[cat] || '<i class="fas fa-book"></i>';
     }
@@ -601,12 +619,10 @@
         
         localStorage.setItem("courseProgress", JSON.stringify(appState.progress));
         const course = appState.courses.find(c => c.id === id);
-        // تم التعديل: تحديث الواجهة فوراً
         renderPlaylistItems(id, course.num || 10);
         updateProgressUI(id, course.num || 10);
     }
 
-    // هذه هي الدالة الجديدة التي تمت إضافتها لإصلاح المشكلة
     function toggleCompleteVideo() {
         const id = appState.currentCourseId;
         if(!id) return;
@@ -614,18 +630,15 @@
         const course = appState.courses.find(c => c.id === id);
         const total = course.num || 10;
         
-        // التأكد من وجود سجل التقدم
         if (!appState.progress[id]) appState.progress[id] = { completed: [] };
         const completedList = appState.progress[id].completed;
         
-        // البحث عن أول درس غير مكتمل لإكماله
         let targetLesson = 1;
         while (completedList.includes(targetLesson)) {
             targetLesson++;
         }
         
         if (targetLesson <= total) {
-            // استخدام دالة التبديل الموجودة لأنها تقوم بتحديث الواجهة أيضاً
             toggleLessonComplete(targetLesson);
             showToast(`تم إكمال الدرس ${targetLesson}`, 'success');
         } else {
@@ -811,4 +824,3 @@
 </script>
 </body>
 </html>
-
