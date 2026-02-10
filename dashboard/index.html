@@ -136,7 +136,7 @@
             </div>
 
             <div class="flex items-center gap-4">
-                <button onclick="toggleDarkMode()" class="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-yellow-400 hover:bg-gray-200 dark:hover:bg-gray-700 trans-all">
+                <button onclick="toggleDarkMode()" class="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 trans-all">
                     <i class="fas fa-moon dark:hidden"></i>
                     <i class="fas fa-sun hidden dark:block"></i>
                 </button>
@@ -595,7 +595,36 @@
         
         localStorage.setItem("courseProgress", JSON.stringify(appState.progress));
         const course = appState.courses.find(c => c.id === id);
+        // تم التعديل: تحديث الواجهة فوراً
         renderPlaylistItems(id, course.num || 10);
+        updateProgressUI(id, course.num || 10);
+    }
+
+    // هذه هي الدالة الجديدة التي تمت إضافتها لإصلاح المشكلة
+    function toggleCompleteVideo() {
+        const id = appState.currentCourseId;
+        if(!id) return;
+        
+        const course = appState.courses.find(c => c.id === id);
+        const total = course.num || 10;
+        
+        // التأكد من وجود سجل التقدم
+        if (!appState.progress[id]) appState.progress[id] = { completed: [] };
+        const completedList = appState.progress[id].completed;
+        
+        // البحث عن أول درس غير مكتمل لإكماله
+        let targetLesson = 1;
+        while (completedList.includes(targetLesson)) {
+            targetLesson++;
+        }
+        
+        if (targetLesson <= total) {
+            // استخدام دالة التبديل الموجودة لأنها تقوم بتحديث الواجهة أيضاً
+            toggleLessonComplete(targetLesson);
+            showToast(`تم إكمال الدرس ${targetLesson}`, 'success');
+        } else {
+            showToast('لقد أتممت جميع الدروس بالفعل!', 'info');
+        }
     }
 
     function updateProgressUI(id, total) {
