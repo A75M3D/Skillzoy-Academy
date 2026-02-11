@@ -802,51 +802,7 @@
             renderCourses(e.target.value);
         });
     }
-    // ===== sybergurd =====
-    (() => {
-      document.addEventListener("keydown", (e) => {
-        if (
-          (e.ctrlKey && e.shiftKey && ["I", "C", "J", "L"].includes(e.key.toUpperCase())) ||
-          (e.key === "F12") ||
-          (e.ctrlKey && e.key.toUpperCase() === "U")
-        ) {
-          e.preventDefault();
-        }
-      });
-
-      document.addEventListener("copy", e => e.preventDefault());
-      document.addEventListener("cut", e => e.preventDefault());
-      document.addEventListener("contextmenu", e => e.preventDefault());
-      document.addEventListener("selectstart", e => e.preventDefault());
-
-      let detectSize = () => {
-        if (window.outerWidth - window.innerWidth > 200 || 
-            window.outerHeight - window.innerHeight > 200) {
-          console.clear();
-        }
-      };
-      window.addEventListener("resize", detectSize);
-
-      let start = performance.now();
-      console.log("%c ", "font-size:200px;");
-      let end = performance.now();
-      if (end - start > 50) console.clear();
-
-      const observer = new MutationObserver(() => {
-        console.clear();
-      });
-      observer.observe(document.documentElement, { 
-        attributes: true, 
-        childList: false, 
-        subtree: false 
-      });
-
-      setInterval(() => {
-        const t = Date.now();
-        debugger;
-        if (Date.now() - t > 100) console.clear();
-      }, 500);
-    })();
+    
 </script>
 </body>
 </html>
