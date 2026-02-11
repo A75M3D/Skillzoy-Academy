@@ -6,19 +6,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#4F46E5">
 
-<!-- Firebase SDKs -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-check-compat.js"></script>
 
-<!-- reCAPTCHA v3 -->
-<script src="https://www.google.com/recaptcha/api.js?render=SITE_KEY_PLACEHOLDER"></script>
-
-<!-- Fonts & Icons -->
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-<!-- Tailwind CSS -->
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
     tailwind.config = {
@@ -37,16 +29,13 @@
       }
     }
 </script>
-
-<!-- Microsoft Clarity Analytics -->
-<script type="text/javascript">
+  <script type="text/javascript">
   (function(c,l,a,r,i,t,y){
       c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
       t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
       y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
   })(window, document, "clarity", "script", "u9054g22tr");
-</script>
-
+  </script>
 <style>
     /* Global Styles */
     :root {
@@ -64,7 +53,6 @@
         font-family: 'Cairo', sans-serif;
         -webkit-tap-highlight-color: transparent;
         background-color: #F8FAFC;
-        overflow-x: hidden;
     }
 
     .dark body {
@@ -72,16 +60,11 @@
         color: #E2E8F0;
     }
 
-    /* Scrollbar Styling */
+    /* Scrollbar Hiding */
     .scrollbar-hide::-webkit-scrollbar { display: none; }
     .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-    
-    .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-    .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(79, 70, 229, 0.3); border-radius: 4px; }
-    .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(79, 70, 229, 0.5); }
 
-    /* Glassmorphism */
+    /* Glassmorphism Classes */
     .glass {
         background: var(--glass-bg);
         backdrop-filter: blur(12px);
@@ -109,25 +92,7 @@
         100% { transform: translateY(0px); }
     }
 
-    @keyframes pulse {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.7; }
-    }
-
-    @keyframes slideIn {
-        from { transform: translateY(100%); }
-        to { transform: translateY(0); }
-    }
-
-    @keyframes slideOut {
-        from { transform: translateY(0); }
-        to { transform: translateY(100%); }
-    }
-
     .animate-float { animation: float 3s ease-in-out infinite; }
-    .animate-pulse { animation: pulse 2s ease-in-out infinite; }
-    .animate-slide-in { animation: slideIn 0.3s ease-out forwards; }
-    .animate-slide-out { animation: slideOut 0.3s ease-in forwards; }
 
     /* Skeleton Loading */
     .skeleton {
@@ -135,60 +100,35 @@
         background-size: 200% 100%;
         animation: loading 1.5s infinite;
     }
-    
     .dark .skeleton {
         background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
     }
-    
     @keyframes loading {
         0% { background-position: 200% 0; }
         100% { background-position: -200% 0; }
     }
 
-    /* Transitions */
+    /* Custom Transitions */
     .trans-all { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-    .trans-transform { transition: transform 0.3s ease-out; }
 
-    /* Video Container */
+    /* Video Player */
     .video-container {
         position: relative;
-        padding-bottom: 56.25%;
+        padding-bottom: 56.25%; /* 16:9 */
         height: 0;
         overflow: hidden;
         border-radius: 16px;
         box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        background: #000;
     }
-    
     .video-container iframe {
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        border: none;
-    }
-
-    /* Utility Classes */
-    .line-clamp-2 {
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-    
-    .line-clamp-1 {
-        display: -webkit-box;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
+        top: 0; left: 0; width: 100%; height: 100%;
     }
 </style>
 </head>
 
 <body class="transition-colors duration-300 antialiased pb-24">
 
-    <!-- Header -->
     <header class="fixed top-0 w-full z-50 glass trans-all shadow-sm">
         <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
             <div class="flex items-center gap-3 cursor-pointer" onclick="showHome()">
@@ -205,20 +145,18 @@
                     <i class="fas fa-moon dark:hidden"></i>
                     <i class="fas fa-sun hidden dark:block"></i>
                 </button>
-                
                 <div class="relative cursor-pointer">
                     <div class="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
                         <i class="fas fa-bell"></i>
                     </div>
-                    <span class="absolute top-0 right-0 w-3 h-3 bg-red-500 border-2 border-white dark:border-gray-900 rounded-full animate-pulse"></span>
+                    <span class="absolute top-0 right-0 w-3 h-3 bg-red-500 border-2 border-white dark:border-gray-900 rounded-full"></span>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 mt-24 space-y-8">
-        <!-- Hero Section -->
+
         <section id="heroSection" class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-indigo-600 to-violet-700 p-6 md:p-10 text-white shadow-2xl shadow-indigo-500/20">
             <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
                 <div class="text-center md:text-right space-y-3 max-w-lg">
@@ -235,23 +173,21 @@
             </div>
         </section>
 
-        <!-- Search and Filter -->
         <section class="sticky top-20 z-40">
             <div class="glass-card p-2 rounded-2xl flex flex-col md:flex-row gap-2 shadow-lg">
                 <div class="relative flex-1">
                     <i class="fas fa-search absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                     <input type="text" id="searchInput" placeholder="ابحث عن مهارة جديدة..." 
-                        class="w-full bg-transparent border-none focus:ring-0 text-gray-700 dark:text-gray-200 pr-10 pl-4 py-3 placeholder-gray-400 focus:outline-none">
+                        class="w-full bg-transparent border-none focus:ring-0 text-gray-700 dark:text-gray-200 pr-10 pl-4 py-3 placeholder-gray-400">
                 </div>
                 <div class="flex gap-2 overflow-x-auto scrollbar-hide py-1 md:py-0 px-1">
-                    <select id="categoryFilter" class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 border-none rounded-xl px-4 py-2 text-sm focus:ring-0 cursor-pointer min-w-[120px] focus:outline-none">
+                    <select id="categoryFilter" class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 border-none rounded-xl px-4 py-2 text-sm focus:ring-0 cursor-pointer min-w-[120px]">
                         <option value="">كل التخصصات</option>
-                    </select>
+                        </select>
                 </div>
             </div>
         </section>
 
-        <!-- Categories -->
         <section>
             <div class="flex justify-between items-end mb-4 px-1">
                 <h3 class="text-xl font-bold text-gray-800 dark:text-white">التصنيفات الشائعة</h3>
@@ -263,7 +199,6 @@
             </div>
         </section>
 
-        <!-- Courses Section -->
         <section id="coursesSection" class="min-h-[400px]">
             <div class="flex justify-between items-end mb-4 px-1">
                 <h3 class="text-xl font-bold text-gray-800 dark:text-white flex items-center gap-2">
@@ -273,8 +208,7 @@
             </div>
             
             <div id="coursesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Courses will be loaded here -->
-            </div>
+                </div>
             
             <div id="noResults" class="hidden flex-col items-center justify-center py-20 text-center">
                 <div class="w-24 h-24 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-4">
@@ -284,11 +218,10 @@
             </div>
         </section>
 
-        <!-- My Courses Section -->
         <section id="myCoursesView" class="hidden min-h-screen">
             <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">دوراتي التعليمية</h2>
             
-            <div id="resumeLearningBanner" class="hidden mb-8 bg-gradient-to-r from-gray-900 to-indigo-900 rounded-2xl p-6 text-white relative overflow-hidden shadow-xl">
+            <div id="resumeLearningBanner" class="hidden mb-8 bg-gray-900 rounded-2xl p-6 text-white relative overflow-hidden shadow-xl">
                 <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
                         <div class="text-xs font-semibold text-gray-400 mb-1 uppercase tracking-wider">أكمل من حيث توقفت</div>
@@ -305,25 +238,20 @@
             </div>
 
             <div id="myCoursesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- My courses will be loaded here -->
-            </div>
+                </div>
         </section>
 
-        <!-- Video Player Overlay -->
         <div id="playerOverlay" class="fixed inset-0 z-[60] bg-white dark:bg-gray-900 transform translate-y-full transition-transform duration-300 overflow-y-auto">
             <div class="sticky top-0 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md z-10 px-4 py-4 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between">
                 <button onclick="closePlayer()" class="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:scale-110 trans-all">
                     <i class="fas fa-arrow-right"></i>
                 </button>
                 <span class="font-bold text-gray-800 dark:text-gray-200">مشاهدة الدورة</span>
-                <div class="w-10"></div>
-            </div>
+                <div class="w-10"></div> </div>
 
             <div class="max-w-5xl mx-auto px-4 py-6">
                 <div class="video-container bg-black mb-6">
-                    <iframe id="playerFrame" src="" frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen loading="lazy"></iframe>
+                    <iframe id="playerFrame" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
 
                 <div class="flex flex-col lg:flex-row gap-8">
@@ -332,7 +260,7 @@
                         <p id="playerCourseDesc" class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed"></p>
                         
                         <div class="flex items-center gap-4 py-4 border-y border-gray-100 dark:border-gray-800">
-                            <button onclick="toggleCompleteVideo()" id="markCompleteBtn" class="flex-1 bg-green-500 hover:bg-green-600 text-white py-3 rounded-xl font-bold shadow-lg shadow-green-500/30 trans-all flex items-center justify-center gap-2">
+                             <button onclick="toggleCompleteVideo()" id="markCompleteBtn" class="flex-1 bg-green-500 hover:bg-green-600 text-white py-3 rounded-xl font-bold shadow-lg shadow-green-500/30 trans-all flex items-center justify-center gap-2">
                                 <i class="fas fa-check-circle"></i>
                                 <span>إكمال المقطع</span>
                             </button>
@@ -352,15 +280,14 @@
                             <div id="progressBarFill" class="h-full bg-gradient-to-r from-indigo-500 to-purple-500 w-0 trans-all duration-1000"></div>
                         </div>
                         <div id="playlistContainer" class="space-y-2 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
-                            <!-- Playlist items will be loaded here -->
-                        </div>
+                            </div>
                     </div>
                 </div>
             </div>
         </div>
+
     </main>
 
-    <!-- Bottom Navigation -->
     <nav class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl border border-white/20 dark:border-gray-700 rounded-full px-6 py-3 shadow-2xl z-40 flex items-center gap-8 trans-all duration-500 w-[90%] max-w-sm justify-between">
         <button onclick="showHome()" class="nav-btn active flex flex-col items-center gap-1 text-indigo-600 dark:text-indigo-400 trans-all">
             <i class="fas fa-home text-xl"></i>
@@ -379,783 +306,520 @@
         </button>
     </nav>
 
-    <!-- WhatsApp Floating Button -->
     <a href="https://wa.me/249908280115" target="_blank" class="hidden md:flex fixed bottom-8 left-8 w-14 h-14 bg-green-500 text-white rounded-full items-center justify-center shadow-lg shadow-green-500/40 hover:scale-110 trans-all z-50 animate-bounce">
         <i class="fab fa-whatsapp text-2xl"></i>
     </a>
 
-    <!-- Loading Spinner -->
-    <div id="loadingSpinner" class="fixed inset-0 z-[100] bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm flex items-center justify-center hidden">
-        <div class="relative">
-            <div class="w-20 h-20 border-4 border-indigo-200 rounded-full"></div>
-            <div class="w-20 h-20 border-4 border-indigo-600 rounded-full absolute top-0 left-0 animate-spin border-t-transparent"></div>
-            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-indigo-600 font-bold">جاري التحميل...</div>
-        </div>
-    </div>
-
 <script>
-// ===== FIREBASE CONFIGURATION =====
-// ⚠️ مهم: استبدل SITE_KEY_FROM_RECAPTCHA بمفتاح موقعك من reCAPTCHA v3
-const FIREBASE_CONFIG = {
-    apiKey: "AIzaSyDgFy0-QL0YuGgqgtcx9541Cs7QxBewRKQ",
-    authDomain: "skillzoy-5ba3c.firebaseapp.com",
-    projectId: "skillzoy-5ba3c",
-    storageBucket: "skillzoy-5ba3c.firebasestorage.app",
-    messagingSenderId: "622606995088",
-    appId: "1:622606995088:web:999c8a6790e7aa30651215",
-    measurementId: "G-WVHTQ4BGNJ"
+    // --- Configuration ---
+    // !!! هام: لا تقم بحذف أو تغيير اسم المتغير هذا، فقط ضع بياناتك داخله !
+const firebaseConfig = {
+  apiKey: "AIzaSyDgFy0-QL0YuGgqgtcx9541Cs7QxBewRKQ",
+  authDomain: "skillzoy-5ba3c.firebaseapp.com",
+  projectId: "skillzoy-5ba3c",
+  storageBucket: "skillzoy-5ba3c.firebasestorage.app",
+  messagingSenderId: "622606995088",
+  appId: "1:622606995088:web:999c8a6790e7aa30651215",
+  measurementId: "G-WVHTQ4BGNJ"     
 };
+  
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
 
-const RECAPTCHA_SITE_KEY = 
-"6LdzPWcsAAAAAMVoYBW_8Sk2C2PvRViVqlW3LKXh"; // ← استبدل هذا بالمفتاح الفعلي
+    // --- State Management ---
+    let appState = {
+        courses: [],
+        myCourses: JSON.parse(localStorage.getItem("myCourses")) || [],
+        progress: JSON.parse(localStorage.getItem("courseProgress")) || {},
+        darkMode: localStorage.getItem("darkMode") === "true",
+        currentCourseId: null
+    };
 
-// ===== APP INITIALIZATION =====
-let firebaseApp, db, appCheck;
-let appInitialized = false;
+    // --- Initialization ---
+    document.addEventListener('DOMContentLoaded', () => {
+        setupTheme();
+        renderSkeletons();
+        fetchCourses();
+        setupEventListeners();
+        updateNavState();
+    });
 
-async function initializeFirebase() {
-    try {
-        if (appInitialized) return;
-        
-        showLoading(true);
-        
-        // Initialize Firebase
-        if (!firebase.apps.length) {
-            firebaseApp = firebase.initializeApp(FIREBASE_CONFIG);
+    // --- UI Logic: Theme ---
+    function setupTheme() {
+        if (appState.darkMode) {
+            document.documentElement.classList.add('dark');
         } else {
-            firebaseApp = firebase.app();
+            document.documentElement.classList.remove('dark');
         }
-        
-        // Initialize Firestore
-        db = firebase.firestore();
-        
-        // Initialize App Check with reCAPTCHA v3
-        appCheck = firebase.appCheck();
-        
-        // Activate App Check (debug mode for development)
-        // Remove true parameter for production
-        await appCheck.activate(RECAPTCHA_SITE_KEY, true);
-        
-        console.log("Firebase and App Check initialized successfully");
-        showToast("تم تهيئة النظام بنجاح", "success");
-        appInitialized = true;
-        
-    } catch (error) {
-        console.error("Firebase initialization error:", error);
-        showToast("خطأ في تهيئة النظام، جاري استخدام وضع عدم الاتصال", "error");
-        // Fallback: Load sample data
-        loadSampleData();
-    } finally {
-        showLoading(false);
     }
-}
 
-// ===== STATE MANAGEMENT =====
-let appState = {
-    courses: [],
-    filteredCourses: [],
-    myCourses: JSON.parse(localStorage.getItem("skillzoy_myCourses")) || [],
-    progress: JSON.parse(localStorage.getItem("skillzoy_progress")) || {},
-    darkMode: localStorage.getItem("skillzoy_darkMode") === "true",
-    currentCourseId: null,
-    categories: [],
-    searchQuery: "",
-    currentFilter: "all"
-};
-
-// ===== APP INITIALIZATION =====
-document.addEventListener('DOMContentLoaded', async () => {
-    // Set up theme
-    setupTheme();
-    
-    // Set up event listeners
-    setupEventListeners();
-    
-    // Initialize Firebase
-    await initializeFirebase();
-    
-    // Render UI
-    renderSkeletons();
-    renderCategories();
-    
-    // Fetch courses from Firestore
-    await fetchCourses();
-    
-    // Update navigation state
-    updateNavState();
-});
-
-// ===== THEME MANAGEMENT =====
-function setupTheme() {
-    if (appState.darkMode) {
-        document.documentElement.classList.add('dark');
-    } else {
-        document.documentElement.classList.remove('dark');
+    function toggleDarkMode() {
+        appState.darkMode = !appState.darkMode;
+        localStorage.setItem("darkMode", appState.darkMode);
+        document.documentElement.classList.toggle('dark');
     }
-}
 
-function toggleDarkMode() {
-    appState.darkMode = !appState.darkMode;
-    localStorage.setItem("skillzoy_darkMode", appState.darkMode);
-    document.documentElement.classList.toggle('dark');
-    
-    showToast(appState.darkMode ? "الوضع الداكن مفعل" : "الوضع الفاتح مفعل", "info");
-}
-
-// ===== DATA FETCHING =====
-async function fetchCourses() {
-    try {
-        showLoading(true);
-        
-        // Get App Check token (for debugging)
-        if (appCheck) {
-            const token = await appCheck.getToken();
-            console.log("App Check Token:", token);
-        }
-        
-        // Fetch courses from Firestore
-        const snapshot = await db.collection('courses').get();
-        
-        if (snapshot.empty) {
-            console.log("No courses found in Firestore");
-            loadSampleData();
-            return;
-        }
-        
-        appState.courses = [];
-        snapshot.forEach(doc => {
-            const courseData = doc.data();
-            appState.courses.push({ 
-                id: doc.id, 
-                ...courseData,
-                // Ensure required fields
-                title: courseData.title || "دورة بدون عنوان",
-                category: courseData.category || "عام",
-                description: courseData.description || "لا يوجد وصف للدورة",
-                price: courseData.price || "مجانية",
-                playlist_id: courseData.playlist_id || null,
-                num: courseData.num || 10
+    // --- Data Fetching ---
+    async function fetchCourses() {
+        try {
+            const snapshot = await db.collection('courses').get();
+            appState.courses = [];
+            
+            snapshot.forEach(doc => {
+                appState.courses.push({ id: doc.id, ...doc.data() });
             });
-        });
-        
-        console.log(`Loaded ${appState.courses.length} courses from Firestore`);
-        
-        // Extract unique categories
-        appState.categories = [...new Set(appState.courses.map(c => c.category))];
-        
-        // Render UI
-        renderCategories();
-        renderCourses();
-        renderMyCourses();
-        
-        showToast(`تم تحميل ${appState.courses.length} دورة`, "success");
-        
-    } catch (error) {
-        console.error("Error fetching courses:", error);
-        showToast("خطأ في تحميل الدورات، جاري تحميل البيانات المحلية", "error");
-        loadSampleData();
-    } finally {
-        showLoading(false);
-    }
-}
 
-function loadSampleData() {
-    // Sample data for fallback
-    appState.courses = [
-        {
-            id: "1",
-            title: "دورة تطوير الويب المتقدمة",
-            category: "برمجة",
-            description: "تعلم تطوير الويب باستخدام أحدث التقنيات",
-            price: "مجانية",
-            playlist_id: "PLDoPjvoNmBAw_t_XWUFbBX-c9MafPk9ji",
-            num: 12
-        },
-        {
-            id: "2",
-            title: "تصميم UI/UX للمبتدئين",
-            category: "تصميم",
-            description: "ابدأ رحلتك في عالم تصميم الواجهات",
-            price: "مجانية",
-            playlist_id: "PLDoPjvoNmBAyvmJ8cbi0Q8Vll7f1aMN5w",
-            num: 8
+            // Simulate network delay for sleek effect
+            setTimeout(() => {
+                renderCategories();
+                renderCourses();
+                renderMyCourses();
+            }, 800);
+
+        } catch (error) {
+            console.error("Error:", error);
+            showToast("حدث خطأ في تحميل البيانات", "error");
         }
-    ];
-    
-    appState.categories = [...new Set(appState.courses.map(c => c.category))];
-    
-    renderCategories();
-    renderCourses();
-    showToast("تم تحميل البيانات المحلية", "info");
-}
+    }
 
-// ===== RENDERING FUNCTIONS =====
-function renderSkeletons() {
-    const grid = document.getElementById('coursesGrid');
-    grid.innerHTML = Array(6).fill(0).map(() => `
-        <div class="glass-card rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-gray-700 animate-pulse">
-            <div class="skeleton w-full h-40 rounded-xl mb-4"></div>
-            <div class="skeleton w-3/4 h-6 rounded-lg mb-2"></div>
-            <div class="skeleton w-1/2 h-4 rounded-lg mb-4"></div>
-            <div class="flex justify-between">
-                <div class="skeleton w-20 h-8 rounded-lg"></div>
-                <div class="skeleton w-20 h-8 rounded-lg"></div>
+    // --- Rendering ---
+    function renderSkeletons() {
+        const grid = document.getElementById('coursesGrid');
+        grid.innerHTML = Array(6).fill(0).map(() => `
+            <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-gray-700">
+                <div class="skeleton w-full h-40 rounded-xl mb-4"></div>
+                <div class="skeleton w-3/4 h-6 rounded-lg mb-2"></div>
+                <div class="skeleton w-1/2 h-4 rounded-lg mb-4"></div>
+                <div class="flex justify-between">
+                    <div class="skeleton w-20 h-8 rounded-lg"></div>
+                    <div class="skeleton w-20 h-8 rounded-lg"></div>
+                </div>
             </div>
-        </div>
-    `).join('');
-}
+        `).join('');
+    }
 
-function renderCategories() {
-    const container = document.getElementById('categoriesContainer');
-    const filterSelect = document.getElementById('categoryFilter');
-    
-    // Clear existing
-    container.innerHTML = '';
-    filterSelect.innerHTML = '<option value="">كل التخصصات</option>';
-    
-    // Add "All" category button
-    container.innerHTML = `
-        <div onclick="filterByCategory('all')" class="min-w-[110px] h-28 cursor-pointer rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white flex flex-col items-center justify-center gap-2 shadow-lg shadow-indigo-500/30 trans-all hover:scale-105">
-            <i class="fas fa-th-large text-xl"></i>
-            <span class="text-sm font-bold">الكل</span>
-        </div>
-    `;
-    
-    // Add category buttons
-    appState.categories.forEach(cat => {
-        // Category button
-        container.innerHTML += `
+    function renderCategories() {
+        const categories = [...new Set(appState.courses.map(c => c.category || 'عام'))];
+        const container = document.getElementById('categoriesContainer');
+        const filterSelect = document.getElementById('categoryFilter');
+
+        container.innerHTML = categories.map(cat => `
             <div onclick="filterByCategory('${cat}')" class="min-w-[110px] h-28 cursor-pointer rounded-2xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 flex flex-col items-center justify-center gap-2 hover:border-indigo-500 hover:shadow-lg trans-all group">
                 <div class="w-10 h-10 rounded-full bg-indigo-50 dark:bg-gray-700 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-lg group-hover:scale-110 trans-all">
                     ${getCategoryIcon(cat)}
                 </div>
-                <span class="text-sm font-bold text-gray-700 dark:text-gray-300 line-clamp-1">${cat}</span>
+                <span class="text-sm font-bold text-gray-700 dark:text-gray-300">${cat}</span>
             </div>
-        `;
-        
-        // Filter dropdown option
-        const option = document.createElement('option');
-        option.value = cat;
-        option.textContent = cat;
-        filterSelect.appendChild(option);
-    });
-}
+        `).join('');
 
-function getCategoryIcon(cat) {
-    const iconMap = {
-        'برمجة': '<i class="fas fa-code"></i>',
-        'تصميم': '<i class="fas fa-paint-brush"></i>',
-        'تسويق': '<i class="fas fa-bullhorn"></i>',
-        'لغات': '<i class="fas fa-language"></i>',
-        'طب وصحة': '<i class="fas fa-heartbeat"></i>',
-        'أعمال': '<i class="fas fa-briefcase"></i>',
-        'تطوير الذات': '<i class="fas fa-lightbulb"></i>',
-        'مهارات تقنية': '<i class="fas fa-laptop-code"></i>',
-        'إدارة': '<i class="fas fa-chart-line"></i>',
-        'محاسبة': '<i class="fas fa-calculator"></i>',
-        'تصوير': '<i class="fas fa-camera"></i>',
-        'طبخ': '<i class="fas fa-utensils"></i>',
-        'لياقة بدنية': '<i class="fas fa-dumbbell"></i>',
-        'فنون': '<i class="fas fa-palette"></i>',
-        'موسيقى': '<i class="fas fa-music"></i>',
-        'تعليم': '<i class="fas fa-chalkboard-teacher"></i>'
-    };
-    return iconMap[cat] || '<i class="fas fa-book"></i>';
-}
+        container.insertAdjacentHTML('afterbegin', `
+            <div onclick="filterByCategory('all')" class="min-w-[110px] h-28 cursor-pointer rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white flex flex-col items-center justify-center gap-2 shadow-lg shadow-indigo-500/30 trans-all hover:scale-105">
+                <i class="fas fa-th-large text-xl"></i>
+                <span class="text-sm font-bold">الكل</span>
+            </div>
+        `);
 
-function renderCourses(filterCategory = "all", searchQuery = "") {
-    const grid = document.getElementById('coursesGrid');
-    const noResults = document.getElementById('noResults');
-    
-    let filtered = [...appState.courses];
-    
-    // Apply category filter
-    if (filterCategory && filterCategory !== "all") {
-        filtered = filtered.filter(course => course.category === filterCategory);
+        categories.forEach(cat => {
+            const option = document.createElement('option');
+            option.value = cat;
+            option.innerText = cat;
+            filterSelect.appendChild(option);
+        });
     }
-    
-    // Apply search filter
-    if (searchQuery) {
-        const query = searchQuery.toLowerCase();
-        filtered = filtered.filter(course => 
-            course.title.toLowerCase().includes(query) ||
-            course.description.toLowerCase().includes(query) ||
-            course.category.toLowerCase().includes(query)
-        );
+
+    function getCategoryIcon(cat) {
+        const map = {
+            'برمجة': '<i class="fas fa-code"></i>',
+            'تصميم': '<i class="fas fa-paint-brush"></i>',
+            'تسويق': '<i class="fas fa-bullhorn"></i>',
+            'لغات': '<i class="fas fa-language"></i>',
+            'طب وصحة': '<i class="fas fa-heartbeat"></i>',
+            'أعمال': '<i class="fas fa-briefcase"></i>',
+            'تطوير الذات': '<i class="fas fa-lightbulb"></i>',
+            'مهارات تقنية': '<i class="fas fa-laptop-code"></i>',
+            'إدارة': '<i class="fas fa-chart-line"></i>',
+            'محاسبة': '<i class="fas fa-calculator"></i>',
+            'تصوير': '<i class="fas fa-camera"></i>',
+            'طبخ': '<i class="fas fa-utensils"></i>',
+            'لياقة بدنية': '<i class="fas fa-dumbbell"></i>',
+            'فنون': '<i class="fas fa-palette"></i>',
+            'موسيقى': '<i class="fas fa-music"></i>',
+            'قيادة': '<i class="fas fa-car"></i>',
+            'تعليم': '<i class="fas fa-chalkboard-teacher"></i>',
+            'استشارات': '<i class="fas fa-handshake"></i>',
+            'سفر': '<i class="fas fa-plane"></i>',
+            'عقارات': '<i class="fas fa-home"></i>',
+            'تداول': '<i class="fas fa-chart-bar"></i>',
+            'زراعة': '<i class="fas fa-leaf"></i>'
+        };
+        return map[cat] || '<i class="fas fa-book"></i>';
     }
-    
-    appState.filteredCourses = filtered;
-    
-    // Show/hide no results message
-    if (filtered.length === 0) {
-        grid.innerHTML = '';
-        noResults.classList.remove('hidden');
-        return;
-    }
-    
-    noResults.classList.add('hidden');
-    
-    // Render courses
-    grid.innerHTML = filtered.map(course => {
-        const isEnrolled = appState.myCourses.includes(course.id);
-        const priceDisplay = (course.price === 'free' || course.price === 'مجانية' || !course.price) 
-            ? '<span class="text-green-500 font-bold">مجانية</span>' 
-            : `<span class="text-indigo-600 dark:text-indigo-400 font-bold">${course.price}</span>`;
-        
-        // Video embed
-        let videoEmbed = '';
-        if (course.playlist_id) {
-            videoEmbed = `<iframe class="absolute inset-0 w-full h-full" 
-                                  src="https://www.youtube.com/embed/videoseries?list=${course.playlist_id}&rel=0&modestbranding=1" 
-                                  frameborder="0" 
-                                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                  allowfullscreen
-                                  loading="lazy">
-                          </iframe>`;
-        } else {
-            videoEmbed = `<div class="absolute inset-0 w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center text-gray-500">
-                            <i class="fas fa-video-slash text-4xl"></i>
-                          </div>`;
+
+    function renderCourses(filter = null) {
+        const grid = document.getElementById('coursesGrid');
+        let data = appState.courses;
+
+        if (filter && filter !== 'all') {
+            data = data.filter(c => (c.category || 'عام') === filter || c.title.includes(filter));
         }
-        
-        return `
-        <div class="glass-card rounded-2xl overflow-hidden hover:transform hover:-translate-y-2 trans-all duration-300 group h-full flex flex-col">
-            <div class="relative w-full aspect-video bg-black rounded-t-2xl overflow-hidden">
-                ${videoEmbed}
-                
-                <div class="absolute top-2 left-2 z-20 bg-black/60 backdrop-blur-md text-white text-xs px-2 py-1 rounded-lg border border-white/20">
-                    ${course.category || 'عام'}
-                </div>
-                
-                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 trans-all"></div>
-            </div>
 
-            <div class="p-5 flex flex-col flex-1">
-                <h3 class="text-lg font-bold text-gray-800 dark:text-white mb-2 line-clamp-2">${course.title}</h3>
-                <p class="text-sm text-gray-500 dark:text-gray-400 mb-4 line-clamp-2 flex-1">${course.description || 'لا يوجد وصف'}</p>
-                
-                <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-gray-700">
-                    ${priceDisplay}
-                    <button onclick="${isEnrolled ? `openPlayer('${course.id}')` : `enrollCourse('${course.id}')`}" 
-                        class="${isEnrolled ? 'bg-green-100 hover:bg-green-200 text-green-600 dark:bg-green-900/30 dark:hover:bg-green-900/50 dark:text-green-400' : 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg shadow-indigo-500/30'} 
-                        px-4 py-2 rounded-xl text-sm font-bold trans-all duration-200">
-                        ${isEnrolled ? '<i class="fas fa-play text-xs ml-1"></i> استكمال الدورة' : '<i class="fas fa-plus text-xs ml-1"></i> تسجيل الآن'}
-                    </button>
+        if (data.length === 0) {
+            grid.innerHTML = '';
+            document.getElementById('noResults').classList.remove('hidden');
+            document.getElementById('noResults').classList.add('flex');
+            return;
+        }
+
+        document.getElementById('noResults').classList.add('hidden');
+        document.getElementById('noResults').classList.remove('flex');
+
+        grid.innerHTML = data.map(course => {
+            const isEnrolled = appState.myCourses.includes(course.id);
+            const priceDisplay = (course.price === 'free' || course.price === 'مجانية') 
+                ? '<span class="text-green-500 font-bold">مجانية</span>' 
+                : `<span class="text-indigo-600 dark:text-indigo-400 font-bold font-mono">${course.price}</span>`;
+
+            // إعداد رابط الفيديو
+            let videoEmbed = '';
+            if (course.playlist_id) {
+                // استخدام رابط القائمة، وإذا لم يوجد نستخدم رابط فيديو عادي
+                videoEmbed = `<iframe class="absolute inset-0 w-full h-full" 
+                                      src="https://www.youtube.com/embed/videoseries?list=${course.playlist_id}" 
+                                      frameborder="0" 
+                                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                      allowfullscreen
+                                      loading="lazy">
+                              </iframe>`;
+            } else {
+                 videoEmbed = `<div class="absolute inset-0 w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-500"><i class="fas fa-video-slash"></i> لا يوجد فيديو</div>`;
+            }
+
+            return `
+            <div class="glass-card rounded-2xl overflow-hidden hover:transform hover:-translate-y-2 trans-all group h-full flex flex-col">
+                <div class="relative w-full aspect-video bg-black rounded-t-2xl overflow-hidden">
+                    ${videoEmbed}
+                    
+                    <div class="absolute top-2 left-2 z-20 bg-black/60 backdrop-blur-md text-white text-xs px-2 py-1 rounded-lg border border-white/20">
+                        ${course.category || 'عام'}
+                    </div>
+                </div>
+
+                <div class="p-5 flex flex-col flex-1">
+                    <h3 class="text-lg font-bold text-gray-800 dark:text-white mb-2 line-clamp-2">${course.title}</h3>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-4 line-clamp-2 flex-1">${course.description || 'لا يوجد وصف'}</p>
+                    
+                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-gray-700">
+                        ${priceDisplay}
+                        <button onclick="${isEnrolled ? `openPlayer('${course.id}')` : `enrollCourse('${course.id}')`}" 
+                            class="${isEnrolled ? 'bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400' : 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/30'} 
+                            px-4 py-2 rounded-xl text-sm font-bold hover:brightness-110 trans-all">
+                            ${isEnrolled ? 'استكمال الدورة <i class="fas fa-play text-xs mr-1"></i>' : 'تسجيل الآن'}
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-        `;
-    }).join('');
-}
+            `;
+        }).join('');
+    }
 
-// ===== COURSE MANAGEMENT =====
-function enrollCourse(courseId) {
-    try {
-        if (!appState.myCourses.includes(courseId)) {
-            appState.myCourses.push(courseId);
-            localStorage.setItem("skillzoy_myCourses", JSON.stringify(appState.myCourses));
+    // --- Actions ---
+    function enrollCourse(id) {
+        if (!appState.myCourses.includes(id)) {
+            appState.myCourses.push(id);
+            localStorage.setItem("myCourses", JSON.stringify(appState.myCourses));
             
-            // Initialize progress
-            if (!appState.progress[courseId]) {
-                const course = appState.courses.find(c => c.id === courseId);
-                appState.progress[courseId] = {
-                    completed: [],
-                    total: course?.num || 10,
-                    lastAccessed: new Date().toISOString()
-                };
-                localStorage.setItem("skillzoy_progress", JSON.stringify(appState.progress));
+            // Init Progress
+            if(!appState.progress[id]) {
+                appState.progress[id] = { completed: [], total: 10 };
+                localStorage.setItem("courseProgress", JSON.stringify(appState.progress));
             }
             
-            showToast("تم التسجيل في الدورة بنجاح! 🎉", "success");
+            showToast("تم التسجيل بنجاح! 🎉", "success");
             renderCourses();
             renderMyCourses();
             updateNavState();
         }
-    } catch (error) {
-        console.error("Error enrolling course:", error);
-        showToast("حدث خطأ أثناء التسجيل", "error");
     }
-}
 
-function removeCourse(courseId, event) {
-    if (event) event.stopPropagation();
-    
-    if (confirm("هل أنت متأكد من حذف هذه الدورة من قائمتك؟")) {
-        appState.myCourses = appState.myCourses.filter(id => id !== courseId);
-        localStorage.setItem("skillzoy_myCourses", JSON.stringify(appState.myCourses));
-        
-        // Remove progress data
-        if (appState.progress[courseId]) {
-            delete appState.progress[courseId];
-            localStorage.setItem("skillzoy_progress", JSON.stringify(appState.progress));
+    function removeCourse(id, event) {
+        event.stopPropagation();
+        if(confirm("هل أنت متأكد من حذف الدورة؟")) {
+            appState.myCourses = appState.myCourses.filter(cid => cid !== id);
+            localStorage.setItem("myCourses", JSON.stringify(appState.myCourses));
+            renderMyCourses();
+            renderCourses();
+            updateNavState();
         }
+    }
+
+    // --- Player Logic ---
+    function openPlayer(id) {
+        const course = appState.courses.find(c => c.id === id);
+        if (!course) return;
+
+        appState.currentCourseId = id;
+        document.getElementById('playerCourseTitle').innerText = course.title;
+        document.getElementById('playerCourseDesc').innerText = course.description || '';
         
-        showToast("تم حذف الدورة", "info");
-        renderMyCourses();
-        renderCourses();
-        updateNavState();
-    }
-}
-
-// ===== VIDEO PLAYER =====
-function openPlayer(courseId) {
-    const course = appState.courses.find(c => c.id === courseId);
-    if (!course) return;
-    
-    appState.currentCourseId = courseId;
-    
-    // Update player UI
-    document.getElementById('playerCourseTitle').textContent = course.title;
-    document.getElementById('playerCourseDesc').textContent = course.description || 'لا يوجد وصف';
-    
-    // Load YouTube playlist
-    const frame = document.getElementById('playerFrame');
-    if (course.playlist_id) {
-        frame.src = `https://www.youtube.com/embed/videoseries?list=${course.playlist_id}&rel=0&modestbranding=1&autoplay=1`;
-    } else {
-        frame.src = "";
-        frame.innerHTML = '<div class="absolute inset-0 flex items-center justify-center text-white">لا يوجد فيديو متاح</div>';
-    }
-    
-    // Render playlist
-    renderPlaylistItems(courseId, course.num || 10);
-    
-    // Save last viewed course
-    localStorage.setItem("skillzoy_lastViewed", JSON.stringify({
-        id: courseId,
-        title: course.title,
-        timestamp: new Date().toISOString()
-    }));
-    
-    // Show player
-    document.getElementById('playerOverlay').classList.remove('translate-y-full');
-    document.body.style.overflow = 'hidden';
-}
-
-function closePlayer() {
-    document.getElementById('playerOverlay').classList.add('translate-y-full');
-    document.getElementById('playerFrame').src = "";
-    document.body.style.overflow = 'auto';
-    renderMyCourses();
-}
-
-function renderPlaylistItems(courseId, totalVideos) {
-    const container = document.getElementById('playlistContainer');
-    const progressData = appState.progress[courseId] || { completed: [] };
-    let html = '';
-    
-    for (let i = 1; i <= totalVideos; i++) {
-        const isCompleted = progressData.completed.includes(i);
-        const isCurrent = i === (progressData.completed.length + 1);
-        
-        html += `
-            <div class="flex items-center justify-between p-3 rounded-xl ${isCurrent ? 'bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-200 dark:border-indigo-800' : isCompleted ? 'bg-green-50 dark:bg-green-900/20' : 'bg-white dark:bg-gray-800'} border border-gray-100 dark:border-gray-700 trans-all hover:scale-[1.02]">
-                <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${isCompleted ? 'bg-green-500 text-white' : isCurrent ? 'bg-indigo-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300'}">
-                        ${isCompleted ? '<i class="fas fa-check"></i>' : i}
-                    </div>
-                    <span class="text-sm font-medium text-gray-700 dark:text-gray-200">الدرس ${i}</span>
-                </div>
-                <button onclick="toggleLessonComplete(${i})" class="text-gray-400 hover:text-green-500 trans-all">
-                    <i class="${isCompleted ? 'fas fa-check-circle text-green-500' : 'far fa-circle'}"></i>
-                </button>
-            </div>
-        `;
-    }
-    
-    container.innerHTML = html;
-    updateProgressUI(courseId, totalVideos);
-}
-
-function toggleLessonComplete(lessonIndex) {
-    const courseId = appState.currentCourseId;
-    if (!courseId) return;
-    
-    if (!appState.progress[courseId]) {
-        appState.progress[courseId] = { completed: [] };
-    }
-    
-    const completedList = appState.progress[courseId].completed;
-    const course = appState.courses.find(c => c.id === courseId);
-    const total = course?.num || 10;
-    
-    // Toggle completion
-    if (completedList.includes(lessonIndex)) {
-        appState.progress[courseId].completed = completedList.filter(i => i !== lessonIndex);
-        showToast(`تم إلغاء إكمال الدرس ${lessonIndex}`, "info");
-    } else {
-        appState.progress[courseId].completed.push(lessonIndex);
-        showToast(`تم إكمال الدرس ${lessonIndex} بنجاح!`, "success");
-        
-        // Sort completed list
-        appState.progress[courseId].completed.sort((a, b) => a - b);
-    }
-    
-    // Save progress
-    localStorage.setItem("skillzoy_progress", JSON.stringify(appState.progress));
-    
-    // Update UI
-    renderPlaylistItems(courseId, total);
-    renderMyCourses();
-}
-
-function toggleCompleteVideo() {
-    const courseId = appState.currentCourseId;
-    if (!courseId) return;
-    
-    const course = appState.courses.find(c => c.id === courseId);
-    const total = course?.num || 10;
-    
-    if (!appState.progress[courseId]) {
-        appState.progress[courseId] = { completed: [] };
-    }
-    
-    const completedList = appState.progress[courseId].completed;
-    
-    // Find next incomplete lesson
-    let nextLesson = 1;
-    while (completedList.includes(nextLesson)) {
-        nextLesson++;
-    }
-    
-    if (nextLesson <= total) {
-        toggleLessonComplete(nextLesson);
-    } else {
-        showToast('مبروك! لقد أتممت جميع دروس هذه الدورة 🎓', 'success');
-    }
-}
-
-function updateProgressUI(courseId, total) {
-    const completed = appState.progress[courseId]?.completed.length || 0;
-    const percent = Math.round((completed / total) * 100);
-    
-    document.getElementById('progressBarFill').style.width = `${percent}%`;
-    document.getElementById('progressPercentage').textContent = `${percent}% مكتمل`;
-    
-    // Update button text
-    const btn = document.getElementById('markCompleteBtn');
-    if (percent === 100) {
-        btn.innerHTML = '<i class="fas fa-trophy"></i><span>أكملت جميع الدروس!</span>';
-        btn.classList.remove('bg-green-500', 'hover:bg-green-600');
-        btn.classList.add('bg-yellow-500', 'hover:bg-yellow-600');
-    }
-}
-
-// ===== MY COURSES PAGE =====
-function renderMyCourses() {
-    const grid = document.getElementById('myCoursesGrid');
-    const banner = document.getElementById('resumeLearningBanner');
-    
-    // Check for last viewed course
-    const lastViewed = JSON.parse(localStorage.getItem("skillzoy_lastViewed"));
-    const shouldShowBanner = lastViewed && appState.myCourses.includes(lastViewed.id);
-    
-    if (shouldShowBanner) {
-        banner.classList.remove('hidden');
-        document.getElementById('resumeTitle').textContent = lastViewed.title;
-        document.getElementById('resumeBtn').onclick = () => openPlayer(lastViewed.id);
-        
-        // Calculate progress for resume text
-        const courseId = lastViewed.id;
-        const course = appState.courses.find(c => c.id === courseId);
-        const total = course?.num || 10;
-        const completed = appState.progress[courseId]?.completed.length || 0;
-        const nextLesson = completed + 1;
-        
-        document.getElementById('resumeProgress').textContent = 
-            nextLesson <= total ? `تابع من الدرس ${nextLesson}` : "أكملت جميع الدروس";
-    } else {
-        banner.classList.add('hidden');
-    }
-    
-    // Render my courses grid
-    if (appState.myCourses.length === 0) {
-        grid.innerHTML = `
-            <div class="col-span-3 text-center py-20">
-                <div class="w-24 h-24 mx-auto bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-4">
-                    <i class="fas fa-book-open text-3xl text-gray-400"></i>
-                </div>
-                <h3 class="text-lg font-bold text-gray-700 dark:text-gray-300 mb-2">لا توجد دورات مسجلة</h3>
-                <p class="text-gray-500 dark:text-gray-400 mb-4">سجل في دوراتك الأولى من الصفحة الرئيسية</p>
-                <button onclick="showHome()" class="bg-indigo-600 text-white px-6 py-2 rounded-xl font-bold hover:bg-indigo-700 trans-all">
-                    <i class="fas fa-arrow-left ml-2"></i> استعرض الدورات
-                </button>
-            </div>
-        `;
-        return;
-    }
-    
-    grid.innerHTML = appState.myCourses.map(courseId => {
-        const course = appState.courses.find(c => c.id === courseId);
-        if (!course) return '';
-        
-        const total = course.num || 10;
-        const completed = appState.progress[courseId]?.completed.length || 0;
-        const percent = Math.round((completed / total) * 100);
-        const progressColor = percent === 100 ? 'from-green-500 to-emerald-600' : 
-                            percent >= 50 ? 'from-blue-500 to-indigo-600' : 
-                            'from-yellow-500 to-orange-600';
-        
-        return `
-            <div class="glass-card rounded-2xl p-4 flex gap-4 items-center cursor-pointer hover:bg-white/50 dark:hover:bg-gray-700/50 trans-all group" onclick="openPlayer('${courseId}')">
-                <div class="w-16 h-16 rounded-xl bg-gradient-to-br ${progressColor} flex items-center justify-center text-white text-xl shrink-0 shadow-lg">
-                    <i class="fas fa-play"></i>
-                </div>
-                <div class="flex-1 min-w-0">
-                    <h4 class="font-bold text-gray-800 dark:text-white truncate group-hover:text-indigo-600 dark:group-hover:text-indigo-400">${course.title}</h4>
-                    <div class="flex justify-between items-center text-xs text-gray-500 dark:text-gray-400 mt-1 mb-2">
-                        <span><i class="fas fa-book-open ml-1"></i> ${completed}/${total} درس</span>
-                        <span class="font-bold">${percent}%</span>
-                    </div>
-                    <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                        <div class="h-full bg-gradient-to-r ${progressColor} rounded-full" style="width: ${percent}%"></div>
-                    </div>
-                </div>
-                <button onclick="removeCourse('${courseId}', event)" class="text-gray-300 hover:text-red-500 px-2 trans-all opacity-0 group-hover:opacity-100">
-                    <i class="fas fa-trash-alt"></i>
-                </button>
-            </div>
-        `;
-    }).join('');
-}
-
-// ===== NAVIGATION =====
-function showHome() {
-    document.getElementById('heroSection').classList.remove('hidden');
-    document.getElementById('coursesSection').classList.remove('hidden');
-    document.getElementById('myCoursesView').classList.add('hidden');
-    setActiveNav(0);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function showMyCourses() {
-    document.getElementById('heroSection').classList.add('hidden');
-    document.getElementById('coursesSection').classList.add('hidden');
-    document.getElementById('myCoursesView').classList.remove('hidden');
-    renderMyCourses();
-    setActiveNav(1);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function setActiveNav(index) {
-    const btns = document.querySelectorAll('.nav-btn');
-    btns.forEach((btn, i) => {
-        if (i === index) {
-            btn.classList.add('text-indigo-600', 'dark:text-indigo-400', 'active');
-            btn.classList.remove('text-gray-400');
+        const frame = document.getElementById('playerFrame');
+        if (course.playlist_id) {
+            frame.src = `https://www.youtube.com/embed/videoseries?list=${course.playlist_id}`;
         } else {
-            btn.classList.remove('text-indigo-600', 'dark:text-indigo-400', 'active');
-            btn.classList.add('text-gray-400');
+             frame.src = "";
         }
-    });
-}
 
-function updateNavState() {
-    const dot = document.getElementById('myCoursesDot');
-    if (appState.myCourses.length > 0) {
-        dot.classList.remove('hidden');
-    } else {
-        dot.classList.add('hidden');
+        renderPlaylistItems(id, course.num || 10);
+        document.getElementById('playerOverlay').classList.remove('translate-y-full');
+        
+        localStorage.setItem("lastViewedCourse", JSON.stringify({id: course.id, title: course.title}));
     }
-}
 
-// ===== FILTERING =====
-function filterByCategory(category) {
-    appState.currentFilter = category;
-    document.getElementById('categoryFilter').value = category;
-    renderCourses(category, appState.searchQuery);
-}
-
-function setupEventListeners() {
-    // Search input
-    document.getElementById('searchInput').addEventListener('input', (e) => {
-        appState.searchQuery = e.target.value;
-        renderCourses(appState.currentFilter, appState.searchQuery);
-    });
-    
-    // Category filter
-    document.getElementById('categoryFilter').addEventListener('change', (e) => {
-        filterByCategory(e.target.value);
-    });
-    
-    // WhatsApp
-    window.openWhatsApp = function() {
-        window.open("https://wa.me/249908280115", "_blank", "noopener,noreferrer");
-    };
-}
-
-// ===== UTILITY FUNCTIONS =====
-function showLoading(show) {
-    const spinner = document.getElementById('loadingSpinner');
-    if (show) {
-        spinner.classList.remove('hidden');
-    } else {
-        spinner.classList.add('hidden');
+    function closePlayer() {
+        document.getElementById('playerOverlay').classList.add('translate-y-full');
+        document.getElementById('playerFrame').src = ""; 
+        renderMyCourses();
     }
-}
 
-function showToast(message, type = 'info') {
-    const toast = document.createElement('div');
-    const colors = {
-        success: 'bg-green-500',
-        error: 'bg-red-500',
-        info: 'bg-indigo-500',
-        warning: 'bg-yellow-500'
-    };
-    
-    toast.className = `fixed top-6 left-1/2 transform -translate-x-1/2 ${colors[type] || 'bg-gray-800'} text-white px-6 py-3 rounded-full shadow-2xl z-[70] flex items-center gap-3 animate-float font-bold text-sm min-w-[300px] justify-center`;
-    toast.innerHTML = `
-        <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'}"></i>
-        <span>${message}</span>
-    `;
-    
-    document.body.appendChild(toast);
-    
-    setTimeout(() => {
-        toast.style.opacity = '0';
-        setTimeout(() => toast.remove(), 300);
-    }, 3000);
-}
+    function renderPlaylistItems(courseId, totalVideos) {
+        const container = document.getElementById('playlistContainer');
+        const progressData = appState.progress[courseId] || { completed: [] };
+        let html = '';
 
-// ===== SECURITY MEASURES =====
-(() => {
-    // Prevent right-click
-    document.addEventListener('contextmenu', e => e.preventDefault());
+        for (let i = 1; i <= totalVideos; i++) {
+            const isCompleted = progressData.completed.includes(i);
+            html += `
+                <div class="flex items-center justify-between p-3 rounded-xl ${isCompleted ? 'bg-green-50 dark:bg-green-900/20' : 'bg-white dark:bg-gray-800'} border border-gray-100 dark:border-gray-700">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${isCompleted ? 'bg-green-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300'}">
+                            ${isCompleted ? '<i class="fas fa-check"></i>' : i}
+                        </div>
+                        <span class="text-sm font-medium text-gray-700 dark:text-gray-200">الدرس رقم ${i}</span>
+                    </div>
+                    <button onclick="toggleLessonComplete(${i})" class="text-gray-400 hover:text-green-500 trans-all">
+                        <i class="far fa-circle ${isCompleted ? 'fas fa-check-circle text-green-500' : ''}"></i>
+                    </button>
+                </div>
+            `;
+        }
+        container.innerHTML = html;
+        updateProgressUI(courseId, totalVideos);
+    }
+
+    function toggleLessonComplete(lessonIndex) {
+        const id = appState.currentCourseId;
+        if (!appState.progress[id]) appState.progress[id] = { completed: [] };
+        
+        const list = appState.progress[id].completed;
+        if (list.includes(lessonIndex)) {
+            appState.progress[id].completed = list.filter(i => i !== lessonIndex);
+        } else {
+            appState.progress[id].completed.push(lessonIndex);
+        }
+        
+        localStorage.setItem("courseProgress", JSON.stringify(appState.progress));
+        const course = appState.courses.find(c => c.id === id);
+        renderPlaylistItems(id, course.num || 10);
+        updateProgressUI(id, course.num || 10);
+    }
+
+    function toggleCompleteVideo() {
+        const id = appState.currentCourseId;
+        if(!id) return;
+        
+        const course = appState.courses.find(c => c.id === id);
+        const total = course.num || 10;
+        
+        if (!appState.progress[id]) appState.progress[id] = { completed: [] };
+        const completedList = appState.progress[id].completed;
+        
+        let targetLesson = 1;
+        while (completedList.includes(targetLesson)) {
+            targetLesson++;
+        }
+        
+        if (targetLesson <= total) {
+            toggleLessonComplete(targetLesson);
+            showToast(`تم إكمال الدرس ${targetLesson}`, 'success');
+        } else {
+            showToast('لقد أتممت جميع الدروس بالفعل!', 'info');
+        }
+    }
+
+    function updateProgressUI(id, total) {
+        const completed = appState.progress[id]?.completed.length || 0;
+        const percent = Math.round((completed / total) * 100);
+        
+        document.getElementById('progressBarFill').style.width = `${percent}%`;
+        document.getElementById('progressPercentage').innerText = `${percent}% مكتمل`;
+    }
+
+    // --- My Courses Page ---
+    function renderMyCourses() {
+        const grid = document.getElementById('myCoursesGrid');
+        
+        const lastViewed = JSON.parse(localStorage.getItem("lastViewedCourse"));
+        const banner = document.getElementById('resumeLearningBanner');
+        
+        if (lastViewed && appState.myCourses.includes(lastViewed.id)) {
+            banner.classList.remove('hidden');
+            document.getElementById('resumeTitle').innerText = lastViewed.title;
+            document.getElementById('resumeBtn').onclick = () => openPlayer(lastViewed.id);
+        } else {
+            banner.classList.add('hidden');
+        }
+
+        if (appState.myCourses.length === 0) {
+            grid.innerHTML = `<div class="col-span-3 text-center text-gray-500 py-10">لم تقم بالتسجيل في أي دورة بعد.</div>`;
+            return;
+        }
+
+        grid.innerHTML = appState.myCourses.map(id => {
+            const course = appState.courses.find(c => c.id === id);
+            if (!course) return '';
+            
+            const total = course.num || 10;
+            const completed = appState.progress[id]?.completed.length || 0;
+            const percent = Math.round((completed / total) * 100);
+
+            return `
+                <div class="glass-card rounded-2xl p-4 flex gap-4 items-center cursor-pointer hover:bg-white/50 dark:hover:bg-gray-700/50 trans-all" onclick="openPlayer('${id}')">
+                    <div class="w-20 h-20 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-2xl shrink-0">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <h4 class="font-bold text-gray-800 dark:text-white truncate">${course.title}</h4>
+                        <div class="flex justify-between items-center text-xs text-gray-500 dark:text-gray-400 mt-1 mb-2">
+                            <span>${completed}/${total} درس</span>
+                            <span>${percent}%</span>
+                        </div>
+                        <div class="h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                            <div class="h-full bg-green-500 rounded-full" style="width: ${percent}%"></div>
+                        </div>
+                    </div>
+                    <button onclick="removeCourse('${id}', event)" class="text-gray-300 hover:text-red-500 px-2 trans-all">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // --- Navigation Logic ---
+    function showHome() {
+        document.getElementById('heroSection').classList.remove('hidden');
+        document.getElementById('coursesSection').classList.remove('hidden');
+        document.getElementById('myCoursesView').classList.add('hidden');
+        setActiveNav(0);
+        window.scrollTo(0,0);
+    }
+
+    function showMyCourses() {
+        document.getElementById('heroSection').classList.add('hidden');
+        document.getElementById('coursesSection').classList.add('hidden');
+        document.getElementById('myCoursesView').classList.remove('hidden');
+        renderMyCourses();
+        setActiveNav(1);
+        window.scrollTo(0,0);
+    }
+
+    function setActiveNav(index) {
+        const btns = document.querySelectorAll('.nav-btn');
+        btns.forEach(b => {
+            b.classList.remove('text-indigo-600', 'dark:text-indigo-400', 'active');
+            b.classList.add('text-gray-400');
+        });
+        btns[index].classList.add('text-indigo-600', 'dark:text-indigo-400', 'active');
+        btns[index].classList.remove('text-gray-400');
+    }
     
-    // Prevent text selection
-    document.addEventListener('selectstart', e => e.preventDefault());
+    function openWhatsApp() {
+        window.open("https://wa.me/249908280115", "_blank");
+    }
+
+    function updateNavState() {
+        if(appState.myCourses.length > 0) {
+            document.getElementById('myCoursesDot').classList.remove('hidden');
+        } else {
+            document.getElementById('myCoursesDot').classList.add('hidden');
+        }
+    }
+
+    // --- Toast Notification ---
+    function showToast(message, type = 'info') {
+        const toast = document.createElement('div');
+        const colorClass = type === 'success' ? 'bg-green-500' : (type === 'error' ? 'bg-red-500' : 'bg-gray-800');
+        
+        toast.className = `fixed top-6 left-1/2 transform -translate-x-1/2 ${colorClass} text-white px-6 py-3 rounded-full shadow-2xl z-[70] flex items-center gap-3 animate-float font-bold text-sm min-w-[300px] justify-center`;
+        toast.innerHTML = `
+            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-info-circle'}"></i>
+            <span>${message}</span>
+        `;
+        
+        document.body.appendChild(toast);
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
+
+    function filterByCategory(cat) {
+        renderCourses(cat);
+    }
     
-    // Prevent keyboard shortcuts for dev tools
-    document.addEventListener('keydown', (e) => {
-        // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C, Ctrl+U
+    function setupEventListeners() {
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            renderCourses(e.target.value);
+        });
+        
+        document.getElementById('categoryFilter').addEventListener('change', (e) => {
+            renderCourses(e.target.value);
+        });
+    }
+    // ===== sybergurd =====
+    (() => {
+      document.addEventListener("keydown", (e) => {
         if (
-            e.key === 'F12' ||
-            (e.ctrlKey && e.shiftKey && ['I', 'J', 'C'].includes(e.key.toUpperCase())) ||
-            (e.ctrlKey && e.key.toUpperCase() === 'U')
+          (e.ctrlKey && e.shiftKey && ["I", "C", "J", "L"].includes(e.key.toUpperCase())) ||
+          (e.key === "F12") ||
+          (e.ctrlKey && e.key.toUpperCase() === "U")
         ) {
-            e.preventDefault();
-            showToast('هذا الإجراء غير مسموح به', 'error');
+          e.preventDefault();
         }
-    });
-    
-    // Prevent copy/paste
-    document.addEventListener('copy', e => e.preventDefault());
-    document.addEventListener('cut', e => e.preventDefault());
-    document.addEventListener('paste', e => e.preventDefault());
-})();
+      });
 
-// ===== WINDOW EVENTS =====
-window.addEventListener('beforeunload', () => {
-    // Save state before leaving
-    localStorage.setItem("skillzoy_myCourses", JSON.stringify(appState.myCourses));
-    localStorage.setItem("skillzoy_progress", JSON.stringify(appState.progress));
-});
+      document.addEventListener("copy", e => e.preventDefault());
+      document.addEventListener("cut", e => e.preventDefault());
+      document.addEventListener("contextmenu", e => e.preventDefault());
+      document.addEventListener("selectstart", e => e.preventDefault());
 
-// Initialize app when window loads
-window.onload = () => {
-    console.log("Skillzoy Academy - App Initialized");
-    showToast("مرحبًا بك في أكاديمية سكيلزوي! 👋", "info");
-};
+      let detectSize = () => {
+        if (window.outerWidth - window.innerWidth > 200 || 
+            window.outerHeight - window.innerHeight > 200) {
+          console.clear();
+        }
+      };
+      window.addEventListener("resize", detectSize);
+
+      let start = performance.now();
+      console.log("%c ", "font-size:200px;");
+      let end = performance.now();
+      if (end - start > 50) console.clear();
+
+      const observer = new MutationObserver(() => {
+        console.clear();
+      });
+      observer.observe(document.documentElement, { 
+        attributes: true, 
+        childList: false, 
+        subtree: false 
+      });
+
+      setInterval(() => {
+        const t = Date.now();
+        debugger;
+        if (Date.now() - t > 100) console.clear();
+      }, 500);
+    })();
 </script>
 </body>
 </html>
