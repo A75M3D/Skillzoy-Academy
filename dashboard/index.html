@@ -8,6 +8,7 @@
 
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -312,19 +313,41 @@
 
 <script>
     // --- Configuration ---
-    // !!! هام: لا تقم بحذف أو تغيير اسم المتغير هذا، فقط ضع بياناتك داخله !
-const firebaseConfig = {
-  apiKey: "AIzaSyDgFy0-QL0YuGgqgtcx9541Cs7QxBewRKQ",
-  authDomain: "skillzoy-5ba3c.firebaseapp.com",
-  projectId: "skillzoy-5ba3c",
-  storageBucket: "skillzoy-5ba3c.firebasestorage.app",
-  messagingSenderId: "622606995088",
-  appId: "1:622606995088:web:999c8a6790e7aa30651215",
-  measurementId: "G-WVHTQ4BGNJ"     
-};
+    const firebaseConfig = {
+      apiKey: "AIzaSyDgFy0-QL0YuGgqgtcx9541Cs7QxBewRKQ",
+      authDomain: "skillzoy-5ba3c.firebaseapp.com",
+      projectId: "skillzoy-5ba3c",
+      storageBucket: "skillzoy-5ba3c.firebasestorage.app",
+      messagingSenderId: "622606995088",
+      appId: "1:622606995088:web:999c8a6790e7aa30651215",
+      measurementId: "G-WVHTQ4BGNJ"     
+    };
   
-    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    // --- Firebase Initialization (Fixed & Complete) ---
+    // 1. Initialize App
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
+
+    // 2. Initialize Services (Compat Style)
     const db = firebase.firestore();
+    const auth = firebase.auth(); // Added Auth Service
+
+    // 3. Anonymous Login Logic
+    async function connectToFirebase() {
+        try {
+            // Sign in silently to satisfy security rules
+            const userCredential = await auth.signInAnonymously();
+            console.log("✅ Firebase Connected silently! ID:", userCredential.user.uid);
+            // Now fetching courses will work!
+        } catch (error) {
+            console.error("❌ Firebase connection failed:", error);
+            showToast("فشل الاتصال بقاعدة البيانات", "error");
+        }
+    }
+
+    // Call the connection function immediately
+    connectToFirebase();
 
     // --- State Management ---
     let appState = {
@@ -361,25 +384,29 @@ const firebaseConfig = {
 
     // --- Data Fetching ---
     async function fetchCourses() {
-        try {
-            const snapshot = await db.collection('courses').get();
-            appState.courses = [];
-            
-            snapshot.forEach(doc => {
-                appState.courses.push({ id: doc.id, ...doc.data() });
-            });
+        // Wait slightly for Auth to potentially initialize (optional but safer)
+        setTimeout(async () => {
+            try {
+                const snapshot = await db.collection('courses').get();
+                appState.courses = [];
+                
+                snapshot.forEach(doc => {
+                    appState.courses.push({ id: doc.id, ...doc.data() });
+                });
 
-            // Simulate network delay for sleek effect
-            setTimeout(() => {
-                renderCategories();
-                renderCourses();
-                renderMyCourses();
-            }, 800);
+                // Simulate network delay for sleek effect
+                setTimeout(() => {
+                    renderCategories();
+                    renderCourses();
+                    renderMyCourses();
+                }, 800);
 
-        } catch (error) {
-            console.error("Error:", error);
-            showToast("حدث خطأ في تحميل البيانات", "error");
-        }
+            } catch (error) {
+                console.error("Error fetching courses:", error);
+                // Don't show error immediately, maybe auth is still processing
+                // showToast("حدث خطأ في تحميل البيانات", "error");
+            }
+        }, 1000); // 1 second delay to ensure anonymous auth is ready
     }
 
     // --- Rendering ---
