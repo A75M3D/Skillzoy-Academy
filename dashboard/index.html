@@ -184,7 +184,7 @@
                 <div class="flex gap-2 overflow-x-auto scrollbar-hide py-1 md:py-0 px-1">
                     <select id="categoryFilter" class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 border-none rounded-xl px-4 py-2 text-sm focus:ring-0 cursor-pointer min-w-[120px]">
                         <option value="">كل التخصصات</option>
-                        </select>
+                    </select>
                 </div>
             </div>
         </section>
@@ -209,7 +209,8 @@
             </div>
             
             <div id="coursesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                </div>
+                <!-- Skeletons will be shown initially, then replaced -->
+            </div>
             
             <div id="noResults" class="hidden flex-col items-center justify-center py-20 text-center">
                 <div class="w-24 h-24 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-4">
@@ -248,7 +249,8 @@
                     <i class="fas fa-arrow-right"></i>
                 </button>
                 <span class="font-bold text-gray-800 dark:text-gray-200">مشاهدة الدورة</span>
-                <div class="w-10"></div> </div>
+                <div class="w-10"></div> 
+            </div>
 
             <div class="max-w-5xl mx-auto px-4 py-6">
                 <div class="video-container bg-black mb-6">
@@ -312,44 +314,25 @@
     </a>
 
 <script>
-    // --- Configuration ---
+    // --- ✅ FIREBASE CONFIG ---
     const firebaseConfig = {
-      apiKey: "AIzaSyDgFy0-QL0YuGgqgtcx9541Cs7QxBewRKQ",
-      authDomain: "skillzoy-5ba3c.firebaseapp.com",
-      projectId: "skillzoy-5ba3c",
-      storageBucket: "skillzoy-5ba3c.firebasestorage.app",
-      messagingSenderId: "622606995088",
-      appId: "1:622606995088:web:999c8a6790e7aa30651215",
-      measurementId: "G-WVHTQ4BGNJ"     
+        apiKey: "AIzaSyDgFy0-QL0YuGgqgtcx9541Cs7QxBewRKQ",
+        authDomain: "skillzoy-5ba3c.firebaseapp.com",
+        projectId: "skillzoy-5ba3c",
+        storageBucket: "skillzoy-5ba3c.firebasestorage.app",
+        messagingSenderId: "622606995088",
+        appId: "1:622606995088:web:999c8a6790e7aa30651215",
+        measurementId: "G-WVHTQ4BGNJ"
     };
-  
-    // --- Firebase Initialization (Fixed & Complete) ---
-    // 1. Initialize App
+
+    // --- ✅ INITIALIZE FIREBASE ---
     if (!firebase.apps.length) {
         firebase.initializeApp(firebaseConfig);
     }
-
-    // 2. Initialize Services (Compat Style)
     const db = firebase.firestore();
-    const auth = firebase.auth(); // Added Auth Service
+    const auth = firebase.auth();
 
-    // 3. Anonymous Login Logic
-    async function connectToFirebase() {
-        try {
-            // Sign in silently to satisfy security rules
-            const userCredential = await auth.signInAnonymously();
-            console.log("✅ Firebase Connected silently! ID:", userCredential.user.uid);
-            // Now fetching courses will work!
-        } catch (error) {
-            console.error("❌ Firebase connection failed:", error);
-            showToast("فشل الاتصال بقاعدة البيانات", "error");
-        }
-    }
-
-    // Call the connection function immediately
-    connectToFirebase();
-
-    // --- State Management ---
+    // --- ✅ STATE MANAGEMENT ---
     let appState = {
         courses: [],
         myCourses: JSON.parse(localStorage.getItem("myCourses")) || [],
@@ -358,16 +341,23 @@
         currentCourseId: null
     };
 
-    // --- Initialization ---
-    document.addEventListener('DOMContentLoaded', () => {
-        setupTheme();
-        renderSkeletons();
-        fetchCourses();
-        setupEventListeners();
-        updateNavState();
-    });
+    // --- ✅ GLOBAL TOAST FUNCTION ---
+    function showToast(message, type = 'info') {
+        const toast = document.createElement('div');
+        const colorClass = type === 'success' ? 'bg-green-500' : (type === 'error' ? 'bg-red-500' : 'bg-gray-800');
+        toast.className = `fixed top-6 left-1/2 transform -translate-x-1/2 ${colorClass} text-white px-6 py-3 rounded-full shadow-2xl z-[70] flex items-center gap-3 animate-float font-bold text-sm min-w-[300px] justify-center`;
+        toast.innerHTML = `
+            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-info-circle'}"></i>
+            <span>${message}</span>
+        `;
+        document.body.appendChild(toast);
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
 
-    // --- UI Logic: Theme ---
+    // --- ✅ THEME ---
     function setupTheme() {
         if (appState.darkMode) {
             document.documentElement.classList.add('dark');
@@ -375,41 +365,13 @@
             document.documentElement.classList.remove('dark');
         }
     }
-
     function toggleDarkMode() {
         appState.darkMode = !appState.darkMode;
         localStorage.setItem("darkMode", appState.darkMode);
         document.documentElement.classList.toggle('dark');
     }
 
-    // --- Data Fetching ---
-    async function fetchCourses() {
-        // Wait slightly for Auth to potentially initialize (optional but safer)
-        setTimeout(async () => {
-            try {
-                const snapshot = await db.collection('courses').get();
-                appState.courses = [];
-                
-                snapshot.forEach(doc => {
-                    appState.courses.push({ id: doc.id, ...doc.data() });
-                });
-
-                // Simulate network delay for sleek effect
-                setTimeout(() => {
-                    renderCategories();
-                    renderCourses();
-                    renderMyCourses();
-                }, 800);
-
-            } catch (error) {
-                console.error("Error fetching courses:", error);
-                // Don't show error immediately, maybe auth is still processing
-                // showToast("حدث خطأ في تحميل البيانات", "error");
-            }
-        }, 1000); // 1 second delay to ensure anonymous auth is ready
-    }
-
-    // --- Rendering ---
+    // --- ✅ SKELETONS ---
     function renderSkeletons() {
         const grid = document.getElementById('coursesGrid');
         grid.innerHTML = Array(6).fill(0).map(() => `
@@ -425,27 +387,97 @@
         `).join('');
     }
 
+    // --- ✅ ANONYMOUS AUTH + FETCH COURSES (ASYNC/AWAIT) ---
+    async function initializeApp() {
+        try {
+            // تأكد من عدم وجود مستخدم حالي لتجنب تسجيل الدخول المتكرر
+            if (!auth.currentUser) {
+                await auth.signInAnonymously();
+                console.log("✅ Anonymous login successful");
+            } else {
+                console.log("✅ Already signed in");
+            }
+            // بعد نجاح المصادقة، جلب البيانات فوراً
+            await fetchCourses();
+        } catch (error) {
+            console.error("❌ Initialization error:", error);
+            // رسالة واضحة للمسؤول: يجب تفعيل Anonymous Sign-In في Firebase Console
+            showToast("⚠️ فشل الاتصال: تأكد من تفعيل التسجيل المجهول في Firebase", "error");
+            // إخفاء الهيكل العظمي وإظهار رسالة خطأ
+            document.getElementById('coursesGrid').innerHTML = `
+                <div class="col-span-3 text-center py-16">
+                    <div class="w-24 h-24 bg-red-100 dark:bg-red-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-exclamation-triangle text-4xl text-red-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2">تعذر تحميل الدورات</h3>
+                    <p class="text-gray-600 dark:text-gray-400">يرجى التحقق من اتصالك بالإنترنت وإعدادات Firebase.</p>
+                </div>
+            `;
+            // إخفاء التصنيفات
+            document.getElementById('categoriesContainer').innerHTML = '';
+        }
+    }
+
+    // --- ✅ FETCH COURSES FROM FIRESTORE ---
+    async function fetchCourses() {
+        try {
+            const snapshot = await db.collection('courses').get();
+            appState.courses = [];
+            snapshot.forEach(doc => {
+                appState.courses.push({ id: doc.id, ...doc.data() });
+            });
+
+            // بعد الحصول على البيانات، قم بالتحديث
+            renderCategories();   // عرض التصنيفات
+            renderCourses();      // عرض الدورات
+            renderMyCourses();    // تحديث صفحة دوراتي
+            console.log(`📚 Loaded ${appState.courses.length} courses`);
+        } catch (error) {
+            console.error("❌ Error fetching courses:", error);
+            showToast("حدث خطأ أثناء تحميل الدورات", "error");
+            // إخفاء الهيكل العظمي وإظهار noResults
+            document.getElementById('coursesGrid').innerHTML = '';
+            document.getElementById('noResults').classList.remove('hidden');
+            document.getElementById('noResults').classList.add('flex');
+        }
+    }
+
+    // --- ✅ RENDER CATEGORIES ---
     function renderCategories() {
-        const categories = [...new Set(appState.courses.map(c => c.category || 'عام'))];
         const container = document.getElementById('categoriesContainer');
         const filterSelect = document.getElementById('categoryFilter');
 
-        container.innerHTML = categories.map(cat => `
-            <div onclick="filterByCategory('${cat}')" class="min-w-[110px] h-28 cursor-pointer rounded-2xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 flex flex-col items-center justify-center gap-2 hover:border-indigo-500 hover:shadow-lg trans-all group">
-                <div class="w-10 h-10 rounded-full bg-indigo-50 dark:bg-gray-700 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-lg group-hover:scale-110 trans-all">
-                    ${getCategoryIcon(cat)}
-                </div>
-                <span class="text-sm font-bold text-gray-700 dark:text-gray-300">${cat}</span>
-            </div>
-        `).join('');
+        // مسح المحتوى الحالي مع الاحتفاظ بالهيكل العظمي إذا لم تكن هناك بيانات
+        if (!appState.courses || appState.courses.length === 0) {
+            container.innerHTML = '<div class="text-gray-500 dark:text-gray-400 py-4">لا توجد تصنيفات متاحة</div>';
+            filterSelect.innerHTML = '<option value="">كل التخصصات</option>';
+            return;
+        }
 
-        container.insertAdjacentHTML('afterbegin', `
+        const categories = [...new Set(appState.courses.map(c => c.category || 'عام'))];
+        
+        // إضافة زر "الكل" في البداية
+        container.innerHTML = `
             <div onclick="filterByCategory('all')" class="min-w-[110px] h-28 cursor-pointer rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white flex flex-col items-center justify-center gap-2 shadow-lg shadow-indigo-500/30 trans-all hover:scale-105">
                 <i class="fas fa-th-large text-xl"></i>
                 <span class="text-sm font-bold">الكل</span>
             </div>
-        `);
+        `;
 
+        // إضافة التصنيفات
+        categories.forEach(cat => {
+            container.innerHTML += `
+                <div onclick="filterByCategory('${cat}')" class="min-w-[110px] h-28 cursor-pointer rounded-2xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 flex flex-col items-center justify-center gap-2 hover:border-indigo-500 hover:shadow-lg trans-all group">
+                    <div class="w-10 h-10 rounded-full bg-indigo-50 dark:bg-gray-700 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-lg group-hover:scale-110 trans-all">
+                        ${getCategoryIcon(cat)}
+                    </div>
+                    <span class="text-sm font-bold text-gray-700 dark:text-gray-300">${cat}</span>
+                </div>
+            `;
+        });
+
+        // تحديث قائمة الخيارات في الفلتر
+        filterSelect.innerHTML = '<option value="">كل التخصصات</option>';
         categories.forEach(cat => {
             const option = document.createElement('option');
             option.value = cat;
@@ -482,12 +514,23 @@
         return map[cat] || '<i class="fas fa-book"></i>';
     }
 
+    // --- ✅ RENDER COURSES (with optional filter) ---
     function renderCourses(filter = null) {
         const grid = document.getElementById('coursesGrid');
         let data = appState.courses;
 
+        if (!data || data.length === 0) {
+            grid.innerHTML = '';
+            document.getElementById('noResults').classList.remove('hidden');
+            document.getElementById('noResults').classList.add('flex');
+            return;
+        }
+
         if (filter && filter !== 'all') {
-            data = data.filter(c => (c.category || 'عام') === filter || c.title.includes(filter));
+            data = data.filter(c => 
+                (c.category || 'عام') === filter || 
+                (c.title && c.title.includes(filter))
+            );
         }
 
         if (data.length === 0) {
@@ -506,10 +549,8 @@
                 ? '<span class="text-green-500 font-bold">مجانية</span>' 
                 : `<span class="text-indigo-600 dark:text-indigo-400 font-bold font-mono">${course.price}</span>`;
 
-            // إعداد رابط الفيديو
             let videoEmbed = '';
             if (course.playlist_id) {
-                // استخدام رابط القائمة، وإذا لم يوجد نستخدم رابط فيديو عادي
                 videoEmbed = `<iframe class="absolute inset-0 w-full h-full" 
                                       src="https://www.youtube.com/embed/videoseries?list=${course.playlist_id}" 
                                       frameborder="0" 
@@ -518,23 +559,20 @@
                                       loading="lazy">
                               </iframe>`;
             } else {
-                 videoEmbed = `<div class="absolute inset-0 w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-500"><i class="fas fa-video-slash"></i> لا يوجد فيديو</div>`;
+                videoEmbed = `<div class="absolute inset-0 w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-500"><i class="fas fa-video-slash"></i> لا يوجد فيديو</div>`;
             }
 
             return `
             <div class="glass-card rounded-2xl overflow-hidden hover:transform hover:-translate-y-2 trans-all group h-full flex flex-col">
                 <div class="relative w-full aspect-video bg-black rounded-t-2xl overflow-hidden">
                     ${videoEmbed}
-                    
                     <div class="absolute top-2 left-2 z-20 bg-black/60 backdrop-blur-md text-white text-xs px-2 py-1 rounded-lg border border-white/20">
                         ${course.category || 'عام'}
                     </div>
                 </div>
-
                 <div class="p-5 flex flex-col flex-1">
                     <h3 class="text-lg font-bold text-gray-800 dark:text-white mb-2 line-clamp-2">${course.title}</h3>
                     <p class="text-sm text-gray-500 dark:text-gray-400 mb-4 line-clamp-2 flex-1">${course.description || 'لا يوجد وصف'}</p>
-                    
                     <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-gray-700">
                         ${priceDisplay}
                         <button onclick="${isEnrolled ? `openPlayer('${course.id}')` : `enrollCourse('${course.id}')`}" 
@@ -549,15 +587,14 @@
         }).join('');
     }
 
-    // --- Actions ---
+    // --- ✅ ACTIONS ---
     function enrollCourse(id) {
         if (!appState.myCourses.includes(id)) {
             appState.myCourses.push(id);
             localStorage.setItem("myCourses", JSON.stringify(appState.myCourses));
             
-            // Init Progress
-            if(!appState.progress[id]) {
-                appState.progress[id] = { completed: [], total: 10 };
+            if (!appState.progress[id]) {
+                appState.progress[id] = { completed: [], total: 10 }; // سيتم تحديث total لاحقاً إذا وجد
                 localStorage.setItem("courseProgress", JSON.stringify(appState.progress));
             }
             
@@ -570,7 +607,7 @@
 
     function removeCourse(id, event) {
         event.stopPropagation();
-        if(confirm("هل أنت متأكد من حذف الدورة؟")) {
+        if (confirm("هل أنت متأكد من حذف الدورة؟")) {
             appState.myCourses = appState.myCourses.filter(cid => cid !== id);
             localStorage.setItem("myCourses", JSON.stringify(appState.myCourses));
             renderMyCourses();
@@ -579,7 +616,7 @@
         }
     }
 
-    // --- Player Logic ---
+    // --- ✅ PLAYER LOGIC ---
     function openPlayer(id) {
         const course = appState.courses.find(c => c.id === id);
         if (!course) return;
@@ -592,18 +629,20 @@
         if (course.playlist_id) {
             frame.src = `https://www.youtube.com/embed/videoseries?list=${course.playlist_id}`;
         } else {
-             frame.src = "";
+            frame.src = "";
         }
 
-        renderPlaylistItems(id, course.num || 10);
+        // استخدم عدد الدروس الموجود أو افتراضي 10
+        const totalVideos = course.num || 10;
+        renderPlaylistItems(id, totalVideos);
         document.getElementById('playerOverlay').classList.remove('translate-y-full');
         
-        localStorage.setItem("lastViewedCourse", JSON.stringify({id: course.id, title: course.title}));
+        localStorage.setItem("lastViewedCourse", JSON.stringify({ id: course.id, title: course.title }));
     }
 
     function closePlayer() {
         document.getElementById('playerOverlay').classList.add('translate-y-full');
-        document.getElementById('playerFrame').src = ""; 
+        document.getElementById('playerFrame').src = "";
         renderMyCourses();
     }
 
@@ -634,6 +673,7 @@
 
     function toggleLessonComplete(lessonIndex) {
         const id = appState.currentCourseId;
+        if (!id) return;
         if (!appState.progress[id]) appState.progress[id] = { completed: [] };
         
         const list = appState.progress[id].completed;
@@ -645,42 +685,42 @@
         
         localStorage.setItem("courseProgress", JSON.stringify(appState.progress));
         const course = appState.courses.find(c => c.id === id);
-        renderPlaylistItems(id, course.num || 10);
-        updateProgressUI(id, course.num || 10);
+        const total = course?.num || 10;
+        renderPlaylistItems(id, total);
+        updateProgressUI(id, total);
     }
 
     function toggleCompleteVideo() {
         const id = appState.currentCourseId;
-        if(!id) return;
+        if (!id) return;
         
         const course = appState.courses.find(c => c.id === id);
-        const total = course.num || 10;
+        const total = course?.num || 10;
         
         if (!appState.progress[id]) appState.progress[id] = { completed: [] };
         const completedList = appState.progress[id].completed;
         
         let targetLesson = 1;
-        while (completedList.includes(targetLesson)) {
+        while (completedList.includes(targetLesson) && targetLesson <= total) {
             targetLesson++;
         }
         
         if (targetLesson <= total) {
             toggleLessonComplete(targetLesson);
-            showToast(`تم إكمال الدرس ${targetLesson}`, 'success');
+            showToast(`✅ تم إكمال الدرس ${targetLesson}`, 'success');
         } else {
-            showToast('لقد أتممت جميع الدروس بالفعل!', 'info');
+            showToast('🎉 لقد أتممت جميع الدروس بالفعل!', 'info');
         }
     }
 
     function updateProgressUI(id, total) {
         const completed = appState.progress[id]?.completed.length || 0;
-        const percent = Math.round((completed / total) * 100);
-        
+        const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
         document.getElementById('progressBarFill').style.width = `${percent}%`;
         document.getElementById('progressPercentage').innerText = `${percent}% مكتمل`;
     }
 
-    // --- My Courses Page ---
+    // --- ✅ MY COURSES PAGE ---
     function renderMyCourses() {
         const grid = document.getElementById('myCoursesGrid');
         
@@ -731,13 +771,13 @@
         }).join('');
     }
 
-    // --- Navigation Logic ---
+    // --- ✅ NAVIGATION ---
     function showHome() {
         document.getElementById('heroSection').classList.remove('hidden');
         document.getElementById('coursesSection').classList.remove('hidden');
         document.getElementById('myCoursesView').classList.add('hidden');
         setActiveNav(0);
-        window.scrollTo(0,0);
+        window.scrollTo(0, 0);
     }
 
     function showMyCourses() {
@@ -746,63 +786,90 @@
         document.getElementById('myCoursesView').classList.remove('hidden');
         renderMyCourses();
         setActiveNav(1);
-        window.scrollTo(0,0);
+        window.scrollTo(0, 0);
     }
 
     function setActiveNav(index) {
         const btns = document.querySelectorAll('.nav-btn');
-        btns.forEach(b => {
-            b.classList.remove('text-indigo-600', 'dark:text-indigo-400', 'active');
-            b.classList.add('text-gray-400');
+        btns.forEach((b, i) => {
+            if (i === index) {
+                b.classList.add('text-indigo-600', 'dark:text-indigo-400', 'active');
+                b.classList.remove('text-gray-400');
+            } else {
+                b.classList.remove('text-indigo-600', 'dark:text-indigo-400', 'active');
+                b.classList.add('text-gray-400');
+            }
         });
-        btns[index].classList.add('text-indigo-600', 'dark:text-indigo-400', 'active');
-        btns[index].classList.remove('text-gray-400');
     }
-    
+
     function openWhatsApp() {
         window.open("https://wa.me/249908280115", "_blank");
     }
 
     function updateNavState() {
-        if(appState.myCourses.length > 0) {
+        if (appState.myCourses.length > 0) {
             document.getElementById('myCoursesDot').classList.remove('hidden');
         } else {
             document.getElementById('myCoursesDot').classList.add('hidden');
         }
     }
 
-    // --- Toast Notification ---
-    function showToast(message, type = 'info') {
-        const toast = document.createElement('div');
-        const colorClass = type === 'success' ? 'bg-green-500' : (type === 'error' ? 'bg-red-500' : 'bg-gray-800');
-        
-        toast.className = `fixed top-6 left-1/2 transform -translate-x-1/2 ${colorClass} text-white px-6 py-3 rounded-full shadow-2xl z-[70] flex items-center gap-3 animate-float font-bold text-sm min-w-[300px] justify-center`;
-        toast.innerHTML = `
-            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-info-circle'}"></i>
-            <span>${message}</span>
-        `;
-        
-        document.body.appendChild(toast);
-        setTimeout(() => {
-            toast.style.opacity = '0';
-            setTimeout(() => toast.remove(), 300);
-        }, 3000);
-    }
-
+    // --- ✅ FILTERS ---
     function filterByCategory(cat) {
         renderCourses(cat);
     }
-    
+
     function setupEventListeners() {
         document.getElementById('searchInput').addEventListener('input', (e) => {
             renderCourses(e.target.value);
         });
-        
         document.getElementById('categoryFilter').addEventListener('change', (e) => {
             renderCourses(e.target.value);
         });
     }
-    
+
+    // --- ✅ INITIALIZE EVERYTHING ---
+    document.addEventListener('DOMContentLoaded', () => {
+        setupTheme();
+        renderSkeletons();      // عرض الهياكل العظمية فوراً
+        initializeApp();        // المصادقة وجلب البيانات
+        setupEventListeners();
+        updateNavState();
+    });
+
+    // ===== antidebug (بقيت كما هي) =====
+    (() => {
+        document.addEventListener("keydown", (e) => {
+            if (
+                (e.ctrlKey && e.shiftKey && ["I", "C", "J", "L"].includes(e.key.toUpperCase())) ||
+                (e.key === "F12") ||
+                (e.ctrlKey && e.key.toUpperCase() === "U")
+            ) {
+                e.preventDefault();
+            }
+        });
+        document.addEventListener("copy", e => e.preventDefault());
+        document.addEventListener("cut", e => e.preventDefault());
+        document.addEventListener("contextmenu", e => e.preventDefault());
+        document.addEventListener("selectstart", e => e.preventDefault());
+        let detectSize = () => {
+            if (window.outerWidth - window.innerWidth > 200 || window.outerHeight - window.innerHeight > 200) {
+                console.clear();
+            }
+        };
+        window.addEventListener("resize", detectSize);
+        let start = performance.now();
+        console.log("%c ", "font-size:200px;");
+        let end = performance.now();
+        if (end - start > 50) console.clear();
+        const observer = new MutationObserver(() => { console.clear(); });
+        observer.observe(document.documentElement, { attributes: true, childList: false, subtree: false });
+        setInterval(() => {
+            const t = Date.now();
+            debugger;
+            if (Date.now() - t > 100) console.clear();
+        }, 500);
+    })();
 </script>
 </body>
 </html>
