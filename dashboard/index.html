@@ -12,6 +12,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app-check.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
 <script>
     tailwind.config = {
@@ -313,7 +316,7 @@
 
 <script>
     // --- Configuration ---
-    // !!! هام: لا تقم بحذف أو تغيير اسم المتغير هذا، فقط ضع بياناتك داخله !!!
+    // !!! هام: لا تقم بحذف أو تغيير اسم المتغير هذا، فقط ضع بياناتك داخله !
 const firebaseConfig = {
   apiKey: "AIzaSyDgFy0-QL0YuGgqgtcx9541Cs7QxBewRKQ",
   authDomain: "skillzoy-5ba3c.firebaseapp.com",
@@ -323,6 +326,43 @@ const firebaseConfig = {
   appId: "1:622606995088:web:999c8a6790e7aa30651215",
   measurementId: "G-WVHTQ4BGNJ"     
 };
+
+// 2. تهيئة التطبيق
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
+
+// 3. تفعيل App Check (قبل Firestore)
+// ملاحظة: اترك السطر التالي فقط أثناء البرمجة على جهازك (Localhost)
+self.FIREBASE_APPCHECK_DEBUG_TOKEN = true; 
+
+const appCheck = firebase.appCheck();
+appCheck.activate(
+  // مفتاح الموقع الخاص بك من الصورة
+  '6LdzPWcsAAAAAMVoYBW_8Sk2C2PvRViVqlW3LKXh', 
+  true // التحديث التلقائي للتوكن
+);
+
+// 4. تهيئة Firestore
+const db = firebase.firestore();
+
+// --- بقية كودك (State Management و fetchCourses) ---
+let appState = {
+  courses: [],
+  // ... بقية الـ State ...
+};
+
+async function fetchCourses() {
+  try {
+    const snapshot = await db.collection('courses').get();
+    // الكود الخاص بك هنا
+  } catch (error) {
+    console.error("خطأ في جلب البيانات:", error);
+  }
+}
+
+
+
     
     if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
