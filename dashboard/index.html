@@ -7,14 +7,12 @@
 <meta name="theme-color" content="#4F46E5">
 
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-check-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app-check.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
 <script>
     tailwind.config = {
@@ -33,13 +31,14 @@
       }
     }
 </script>
-  <script type="text/javascript">
-  (function(c,l,a,r,i,t,y){
-      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-  })(window, document, "clarity", "script", "u9054g22tr");
-  </script>
+<script type="text/javascript">
+(function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+})(window, document, "clarity", "script", "u9054g22tr");
+</script>
+
 <style>
     /* Global Styles */
     :root {
@@ -47,58 +46,44 @@
         --glass-bg: rgba(255, 255, 255, 0.85);
         --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
     }
-    
     .dark :root {
         --glass-border: 1px solid rgba(255, 255, 255, 0.05);
         --glass-bg: rgba(15, 23, 42, 0.85);
     }
-
     body {
         font-family: 'Cairo', sans-serif;
         -webkit-tap-highlight-color: transparent;
         background-color: #F8FAFC;
     }
-
     .dark body {
         background-color: #020617;
         color: #E2E8F0;
     }
-
-    /* Scrollbar Hiding */
     .scrollbar-hide::-webkit-scrollbar { display: none; }
     .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-
-    /* Glassmorphism Classes */
     .glass {
         background: var(--glass-bg);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         border: var(--glass-border);
     }
-
     .glass-card {
         background: rgba(255, 255, 255, 0.9);
         backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.5);
         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
     }
-
     .dark .glass-card {
         background: rgba(30, 41, 59, 0.8);
         border: 1px solid rgba(255, 255, 255, 0.05);
         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
     }
-
-    /* Animations */
     @keyframes float {
         0% { transform: translateY(0px); }
         50% { transform: translateY(-5px); }
         100% { transform: translateY(0px); }
     }
-
     .animate-float { animation: float 3s ease-in-out infinite; }
-
-    /* Skeleton Loading */
     .skeleton {
         background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
         background-size: 200% 100%;
@@ -111,11 +96,7 @@
         0% { background-position: 200% 0; }
         100% { background-position: -200% 0; }
     }
-
-    /* Custom Transitions */
     .trans-all { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-
-    /* Video Player */
     .video-container {
         position: relative;
         padding-bottom: 56.25%; /* 16:9 */
@@ -160,7 +141,6 @@
     </header>
 
     <main class="max-w-7xl mx-auto px-4 mt-24 space-y-8">
-
         <section id="heroSection" class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-indigo-600 to-violet-700 p-6 md:p-10 text-white shadow-2xl shadow-indigo-500/20">
             <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
                 <div class="text-center md:text-right space-y-3 max-w-lg">
@@ -212,7 +192,7 @@
             </div>
             
             <div id="coursesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                </div>
+            </div>
             
             <div id="noResults" class="hidden flex-col items-center justify-center py-20 text-center">
                 <div class="w-24 h-24 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-4">
@@ -242,7 +222,7 @@
             </div>
 
             <div id="myCoursesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                </div>
+            </div>
         </section>
 
         <div id="playerOverlay" class="fixed inset-0 z-[60] bg-white dark:bg-gray-900 transform translate-y-full transition-transform duration-300 overflow-y-auto">
@@ -251,7 +231,8 @@
                     <i class="fas fa-arrow-right"></i>
                 </button>
                 <span class="font-bold text-gray-800 dark:text-gray-200">مشاهدة الدورة</span>
-                <div class="w-10"></div> </div>
+                <div class="w-10"></div> 
+            </div>
 
             <div class="max-w-5xl mx-auto px-4 py-6">
                 <div class="video-container bg-black mb-6">
@@ -284,7 +265,7 @@
                             <div id="progressBarFill" class="h-full bg-gradient-to-r from-indigo-500 to-purple-500 w-0 trans-all duration-1000"></div>
                         </div>
                         <div id="playlistContainer" class="space-y-2 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
-                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -315,59 +296,36 @@
     </a>
 
 <script>
-    // --- Configuration ---
-    // !!! هام: لا تقم بحذف أو تغيير اسم المتغير هذا، فقط ضع بياناتك داخله !
-const firebaseConfig = {
-  apiKey: "AIzaSyDgFy0-QL0YuGgqgtcx9541Cs7QxBewRKQ",
-  authDomain: "skillzoy-5ba3c.firebaseapp.com",
-  projectId: "skillzoy-5ba3c",
-  storageBucket: "skillzoy-5ba3c.firebasestorage.app",
-  messagingSenderId: "622606995088",
-  appId: "1:622606995088:web:999c8a6790e7aa30651215",
-  measurementId: "G-WVHTQ4BGNJ"     
-};
+    // --- 1. إعدادات Firebase ---
+    const firebaseConfig = {
+      apiKey: "AIzaSyDgFy0-QL0YuGgqgtcx9541Cs7QxBewRKQ",
+      authDomain: "skillzoy-5ba3c.firebaseapp.com",
+      projectId: "skillzoy-5ba3c",
+      storageBucket: "skillzoy-5ba3c.firebasestorage.app",
+      messagingSenderId: "622606995088",
+      appId: "1:622606995088:web:999c8a6790e7aa30651215",
+      measurementId: "G-WVHTQ4BGNJ"     
+    };
 
-// 2. تهيئة التطبيق
-if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-}
+    // --- 2. تهيئة Firebase مرة واحدة فقط ---
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
 
-// 3. تفعيل App Check (قبل Firestore)
-// ملاحظة: اترك السطر التالي فقط أثناء البرمجة على جهازك (Localhost)
-self.FIREBASE_APPCHECK_DEBUG_TOKEN = true; 
+    // --- 3. تفعيل App Check ---
+    // هذا السطر للتجربة المحلية فقط، يفضل حذفه أو تعطيله عند النشر النهائي
+    self.FIREBASE_APPCHECK_DEBUG_TOKEN = true; 
 
-const appCheck = firebase.appCheck();
-appCheck.activate(
-  // مفتاح الموقع الخاص بك من الصورة
-  '6LdzPWcsAAAAAMVoYBW_8Sk2C2PvRViVqlW3LKXh', 
-  true // التحديث التلقائي للتوكن
-);
+    const appCheck = firebase.appCheck();
+    appCheck.activate(
+      '6LdzPWcsAAAAAMVoyBW_8Sk2C2PvRViVqlW3LKXl', 
+      true
+    );
 
-// 4. تهيئة Firestore
-const db = firebase.firestore();
-
-// --- بقية كودك (State Management و fetchCourses) ---
-let appState = {
-  courses: [],
-  // ... بقية الـ State ...
-};
-
-async function fetchCourses() {
-  try {
-    const snapshot = await db.collection('courses').get();
-    // الكود الخاص بك هنا
-  } catch (error) {
-    console.error("خطأ في جلب البيانات:", error);
-  }
-}
-
-
-
-    
-    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    // --- 4. تعريف قاعدة البيانات مرة واحدة ---
     const db = firebase.firestore();
 
-    // --- State Management ---
+    // --- 5. State Management ---
     let appState = {
         courses: [],
         myCourses: JSON.parse(localStorage.getItem("myCourses")) || [],
@@ -380,7 +338,7 @@ async function fetchCourses() {
     document.addEventListener('DOMContentLoaded', () => {
         setupTheme();
         renderSkeletons();
-        fetchCourses();
+        fetchCourses(); // استدعاء الدالة لجلب البيانات
         setupEventListeners();
         updateNavState();
     });
@@ -410,7 +368,7 @@ async function fetchCourses() {
                 appState.courses.push({ id: doc.id, ...doc.data() });
             });
 
-            // Simulate network delay for sleek effect
+            // تأخير بسيط للمحاكاة (اختياري)
             setTimeout(() => {
                 renderCategories();
                 renderCourses();
@@ -423,7 +381,7 @@ async function fetchCourses() {
         }
     }
 
-    // --- Rendering ---
+    // --- Rendering Functions ---
     function renderSkeletons() {
         const grid = document.getElementById('coursesGrid');
         grid.innerHTML = Array(6).fill(0).map(() => `
@@ -520,10 +478,8 @@ async function fetchCourses() {
                 ? '<span class="text-green-500 font-bold">مجانية</span>' 
                 : `<span class="text-indigo-600 dark:text-indigo-400 font-bold font-mono">${course.price}</span>`;
 
-            // إعداد رابط الفيديو
             let videoEmbed = '';
             if (course.playlist_id) {
-                // استخدام رابط القائمة، وإذا لم يوجد نستخدم رابط فيديو عادي
                 videoEmbed = `<iframe class="absolute inset-0 w-full h-full" 
                                       src="https://www.youtube.com/embed/videoseries?list=${course.playlist_id}" 
                                       frameborder="0" 
@@ -539,7 +495,6 @@ async function fetchCourses() {
             <div class="glass-card rounded-2xl overflow-hidden hover:transform hover:-translate-y-2 trans-all group h-full flex flex-col">
                 <div class="relative w-full aspect-video bg-black rounded-t-2xl overflow-hidden">
                     ${videoEmbed}
-                    
                     <div class="absolute top-2 left-2 z-20 bg-black/60 backdrop-blur-md text-white text-xs px-2 py-1 rounded-lg border border-white/20">
                         ${course.category || 'عام'}
                     </div>
@@ -569,7 +524,6 @@ async function fetchCourses() {
             appState.myCourses.push(id);
             localStorage.setItem("myCourses", JSON.stringify(appState.myCourses));
             
-            // Init Progress
             if(!appState.progress[id]) {
                 appState.progress[id] = { completed: [], total: 10 };
                 localStorage.setItem("courseProgress", JSON.stringify(appState.progress));
@@ -816,7 +770,9 @@ async function fetchCourses() {
             renderCourses(e.target.value);
         });
     }
-    // ===== sybergurd =====
+
+    // --- Sybergurd Protection (Optional) ---
+    // تم حذف خاصية debugger لتسهيل فحص الأخطاء، يمكنك إعادتها لاحقاً
     (() => {
       document.addEventListener("keydown", (e) => {
         if (
@@ -827,40 +783,12 @@ async function fetchCourses() {
           e.preventDefault();
         }
       });
-
       document.addEventListener("copy", e => e.preventDefault());
       document.addEventListener("cut", e => e.preventDefault());
       document.addEventListener("contextmenu", e => e.preventDefault());
       document.addEventListener("selectstart", e => e.preventDefault());
-
-      let detectSize = () => {
-        if (window.outerWidth - window.innerWidth > 200 || 
-            window.outerHeight - window.innerHeight > 200) {
-          console.clear();
-        }
-      };
-      window.addEventListener("resize", detectSize);
-
-      let start = performance.now();
-      console.log("%c ", "font-size:200px;");
-      let end = performance.now();
-      if (end - start > 50) console.clear();
-
-      const observer = new MutationObserver(() => {
-        console.clear();
-      });
-      observer.observe(document.documentElement, { 
-        attributes: true, 
-        childList: false, 
-        subtree: false 
-      });
-
-      setInterval(() => {
-        const t = Date.now();
-        debugger;
-        if (Date.now() - t > 100) console.clear();
-      }, 500);
     })();
 </script>
 </body>
 </html>
+
