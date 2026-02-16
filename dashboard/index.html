@@ -125,6 +125,38 @@
         position: absolute;
         top: 0; left: 0; width: 100%; height: 100%;
     }
+
+    /* Load More Button */
+    .load-more-container {
+        text-align: center;
+        margin: 40px 0;
+    }
+    .load-more-btn {
+        background: var(--glass-bg);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255,255,255,0.2);
+        color: #4F46E5;
+        padding: 12px 40px;
+        border-radius: 50px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .dark .load-more-btn {
+        background: rgba(30,41,59,0.8);
+        color: #818cf8;
+        border-color: rgba(255,255,255,0.05);
+    }
+    .load-more-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(79,70,229,0.3);
+    }
+    .load-more-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+    }
 </style>
 </head>
 
@@ -210,6 +242,11 @@
             
             <div id="coursesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Skeletons will be shown initially, then replaced -->
+            </div>
+            
+            <!-- Load More Button -->
+            <div class="load-more-container" id="loadMoreContainer">
+                <button class="load-more-btn" id="loadMoreBtn" style="display: none;">تحميل المزيد</button>
             </div>
             
             <div id="noResults" class="hidden flex-col items-center justify-center py-20 text-center">
@@ -350,8 +387,18 @@
         darkMode: localStorage.getItem("darkMode") === "true",
         currentCourseId: null,
         lastSyncTimestamp: localStorage.getItem("lastSyncTimestamp") || null,
-        pendingProgressUpdates: {} // لتجميع تحديثات التقدم قبل كتابتها
+        pendingProgressUpdates: {},
+        pendingEnrollments: [] // تجميع التسجيلات الجديدة
     };
+
+    // --- ✅ PAGINATION VARIABLES ---
+    let allCourses = [];           // جميع الدورات (قد تكون كلها أو جزء منها)
+    let displayedCourses = [];     // الدورات المعروضة حالياً (بعد التصفية والترتيب)
+    let currentPage = 0;
+    const pageSize = 20;
+    let hasMore = true;
+    let lastVisible = null;        // آخر دورة في الدفعة (للاستعلام)
+    let loadingMore = false;
 
     // --- ✅ GLOBAL TOAST FUNCTION ---
     function showToast(message, type = 'info') {
@@ -408,7 +455,7 @@
             }
             // First try to load from cache immediately
             await loadCoursesFromCache();
-            // Then fetch fresh data from server in background
+            // Then fetch fresh data from server in background (with pagination)
             fetchCoursesFromServer();
         } catch (error) {
             console.error("❌ Initialization error:", error);
@@ -423,21 +470,27 @@
                 </div>
             `;
         }
+
+        // بدء دورة كتابة التحديثات المتراكمة كل دقيقة
+        setInterval(() => {
+            flushProgressUpdates();
+            flushEnrollments();
+        }, 60000);
     }
 
     // Load courses from local cache first
     async function loadCoursesFromCache() {
         try {
-            // Try to get cached data first (source: cache)
             const snapshot = await db.collection('courses').get({ source: 'cache' });
             if (!snapshot.empty) {
-                appState.courses = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                allCourses = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                // ترتيب (مثلاً حسب التاريخ)
+                allCourses.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+                resetPagination();
                 renderCategories();
-                renderCourses();
-                renderMyCourses();
-                console.log(`📚 Loaded ${appState.courses.length} courses from cache`);
+                renderCourses();  // سيعرض الصفحة الأولى
+                console.log(`📚 Loaded ${allCourses.length} courses from cache`);
             } else {
-                // No cache, will wait for server fetch
                 console.log("Cache empty, waiting for server...");
             }
         } catch (error) {
@@ -445,44 +498,43 @@
         }
     }
 
-    // Fetch courses from server (only updated ones if possible)
+    // Fetch courses from server with pagination and delta updates
     async function fetchCoursesFromServer() {
         try {
-            let query = db.collection('courses');
+            let query = db.collection('courses').orderBy('createdAt', 'desc').limit(pageSize);
             
-            // If we have a last sync timestamp, only fetch newer courses (delta query)
-            if (appState.lastSyncTimestamp) {
-                const lastSync = new Date(appState.lastSyncTimestamp);
-                query = query.where('updatedAt', '>', lastSync);
-            }
-            
+            // If we have a last sync timestamp, only fetch newer courses (optional)
+            // لكن هنا نستخدم pagination بسيط: نجلب الدفعة الأولى ثم نخزنها
             const snapshot = await query.get({ source: 'server' });
             
             if (!snapshot.empty) {
-                // Merge new/updated courses with existing ones
                 const serverCourses = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                 
-                // Update appState.courses (replace old versions)
+                // Merge with existing courses (replace if newer)
                 serverCourses.forEach(newCourse => {
-                    const index = appState.courses.findIndex(c => c.id === newCourse.id);
+                    const index = allCourses.findIndex(c => c.id === newCourse.id);
                     if (index >= 0) {
-                        appState.courses[index] = newCourse;
+                        allCourses[index] = newCourse;
                     } else {
-                        appState.courses.push(newCourse);
+                        allCourses.push(newCourse);
                     }
                 });
                 
-                // Update sync timestamp
-                appState.lastSyncTimestamp = new Date().toISOString();
-                localStorage.setItem("lastSyncTimestamp", appState.lastSyncTimestamp);
+                // ترتيب جميع الدورات (حسب التاريخ)
+                allCourses.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
                 
-                // Re-render UI
+                // تحديث lastVisible لآخر دورة في هذه الدفعة
+                lastVisible = snapshot.docs[snapshot.docs.length - 1];
+                hasMore = snapshot.docs.length === pageSize;
+                
+                // إعادة تعيين pagination وإعادة عرض الصفحة الأولى
+                resetPagination();
                 renderCategories();
                 renderCourses();
-                renderMyCourses();
-                console.log(`📡 Fetched ${serverCourses.length} updated courses from server`);
+                
+                console.log(`📡 Fetched ${serverCourses.length} courses from server`);
             } else {
-                console.log("No new courses from server");
+                console.log("No courses from server");
             }
         } catch (error) {
             console.error("❌ Error fetching courses from server:", error);
@@ -490,18 +542,75 @@
         }
     }
 
+    // Load more courses (next page)
+    async function loadMoreCourses() {
+        if (loadingMore || !hasMore) return;
+        loadingMore = true;
+        const btn = document.getElementById('loadMoreBtn');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin ml-2"></i> جاري التحميل...';
+
+        try {
+            let query = db.collection('courses')
+                .orderBy('createdAt', 'desc')
+                .startAfter(lastVisible)
+                .limit(pageSize);
+            
+            const snapshot = await query.get({ source: 'server' });
+            
+            if (!snapshot.empty) {
+                const newCourses = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                
+                // إضافة الدورات الجديدة إلى allCourses (تجنب التكرار)
+                newCourses.forEach(newCourse => {
+                    if (!allCourses.some(c => c.id === newCourse.id)) {
+                        allCourses.push(newCourse);
+                    }
+                });
+                
+                // ترتيب
+                allCourses.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+                
+                // تحديث lastVisible
+                lastVisible = snapshot.docs[snapshot.docs.length - 1];
+                hasMore = snapshot.docs.length === pageSize;
+                
+                // إعادة عرض الدورات (سيتم إضافة الصفحة الحالية + الجديدة تلقائياً)
+                renderCourses();
+            } else {
+                hasMore = false;
+            }
+        } catch (error) {
+            console.error("Error loading more courses:", error);
+            showToast("حدث خطأ أثناء التحميل", "error");
+        } finally {
+            loadingMore = false;
+            btn.disabled = false;
+            btn.innerHTML = 'تحميل المزيد';
+            if (!hasMore) btn.style.display = 'none';
+        }
+    }
+
+    // إعادة تعيين pagination عند تغيير الفلتر
+    function resetPagination() {
+        currentPage = 0;
+        // لا نعيد تعيين lastVisible لأنه خاص بالاستعلام، لكننا نريد عرض أول 20 من allCourses
+        // حسب الفلتر الحالي
+        displayedCourses = []; // سيتم ملؤها في renderCourses
+    }
+
     // --- ✅ RENDER CATEGORIES ---
     function renderCategories() {
         const container = document.getElementById('categoriesContainer');
         const filterSelect = document.getElementById('categoryFilter');
 
-        if (!appState.courses || appState.courses.length === 0) {
+        if (!allCourses || allCourses.length === 0) {
             container.innerHTML = '<div class="text-gray-500 dark:text-gray-400 py-4">لا توجد تصنيفات متاحة</div>';
             filterSelect.innerHTML = '<option value="">كل التخصصات</option>';
             return;
         }
 
-        const categories = [...new Set(appState.courses.map(c => c.category || 'عام'))];
+        const categories = [...new Set(allCourses.map(c => c.category || 'عام'))];
         
         container.innerHTML = `
             <div onclick="filterByCategory('all')" class="min-w-[110px] h-28 cursor-pointer rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white flex flex-col items-center justify-center gap-2 shadow-lg shadow-indigo-500/30 trans-all hover:scale-105">
@@ -558,36 +667,50 @@
         return map[cat] || '<i class="fas fa-book"></i>';
     }
 
-    // --- ✅ RENDER COURSES (with filter) ---
+    // --- ✅ RENDER COURSES (with filter and pagination) ---
     function renderCourses(filter = null) {
         const grid = document.getElementById('coursesGrid');
-        let data = appState.courses;
+        const loadMoreBtn = document.getElementById('loadMoreBtn');
+        let filtered = allCourses;
 
-        if (!data || data.length === 0) {
+        if (!filtered || filtered.length === 0) {
             grid.innerHTML = '';
             document.getElementById('noResults').classList.remove('hidden');
             document.getElementById('noResults').classList.add('flex');
+            loadMoreBtn.style.display = 'none';
             return;
         }
 
-        if (filter && filter !== 'all') {
-            data = data.filter(c => 
+        if (filter && filter !== 'all' && filter !== '') {
+            filtered = filtered.filter(c => 
                 (c.category || 'عام') === filter || 
                 (c.title && c.title.includes(filter))
             );
         }
 
-        if (data.length === 0) {
+        if (filtered.length === 0) {
             grid.innerHTML = '';
             document.getElementById('noResults').classList.remove('hidden');
             document.getElementById('noResults').classList.add('flex');
+            loadMoreBtn.style.display = 'none';
             return;
         }
 
         document.getElementById('noResults').classList.add('hidden');
         document.getElementById('noResults').classList.remove('flex');
 
-        grid.innerHTML = data.map(course => {
+        // Pagination: عرض أول 20 فقط
+        const start = 0;
+        const end = pageSize;
+        const pageCourses = filtered.slice(start, end);
+        const totalFiltered = filtered.length;
+        const hasMoreFiltered = totalFiltered > end;
+
+        // حفظ القائمة المعروضة في متغير عام للاستفادة منها في "تحميل المزيد"
+        displayedCourses = filtered;
+
+        // بناء HTML
+        grid.innerHTML = pageCourses.map(course => {
             const isEnrolled = appState.myCourses.includes(course.id);
             const priceDisplay = (course.price === 'free' || course.price === 'مجانية') 
                 ? '<span class="text-green-500 font-bold">مجانية</span>' 
@@ -629,9 +752,88 @@
             </div>
             `;
         }).join('');
+
+        // إظهار أو إخفاء زر "تحميل المزيد" بناءً على ما إذا كان هناك المزيد من النتائج
+        if (hasMoreFiltered && (filtered.length > pageSize)) {
+            loadMoreBtn.style.display = 'inline-block';
+            // تعطيل الرابط المؤقت للاستخدام مع filter
+            loadMoreBtn.onclick = () => loadMoreFilteredCourses(filter);
+        } else {
+            loadMoreBtn.style.display = 'none';
+        }
     }
 
-    // --- ✅ ACTIONS ---
+    // دالة لتحميل المزيد من الدورات بناءً على الفلتر الحالي
+    function loadMoreFilteredCourses(filter) {
+        const loadMoreBtn = document.getElementById('loadMoreBtn');
+        const grid = document.getElementById('coursesGrid');
+        
+        // عدد العناصر المعروضة حالياً
+        const currentDisplayCount = grid.children.length;
+        // إجمالي العناصر المفلترة
+        const totalFiltered = displayedCourses.length;
+        
+        if (currentDisplayCount >= totalFiltered) {
+            loadMoreBtn.style.display = 'none';
+            return;
+        }
+        
+        // العناصر التالية
+        const nextCount = Math.min(currentDisplayCount + pageSize, totalFiltered);
+        const nextCourses = displayedCourses.slice(currentDisplayCount, nextCount);
+        
+        // إضافة إلى الـ HTML
+        nextCourses.forEach(course => {
+            const isEnrolled = appState.myCourses.includes(course.id);
+            const priceDisplay = (course.price === 'free' || course.price === 'مجانية') 
+                ? '<span class="text-green-500 font-bold">مجانية</span>' 
+                : `<span class="text-indigo-600 dark:text-indigo-400 font-bold font-mono">${course.price}</span>`;
+
+            let videoEmbed = '';
+            if (course.playlist_id) {
+                videoEmbed = `<iframe class="absolute inset-0 w-full h-full" 
+                                      src="https://www.youtube.com/embed/videoseries?list=${course.playlist_id}" 
+                                      frameborder="0" 
+                                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                      allowfullscreen
+                                      loading="lazy">
+                              </iframe>`;
+            } else {
+                videoEmbed = `<div class="absolute inset-0 w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-500"><i class="fas fa-video-slash"></i> لا يوجد فيديو</div>`;
+            }
+
+            const card = document.createElement('div');
+            card.className = 'glass-card rounded-2xl overflow-hidden hover:transform hover:-translate-y-2 trans-all group h-full flex flex-col';
+            card.innerHTML = `
+                <div class="relative w-full aspect-video bg-black rounded-t-2xl overflow-hidden">
+                    ${videoEmbed}
+                    <div class="absolute top-2 left-2 z-20 bg-black/60 backdrop-blur-md text-white text-xs px-2 py-1 rounded-lg border border-white/20">
+                        ${course.category || 'عام'}
+                    </div>
+                </div>
+                <div class="p-5 flex flex-col flex-1">
+                    <h3 class="text-lg font-bold text-gray-800 dark:text-white mb-2 line-clamp-2">${course.title}</h3>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-4 line-clamp-2 flex-1">${course.description || 'لا يوجد وصف'}</p>
+                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-gray-700">
+                        ${priceDisplay}
+                        <button onclick="${isEnrolled ? `openPlayer('${course.id}')` : `enrollCourse('${course.id}')`}" 
+                            class="${isEnrolled ? 'bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400' : 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/30'} 
+                            px-4 py-2 rounded-xl text-sm font-bold hover:brightness-110 trans-all">
+                            ${isEnrolled ? 'استكمال الدورة <i class="fas fa-play text-xs mr-1"></i>' : 'تسجيل الآن'}
+                        </button>
+                    </div>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+
+        // إذا انتهت جميع العناصر، أخف الزر
+        if (currentDisplayCount + nextCourses.length >= totalFiltered) {
+            loadMoreBtn.style.display = 'none';
+        }
+    }
+
+    // --- ✅ ENROLLMENT (with batch) ---
     function enrollCourse(id) {
         if (!appState.myCourses.includes(id)) {
             appState.myCourses.push(id);
@@ -647,30 +849,46 @@
             renderMyCourses();
             updateNavState();
 
-            // Optionally write enrollment to Firestore (batch later)
+            // تجميع التسجيل لكتابته في Firestore
             queueEnrollmentWrite(id);
         }
     }
 
-    // تجميع عمليات التسجيل لكتابتها دفعة واحدة (اختياري)
     function queueEnrollmentWrite(courseId) {
-        // يمكن تنفيذها لاحقاً عند خروج المستخدم أو بشكل دوري
+        if (!auth.currentUser) return;
+        appState.pendingEnrollments.push({
+            userId: auth.currentUser.uid,
+            courseId,
+            enrolledAt: new Date().toISOString()
+        });
     }
 
-    function removeCourse(id, event) {
-        event.stopPropagation();
-        if (confirm("هل أنت متأكد من حذف الدورة؟")) {
-            appState.myCourses = appState.myCourses.filter(cid => cid !== id);
-            localStorage.setItem("myCourses", JSON.stringify(appState.myCourses));
-            renderMyCourses();
-            renderCourses();
-            updateNavState();
+    // كتابة التسجيلات المتراكمة إلى Firestore (مرة كل دقيقة)
+    async function flushEnrollments() {
+        if (appState.pendingEnrollments.length === 0 || !auth.currentUser) return;
+        
+        const batch = db.batch();
+        const userRef = db.collection('users').doc(auth.currentUser.uid);
+        
+        appState.pendingEnrollments.forEach(enrollment => {
+            const enrollmentRef = userRef.collection('enrollments').doc(enrollment.courseId);
+            batch.set(enrollmentRef, {
+                enrolledAt: firebase.firestore.FieldValue.serverTimestamp()
+            }, { merge: true });
+        });
+        
+        try {
+            await batch.commit();
+            console.log(`✅ Flushed ${appState.pendingEnrollments.length} enrollments to Firestore`);
+            appState.pendingEnrollments = [];
+        } catch (error) {
+            console.error("Error flushing enrollments:", error);
         }
     }
 
-    // --- ✅ PLAYER LOGIC ---
+    // --- ✅ PLAYER LOGIC (as before) ---
     function openPlayer(id) {
-        const course = appState.courses.find(c => c.id === id);
+        const course = allCourses.find(c => c.id === id);
         if (!course) return;
 
         appState.currentCourseId = id;
@@ -739,25 +957,24 @@
         // حفظ في localStorage فوراً للاستجابة السريعة
         localStorage.setItem("courseProgress", JSON.stringify(appState.progress));
         
-        // تجميع التحديث لكتابته لاحقاً في Firestore (تقليل الكتابات)
+        // تجميع التحديث لكتابته لاحقاً في Firestore
         if (!appState.pendingProgressUpdates[id]) {
             appState.pendingProgressUpdates[id] = { completed: [...appState.progress[id].completed] };
         } else {
             appState.pendingProgressUpdates[id].completed = [...appState.progress[id].completed];
         }
 
-        const course = appState.courses.find(c => c.id === id);
+        const course = allCourses.find(c => c.id === id);
         const total = course?.num || 10;
         renderPlaylistItems(id, total);
         updateProgressUI(id, total);
     }
 
-    // كتابة تحديثات التprogress المتراكمة إلى Firestore دفعة واحدة
     async function flushProgressUpdates() {
-        if (Object.keys(appState.pendingProgressUpdates).length === 0) return;
+        if (Object.keys(appState.pendingProgressUpdates).length === 0 || !auth.currentUser) return;
         
         const batch = db.batch();
-        const userId = auth.currentUser?.uid || 'anonymous';
+        const userId = auth.currentUser.uid;
         
         for (const [courseId, progress] of Object.entries(appState.pendingProgressUpdates)) {
             const docRef = db.collection('users').doc(userId).collection('progress').doc(courseId);
@@ -769,8 +986,8 @@
         
         try {
             await batch.commit();
-            console.log("Progress batch written to Firestore");
-            appState.pendingProgressUpdates = {}; // مسح التجميع
+            console.log(`✅ Progress batch written to Firestore (${Object.keys(appState.pendingProgressUpdates).length} courses)`);
+            appState.pendingProgressUpdates = {};
         } catch (error) {
             console.error("Error writing progress batch:", error);
         }
@@ -780,7 +997,7 @@
         const id = appState.currentCourseId;
         if (!id) return;
         
-        const course = appState.courses.find(c => c.id === id);
+        const course = allCourses.find(c => c.id === id);
         const total = course?.num || 10;
         
         if (!appState.progress[id]) appState.progress[id] = { completed: [] };
@@ -827,7 +1044,7 @@
         }
 
         grid.innerHTML = appState.myCourses.map(id => {
-            const course = appState.courses.find(c => c.id === id);
+            const course = allCourses.find(c => c.id === id);
             if (!course) return '';
             
             const total = course.num || 10;
@@ -855,6 +1072,18 @@
                 </div>
             `;
         }).join('');
+    }
+
+    function removeCourse(id, event) {
+        event.stopPropagation();
+        if (confirm("هل أنت متأكد من حذف الدورة؟")) {
+            appState.myCourses = appState.myCourses.filter(cid => cid !== id);
+            localStorage.setItem("myCourses", JSON.stringify(appState.myCourses));
+            // يمكن إضافة حذف من Firestore لاحقاً إذا أردت
+            renderMyCourses();
+            renderCourses();
+            updateNavState();
+        }
     }
 
     // --- ✅ NAVIGATION ---
@@ -902,7 +1131,7 @@
 
     // --- ✅ FILTERS ---
     function filterByCategory(cat) {
-        renderCourses(cat);
+        renderCourses(cat === 'all' ? null : cat);
     }
 
     function setupEventListeners() {
@@ -925,6 +1154,7 @@
         // كتابة التحديثات المتراكمة عند مغادرة الصفحة
         window.addEventListener('beforeunload', () => {
             flushProgressUpdates();
+            flushEnrollments();
         });
     });
 
