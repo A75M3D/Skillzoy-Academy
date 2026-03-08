@@ -3,46 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Skillzoy Academy - تسجيل الدخول</title>
-  <meta name="theme-color" content="#4361ee">
+  <title>Skillzoy Academy | تسجيل الدخول</title>
+  <meta name="theme-color" content="#ffffff">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <script type="text/javascript">
-  (function(c,l,a,r,i,t,y){
-      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-  })(window, document, "clarity", "script", "u9054g22tr");
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "u9054g22tr");
   </script>
   <style>
     :root {
-      --primary: #4361ee;
-      --primary-dark: #3a0ca3;
-      --primary-light: #4895ef;
-      --secondary: #7209b7;
-      --success: #4cc9f0;
-      --error: #e63946;
-      --warning: #f4a261;
-      --light: #f8f9fa;
-      --dark: #212529;
-      --gray: #6c757d;
-      --glass-bg: rgba(255, 255, 255, 0.08);
-      --glass-border: rgba(255, 255, 255, 0.18);
-      --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      --primary: #4f46e5;
+      --primary-light: #818cf8;
+      --primary-dark: #3730a3;
+      --secondary: #10b981;
+      --error: #ef4444;
+      --warning: #f59e0b;
+      --success: #10b981;
+      --light: #f9fafb;
+      --dark: #1f2937;
+      --gray: #6b7280;
+      --gray-light: #e5e7eb;
+      --glass-bg: rgba(255, 255, 255, 0.7);
+      --glass-border: rgba(255, 255, 255, 0.5);
+      --glass-shadow: 0 20px 35px -8px rgba(0, 0, 0, 0.1);
     }
 
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Inter', sans-serif;
     }
 
     body {
-      background: linear-gradient(135deg, #1a2980, #26d0ce);
-      background-attachment: fixed;
-      color: var(--light);
+      background: linear-gradient(145deg, #f3f4f6 0%, #ffffff 100%);
       min-height: 100vh;
       display: flex;
       justify-content: center;
@@ -50,56 +49,12 @@
       padding: 20px;
       position: relative;
       overflow-x: hidden;
-    }
-
-    .bg-bubbles {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-    }
-
-    .bg-bubbles li {
-      position: absolute;
-      list-style: none;
-      display: block;
-      width: 40px;
-      height: 40px;
-      background-color: rgba(255, 255, 255, 0.1);
-      bottom: -160px;
-      animation: square 25s infinite;
-      border-radius: 50%;
-    }
-
-    .bg-bubbles li:nth-child(1) { left: 10%; animation-delay: 0s; }
-    .bg-bubbles li:nth-child(2) { left: 20%; width: 80px; height: 80px; animation-delay: 2s; animation-duration: 17s; }
-    .bg-bubbles li:nth-child(3) { left: 25%; animation-delay: 4s; }
-    .bg-bubbles li:nth-child(4) { left: 40%; width: 60px; height: 60px; animation-duration: 22s; }
-    .bg-bubbles li:nth-child(5) { left: 70%; }
-    .bg-bubbles li:nth-child(6) { left: 80%; width: 120px; height: 120px; animation-delay: 3s; }
-    .bg-bubbles li:nth-child(7) { left: 32%; width: 160px; height: 160px; animation-delay: 7s; }
-    .bg-bubbles li:nth-child(8) { left: 55%; width: 20px; height: 20px; animation-delay: 15s; animation-duration: 40s; }
-    .bg-bubbles li:nth-child(9) { left: 25%; width: 10px; height: 10px; animation-delay: 2s; animation-duration: 40s; }
-    .bg-bubbles li:nth-child(10) { left: 90%; width: 160px; height: 160px; animation-delay: 11s; }
-
-    @keyframes square {
-      0% {
-        transform: translateY(0) rotate(0deg);
-        opacity: 1;
-        border-radius: 50%;
-      }
-      100% {
-        transform: translateY(-1000px) rotate(720deg);
-        opacity: 0;
-        border-radius: 10%;
-      }
+      color: var(--dark);
     }
 
     .security-indicator {
-      background: linear-gradient(90deg, var(--success), var(--primary));
-      color: white;
+      background: white;
+      color: var(--dark);
       padding: 10px;
       text-align: center;
       font-size: 0.85rem;
@@ -108,12 +63,13 @@
       left: 0;
       right: 0;
       z-index: 1000;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
       backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--gray-light);
     }
 
     .security-indicator::before {
@@ -144,8 +100,8 @@
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--glass-border);
-      border-radius: 18px;
-      padding: 32px 28px;
+      border-radius: 28px;
+      padding: 36px 32px;
       box-shadow: var(--glass-shadow);
       transition: all 0.4s ease;
       position: relative;
@@ -159,97 +115,85 @@
       left: 0;
       right: 0;
       height: 4px;
-      background: linear-gradient(90deg, var(--primary), var(--success));
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
     }
 
     .glass-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+      transform: translateY(-6px);
+      box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.15);
     }
 
     .logo-section {
       text-align: center;
-      margin-bottom: 22px;
+      margin-bottom: 20px;
     }
 
     .logo {
       display: inline-flex;
       align-items: center;
       gap: 12px;
-      color: white;
+      color: var(--dark);
       text-decoration: none;
       font-size: 1.5rem;
-      font-weight: bold;
+      font-weight: 600;
     }
 
     .logo-icon {
       width: 46px;
       height: 46px;
-      background: rgba(255, 255, 255, 0.15);
-      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-light), var(--primary));
+      border-radius: 14px;
       display: flex;
       justify-content: center;
       align-items: center;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      box-shadow: 0 10px 15px -5px rgba(79, 70, 229, 0.3);
     }
 
     h2 {
       text-align: center;
       margin-bottom: 24px;
-      color: white;
+      color: var(--dark);
       font-weight: 700;
-      font-size: 1.6rem;
-      position: relative;
-    }
-
-    h2::after {
-      content: '';
-      position: absolute;
-      bottom: -8px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 50px;
-      height: 3px;
-      background: linear-gradient(90deg, var(--primary), var(--success));
-      border-radius: 3px;
+      font-size: 1.7rem;
+      letter-spacing: -0.02em;
     }
 
     .form-group {
-      margin-bottom: 20px;
+      margin-bottom: 22px;
       position: relative;
     }
 
     label {
       display: block;
       margin-bottom: 8px;
-      font-weight: 600;
-      color: rgba(255, 255, 255, 0.95);
-      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--dark);
+      font-size: 0.9rem;
     }
 
     .form-control {
       width: 100%;
-      padding: 14px 16px;
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      border-radius: 10px;
+      padding: 14px 18px;
+      border: 1.5px solid var(--gray-light);
+      border-radius: 16px;
       font-size: 0.95rem;
-      background: rgba(255, 255, 255, 0.08);
-      color: white;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
+      background: white;
+      color: var(--dark);
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
     }
 
     .form-control:focus {
       outline: none;
-      border-color: var(--primary-light);
-      box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.25);
-      background: rgba(255, 255, 255, 0.12);
-      transform: translateY(-2px);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+      background: white;
     }
 
     .form-control::placeholder {
-      color: rgba(255, 255, 255, 0.5);
+      color: var(--gray);
+      opacity: 0.6;
     }
 
     .input-with-icon {
@@ -258,15 +202,15 @@
 
     .input-icon {
       position: absolute;
-      left: 16px;
+      left: 18px;
       top: 50%;
       transform: translateY(-50%);
-      color: rgba(255, 255, 255, 0.7);
+      color: var(--gray);
       font-size: 1rem;
     }
 
     .input-with-icon .form-control {
-      padding-left: 45px;
+      padding-left: 48px;
     }
 
     .password-container {
@@ -275,25 +219,25 @@
 
     .toggle-password {
       position: absolute;
-      right: 14px;
+      right: 16px;
       top: 50%;
       transform: translateY(-50%);
       background: none;
       border: none;
-      color: rgba(255, 255, 255, 0.7);
+      color: var(--gray);
       cursor: pointer;
       font-size: 1.1rem;
-      transition: color 0.3s ease;
+      transition: color 0.2s ease;
     }
 
     .toggle-password:hover {
-      color: var(--primary-light);
+      color: var(--primary);
     }
 
     .btn {
       padding: 14px 20px;
       border: none;
-      border-radius: 10px;
+      border-radius: 16px;
       cursor: pointer;
       font-size: 1rem;
       font-weight: 600;
@@ -314,7 +258,7 @@
       left: -100%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
       transition: left 0.5s;
     }
 
@@ -325,12 +269,12 @@
     .btn-primary {
       background: linear-gradient(135deg, var(--primary), var(--primary-dark));
       color: white;
-      box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
+      box-shadow: 0 6px 14px rgba(79, 70, 229, 0.3);
     }
 
     .btn-primary:hover:not(:disabled) {
       transform: translateY(-3px);
-      box-shadow: 0 6px 18px rgba(67, 97, 238, 0.4);
+      box-shadow: 0 10px 20px rgba(79, 70, 229, 0.4);
     }
 
     .btn-primary:disabled {
@@ -342,17 +286,18 @@
 
     .btn-google {
       background: white;
-      color: #333;
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      color: var(--dark);
+      border: 1.5px solid var(--gray-light);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.02);
       font-size: 0.95rem;
       padding: 12px 16px;
     }
 
     .btn-google:hover {
-      background: #f8f9fa;
+      background: var(--light);
       transform: translateY(-2px);
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+      border-color: var(--primary-light);
+      box-shadow: 0 10px 18px rgba(0, 0, 0, 0.05);
     }
 
     .btn-google i {
@@ -362,7 +307,7 @@
 
     .alert {
       padding: 14px 18px;
-      border-radius: 10px;
+      border-radius: 16px;
       margin: 16px 0;
       display: flex;
       align-items: center;
@@ -370,6 +315,7 @@
       animation: slideIn 0.3s ease-out;
       backdrop-filter: blur(10px);
       font-size: 0.9rem;
+      border: 1px solid transparent;
     }
 
     @keyframes slideIn {
@@ -384,24 +330,21 @@
     }
 
     .alert-error { 
-      background: rgba(230, 57, 70, 0.15); 
-      color: #ff6b6b; 
-      border-left: 4px solid var(--error);
-      border: 1px solid rgba(230, 57, 70, 0.3);
+      background: #fef2f2; 
+      color: #b91c1c; 
+      border-color: #fecaca;
     }
     
     .alert-warning { 
-      background: rgba(244, 162, 97, 0.15); 
-      color: #ffd166; 
-      border-left: 4px solid var(--warning);
-      border: 1px solid rgba(244, 162, 97, 0.3);
+      background: #fffbeb; 
+      color: #b45309; 
+      border-color: #fde68a;
     }
     
     .alert-success { 
-      background: rgba(76, 201, 240, 0.15); 
-      color: #4cc9f0; 
-      border-left: 4px solid var(--success);
-      border: 1px solid rgba(76, 201, 240, 0.3);
+      background: #f0fdf4; 
+      color: #065f46; 
+      border-color: #bbf7d0;
     }
 
     .form-options {
@@ -426,40 +369,40 @@
     .remember-me label {
       margin-bottom: 0;
       font-size: 0.9rem;
-      color: rgba(255, 255, 255, 0.85);
+      color: var(--dark);
       cursor: pointer;
     }
 
     .forgot-password {
-      color: var(--primary-light);
+      color: var(--primary);
       text-decoration: none;
       font-size: 0.9rem;
-      transition: all 0.3s ease;
+      transition: all 0.2s ease;
       font-weight: 500;
     }
 
     .forgot-password:hover {
       text-decoration: underline;
-      color: var(--success);
+      color: var(--primary-dark);
     }
 
     .divider {
       display: flex;
       align-items: center;
       text-align: center;
-      margin: 20px 0;
+      margin: 24px 0;
     }
 
     .divider::before,
     .divider::after {
       content: '';
       flex: 1;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      border-bottom: 1px solid var(--gray-light);
     }
 
     .divider span {
       padding: 0 12px;
-      color: rgba(255, 255, 255, 0.7);
+      color: var(--gray);
       font-size: 0.85rem;
     }
 
@@ -467,29 +410,31 @@
       text-align: center;
       margin-top: 24px;
       padding-top: 20px;
-      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      border-top: 1px solid var(--gray-light);
     }
 
     .register-text {
-      color: rgba(255, 255, 255, 0.85);
+      color: var(--gray);
       font-size: 0.95rem;
       margin-bottom: 12px;
     }
 
     .btn-register {
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      border: 1px solid rgba(255, 255, 255, 0.25);
+      background: white;
+      color: var(--dark);
+      border: 1.5px solid var(--gray-light);
       padding: 12px 20px;
       font-weight: 600;
       transition: all 0.3s ease;
       width: 100%;
+      border-radius: 16px;
     }
 
     .btn-register:hover {
-      background: rgba(255, 255, 255, 0.15);
+      background: var(--light);
       transform: translateY(-2px);
       border-color: var(--primary-light);
+      box-shadow: 0 10px 18px rgba(0, 0, 0, 0.05);
     }
 
     .loading-spinner {
@@ -514,7 +459,7 @@
       
       .glass-card {
         padding: 28px 22px;
-        border-radius: 16px;
+        border-radius: 24px;
       }
       
       .form-options {
@@ -569,39 +514,18 @@
 
     @keyframes pulse {
       0% {
-        box-shadow: 0 0 0 0 rgba(67, 97, 238, 0.4);
+        box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.3);
       }
       70% {
-        box-shadow: 0 0 0 8px rgba(67, 97, 238, 0);
+        box-shadow: 0 0 0 8px rgba(79, 70, 229, 0);
       }
       100% {
-        box-shadow: 0 0 0 0 rgba(67, 97, 238, 0);
+        box-shadow: 0 0 0 0 rgba(79, 70, 229, 0);
       }
-    }
-
-    .google-icon {
-      background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg) 73% 55%/150% 150% no-repeat;
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      -webkit-text-fill-color: transparent;
     }
   </style>
 </head>
 <body>
-  <ul class="bg-bubbles">
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-  </ul>
-
   <div class="security-indicator">
     <span>اتصال آمن مشفر - System Secure</span>
   </div>
@@ -659,21 +583,18 @@
         </button>
       </form>
 
-      <!-- فاصل بين طرق التسجيل -->
       <div class="divider">
         <span>أو</span>
       </div>
 
-      <!-- زر تسجيل الدخول بجوجل -->
       <button type="button" class="btn btn-google" id="googleLogin">
-        <i class="fab fa-google google-icon"></i>
+        <i class="fab fa-google"></i>
         <span>متابعة باستخدام Google</span>
       </button>
 
-      <!-- رابط إنشاء حساب -->
       <div class="register-section">
         <div class="register-text">ليس لديك حساب؟</div>
-        <a href="register.html" class="btn btn-register">
+        <a href="register.html" class="btn-register">
           <i class="fas fa-user-plus"></i>
           أنشئ حساب جديد
         </a>
@@ -681,21 +602,17 @@
     </div>
   </div>
 
-  <!-- استخدام CDN لـ Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.38.0/dist/umd/supabase.min.js"></script>
 
   <script>
-    // ===== تهيئة Supabase =====
     const SUPABASE_URL = 'https://sjipwstkvvrautexigmt.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNqaXB3c3RrdnZyYXV0ZXhpZ210Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MTE5MDcsImV4cCI6MjA3NDQ4NzkwN30.FSh2yIdZdvdNvtWxK5JB02PIdWOG3707qO-F0c84PnY';
 
-    // التحقق من وجود المفاتيح
     if (!SUPABASE_URL || !SUPABASE_ANON_KEY || SUPABASE_ANON_KEY === 'your_actual_anon_key_here') {
-        document.body.innerHTML = '<div style="color: white; text-align: center; padding: 50px; background: #e63946; margin: 20px; border-radius: 10px;">❌ يرجى إعداد مفاتيح Supabase الصحيحة</div>';
+        document.body.innerHTML = '<div style="color: white; text-align: center; padding: 50px; background: #ef4444; margin: 20px; border-radius: 16px;">❌ يرجى إعداد مفاتيح Supabase الصحيحة</div>';
         throw new Error('Supabase keys missing');
     }
 
-    // إنشاء عميل Supabase
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
       auth: {
         flowType: 'pkce',
@@ -705,7 +622,6 @@
       }
     });
 
-    // ===== فئة الأمان =====
     class SecurityHelper {
         static sanitizeInput(input) {
             if (typeof input !== 'string') return '';
@@ -725,15 +641,8 @@
         static validatePassword(password) {
             return password && password.length >= 6 && password.length <= 100;
         }
-
-        static safeTextContent(element, text) {
-            if (element && text !== undefined && text !== null) {
-                element.textContent = text.toString();
-            }
-        }
     }
 
-    // ===== عناصر DOM =====
     const elements = {
       loginForm: document.getElementById('loginForm'),
       email: document.getElementById('email'),
@@ -747,28 +656,21 @@
       googleLogin: document.getElementById('googleLogin')
     };
 
-    // ===== أحداث التحميل =====
     document.addEventListener('DOMContentLoaded', () => {
       checkExistingSession();
       setupEventListeners();
-      
       setTimeout(() => {
         document.querySelector('.glass-card').classList.add('pulse');
       }, 1000);
     });
 
-    // ===== التحقق من الجلسة الحالية =====
     async function checkExistingSession() {
       try {
         showAlert('🔍 جاري التحقق من الجلسة الحالية...', 'warning');
-        
         const { data: { session }, error } = await supabase.auth.getSession();
-        
         if (error) throw error;
-        
         if (session) {
           showAlert('✅ تم اكتشاف جلسة نشطة! جاري التوجيه...', 'success');
-          
           setTimeout(() => {
             window.location.href = 'https://skillzoy-academy.vercel.app/dashboard/index.html';
           }, 1500);
@@ -782,47 +684,38 @@
       }
     }
 
-    // ===== إعداد المستمعين للأحداث =====
     function setupEventListeners() {
       elements.loginForm.addEventListener('submit', handleLogin);
       elements.togglePassword.addEventListener('click', togglePasswordVisibility);
       elements.googleLogin.addEventListener('click', handleGoogleLogin);
-      
+
       const inputs = document.querySelectorAll('.form-control');
       inputs.forEach(input => {
         input.addEventListener('focus', function() {
           this.parentElement.parentElement.style.transform = 'translateY(-3px)';
         });
-        
         input.addEventListener('blur', function() {
           this.parentElement.parentElement.style.transform = 'translateY(0)';
         });
       });
 
-      // منع حقن XSS في جميع الحقول
       elements.email.addEventListener('input', (e) => {
         e.target.value = SecurityHelper.sanitizeInput(e.target.value);
       });
     }
 
-    // ===== تبديل رؤية كلمة المرور =====
     function togglePasswordVisibility() {
       const input = elements.password;
       const button = elements.togglePassword;
-      
       const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
       input.setAttribute('type', type);
-      
       const icon = button.querySelector('i');
       icon.className = type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
     }
 
-    // ===== تسجيل الدخول بحساب Google =====
     async function handleGoogleLogin() {
       try {
         showAlert('جاري التحويل إلى صفحة تسجيل الدخول بجوجل...', 'warning');
-        
-        // إعداد خيارات OAuth مع إعادة التوجيه الصحيحة
         const { data, error } = await supabase.auth.signInWithOAuth({
           provider: 'google',
           options: {
@@ -833,16 +726,13 @@
             }
           }
         });
-
         if (error) throw error;
-        
       } catch (error) {
         console.error('Google login error:', error);
         showAlert('❌ حدث خطأ أثناء محاولة تسجيل الدخول بجوجل: ' + (error.message || 'يرجى المحاولة لاحقًا'), 'error');
       }
     }
 
-    // ===== معالجة تسجيل الدخول =====
     async function handleLogin(e) {
       e.preventDefault();
 
@@ -880,9 +770,7 @@
         }
 
         showAlert('✅ تم تسجيل الدخول بنجاح! جاري التوجيه...', 'success');
-        
         document.querySelector('.glass-card').style.transform = 'scale(0.95)';
-        
         setTimeout(() => {
           window.location.href = 'https://skillzoy-academy.vercel.app/dashboard/index.html';
         }, 2000);
@@ -895,14 +783,12 @@
       }
     }
 
-    // ===== معالجة أخطاء تسجيل الدخول =====
     function handleLoginError(error) {
       let message = '⛔ حدث خطأ أثناء تسجيل الدخول';
-      
       if (error.message && error.message.includes('Invalid login credentials')) {
         message = '❌ البريد الإلكتروني أو كلمة المرور غير صحيحة';
       } else if (error.message && error.message.includes('Email not confirmed')) {
-        message = '⚠️ (Supabase Auth) لم يتم تأكيد البريد الإلكتروني. يرجى التحقق من صندوق الوارد 📥';
+        message = '⚠️ لم يتم تأكيد البريد الإلكتروني. يرجى التحقق من صندوق الوارد';
       } else if (error.message && error.message.includes('Too many requests')) {
         message = '⏳ تم إرسال العديد من الطلبات. يرجى الانتظار قليلاً ثم المحاولة مرة أخرى';
       } else if (error.message && error.message.includes('User not found')) {
@@ -910,15 +796,12 @@
       } else {
         message = `⛔ ${error.message || 'حدث خطأ غير متوقع في الخادم'}`;
       }
-      
       showAlert(message, 'error');
     }
 
-    // ===== وظائف مساعدة =====
     function showAlert(message, type) {
       const icon = type === 'error' ? '⛔' : type === 'warning' ? '⚠️' : '✅';
       elements.authAlert.innerHTML = `<div class="alert alert-${type}">${icon} ${message}</div>`;
-      
       if (type !== 'success') {
         setTimeout(() => {
           elements.authAlert.innerHTML = '';
@@ -930,7 +813,6 @@
       elements.loginSubmit.disabled = loading;
       elements.submitText.textContent = loading ? 'جاري تسجيل الدخول...' : 'تسجيل الدخول';
       elements.submitSpinner.style.display = loading ? 'inline-block' : 'none';
-      
       if (loading) {
         elements.loginSubmit.classList.remove('pulse');
       } else {
@@ -938,7 +820,6 @@
       }
     }
 
-    // ===== أمان إضافي =====
     (() => {
       document.addEventListener("keydown", (e) => {
         if (
