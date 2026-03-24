@@ -190,21 +190,7 @@
 
     <main class="max-w-7xl mx-auto px-4 mt-24 space-y-8">
 
-        <section id="heroSection" class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-indigo-600 to-violet-700 p-6 md:p-10 text-white shadow-2xl shadow-indigo-500/20">
-            <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
-                <div class="text-center md:text-right space-y-3 max-w-lg">
-                    <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full text-sm font-medium border border-white/20">
-                        <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                        <span>Skillzoy Academy</span>
-                    </div>
-                    <h2 class="text-3xl md:text-4xl font-bold leading-tight">طور مهاراتك لمستقبل أفضل</h2>
-                    <p class="text-indigo-100 text-lg opacity-90">وأتقن مهارات حقيقية مواكبة لسوق العمل الحديث</p>
-                </div>
-                <div class="hidden md:block absolute left-0 bottom-0 opacity-20">
-                    <i class="fas fa-rocket text-9xl transform -rotate-45 translate-y-10 -translate-x-10"></i>
-                </div>
-            </div>
-        </section>
+        <!-- حذف كامل لقسم heroSection -->
 
         <section class="sticky top-20 z-40">
             <div class="glass-card p-2 rounded-2xl flex flex-col md:flex-row gap-2 shadow-lg">
@@ -369,16 +355,6 @@
     const db = firebase.firestore();
     const auth = firebase.auth();
 
-    // Enable offline persistence for automatic caching
-    db.enablePersistence({ synchronizeTabs: true })
-        .catch(err => {
-            if (err.code === 'failed-precondition') {
-                console.warn('Persistence failed: Multiple tabs open');
-            } else if (err.code === 'unimplemented') {
-                console.warn('Persistence not available in this browser');
-            }
-        });
-
     // --- ✅ STATE MANAGEMENT ---
     let appState = {
         courses: [],
@@ -388,16 +364,37 @@
         currentCourseId: null,
         lastSyncTimestamp: localStorage.getItem("lastSyncTimestamp") || null,
         pendingProgressUpdates: {},
-        pendingEnrollments: [] // تجميع التسجيلات الجديدة
+        pendingEnrollments: []
     };
 
-    // --- ✅ PAGINATION VARIABLES ---
-    let allCourses = [];           // جميع الدورات (قد تكون كلها أو جزء منها)
-    let displayedCourses = [];     // الدورات المعروضة حالياً (بعد التصفية والترتيب)
+    // --- ✅ LOCAL CACHE FOR COURSES WITH 6 HOURS TTL ---
+    const CACHE_KEY = "cachedCourses";
+    const CACHE_TIMESTAMP_KEY = "cachedCoursesTimestamp";
+    const CACHE_DURATION_MS = 6 * 60 * 60 * 1000; // 6 hours
+
+    function saveCoursesToCache(courses) {
+        localStorage.setItem(CACHE_KEY, JSON.stringify(courses));
+        localStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
+    }
+
+    function loadCoursesFromCache() {
+        const cached = localStorage.getItem(CACHE_KEY);
+        const timestamp = localStorage.getItem(CACHE_TIMESTAMP_KEY);
+        if (cached && timestamp) {
+            const age = Date.now() - parseInt(timestamp);
+            if (age < CACHE_DURATION_MS) {
+                return JSON.parse(cached);
+            }
+        }
+        return null;
+    }
+
+    // --- ✅ PAGINATION VARIABLES (based on filtered courses) ---
+    let allCourses = [];           // all courses from cache or server
+    let displayedCourses = [];     // currently filtered courses
     let currentPage = 0;
     const pageSize = 20;
     let hasMore = true;
-    let lastVisible = null;        // آخر دورة في الدفعة (للاستعلام)
     let loadingMore = false;
 
     // --- ✅ GLOBAL TOAST FUNCTION ---
@@ -446,17 +443,25 @@
         `).join('');
     }
 
-    // --- ✅ ANONYMOUS AUTH + FETCH COURSES (CACHE FIRST, THEN SERVER) ---
+    // --- ✅ ANONYMOUS AUTH + LOAD COURSES (CACHE FIRST, THEN SERVER IF EXPIRED) ---
     async function initializeApp() {
         try {
             if (!auth.currentUser) {
                 await auth.signInAnonymously();
                 console.log("✅ Anonymous login successful");
             }
-            // First try to load from cache immediately
-            await loadCoursesFromCache();
-            // Then fetch fresh data from server in background (with pagination)
-            fetchCoursesFromServer();
+
+            // 1. Try to load from cache (6h TTL)
+            const cachedCourses = loadCoursesFromCache();
+            if (cachedCourses && cachedCourses.length > 0) {
+                allCourses = cachedCourses;
+                console.log(`📦 Loaded ${allCourses.length} courses from local cache (6h TTL)`);
+                renderCategories();
+                renderCourses(); // render first page
+            } else {
+                // No valid cache: fetch from server and cache
+                await fetchCoursesFromServerAndCache();
+            }
         } catch (error) {
             console.error("❌ Initialization error:", error);
             showToast("⚠️ حدث خطأ في الاتصال", "error");
@@ -471,132 +476,46 @@
             `;
         }
 
-        // بدء دورة كتابة التحديثات المتراكمة كل دقيقة
+        // Background periodic flush for progress/enrollments
         setInterval(() => {
             flushProgressUpdates();
             flushEnrollments();
         }, 60000);
     }
 
-    // Load courses from local cache first
-    async function loadCoursesFromCache() {
+    async function fetchCoursesFromServerAndCache() {
         try {
-            const snapshot = await db.collection('courses').get({ source: 'cache' });
-            if (!snapshot.empty) {
-                allCourses = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                // ترتيب (مثلاً حسب التاريخ)
-                allCourses.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
-                resetPagination();
-                renderCategories();
-                renderCourses();  // سيعرض الصفحة الأولى
-                console.log(`📚 Loaded ${allCourses.length} courses from cache`);
-            } else {
-                console.log("Cache empty, waiting for server...");
-            }
-        } catch (error) {
-            console.log("No cache available, will fetch from server:", error);
-        }
-    }
-
-    // Fetch courses from server with pagination and delta updates
-    async function fetchCoursesFromServer() {
-        try {
-            let query = db.collection('courses').orderBy('createdAt', 'desc').limit(pageSize);
-            
-            // If we have a last sync timestamp, only fetch newer courses (optional)
-            // لكن هنا نستخدم pagination بسيط: نجلب الدفعة الأولى ثم نخزنها
-            const snapshot = await query.get({ source: 'server' });
-            
+            const snapshot = await db.collection('courses').get({ source: 'server' });
             if (!snapshot.empty) {
                 const serverCourses = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                
-                // Merge with existing courses (replace if newer)
-                serverCourses.forEach(newCourse => {
-                    const index = allCourses.findIndex(c => c.id === newCourse.id);
-                    if (index >= 0) {
-                        allCourses[index] = newCourse;
-                    } else {
-                        allCourses.push(newCourse);
-                    }
-                });
-                
-                // ترتيب جميع الدورات (حسب التاريخ)
-                allCourses.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
-                
-                // تحديث lastVisible لآخر دورة في هذه الدفعة
-                lastVisible = snapshot.docs[snapshot.docs.length - 1];
-                hasMore = snapshot.docs.length === pageSize;
-                
-                // إعادة تعيين pagination وإعادة عرض الصفحة الأولى
-                resetPagination();
+                // sort by createdAt descending (if exists)
+                serverCourses.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+                allCourses = serverCourses;
+                saveCoursesToCache(allCourses);
+                console.log(`📡 Fetched ${allCourses.length} courses from server and cached (6h)`);
                 renderCategories();
                 renderCourses();
-                
-                console.log(`📡 Fetched ${serverCourses.length} courses from server`);
             } else {
                 console.log("No courses from server");
+                allCourses = [];
+                renderCategories();
+                renderCourses();
             }
         } catch (error) {
             console.error("❌ Error fetching courses from server:", error);
             showToast("تحديث الدورات فشل", "error");
-        }
-    }
-
-    // Load more courses (next page)
-    async function loadMoreCourses() {
-        if (loadingMore || !hasMore) return;
-        loadingMore = true;
-        const btn = document.getElementById('loadMoreBtn');
-        btn.disabled = true;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin ml-2"></i> جاري التحميل...';
-
-        try {
-            let query = db.collection('courses')
-                .orderBy('createdAt', 'desc')
-                .startAfter(lastVisible)
-                .limit(pageSize);
-            
-            const snapshot = await query.get({ source: 'server' });
-            
-            if (!snapshot.empty) {
-                const newCourses = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                
-                // إضافة الدورات الجديدة إلى allCourses (تجنب التكرار)
-                newCourses.forEach(newCourse => {
-                    if (!allCourses.some(c => c.id === newCourse.id)) {
-                        allCourses.push(newCourse);
-                    }
-                });
-                
-                // ترتيب
-                allCourses.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
-                
-                // تحديث lastVisible
-                lastVisible = snapshot.docs[snapshot.docs.length - 1];
-                hasMore = snapshot.docs.length === pageSize;
-                
-                // إعادة عرض الدورات (سيتم إضافة الصفحة الحالية + الجديدة تلقائياً)
+            // fallback: try cache again (maybe expired but we still use it)
+            const cached = loadCoursesFromCache();
+            if (cached && cached.length) {
+                allCourses = cached;
+                renderCategories();
                 renderCourses();
             } else {
-                hasMore = false;
+                allCourses = [];
+                renderCategories();
+                renderCourses();
             }
-        } catch (error) {
-            console.error("Error loading more courses:", error);
-            showToast("حدث خطأ أثناء التحميل", "error");
-        } finally {
-            loadingMore = false;
-            btn.disabled = false;
-            btn.innerHTML = 'تحميل المزيد';
-            if (!hasMore) btn.style.display = 'none';
         }
-    }
-
-    // إعادة تعيين pagination عند تغيير الفلتر
-    function resetPagination() {
-        currentPage = 0;
-        // لا نعيد تعيين lastVisible لأنه خاص بالاستعلام، لكننا نريد عرض أول 20 من allCourses
-        // حسب الفلتر الحالي
-        displayedCourses = []; // سيتم ملؤها في renderCourses
     }
 
     // --- ✅ RENDER CATEGORIES ---
@@ -756,7 +675,6 @@
         // إظهار أو إخفاء زر "تحميل المزيد" بناءً على ما إذا كان هناك المزيد من النتائج
         if (hasMoreFiltered && (filtered.length > pageSize)) {
             loadMoreBtn.style.display = 'inline-block';
-            // تعطيل الرابط المؤقت للاستخدام مع filter
             loadMoreBtn.onclick = () => loadMoreFilteredCourses(filter);
         } else {
             loadMoreBtn.style.display = 'none';
@@ -768,9 +686,7 @@
         const loadMoreBtn = document.getElementById('loadMoreBtn');
         const grid = document.getElementById('coursesGrid');
         
-        // عدد العناصر المعروضة حالياً
         const currentDisplayCount = grid.children.length;
-        // إجمالي العناصر المفلترة
         const totalFiltered = displayedCourses.length;
         
         if (currentDisplayCount >= totalFiltered) {
@@ -778,11 +694,9 @@
             return;
         }
         
-        // العناصر التالية
         const nextCount = Math.min(currentDisplayCount + pageSize, totalFiltered);
         const nextCourses = displayedCourses.slice(currentDisplayCount, nextCount);
         
-        // إضافة إلى الـ HTML
         nextCourses.forEach(course => {
             const isEnrolled = appState.myCourses.includes(course.id);
             const priceDisplay = (course.price === 'free' || course.price === 'مجانية') 
@@ -827,7 +741,6 @@
             grid.appendChild(card);
         });
 
-        // إذا انتهت جميع العناصر، أخف الزر
         if (currentDisplayCount + nextCourses.length >= totalFiltered) {
             loadMoreBtn.style.display = 'none';
         }
@@ -849,7 +762,6 @@
             renderMyCourses();
             updateNavState();
 
-            // تجميع التسجيل لكتابته في Firestore
             queueEnrollmentWrite(id);
         }
     }
@@ -863,7 +775,6 @@
         });
     }
 
-    // كتابة التسجيلات المتراكمة إلى Firestore (مرة كل دقيقة)
     async function flushEnrollments() {
         if (appState.pendingEnrollments.length === 0 || !auth.currentUser) return;
         
@@ -886,7 +797,7 @@
         }
     }
 
-    // --- ✅ PLAYER LOGIC (as before) ---
+    // --- ✅ PLAYER LOGIC ---
     function openPlayer(id) {
         const course = allCourses.find(c => c.id === id);
         if (!course) return;
@@ -913,7 +824,6 @@
         document.getElementById('playerOverlay').classList.add('translate-y-full');
         document.getElementById('playerFrame').src = "";
         renderMyCourses();
-        // عند إغلاق المشغل، نقوم بكتابة أي تحديثات تقدم متراكمة إلى Firestore
         flushProgressUpdates();
     }
 
@@ -954,10 +864,8 @@
             appState.progress[id].completed.push(lessonIndex);
         }
         
-        // حفظ في localStorage فوراً للاستجابة السريعة
         localStorage.setItem("courseProgress", JSON.stringify(appState.progress));
         
-        // تجميع التحديث لكتابته لاحقاً في Firestore
         if (!appState.pendingProgressUpdates[id]) {
             appState.pendingProgressUpdates[id] = { completed: [...appState.progress[id].completed] };
         } else {
@@ -1079,7 +987,6 @@
         if (confirm("هل أنت متأكد من حذف الدورة؟")) {
             appState.myCourses = appState.myCourses.filter(cid => cid !== id);
             localStorage.setItem("myCourses", JSON.stringify(appState.myCourses));
-            // يمكن إضافة حذف من Firestore لاحقاً إذا أردت
             renderMyCourses();
             renderCourses();
             updateNavState();
@@ -1088,7 +995,6 @@
 
     // --- ✅ NAVIGATION ---
     function showHome() {
-        document.getElementById('heroSection').classList.remove('hidden');
         document.getElementById('coursesSection').classList.remove('hidden');
         document.getElementById('myCoursesView').classList.add('hidden');
         setActiveNav(0);
@@ -1096,7 +1002,6 @@
     }
 
     function showMyCourses() {
-        document.getElementById('heroSection').classList.add('hidden');
         document.getElementById('coursesSection').classList.add('hidden');
         document.getElementById('myCoursesView').classList.remove('hidden');
         renderMyCourses();
@@ -1146,12 +1051,11 @@
     // --- ✅ INITIALIZE EVERYTHING ---
     document.addEventListener('DOMContentLoaded', () => {
         setupTheme();
-        renderSkeletons();      // عرض الهياكل العظمية فوراً
-        initializeApp();        // المصادقة وجلب البيانات (cache first)
+        renderSkeletons();
+        initializeApp();
         setupEventListeners();
         updateNavState();
 
-        // كتابة التحديثات المتراكمة عند مغادرة الصفحة
         window.addEventListener('beforeunload', () => {
             flushProgressUpdates();
             flushEnrollments();
@@ -1192,6 +1096,5 @@
         }, 500);
     })();
 </script>
-<!-- تذكير: قم بإزالة فهرسة الحقول ذات الكتابات العالية مثل 'updatedAt' إذا لم تكن بحاجة للبحث بها -->
 </body>
 </html>
