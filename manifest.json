@@ -1,23 +1,16 @@
 {
   "name": "SkillZoy Academy",
   "short_name": "Skillzoy",
+  "description": "منصة تعليمية حديثة تقدم دورات ومهارات عملية لمواكبة سوق العمل.",
+  "id": "/?skillzoy-academy",
   "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#1e3a8a",
   "orientation": "portrait",
   "scope": "/",
+
   "icons": [
-    {
-      "src": "/js/ei_1765957630803-removebg-preview.png",
-      "sizes": "72x72",
-      "type": "image/png"
-    },
-    {
-      "src": "/js/ei_1765957630803-removebg-preview.png",
-      "sizes": "144x144",
-      "type": "image/png"
-    },
     {
       "src": "/js/ei_1765957630803-removebg-preview.png",
       "sizes": "192x192",
@@ -25,17 +18,15 @@
     },
     {
       "src": "/js/ei_1765957630803-removebg-preview.png",
-      "sizes": "256x256",
-      "type": "image/png"
-    },
-    {
-      "src": "/js/ei_1765957630803-removebg-preview.png",
       "sizes": "512x512",
       "type": "image/png"
-    },
+    }
+  ],
+
+  "screenshots": [
     {
       "src": "/js/ei_1765957630803-removebg-preview.png",
-      "sizes": "1024x1024",
+      "sizes": "1080x1920",
       "type": "image/png"
     }
   ]
