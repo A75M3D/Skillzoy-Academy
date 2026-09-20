@@ -7,11 +7,9 @@
     <meta name="description" content="منصة تعليمية تقدم شهادات معتمدة و كورسات مجانية في مختلف المجالات.">
     <meta name="keywords" content="التطوير المهني ,افضل شهادات مجانية, تعلم البرمجة, تعليم اونلاين, HTML, CSS, JavaScript, Skillzoy Academy">
     <title>Skillzoy Academy - منصة رائدة في التعليم الألكتروني</title>
-    <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1e3a8a">
     
-    <!-- زر التثبيت في CSS -->
     <style>
         .install-btn {
             background: linear-gradient(135deg, #2563eb, #1e3a8a);
@@ -44,12 +42,10 @@
         }
     </style>
     
-    <!-- إضافة Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <!-- YouTube IFrame API -->
     <script src="https://www.youtube.com/iframe_api"></script>
     
     <style>
@@ -61,7 +57,6 @@
             --color-accent: 219, 234, 254;
         }
         
-        /* تصميم متطور باللونين الأبيض والأزرق */
         body {
             background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
@@ -71,7 +66,6 @@
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
         }
         
-        /* تأثيرات انيميشن متطورة */
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-20px); }
@@ -106,7 +100,6 @@
             animation: gradientShift 15s ease infinite;
         }
         
-        /* تصميم كروت متطور */
         .modern-card {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
@@ -130,7 +123,6 @@
                         0 0 0 1px rgba(59, 130, 246, 0.1);
         }
         
-        /* أزرار متطورة محسنة */
         .modern-btn {
             background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%) !important;
             color: white !important;
@@ -177,7 +169,6 @@
             box-shadow: 0 15px 40px rgba(37, 99, 235, 0.5) !important;
         }
         
-        /* أزرار ثانوية محسنة */
         .secondary-btn {
             background: rgba(30, 58, 138, 0.1) !important;
             color: #1e3a8a !important;
@@ -211,7 +202,6 @@
             box-shadow: 0 10px 30px rgba(96, 165, 250, 0.3) !important;
         }
         
-        /* زر CTA الخاص (قبل الفوتر) */
         .cta-special-btn {
             background: white !important;
             color: #1e3a8a !important;
@@ -262,7 +252,6 @@
             animation: shimmer 2s infinite;
         }
         
-        /* تصميم الهيدر */
         .modern-header {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
@@ -275,7 +264,6 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        /* تأثيرات النص */
         .gradient-text {
             background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #60a5fa 100%);
             -webkit-background-clip: text;
@@ -285,7 +273,6 @@
             animation: gradientShift 8s ease infinite;
         }
         
-        /* تأثيرات الدخول */
         .fade-in-up {
             opacity: 0;
             transform: translateY(30px);
@@ -299,7 +286,6 @@
             }
         }
         
-        /* شبكة خلفية متطورة */
         .grid-background {
             background-image: 
                 linear-gradient(rgba(30, 58, 138, 0.1) 1px, transparent 1px),
@@ -307,7 +293,6 @@
             background-size: 50px 50px;
         }
         
-        /* خطوط أنيقة */
         .section-divider {
             height: 4px;
             width: 100px;
@@ -316,7 +301,6 @@
             margin: 20px auto;
         }
         
-        /* تأثيرات التنقل */
         .nav-link {
             position: relative;
             padding: 8px 16px;
@@ -349,7 +333,6 @@
             width: 100%;
         }
         
-        /* تحسينات الفيديو */
         .video-container {
             position: relative;
             border-radius: 24px;
@@ -366,7 +349,6 @@
             pointer-events: none;
         }
         
-        /* حاوية فيديو اليوتيوب */
         .youtube-player {
             width: 100%;
             height: 100%;
@@ -374,7 +356,6 @@
             background-color: #000;
         }
         
-        /* تأثيرات الإحصائيات محسنة */
         .stat-card {
             background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(248, 250, 252, 0.95));
             border: 2px solid rgba(30, 58, 138, 0.15);
@@ -408,7 +389,6 @@
             background: linear-gradient(180deg, #1e3a8a, #3b82f6);
         }
         
-        /* تحسينات للشهادات */
         .certificate-container {
             position: relative;
             perspective: 1000px;
@@ -426,7 +406,6 @@
             transform: rotateY(5deg) rotateX(5deg) translateY(-10px);
         }
         
-        /* تحسينات القيم */
         .value-icon-container {
             width: 80px;
             height: 80px;
@@ -447,7 +426,6 @@
             box-shadow: 0 15px 40px rgba(30, 58, 138, 0.4);
         }
         
-        /* تحسينات الفوتر */
         .modern-footer {
             background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
             color: white;
@@ -466,7 +444,6 @@
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
         }
         
-        /* تأثيرات التحميل */
         .loading-shimmer {
             background: linear-gradient(90deg, 
                 rgba(30, 58, 138, 0.1) 25%, 
@@ -476,7 +453,6 @@
             animation: shimmer 2s infinite linear;
         }
         
-        /* تحسينات للعرض على الجوال */
         @media (max-width: 768px) {
             .modern-header {
                 backdrop-filter: blur(10px);
@@ -507,7 +483,6 @@
             }
         }
         
-        /* تصميم الشريط الجانبي */
         .sidebar {
             position: fixed;
             top: 50%;
@@ -572,7 +547,6 @@
             }
         }
         
-        /* زر البدء قبل الفوتر */
         .cta-section {
             background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
             border-radius: 40px;
@@ -596,7 +570,6 @@
             animation: float 20s linear infinite;
         }
         
-        /* إشعار الترحيب بالروبوت */
         .welcome-notification {
             position: fixed;
             top: 20px;
@@ -702,7 +675,6 @@
             animation: countUp 1s ease-out forwards;
         }
         
-        /* زر تبديل الشريط الجانبي */
         .sidebar-toggle {
             position: fixed;
             top: 120px;
@@ -732,7 +704,6 @@
             background: linear-gradient(135deg, #2563eb, #3b82f6);
         }
         
-        /* تحسينات الأزرار في القسم الرئيسي */
         .hero-buttons {
             display: flex;
             flex-wrap: wrap;
@@ -740,7 +711,6 @@
             margin-bottom: 48px;
         }
         
-        /* تحسينات للإحصائيات */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -775,7 +745,6 @@
             }
         }
 
-        /* تحسينات زر تشغيل الفيديو */
         .video-play-button {
             position: absolute;
             top: 50%;
@@ -810,7 +779,6 @@
             margin-right: -3px;
         }
         
-        /* حالة تحميل الفيديو */
         .video-loading {
             position: absolute;
             top: 50%;
@@ -833,7 +801,6 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* إشعار الوصول السريع */
         .access-notification {
             position: fixed;
             top: 50%;
@@ -931,7 +898,6 @@
             }
         }
 
-        /* زر الدخول المباشر في الهيدر */
         .direct-access-btn {
             background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
             color: white !important;
@@ -963,32 +929,6 @@
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.15); }
         }
-
-        /* شارة الدخول المباشر */
-        .direct-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(16, 185, 129, 0.1);
-            color: #059669;
-            padding: 8px 16px;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 24px;
-            border: 1px solid rgba(16, 185, 129, 0.3);
-        }
-        
-        .dark .direct-badge {
-            background: rgba(16, 185, 129, 0.15);
-            color: #34d399;
-            border-color: rgba(16, 185, 129, 0.4);
-        }
-        
-        .direct-badge i {
-            font-size: 0.7rem;
-            animation: pulse-icon 1.5s infinite;
-        }
     </style>
     
     <script>
@@ -1014,49 +954,42 @@
 </head>
 <body class="dark:bg-gray-900 theme-transition" data-theme="blue">
     
-    <!-- زر تثبيت التطبيق -->
     <button id="installBtn" class="install-btn hidden">
         <i class="fas fa-download ml-2"></i>
         تثبيت التطبيق
     </button>
 
-    <!-- تأثيرات خلفية متطورة -->
     <div class="fixed inset-0 z-[-2] grid-background opacity-50"></div>
     <div class="fixed inset-0 z-[-1] bg-gradient-to-br from-blue-50/30 via-white/30 to-accent/30 dark:from-gray-900/30 dark:via-gray-800/30 dark:to-blue-900/30"></div>
     
-    <!-- بقع متحركة متطورة -->
     <div class="fixed inset-0 overflow-hidden z-[-1]">
         <div class="absolute -top-40 -right-40 w-80 h-80 bg-blue-400/10 rounded-full blur-3xl float-animation"></div>
         <div class="absolute top-1/3 left-1/4 w-96 h-96 bg-blue-300/5 rounded-full blur-3xl float-animation" style="animation-delay: 1s;"></div>
         <div class="absolute bottom-0 right-1/3 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl float-animation" style="animation-delay: 2s;"></div>
     </div>
 
-    <!-- إشعار الترحيب بالروبوت -->
     <div id="welcome-notification" class="welcome-notification">
         <img src="https://cdn-icons-png.flaticon.com/512/4712/4712035.png" alt="روبوت ترحيب" class="robot-image">
         <div class="welcome-text">
             <h3>مرحباً بك في Skillzoy! 👋</h3>
-            <p>دخول مباشر بدون تسجيل — ابدأ التعلم فوراً</p>
+            <p>دخول مباشر ووصول سريع للدورات</p>
         </div>
         <button class="close-notification" onclick="closeWelcomeNotification()">×</button>
     </div>
 
-    <!-- إشعار الوصول السريع -->
     <div id="access-notification" class="access-notification hidden">
         <button class="access-close-btn" onclick="closeAccessNotification()">×</button>
         <img src="https://cdn-icons-png.flaticon.com/512/4712/4712035.png" alt="روبوت الوصول السريع" class="access-robot-image">
         <div class="access-text">
             <h3>🚀 الوصول السريع للدورات!</h3>
-            <p>اضغط على زر « ابدأ التعلم الآن » في الأسفل وابدأ مباشرة بدون أي تسجيل!</p>
+            <p>اضغط على زر « ابدأ التعلم الآن » في الأسفل وتابع رحلتك مباشرة!</p>
         </div>
     </div>
 
-    <!-- زر تبديل الشريط الجانبي -->
     <button id="sidebar-toggle-btn" class="sidebar-toggle hidden lg:flex">
         <i class="fas fa-bars" id="sidebar-icon"></i>
     </button>
 
-    <!-- شريط جانبي للأزرار (بدون تسجيل دخول) -->
     <div id="sidebar" class="sidebar hidden">
         <a href="#courses" class="sidebar-btn" title="الدورات">
             <i class="fas fa-book"></i>
@@ -1075,11 +1008,9 @@
         </a>
     </div>
 
-    <!-- Header -->
     <header class="modern-header sticky top-0 z-50 transition-all duration-500">
         <div class="container mx-auto px-4 py-3">
             <div class="flex items-center justify-between">
-                <!-- Logo -->
                 <div class="flex items-center space-x-3 space-x-reverse">
                     <div class="w-12 h-12 bg-gradient-to-br from-primary to-primary-light rounded-2xl flex items-center justify-center shadow-lg">
                         <i class="fas fa-graduation-cap text-white text-xl"></i>
@@ -1090,7 +1021,6 @@
                     </div>
                 </div>
 
-                <!-- Desktop Navigation -->
                 <nav class="hidden lg:flex items-center space-x-1 space-x-reverse">
                     <a href="#home" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary font-medium">الرئيسية</a>
                     <a href="#courses" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary font-medium">الدورات</a>
@@ -1101,20 +1031,16 @@
                     <a href="#trainers" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary font-medium">للمدربين</a>
                 </nav>
 
-                <!-- Actions -->
                 <div class="flex items-center space-x-3 space-x-reverse">
-                    <!-- Theme Toggle -->
                     <button id="theme-toggle" class="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-blue-600 dark:text-blue-300 hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors shadow-md">
                         <i class="fas fa-moon dark:hidden"></i>
                         <i class="fas fa-sun hidden dark:block"></i>
                     </button>
                     
-                    <!-- Mobile Menu -->
                     <button id="mobile-menu-btn" class="lg:hidden w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-blue-600 dark:text-blue-300 shadow-md">
                         <i class="fas fa-bars"></i>
                     </button>
                     
-                    <!-- Direct Access Button -->
                     <a href="dashboard/index.html" class="hidden lg:inline-flex direct-access-btn">
                         <i class="fas fa-rocket"></i>
                         ابدأ التعلم الآن
@@ -1124,7 +1050,6 @@
         </div>
     </header>
 
-    <!-- Mobile Navigation -->
     <div id="mobile-nav" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden backdrop-blur-sm">
         <div class="absolute top-0 right-0 h-full w-80 max-w-full bg-white dark:bg-gray-900 shadow-xl">
             <div class="p-6">
@@ -1172,7 +1097,7 @@
                         </a>
                         <p class="text-center text-xs text-gray-500 dark:text-gray-400 mt-3">
                             <i class="fas fa-bolt text-yellow-500 ml-1"></i>
-                            دخول مباشر بدون تسجيل
+                            دخول مباشر ووصول سريع للدورات
                         </p>
                     </div>
                 </nav>
@@ -1180,25 +1105,17 @@
         </div>
     </div>
 
-    <!-- Hero Section -->
     <section id="home" class="pt-20 pb-32 relative overflow-hidden">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                <!-- Hero Content -->
                 <div class="fade-in-up">
-                    <!-- شارة الدخول المباشر -->
-                    <div class="direct-badge">
-                        <i class="fas fa-circle"></i>
-                        <span>دخول مباشر — بدون تسجيل أو إنشاء حساب</span>
-                    </div>
-                    
                     <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6">
                         طور مهاراتك مع
                         <span class="gradient-text block mt-2">Skillzoy Academy</span>
                     </h1>
                     
                     <p class="text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
-                        انضم إلى آلاف الطلاب حول العالم وطور مهاراتك مع دوراتنا المتخصصة. احصل على شهادات معتمدة وافتح أبوابًا جديدة لمستقبلك المهني — بدون أي تسجيل، ابدأ فوراً.
+                        انضم إلى آلاف الطلاب حول العالم وطور مهاراتك مع دوراتنا المتخصصة. احصل على شهادات معتمدة وافتح أبوابًا جديدة لمستقبلك المهني.
                     </p>
                     
                     <div class="hero-buttons">
@@ -1212,7 +1129,6 @@
                         </a>
                     </div>
                     
-                    <!-- Stats -->
                     <div class="stats-grid">
                         <div class="stat-card p-6 rounded-2xl text-center">
                             <p class="text-3xl font-bold text-primary dark:text-blue-300 mb-2">
@@ -1235,19 +1151,15 @@
                     </div>
                 </div>
                 
-                <!-- Hero Video -->
                 <div class="fade-in-up" style="animation-delay: 0.2s;">
                     <div class="video-container relative" style="height: 384px;">
                         <div class="absolute inset-0 bg-gradient-to-br from-primary/20 to-blue-300/10 rounded-3xl"></div>
-                        <!-- حاوية فيديو اليوتيوب -->
                         <div id="youtube-player" class="youtube-player"></div>
                         
-                        <!-- زر تشغيل الفيديو -->
                         <div class="video-play-button" id="play-video">
                             <i class="fas fa-play"></i>
                         </div>
                         
-                        <!-- مؤشر التحميل -->
                         <div class="video-loading hidden" id="video-loading">
                             <div class="video-loading-spinner"></div>
                         </div>
@@ -1257,7 +1169,6 @@
         </div>
     </section>
 
-    <!-- Courses Section -->
     <section id="courses" class="py-24 bg-white/50 dark:bg-gray-900/50">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16 fade-in-up">
@@ -1266,12 +1177,11 @@
                 </h2>
                 <div class="section-divider"></div>
                 <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                    اختر من بين مجموعة واسعة من الدورات المجانية المصممة خصيصًا لتلبية احتياجات سوق العمل الحديث — واضغط مباشرة للبدء
+                    اختر من بين مجموعة واسعة من الدورات المجانية المصممة خصيصًا لتلبية احتياجات سوق العمل الحديث
                 </p>
             </div>
             
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <!-- Course 1 -->
                 <div class="modern-card p-8 fade-in-up">
                     <div class="video-container mb-6">
                         <img src="https://i.ibb.co/XrsJYthH/096e359e1e0bee3457c3517b09c4d165.jpg" 
@@ -1316,7 +1226,6 @@
                     </a>
                 </div>
                 
-                <!-- Course 2 -->
                 <div class="modern-card p-8 fade-in-up" style="animation-delay: 0.1s;">
                     <div class="video-container mb-6">
                         <img src="https://i.ibb.co/TDjSjbqT/574d8143dbf957728e88b81c13dbd469.jpg" 
@@ -1364,7 +1273,7 @@
         </div>
     </section>
 
-    <!-- Process Section -->
+    <!-- Process Section - تم تبديل الخطوتين 1 و 2 -->
     <section id="process" class="py-24 bg-gradient-to-br from-blue-50 to-white dark:from-gray-900 dark:to-gray-800">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16 fade-in-up">
@@ -1373,13 +1282,25 @@
                 </h2>
                 <div class="section-divider"></div>
                 <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                    خطوات بسيطة وسريعة — بدون تسجيل أو انتظار، ابدأ التعلم مباشرة
+                    خطوات بسيطة وسريعة للوصول إلى دوراتك وبدء التعلم مباشرة
                 </p>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Step 1 -->
+                <!-- Step 1 (كان Step 2) - دخول مباشر -->
                 <div class="modern-card p-8 text-center fade-in-up">
+                    <div class="value-icon-container mb-6">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">دخول مباشر</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        اضغط على «ابدأ الدورة» وستنتقل مباشرة إلى المحتوى
+                    </p>
+                    <div class="mt-6 text-3xl font-bold text-primary opacity-50">01</div>
+                </div>
+                
+                <!-- Step 2 (كان Step 1) - اختر دورتك -->
+                <div class="modern-card p-8 text-center fade-in-up" style="animation-delay: 0.1s;">
                     <div class="value-icon-container mb-6">
                         <i class="fas fa-hand-pointer"></i>
                     </div>
@@ -1387,22 +1308,10 @@
                     <p class="text-gray-600 dark:text-gray-400">
                         تصفح الدورات المتاحة واختر ما يناسب هدفك المهني
                     </p>
-                    <div class="mt-6 text-3xl font-bold text-primary opacity-50">01</div>
-                </div>
-                
-                <!-- Step 2 -->
-                <div class="modern-card p-8 text-center fade-in-up" style="animation-delay: 0.1s;">
-                    <div class="value-icon-container mb-6">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">دخول مباشر</h3>
-                    <p class="text-gray-600 dark:text-gray-400">
-                        اضغط على «ابدأ الدورة» وستدخل مباشرة بدون تسجيل
-                    </p>
                     <div class="mt-6 text-3xl font-bold text-primary opacity-50">02</div>
                 </div>
                 
-                <!-- Step 3 -->
+                <!-- Step 3 - ابدأ التعلم -->
                 <div class="modern-card p-8 text-center fade-in-up" style="animation-delay: 0.2s;">
                     <div class="value-icon-container mb-6">
                         <i class="fas fa-play-circle"></i>
@@ -1414,7 +1323,7 @@
                     <div class="mt-6 text-3xl font-bold text-primary opacity-50">03</div>
                 </div>
                 
-                <!-- Step 4 -->
+                <!-- Step 4 - الحصول على الشهادة -->
                 <div class="modern-card p-8 text-center fade-in-up" style="animation-delay: 0.3s;">
                     <div class="value-icon-container mb-6">
                         <i class="fas fa-award"></i>
@@ -1429,7 +1338,6 @@
         </div>
     </section>
 
-    <!-- Testimonials -->
     <section id="testimonials" class="py-24 bg-white dark:bg-gray-900">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16 fade-in-up">
@@ -1443,7 +1351,6 @@
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Testimonial 1 -->
                 <div class="modern-card p-8 fade-in-up">
                     <div class="flex items-center mb-6">
                         <img src="https://i.ibb.co/3Kp94ZJ/978ac54cfb18a268489d5232ab0f4163.jpg" 
@@ -1466,7 +1373,6 @@
                     </p>
                 </div>
                 
-                <!-- Testimonial 2 -->
                 <div class="modern-card p-8 fade-in-up" style="animation-delay: 0.1s;">
                     <div class="flex items-center mb-6">
                         <img src="https://i.ibb.co/0yr1RTbY/bb93a953c53eb5f755ad55fa0d8d259a.jpg" 
@@ -1489,7 +1395,6 @@
                     </p>
                 </div>
                 
-                <!-- Testimonial 3 -->
                 <div class="modern-card p-8 fade-in-up" style="animation-delay: 0.2s;">
                     <div class="flex items-center mb-6">
                         <img src="https://i.ibb.co/QFMxTMBy/7464abbefba19ee1028e179d03821b25.jpg" 
@@ -1515,7 +1420,6 @@
         </div>
     </section>
 
-    <!-- Certificate Section -->
     <section id="certificate" class="py-24 bg-gradient-to-br from-blue-50 to-white dark:from-gray-900 dark:to-gray-800">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16 fade-in-up">
@@ -1558,7 +1462,6 @@
         </div>
     </section>
 
-    <!-- Values Section -->
     <section id="values" class="py-24 bg-white dark:bg-gray-900">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16 fade-in-up">
@@ -1572,7 +1475,6 @@
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Value 1 -->
                 <div class="value-card modern-card p-8 text-center fade-in-up">
                     <div class="value-icon-container">
                         <i class="fas fa-universal-access"></i>
@@ -1583,7 +1485,6 @@
                     </p>
                 </div>
                 
-                <!-- Value 2 -->
                 <div class="value-card modern-card p-8 text-center fade-in-up" style="animation-delay: 0.1s;">
                     <div class="value-icon-container">
                         <i class="fas fa-shield-alt"></i>
@@ -1594,7 +1495,6 @@
                     </p>
                 </div>
                 
-                <!-- Value 3 -->
                 <div class="value-card modern-card p-8 text-center fade-in-up" style="animation-delay: 0.2s;">
                     <div class="value-icon-container">
                         <i class="fas fa-trophy"></i>
@@ -1605,7 +1505,6 @@
                     </p>
                 </div>
                 
-                <!-- Value 4 -->
                 <div class="value-card modern-card p-8 text-center fade-in-up" style="animation-delay: 0.3s;">
                     <div class="value-icon-container">
                         <i class="fas fa-users"></i>
@@ -1616,7 +1515,6 @@
                     </p>
                 </div>
                 
-                <!-- Value 5 -->
                 <div class="value-card modern-card p-8 text-center fade-in-up" style="animation-delay: 0.4s;">
                     <div class="value-icon-container">
                         <i class="fas fa-globe"></i>
@@ -1627,7 +1525,6 @@
                     </p>
                 </div>
                 
-                <!-- Value 6 -->
                 <div class="value-card modern-card p-8 text-center fade-in-up" style="animation-delay: 0.5s;">
                     <div class="value-icon-container">
                         <i class="fas fa-graduation-cap"></i>
@@ -1641,7 +1538,6 @@
         </div>
     </section>
 
-    <!-- Collaboration Section -->
     <section id="collaboration" class="py-24 bg-gradient-to-br from-blue-50 to-white dark:from-gray-900 dark:to-gray-800">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16 fade-in-up">
@@ -1680,7 +1576,6 @@
         </div>
     </section>
 
-    <!-- Trainers Section -->
     <section id="trainers" class="py-24 bg-white dark:bg-gray-900">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16 fade-in-up">
@@ -1711,20 +1606,19 @@
         </div>
     </section>
 
-    <!-- Call to Action Section -->
     <section class="py-24">
         <div class="container mx-auto px-4">
             <div class="cta-section p-12 md:p-16 fade-in-up">
                 <div class="max-w-3xl mx-auto text-center relative z-10">
                     <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-5 py-2 rounded-full mb-6 border border-white/20">
                         <i class="fas fa-bolt text-yellow-300"></i>
-                        <span class="text-white text-sm font-medium">دخول مباشر — بدون تسجيل</span>
+                        <span class="text-white text-sm font-medium">دخول مباشر ووصول سريع</span>
                     </div>
                     <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
                         مستعد لبدء رحلتك التعليمية؟
                     </h2>
                     <p class="text-xl text-blue-100 mb-8">
-                        انضم إلى آلاف الطلاب الناجحين وابدأ رحلتك نحو التميز المهني اليوم — بضغطة زر واحدة
+                        انضم إلى آلاف الطلاب الناجحين وابدأ رحلتك نحو التميز المهني اليوم
                     </p>
                     <a href="dashboard/index.html" class="cta-special-btn inline-flex items-center">
                         <i class="fas fa-graduation-cap ml-2"></i>
@@ -1732,18 +1626,16 @@
                     </a>
                     <p class="text-blue-200 mt-6 text-sm">
                         <i class="fas fa-check-circle ml-1"></i>
-                        دخول فوري — بدون أي تسجيل أو انتظار
+                        وصول سريع ومباشر للدورات
                     </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="modern-footer pt-16 pb-8">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
-                <!-- Column 1 -->
                 <div>
                     <div class="flex items-center mb-6">
                         <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-lg">
@@ -1773,7 +1665,6 @@
                     </div>
                 </div>
                 
-                <!-- Column 2 -->
                 <div>
                     <h4 class="text-lg font-bold text-white mb-6">روابط سريعة</h4>
                     <ul class="space-y-3">
@@ -1785,7 +1676,6 @@
                     </ul>
                 </div>
                 
-                <!-- Column 3 -->
                 <div>
                     <h4 class="text-lg font-bold text-white mb-6">الدورات</h4>
                     <ul class="space-y-3">
@@ -1797,7 +1687,6 @@
                     </ul>
                 </div>
                 
-                <!-- Column 4 -->
                 <div>
                     <h4 class="text-lg font-bold text-white mb-6">تواصل معنا</h4>
                     <ul class="space-y-3 text-blue-200">
@@ -1856,7 +1745,6 @@
             }
         });
         
-        // تهيئة GSAP للانيميشنات
         document.addEventListener('DOMContentLoaded', function() {
             gsap.registerPlugin(ScrollTrigger);
             
@@ -1891,7 +1779,6 @@
                 });
             });
             
-            // تبديل الوضع الداكن
             const themeToggle = document.getElementById('theme-toggle');
             themeToggle.addEventListener('click', () => {
                 document.documentElement.classList.toggle('dark');
@@ -1904,7 +1791,6 @@
                 document.documentElement.classList.add('dark');
             }
             
-            // القائمة الجوالية
             const mobileMenuBtn = document.getElementById('mobile-menu-btn');
             const mobileNav = document.getElementById('mobile-nav');
             const closeMobileMenu = document.getElementById('close-mobile-menu');
@@ -1923,14 +1809,12 @@
                 }
             });
             
-            // إغلاق القائمة عند النقر على رابط
             mobileNav.querySelectorAll('a').forEach(link => {
                 link.addEventListener('click', () => {
                     mobileNav.classList.add('hidden');
                 });
             });
             
-            // الشريط الجانبي
             const sidebarToggleBtn = document.getElementById('sidebar-toggle-btn');
             const sidebar = document.getElementById('sidebar');
             const sidebarIcon = document.getElementById('sidebar-icon');
@@ -1962,7 +1846,6 @@
                 }
             });
             
-            // نبضات الأيقونات
             setInterval(() => {
                 gsap.to('.value-icon-container', {
                     scale: 1.1,
@@ -1979,7 +1862,6 @@
                 ease: 'power2.inOut'
             });
             
-            // العدّاد المتحرك
             function animateCounters() {
                 const counters = document.querySelectorAll('.counting-number');
                 counters.forEach(counter => {
@@ -2022,7 +1904,6 @@
                 });
             }
             
-            // تأثيرات الشهادات
             document.querySelectorAll('.certificate-container').forEach(container => {
                 container.addEventListener('mouseenter', () => {
                     gsap.to(container.querySelector('.certificate-image'), {
@@ -2045,7 +1926,6 @@
                 });
             });
             
-            // تأثيرات الفيديو
             const videoContainers = document.querySelectorAll('.video-container');
             videoContainers.forEach(container => {
                 const playBtn = container.querySelector('#play-video');
@@ -2066,7 +1946,6 @@
                 }
             });
             
-            // تأثيرات التمرير للهيدر
             let lastScroll = 0;
             const header = document.querySelector('header');
             
@@ -2091,7 +1970,6 @@
             });
         });
         
-        // إغلاق إشعار الترحيب
         function closeWelcomeNotification() {
             const notification = document.getElementById('welcome-notification');
             gsap.to(notification, {
@@ -2252,7 +2130,6 @@
             }, 500);
         });
         
-        // تحسين تجربة الجوال
         function optimizeForMobile() {
             if (window.innerWidth <= 768) {
                 const videoContainer = document.querySelector('.video-container');
@@ -2271,7 +2148,6 @@
         window.addEventListener('load', optimizeForMobile);
         window.addEventListener('resize', optimizeForMobile);
         
-        // ===== إشعار الوصول السريع =====
         const accessNotification = document.getElementById('access-notification');
         
         setTimeout(() => {
