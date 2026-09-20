@@ -6,7 +6,7 @@
     <meta name="google-site-verification" content="oSd203M5ljdzzVDAHe_R7NBxg5seGO5-EUleZL8D90E" />
     <meta name="description" content="منصة تعليمية تقدم شهادات معتمدة و كورسات مجانية في مختلف المجالات.">
     <meta name="keywords" content="التطوير المهني ,افضل شهادات مجانية, تعلم البرمجة, تعليم اونلاين, HTML, CSS, JavaScript, Skillzoy Academy">
-    <title>Skillzoy Academy -منصة رائدة في التعليم الألكتروني </title>
+    <title>Skillzoy Academy - منصة رائدة في التعليم الألكتروني</title>
     <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1e3a8a">
@@ -130,7 +130,7 @@
                         0 0 0 1px rgba(59, 130, 246, 0.1);
         }
         
-        /* أزرار متطورة محسنة - الآن زرقاء في كلا الوضعين */
+        /* أزرار متطورة محسنة */
         .modern-btn {
             background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%) !important;
             color: white !important;
@@ -177,7 +177,7 @@
             box-shadow: 0 15px 40px rgba(37, 99, 235, 0.5) !important;
         }
         
-        /* أزرار ثانوية محسنة - الآن زرقاء في كلا الوضعين */
+        /* أزرار ثانوية محسنة */
         .secondary-btn {
             background: rgba(30, 58, 138, 0.1) !important;
             color: #1e3a8a !important;
@@ -211,7 +211,7 @@
             box-shadow: 0 10px 30px rgba(96, 165, 250, 0.3) !important;
         }
         
-        /* زر CTA الخاص (قبل الفوتر) - أبيض مع إطار أزرق */
+        /* زر CTA الخاص (قبل الفوتر) */
         .cta-special-btn {
             background: white !important;
             color: #1e3a8a !important;
@@ -363,6 +363,7 @@
             inset: 0;
             background: linear-gradient(135deg, rgba(30, 58, 138, 0.2), rgba(59, 130, 246, 0.1));
             z-index: 1;
+            pointer-events: none;
         }
         
         /* حاوية فيديو اليوتيوب */
@@ -832,7 +833,7 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* إشعار الوصول السريع - الجديد */
+        /* إشعار الوصول السريع */
         .access-notification {
             position: fixed;
             top: 50%;
@@ -929,6 +930,65 @@
                 display: none;
             }
         }
+
+        /* زر الدخول المباشر في الهيدر */
+        .direct-access-btn {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white !important;
+            padding: 10px 22px;
+            border-radius: 14px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            box-shadow: 0 8px 25px rgba(30, 58, 138, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            font-size: 0.95rem;
+        }
+        
+        .direct-access-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(30, 58, 138, 0.4);
+        }
+        
+        .direct-access-btn i {
+            animation: pulse-icon 2s infinite;
+        }
+        
+        @keyframes pulse-icon {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        /* شارة الدخول المباشر */
+        .direct-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(16, 185, 129, 0.1);
+            color: #059669;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+        
+        .dark .direct-badge {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border-color: rgba(16, 185, 129, 0.4);
+        }
+        
+        .direct-badge i {
+            font-size: 0.7rem;
+            animation: pulse-icon 1.5s infinite;
+        }
     </style>
     
     <script>
@@ -954,7 +1014,7 @@
 </head>
 <body class="dark:bg-gray-900 theme-transition" data-theme="blue">
     
-    <!-- زر تثبيت التطبيق بنفس الطريقة في الكود الأول -->
+    <!-- زر تثبيت التطبيق -->
     <button id="installBtn" class="install-btn hidden">
         <i class="fas fa-download ml-2"></i>
         تثبيت التطبيق
@@ -975,20 +1035,19 @@
     <div id="welcome-notification" class="welcome-notification">
         <img src="https://cdn-icons-png.flaticon.com/512/4712/4712035.png" alt="روبوت ترحيب" class="robot-image">
         <div class="welcome-text">
-            <h3>مرحباً بك في Skillzoy!👋</h3>
-            <p>نتمنى لك رحلة تعليمية ممتعة ومليئة بالإنجازات</p>
+            <h3>مرحباً بك في Skillzoy! 👋</h3>
+            <p>دخول مباشر بدون تسجيل — ابدأ التعلم فوراً</p>
         </div>
         <button class="close-notification" onclick="closeWelcomeNotification()">×</button>
     </div>
 
-    <!-- إشعار الوصول السريع الجديد -->
+    <!-- إشعار الوصول السريع -->
     <div id="access-notification" class="access-notification hidden">
         <button class="access-close-btn" onclick="closeAccessNotification()">×</button>
         <img src="https://cdn-icons-png.flaticon.com/512/4712/4712035.png" alt="روبوت الوصول السريع" class="access-robot-image">
         <div class="access-text">
             <h3>🚀 الوصول السريع للدورات!</h3>
-            <p> اضغط على زر  » ابدأ التعلم الآن «   
-            في الأسفل وتابع مع Google!</p>
+            <p>اضغط على زر « ابدأ التعلم الآن » في الأسفل وابدأ مباشرة بدون أي تسجيل!</p>
         </div>
     </div>
 
@@ -997,19 +1056,22 @@
         <i class="fas fa-bars" id="sidebar-icon"></i>
     </button>
 
-    <!-- شريط جانبي للأزرار -->
+    <!-- شريط جانبي للأزرار (بدون تسجيل دخول) -->
     <div id="sidebar" class="sidebar hidden">
-        <a href="login.html" class="sidebar-btn" title="تسجيل الدخول">
-            <i class="fas fa-sign-in-alt"></i>
-        </a>
-        <a href="register.html" class="sidebar-btn" title="إنشاء حساب">
-            <i class="fas fa-user-plus"></i>
-        </a>
         <a href="#courses" class="sidebar-btn" title="الدورات">
             <i class="fas fa-book"></i>
         </a>
         <a href="#certificate" class="sidebar-btn" title="الشهادات">
             <i class="fas fa-award"></i>
+        </a>
+        <a href="#testimonials" class="sidebar-btn" title="آراء الطلاب">
+            <i class="fas fa-comments"></i>
+        </a>
+        <a href="https://wa.me/0908280115" class="sidebar-btn" title="تواصل واتساب" target="_blank">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="dashboard/index.html" class="sidebar-btn" title="ابدأ التعلم">
+            <i class="fas fa-rocket"></i>
         </a>
     </div>
 
@@ -1024,7 +1086,7 @@
                     </div>
                     <div>
                         <h1 class="text-xl font-bold text-primary dark:text-white">Skillzoy Academy</h1>
-                        <p class="text-xs text-gray-600 dark:text-gray-300">منصة رائدة في التعليم الألكتروني </p>
+                        <p class="text-xs text-gray-600 dark:text-gray-300">منصة رائدة في التعليم الألكتروني</p>
                     </div>
                 </div>
 
@@ -1032,11 +1094,10 @@
                 <nav class="hidden lg:flex items-center space-x-1 space-x-reverse">
                     <a href="#home" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary font-medium">الرئيسية</a>
                     <a href="#courses" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary font-medium">الدورات</a>
-                    <a href="#process" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary font-medium">الاشتراك</a>
+                    <a href="#process" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary font-medium">البدء</a>
                     <a href="#testimonials" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary font-medium">آراء الطلاب</a>
                     <a href="#certificate" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary font-medium">الشهادات</a>
                     <a href="#values" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary font-medium">قيمنا</a>
-                    <a href="#collaboration" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary font-medium">التعاون</a>
                     <a href="#trainers" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary font-medium">للمدربين</a>
                 </nav>
 
@@ -1053,15 +1114,11 @@
                         <i class="fas fa-bars"></i>
                     </button>
                     
-                    <!-- Auth Buttons -->
-                    <div class="hidden lg:flex space-x-3 space-x-reverse">
-                        <a href="login.html" class="secondary-btn px-6 py-2">
-                            تسجيل الدخول
-                        </a>
-                        <a href="register.html" class="modern-btn px-6 py-2">
-                            إنشاء حساب
-                        </a>
-                    </div>
+                    <!-- Direct Access Button -->
+                    <a href="dashboard/index.html" class="hidden lg:inline-flex direct-access-btn">
+                        <i class="fas fa-rocket"></i>
+                        ابدأ التعلم الآن
+                    </a>
                 </div>
             </div>
         </div>
@@ -1093,8 +1150,8 @@
                         الدورات
                     </a>
                     <a href="#process" class="flex items-center p-3 rounded-xl hover:bg-blue-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">
-                        <i class="fas fa-sign-in-alt ml-3"></i>
-                        الاشتراك
+                        <i class="fas fa-play-circle ml-3"></i>
+                        كيف تبدأ
                     </a>
                     <a href="#testimonials" class="flex items-center p-3 rounded-xl hover:bg-blue-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">
                         <i class="fas fa-comments ml-3"></i>
@@ -1104,13 +1161,19 @@
                         <i class="fas fa-award ml-3"></i>
                         الشهادات
                     </a>
+                    <a href="#values" class="flex items-center p-3 rounded-xl hover:bg-blue-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">
+                        <i class="fas fa-heart ml-3"></i>
+                        قيمنا
+                    </a>
                     <div class="pt-4 border-t border-gray-200 dark:border-gray-800">
-                        <a href="login.html" class="block w-full p-3 text-center secondary-btn mb-3">
-                            تسجيل الدخول
+                        <a href="dashboard/index.html" class="block w-full p-4 text-center modern-btn">
+                            <i class="fas fa-rocket ml-2"></i>
+                            ابدأ التعلم الآن
                         </a>
-                        <a href="register.html" class="block w-full p-3 text-center modern-btn">
-                            إنشاء حساب
-                        </a>
+                        <p class="text-center text-xs text-gray-500 dark:text-gray-400 mt-3">
+                            <i class="fas fa-bolt text-yellow-500 ml-1"></i>
+                            دخول مباشر بدون تسجيل
+                        </p>
                     </div>
                 </nav>
             </div>
@@ -1123,7 +1186,11 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                 <!-- Hero Content -->
                 <div class="fade-in-up">
-                 
+                    <!-- شارة الدخول المباشر -->
+                    <div class="direct-badge">
+                        <i class="fas fa-circle"></i>
+                        <span>دخول مباشر — بدون تسجيل أو إنشاء حساب</span>
+                    </div>
                     
                     <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6">
                         طور مهاراتك مع
@@ -1131,13 +1198,13 @@
                     </h1>
                     
                     <p class="text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
-                        انضم إلى آلاف الطلاب حول العالم وطور مهاراتك مع دوراتنا المتخصصة. احصل على شهادات معتمدة وافتح أبوابًا جديدة لمستقبلك المهني.
+                        انضم إلى آلاف الطلاب حول العالم وطور مهاراتك مع دوراتنا المتخصصة. احصل على شهادات معتمدة وافتح أبوابًا جديدة لمستقبلك المهني — بدون أي تسجيل، ابدأ فوراً.
                     </p>
                     
                     <div class="hero-buttons">
                         <a href="dashboard/index.html" class="modern-btn">
                             <i class="fas fa-rocket ml-2"></i>
-                              ابدأ رحلتك الآن
+                            ابدأ رحلتك الآن
                         </a>
                         <a href="#courses" class="secondary-btn">
                             <i class="fas fa-play-circle ml-2"></i>
@@ -1190,7 +1257,6 @@
         </div>
     </section>
 
-    <!-- باقي الأقسام تبقى كما هي -->
     <!-- Courses Section -->
     <section id="courses" class="py-24 bg-white/50 dark:bg-gray-900/50">
         <div class="container mx-auto px-4">
@@ -1200,7 +1266,7 @@
                 </h2>
                 <div class="section-divider"></div>
                 <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                    اختر من بين مجموعة واسعة من الدورات المجانية المصممة خصيصًا لتلبية احتياجات سوق العمل الحديث
+                    اختر من بين مجموعة واسعة من الدورات المجانية المصممة خصيصًا لتلبية احتياجات سوق العمل الحديث — واضغط مباشرة للبدء
                 </p>
             </div>
             
@@ -1246,7 +1312,7 @@
                     
                     <a href="dashboard/index.html" class="modern-btn w-full text-center">
                         <i class="fas fa-play-circle ml-2"></i>
-                        ابدأ الدورة الأن
+                        ابدأ الدورة الآن
                     </a>
                 </div>
                 
@@ -1307,7 +1373,7 @@
                 </h2>
                 <div class="section-divider"></div>
                 <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                    اتبع هذه الخطوات البسيطة للانضمام إلى مجتمعنا التعليمي والحصول على شهادتك المعتمدة
+                    خطوات بسيطة وسريعة — بدون تسجيل أو انتظار، ابدأ التعلم مباشرة
                 </p>
             </div>
             
@@ -1315,11 +1381,11 @@
                 <!-- Step 1 -->
                 <div class="modern-card p-8 text-center fade-in-up">
                     <div class="value-icon-container mb-6">
-                        <i class="fas fa-user-plus"></i>
+                        <i class="fas fa-hand-pointer"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">إنشاء حساب</h3>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">اختر دورتك</h3>
                     <p class="text-gray-600 dark:text-gray-400">
-                        سجل حسابك في دقيقة واحدة باستخدام بريدك الإلكتروني
+                        تصفح الدورات المتاحة واختر ما يناسب هدفك المهني
                     </p>
                     <div class="mt-6 text-3xl font-bold text-primary opacity-50">01</div>
                 </div>
@@ -1327,11 +1393,11 @@
                 <!-- Step 2 -->
                 <div class="modern-card p-8 text-center fade-in-up" style="animation-delay: 0.1s;">
                     <div class="value-icon-container mb-6">
-                        <i class="fas fa-check-circle"></i>
+                        <i class="fas fa-bolt"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">تفعيل الحساب</h3>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">دخول مباشر</h3>
                     <p class="text-gray-600 dark:text-gray-400">
-                        تأكيد حسابك عبر البريد الإلكتروني لبدء رحلتك
+                        اضغط على «ابدأ الدورة» وستدخل مباشرة بدون تسجيل
                     </p>
                     <div class="mt-6 text-3xl font-bold text-primary opacity-50">02</div>
                 </div>
@@ -1341,9 +1407,9 @@
                     <div class="value-icon-container mb-6">
                         <i class="fas fa-play-circle"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">بدء التعلم</h3>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">ابدأ التعلم</h3>
                     <p class="text-gray-600 dark:text-gray-400">
-                        اختر دورتك المفضلة وابدأ التعلم فوراً
+                        شاهد الدروس وطبّق عملياً في أي وقت ومن أي مكان
                     </p>
                     <div class="mt-6 text-3xl font-bold text-primary opacity-50">03</div>
                 </div>
@@ -1355,7 +1421,7 @@
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">الحصول على الشهادة</h3>
                     <p class="text-gray-600 dark:text-gray-400">
-                        تواصل معنا على واتساب للحصول على شهادتك المعتمدة بعد اكمال الدورة
+                        تواصل معنا على واتساب للحصول على شهادتك المعتمدة بعد إكمال الدورة
                     </p>
                     <div class="mt-6 text-3xl font-bold text-primary opacity-50">04</div>
                 </div>
@@ -1575,23 +1641,98 @@
         </div>
     </section>
 
-    <!-- Call to Action Section (ابدأ التعلم الآن) -->
+    <!-- Collaboration Section -->
+    <section id="collaboration" class="py-24 bg-gradient-to-br from-blue-50 to-white dark:from-gray-900 dark:to-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 fade-in-up">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                    التعاون والشراكات
+                </h2>
+                <div class="section-divider"></div>
+                <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                    نفتح أبوابنا للتعاون مع المؤسسات والمراكز التعليمية لتقديم محتوى أفضل
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="modern-card p-8 text-center fade-in-up">
+                    <div class="value-icon-container">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">شراكات تعليمية</h3>
+                    <p class="text-gray-600 dark:text-gray-400">نتعاون مع مراكز ومؤسسات تعليمية لاعتماد شهاداتنا</p>
+                </div>
+                <div class="modern-card p-8 text-center fade-in-up" style="animation-delay: 0.1s;">
+                    <div class="value-icon-container">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">مدربون محترفون</h3>
+                    <p class="text-gray-600 dark:text-gray-400">نرحب بانضمام المدربين المحترفين لتقديم دورات متميزة</p>
+                </div>
+                <div class="modern-card p-8 text-center fade-in-up" style="animation-delay: 0.2s;">
+                    <div class="value-icon-container">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">تدريب الشركات</h3>
+                    <p class="text-gray-600 dark:text-gray-400">نقدم برامج تدريبية مخصصة للشركات والمؤسسات</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trainers Section -->
+    <section id="trainers" class="py-24 bg-white dark:bg-gray-900">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 fade-in-up">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                    انضم كمدرب
+                </h2>
+                <div class="section-divider"></div>
+                <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                    شارك خبرتك مع آلاف الطلاب وانضم إلى فريق مدربينا المحترفين
+                </p>
+            </div>
+            
+            <div class="max-w-3xl mx-auto modern-card p-12 text-center fade-in-up">
+                <div class="value-icon-container mb-6" style="width: 100px; height: 100px; font-size: 42px;">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                    هل أنت مدرب محترف؟
+                </h3>
+                <p class="text-gray-600 dark:text-gray-400 mb-8 text-lg">
+                    نرحب بانضمام المدربين المحترفين في جميع المجالات. تواصل معنا لمعرفة المزيد عن فرص التعاون.
+                </p>
+                <a href="https://wa.me/0908280115" target="_blank" class="modern-btn">
+                    <i class="fab fa-whatsapp ml-2"></i>
+                    تواصل معنا الآن
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
     <section class="py-24">
         <div class="container mx-auto px-4">
             <div class="cta-section p-12 md:p-16 fade-in-up">
                 <div class="max-w-3xl mx-auto text-center relative z-10">
+                    <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-5 py-2 rounded-full mb-6 border border-white/20">
+                        <i class="fas fa-bolt text-yellow-300"></i>
+                        <span class="text-white text-sm font-medium">دخول مباشر — بدون تسجيل</span>
+                    </div>
                     <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
                         مستعد لبدء رحلتك التعليمية؟
                     </h2>
                     <p class="text-xl text-blue-100 mb-8">
-                        انضم إلى آلاف الطلاب الناجحين وابدأ رحلتك نحو التميز المهني اليوم
+                        انضم إلى آلاف الطلاب الناجحين وابدأ رحلتك نحو التميز المهني اليوم — بضغطة زر واحدة
                     </p>
                     <a href="dashboard/index.html" class="cta-special-btn inline-flex items-center">
                         <i class="fas fa-graduation-cap ml-2"></i>
                         ابدأ التعلم الآن
                     </a>
                     <p class="text-blue-200 mt-6 text-sm">
-                        سجل مجاناً وابدأ فوراً
+                        <i class="fas fa-check-circle ml-1"></i>
+                        دخول فوري — بدون أي تسجيل أو انتظار
                     </p>
                 </div>
             </div>
@@ -1610,14 +1751,13 @@
                         </div>
                         <div class="mr-4">
                             <h3 class="text-xl font-bold text-white">Skillzoy Academy</h3>
-                            <p class="text-blue-200 text-sm">منصة رائدة في التعليم الألكتروني </p>
+                            <p class="text-blue-200 text-sm">منصة رائدة في التعليم الألكتروني</p>
                         </div>
                     </div>
                     <p class="text-blue-200 mb-6">
                         منصة التعلم الإلكتروني الرائدة في تقديم دورات تدريبية متخصصة وشهادات معتمدة.
                     </p>
                     <div class="flex space-x-4 space-x-reverse">
-                        <!-- تم تغيير الأيقونات إلى Facebook, TikTok, Instagram, LinkedIn -->
                         <a href="https://www.facebook.com/profile.php?id=61584644981535" class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center text-white hover:bg-white/20 transition-colors">
                             <i class="fab fa-facebook-f"></i>
                         </a>
@@ -1639,7 +1779,7 @@
                     <ul class="space-y-3">
                         <li><a href="#home" class="text-blue-200 hover:text-white transition-colors">الرئيسية</a></li>
                         <li><a href="#courses" class="text-blue-200 hover:text-white transition-colors">الدورات</a></li>
-                        <li><a href="#process" class="text-blue-200 hover:text-white transition-colors">كيفية الاشتراك</a></li>
+                        <li><a href="#process" class="text-blue-200 hover:text-white transition-colors">كيف تبدأ</a></li>
                         <li><a href="#testimonials" class="text-blue-200 hover:text-white transition-colors">آراء الطلاب</a></li>
                         <li><a href="#certificate" class="text-blue-200 hover:text-white transition-colors">الشهادات</a></li>
                     </ul>
@@ -1691,14 +1831,12 @@
 
     <script>
         // ===== PWA Installation Logic =====
-        // تسجيل Service Worker
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('service-worker.js')
                 .then(() => console.log('✅ تم تسجيل الـ Service Worker'))
                 .catch(err => console.log('❌ خطأ في SW:', err));
         }
 
-        // منطق زر التثبيت
         let deferredPrompt;
         const installBtn = document.getElementById('installBtn');
 
@@ -1720,10 +1858,8 @@
         
         // تهيئة GSAP للانيميشنات
         document.addEventListener('DOMContentLoaded', function() {
-            // تهيئة التمرير السلس
             gsap.registerPlugin(ScrollTrigger);
             
-            // انيميشن للعناصر عند الظهور
             gsap.utils.toArray('.fade-in-up').forEach(el => {
                 gsap.from(el, {
                     scrollTrigger: {
@@ -1737,7 +1873,6 @@
                 });
             });
             
-            // انيميشن للبطاقات
             gsap.utils.toArray('.modern-card').forEach(card => {
                 card.addEventListener('mouseenter', () => {
                     gsap.to(card, {
@@ -1765,12 +1900,11 @@
                 );
             });
             
-            // تحميل تفضيلات الثيم
             if (localStorage.getItem('theme') === 'dark') {
                 document.documentElement.classList.add('dark');
             }
             
-            // التحكم في القائمة الجوالية
+            // القائمة الجوالية
             const mobileMenuBtn = document.getElementById('mobile-menu-btn');
             const mobileNav = document.getElementById('mobile-nav');
             const closeMobileMenu = document.getElementById('close-mobile-menu');
@@ -1789,7 +1923,14 @@
                 }
             });
             
-            // التحكم في الشريط الجانبي
+            // إغلاق القائمة عند النقر على رابط
+            mobileNav.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileNav.classList.add('hidden');
+                });
+            });
+            
+            // الشريط الجانبي
             const sidebarToggleBtn = document.getElementById('sidebar-toggle-btn');
             const sidebar = document.getElementById('sidebar');
             const sidebarIcon = document.getElementById('sidebar-icon');
@@ -1821,7 +1962,7 @@
                 }
             });
             
-            // انيميشن للنبضات
+            // نبضات الأيقونات
             setInterval(() => {
                 gsap.to('.value-icon-container', {
                     scale: 1.1,
@@ -1832,20 +1973,19 @@
                 });
             }, 3000);
             
-            // تأثيرات للمكونات الرئيسية
             gsap.from('.gradient-text', {
                 duration: 2,
                 backgroundPosition: '200% 0',
                 ease: 'power2.inOut'
             });
             
-            // انيميشن للإحصائيات مع العدّاد المتحرك
+            // العدّاد المتحرك
             function animateCounters() {
                 const counters = document.querySelectorAll('.counting-number');
                 counters.forEach(counter => {
                     const target = parseFloat(counter.getAttribute('data-target'));
-                    const duration = 2000; // 2 seconds
-                    const increment = target / (duration / 16); // 60fps
+                    const duration = 2000;
+                    const increment = target / (duration / 16);
                     let current = 0;
                     
                     const timer = setInterval(() => {
@@ -1855,7 +1995,6 @@
                             clearInterval(timer);
                         }
                         
-                        // تنسيق الأرقام مع الكسور
                         if (target % 1 !== 0) {
                             counter.textContent = current.toFixed(1);
                         } else {
@@ -1863,7 +2002,6 @@
                         }
                     }, 16);
                     
-                    // تأثير ظهر للأرقام
                     gsap.from(counter, {
                         opacity: 0,
                         y: 20,
@@ -1874,7 +2012,6 @@
                 });
             }
             
-            // تشغيل العدّاد عند ظهور القسم
             const statsSection = document.querySelector('.stats-grid');
             if (statsSection) {
                 ScrollTrigger.create({
@@ -1885,7 +2022,7 @@
                 });
             }
             
-            // تأثيرات للشهادات
+            // تأثيرات الشهادات
             document.querySelectorAll('.certificate-container').forEach(container => {
                 container.addEventListener('mouseenter', () => {
                     gsap.to(container.querySelector('.certificate-image'), {
@@ -1908,7 +2045,7 @@
                 });
             });
             
-            // تأثيرات للفيديو
+            // تأثيرات الفيديو
             const videoContainers = document.querySelectorAll('.video-container');
             videoContainers.forEach(container => {
                 const playBtn = container.querySelector('#play-video');
@@ -1968,21 +2105,20 @@
             });
         }
         
-        // إغلاق الإشعار تلقائياً بعد 5 ثوانٍ
         setTimeout(() => {
             closeWelcomeNotification();
         }, 5000);
         
-        // === YouTube Player API Implementation ===
+        // === YouTube Player API ===
         let player;
         let isPlayerReady = false;
+        const VIDEO_ID = 'jlr4OFjCxgk';
         
-        // تهيئة مشغل YouTube
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('youtube-player', {
                 height: '384',
                 width: '100%',
-              videoId:'jlr4OFjCxgk',
+                videoId: VIDEO_ID,
                 playerVars: {
                     'rel': 0,
                     'modestbranding': 1,
@@ -1998,30 +2134,25 @@
             });
         }
         
-        // عند جاهزية المشغل
         function onPlayerReady(event) {
             isPlayerReady = true;
             console.log('YouTube player is ready');
             
-            // إخفاء مؤشر التحميل
             const loadingElement = document.getElementById('video-loading');
             if (loadingElement) {
                 loadingElement.classList.add('hidden');
             }
         }
         
-        // تغيير حالة الفيديو
         function onPlayerStateChange(event) {
             const playButton = document.getElementById('play-video');
             const loadingElement = document.getElementById('video-loading');
             
             switch(event.data) {
                 case YT.PlayerState.PLAYING:
-                    // إخفاء زر التشغيل عند بدء التشغيل
                     if (playButton) {
                         playButton.style.display = 'none';
                     }
-                    // إخفاء مؤشر التحميل
                     if (loadingElement) {
                         loadingElement.classList.add('hidden');
                     }
@@ -2029,14 +2160,12 @@
                     
                 case YT.PlayerState.PAUSED:
                 case YT.PlayerState.ENDED:
-                    // إظهار زر التشغيل عند التوقف أو الانتهاء
                     if (playButton) {
                         playButton.style.display = 'flex';
                     }
                     break;
                     
                 case YT.PlayerState.BUFFERING:
-                    // إظهار مؤشر التحميل عند التخزين المؤقت
                     if (loadingElement) {
                         loadingElement.classList.remove('hidden');
                     }
@@ -2044,7 +2173,6 @@
             }
         }
         
-        // عند حدوث خطأ في المشغل
         function onPlayerError(event) {
             console.error('YouTube player error:', event.data);
             const loadingElement = document.getElementById('video-loading');
@@ -2062,7 +2190,6 @@
             }
         }
         
-        // إعادة تحميل الفيديو
         function retryVideoLoad() {
             const playButton = document.getElementById('play-video');
             const loadingElement = document.getElementById('video-loading');
@@ -2078,13 +2205,11 @@
                 loadingElement.classList.remove('hidden');
             }
             
-            // إعادة تحميل الفيديو
             if (player && typeof player.loadVideoById === 'function') {
-                player.loadVideoById('vjjxP5v4NfU');
+                player.loadVideoById(VIDEO_ID);
             }
         }
         
-        // تشغيل الفيديو
         function playVideo() {
             const playButton = document.getElementById('play-video');
             const loadingElement = document.getElementById('video-loading');
@@ -2105,24 +2230,20 @@
                 loadingElement.classList.remove('hidden');
             }
             
-            // استخدام API لتشغيل الفيديو
             if (player && typeof player.playVideo === 'function') {
                 player.playVideo();
             }
         }
         
-        // إضافة حدث النقر على زر التشغيل
         document.addEventListener('DOMContentLoaded', function() {
             const playButton = document.getElementById('play-video');
             if (playButton) {
                 playButton.addEventListener('click', playVideo);
             }
             
-            // التحقق من حالة المشغل بشكل دوري
             const checkPlayerReady = setInterval(function() {
                 if (isPlayerReady) {
                     clearInterval(checkPlayerReady);
-                    // إخفاء مؤشر التحميل إذا كان المشغل جاهزًا
                     const loadingElement = document.getElementById('video-loading');
                     if (loadingElement) {
                         loadingElement.classList.add('hidden');
@@ -2131,16 +2252,14 @@
             }, 500);
         });
         
-        // تحسين تجربة المستخدم على الجوال
+        // تحسين تجربة الجوال
         function optimizeForMobile() {
             if (window.innerWidth <= 768) {
-                // تحسين حجم وعرض الفيديو على الجوال
                 const videoContainer = document.querySelector('.video-container');
                 if (videoContainer) {
                     videoContainer.style.height = '300px';
                 }
                 
-                // تحسين حجم زر التشغيل على الجوال
                 const playButton = document.getElementById('play-video');
                 if (playButton) {
                     playButton.style.width = '60px';
@@ -2149,52 +2268,26 @@
             }
         }
         
-        // استدعاء تحسينات الجوال عند تحميل الصفحة وعند تغيير الحجم
         window.addEventListener('load', optimizeForMobile);
         window.addEventListener('resize', optimizeForMobile);
         
-        // تحسين أداء الفيديو
-        function improveVideoPerformance() {
-            // تأخير تحميل الفيديو حتى يصبح مرئيًا
-            const videoSection = document.getElementById('home');
-            if (videoSection) {
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            // هنا يمكنك إضافة أي تحسينات إضافية
-                            console.log('Video section is visible');
-                        }
-                    });
-                }, { threshold: 0.3 });
-                
-                observer.observe(videoSection);
-            }
-        }
-        
-        // استدعاء تحسينات الأداء
-        window.addEventListener('load', improveVideoPerformance);
-        
-        // ===== إشعار الوصول السريع الجديد =====
+        // ===== إشعار الوصول السريع =====
         const accessNotification = document.getElementById('access-notification');
         
-        // إظهار الإشعار بعد 15 ثانية
         setTimeout(() => {
             if (accessNotification) {
                 accessNotification.classList.remove('hidden');
-                // إضافة تأثير الظهور
                 gsap.fromTo(accessNotification, 
                     { opacity: 0, scale: 0.8 },
                     { opacity: 1, scale: 1, duration: 0.6, ease: 'back.out(1.7)' }
                 );
                 
-                // إغلاق الإشعار تلقائياً بعد 8 ثوانٍ
                 setTimeout(() => {
                     closeAccessNotification();
                 }, 8000);
             }
-        }, 15000); // 15 ثانية
+        }, 15000);
         
-        // إغلاق إشعار الوصول السريع
         function closeAccessNotification() {
             if (accessNotification && !accessNotification.classList.contains('hidden')) {
                 gsap.to(accessNotification, {
@@ -2209,7 +2302,6 @@
             }
         }
         
-        // إغلاق الإشعار عند النقر خارج المحتوى
         document.addEventListener('click', function(event) {
             if (accessNotification && !accessNotification.classList.contains('hidden')) {
                 const isClickInside = accessNotification.contains(event.target);
@@ -2219,59 +2311,57 @@
             }
         });
         
-        // إغلاق الإشعار بمفتاح ESC
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Escape' && accessNotification && !accessNotification.classList.contains('hidden')) {
                 closeAccessNotification();
             }
         });
         
-    // =====Sybergurd =====
-    (() => {
-      document.addEventListener("keydown", (e) => {
-        if (
-          (e.ctrlKey && e.shiftKey && ["I", "C", "J", "L"].includes(e.key.toUpperCase())) ||
-          (e.key === "F12") ||
-          (e.ctrlKey && e.key.toUpperCase() === "U")
-        ) {
-          e.preventDefault();
-        }
-      });
+        // ===== Sybergurd Protection =====
+        (() => {
+            document.addEventListener("keydown", (e) => {
+                if (
+                    (e.ctrlKey && e.shiftKey && ["I", "C", "J", "L"].includes(e.key.toUpperCase())) ||
+                    (e.key === "F12") ||
+                    (e.ctrlKey && e.key.toUpperCase() === "U")
+                ) {
+                    e.preventDefault();
+                }
+            });
 
-      document.addEventListener("copy", e => e.preventDefault());
-      document.addEventListener("cut", e => e.preventDefault());
-      document.addEventListener("contextmenu", e => e.preventDefault());
-      document.addEventListener("selectstart", e => e.preventDefault());
+            document.addEventListener("copy", e => e.preventDefault());
+            document.addEventListener("cut", e => e.preventDefault());
+            document.addEventListener("contextmenu", e => e.preventDefault());
+            document.addEventListener("selectstart", e => e.preventDefault());
 
-      let detectSize = () => {
-        if (window.outerWidth - window.innerWidth > 200 || 
-            window.outerHeight - window.innerHeight > 200) {
-          console.clear();
-        }
-      };
-      window.addEventListener("resize", detectSize);
+            let detectSize = () => {
+                if (window.outerWidth - window.innerWidth > 200 || 
+                    window.outerHeight - window.innerHeight > 200) {
+                    console.clear();
+                }
+            };
+            window.addEventListener("resize", detectSize);
 
-      let start = performance.now();
-      console.log("%c ", "font-size:200px;");
-      let end = performance.now();
-      if (end - start > 50) console.clear();
+            let start = performance.now();
+            console.log("%c ", "font-size:200px;");
+            let end = performance.now();
+            if (end - start > 50) console.clear();
 
-      const observer = new MutationObserver(() => {
-        console.clear();
-      });
-      observer.observe(document.documentElement, { 
-        attributes: true, 
-        childList: false, 
-        subtree: false 
-      });
+            const observer = new MutationObserver(() => {
+                console.clear();
+            });
+            observer.observe(document.documentElement, { 
+                attributes: true, 
+                childList: false, 
+                subtree: false 
+            });
 
-      setInterval(() => {
-        const t = Date.now();
-        debugger;
-        if (Date.now() - t > 100) console.clear();
-      }, 500);
-    })();
-        
+            setInterval(() => {
+                const t = Date.now();
+                debugger;
+                if (Date.now() - t > 100) console.clear();
+            }, 500);
+        })();
     </script>
 </body>
 </html>
