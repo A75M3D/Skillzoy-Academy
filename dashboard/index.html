@@ -4,12 +4,14 @@
 <meta charset="UTF-8">
 <title>Skillzoy Academy | منصة رائدة في التعليم الألكتروني</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#4F46E5">
+<meta name="theme-color" content="#1E40AF">
 
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="https://cdn.tailwindcss.com"></script>
@@ -18,295 +20,1063 @@
       darkMode: 'class',
       theme: {
         extend: {
-          fontFamily: {
-            sans: ['Cairo', 'sans-serif'],
-          },
+          fontFamily: { sans: ['Cairo', 'sans-serif'] },
           colors: {
-            primary: '#4F46E5',
-            secondary: '#10B981',
-            dark: '#0F172A',
+            primary: '#1E40AF',
+            brand: {
+              50:  '#EFF6FF',
+              100: '#DBEAFE',
+              200: '#BFDBFE',
+              300: '#93C5FD',
+              400: '#60A5FA',
+              500: '#3B82F6',
+              600: '#2563EB',
+              700: '#1D4ED8',
+              800: '#1E40AF',
+              900: '#1E3A8A',
+              950: '#172554'
+            }
           }
         }
       }
     }
 </script>
-  <script type="text/javascript">
-  (function(c,l,a,r,i,t,y){
-      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-  })(window, document, "clarity", "script", "u9054g22tr");
-  </script>
+<script type="text/javascript">
+(function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+})(window, document, "clarity", "script", "u9054g22tr");
+</script>
 <style>
-    /* Global Styles */
+    /* ============================================
+       DESIGN TOKENS — Premium Blue & White
+    ============================================ */
     :root {
-        --glass-border: 1px solid rgba(255, 255, 255, 0.1);
-        --glass-bg: rgba(255, 255, 255, 0.85);
-        --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+        --blue-50:  #EFF6FF;
+        --blue-100: #DBEAFE;
+        --blue-200: #BFDBFE;
+        --blue-300: #93C5FD;
+        --blue-400: #60A5FA;
+        --blue-500: #3B82F6;
+        --blue-600: #2563EB;
+        --blue-700: #1D4ED8;
+        --blue-800: #1E40AF;
+        --blue-900: #1E3A8A;
+        --blue-950: #172554;
+
+        --ink-900: #0F172A;
+        --ink-700: #334155;
+        --ink-500: #64748B;
+        --ink-300: #CBD5E1;
+
+        --surface: #FFFFFF;
+        --surface-soft: #F8FAFC;
+        --surface-mute: #F1F5F9;
+
+        --ring-blue: 0 0 0 4px rgba(59, 130, 246, 0.14);
+        --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.06);
+        --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.08), 0 1px 2px rgba(15, 23, 42, 0.04);
+        --shadow-md: 0 4px 12px -2px rgba(15, 23, 42, 0.08), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
+        --shadow-lg: 0 12px 28px -6px rgba(30, 64, 175, 0.16), 0 4px 10px -4px rgba(15, 23, 42, 0.06);
+        --shadow-xl: 0 24px 48px -12px rgba(30, 64, 175, 0.20), 0 8px 16px -8px rgba(15, 23, 42, 0.08);
+        --shadow-glow: 0 8px 32px -4px rgba(59, 130, 246, 0.35);
+
+        --border-soft: 1px solid rgba(148, 163, 184, 0.16);
+        --border-blue: 1px solid rgba(59, 130, 246, 0.18);
     }
-    
-    .dark :root {
-        --glass-border: 1px solid rgba(255, 255, 255, 0.05);
-        --glass-bg: rgba(15, 23, 42, 0.85);
+
+    .dark {
+        --surface: #0B1220;
+        --surface-soft: #0F172A;
+        --surface-mute: #1E293B;
+
+        --ink-900: #F1F5F9;
+        --ink-700: #CBD5E1;
+        --ink-500: #94A3B8;
+        --ink-300: #475569;
+
+        --border-soft: 1px solid rgba(148, 163, 184, 0.10);
+        --border-blue: 1px solid rgba(59, 130, 246, 0.22);
+
+        --shadow-lg: 0 12px 28px -6px rgba(0, 0, 0, 0.5), 0 4px 10px -4px rgba(0, 0, 0, 0.3);
+        --shadow-xl: 0 24px 48px -12px rgba(0, 0, 0, 0.6), 0 8px 16px -8px rgba(0, 0, 0, 0.4);
+    }
+
+    * { -webkit-tap-highlight-color: transparent; }
+
+    html, body {
+        font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 
     body {
-        font-family: 'Cairo', sans-serif;
-        -webkit-tap-highlight-color: transparent;
-        background-color: #F8FAFC;
+        background:
+            radial-gradient(1200px 600px at 100% -10%, rgba(59, 130, 246, 0.08), transparent 60%),
+            radial-gradient(900px 500px at -10% 10%, rgba(37, 99, 235, 0.06), transparent 55%),
+            linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%);
+        color: var(--ink-900);
+        min-height: 100vh;
     }
 
     .dark body {
-        background-color: #020617;
-        color: #E2E8F0;
+        background:
+            radial-gradient(1200px 600px at 100% -10%, rgba(59, 130, 246, 0.10), transparent 60%),
+            radial-gradient(900px 500px at -10% 10%, rgba(37, 99, 235, 0.08), transparent 55%),
+            linear-gradient(180deg, #0B1220 0%, #0F172A 100%);
+        color: var(--ink-900);
     }
 
-    /* Scrollbar Hiding */
     .scrollbar-hide::-webkit-scrollbar { display: none; }
     .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 
-    /* Glassmorphism Classes */
+    /* ============================================
+       SURFACES
+    ============================================ */
     .glass {
-        background: var(--glass-bg);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: var(--glass-border);
+        background: rgba(255, 255, 255, 0.82);
+        backdrop-filter: saturate(180%) blur(20px);
+        -webkit-backdrop-filter: saturate(180%) blur(20px);
+        border-bottom: 1px solid rgba(148, 163, 184, 0.14);
+    }
+    .dark .glass {
+        background: rgba(11, 18, 32, 0.75);
+        border-bottom: 1px solid rgba(148, 163, 184, 0.08);
     }
 
     .glass-card {
-        background: rgba(255, 255, 255, 0.9);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.5);
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        background: var(--surface);
+        border: var(--border-soft);
+        box-shadow: var(--shadow-sm);
+        transition: box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                    transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                    border-color 0.35s ease;
     }
-
     .dark .glass-card {
-        background: rgba(30, 41, 59, 0.8);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        background: linear-gradient(180deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.85));
+        border: 1px solid rgba(148, 163, 184, 0.08);
     }
 
-    /* Animations */
-    @keyframes float {
-        0% { transform: translateY(0px); }
-        50% { transform: translateY(-5px); }
-        100% { transform: translateY(0px); }
+    /* ============================================
+       HEADER
+    ============================================ */
+    .brand-badge {
+        width: 40px; height: 40px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--blue-700) 0%, var(--blue-500) 60%, #38BDF8 130%);
+        box-shadow:
+            0 1px 0 rgba(255,255,255,0.3) inset,
+            0 8px 20px -6px rgba(29, 78, 216, 0.55);
+        position: relative;
+        overflow: hidden;
+    }
+    .brand-badge::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.4), transparent 55%);
+        pointer-events: none;
+    }
+    .brand-title {
+        background: linear-gradient(135deg, var(--blue-800) 0%, var(--blue-500) 70%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        letter-spacing: -0.02em;
+    }
+    .dark .brand-title {
+        background: linear-gradient(135deg, #93C5FD 0%, #60A5FA 70%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
     }
 
-    .animate-float { animation: float 3s ease-in-out infinite; }
+    .icon-btn {
+        width: 40px; height: 40px;
+        border-radius: 12px;
+        background: var(--surface-soft);
+        border: var(--border-soft);
+        color: var(--ink-700);
+        display: flex; align-items: center; justify-content: center;
+        transition: all 0.25s ease;
+        position: relative;
+    }
+    .icon-btn:hover {
+        background: var(--blue-50);
+        color: var(--blue-700);
+        border-color: rgba(59, 130, 246, 0.28);
+        transform: translateY(-1px);
+    }
+    .dark .icon-btn {
+        background: rgba(30, 41, 59, 0.6);
+        color: #CBD5E1;
+    }
+    .dark .icon-btn:hover {
+        background: rgba(37, 99, 235, 0.15);
+        color: #93C5FD;
+        border-color: rgba(59, 130, 246, 0.35);
+    }
 
-    /* Skeleton Loading */
+    /* ============================================
+       SEARCH BAR
+    ============================================ */
+    .search-shell {
+        background: var(--surface);
+        border: 1px solid rgba(148, 163, 184, 0.18);
+        border-radius: 18px;
+        box-shadow: var(--shadow-md);
+        transition: box-shadow 0.3s ease, border-color 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    .search-shell::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 18px;
+        padding: 1px;
+        background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.05));
+        -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        pointer-events: none;
+    }
+    .dark .search-shell {
+        background: rgba(15, 23, 42, 0.7);
+        border-color: rgba(148, 163, 184, 0.10);
+    }
+    .search-shell:focus-within {
+        box-shadow: var(--shadow-lg), var(--ring-blue);
+        border-color: rgba(59, 130, 246, 0.4);
+    }
+
+    .search-input {
+        background: transparent;
+        border: none;
+        outline: none;
+        color: var(--ink-900);
+        font-weight: 500;
+        font-size: 15px;
+    }
+    .search-input::placeholder { color: var(--ink-500); opacity: 0.85; }
+    .dark .search-input { color: #F1F5F9; }
+    .dark .search-input::placeholder { color: #64748B; }
+
+    .search-icon-badge {
+        width: 34px; height: 34px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, var(--blue-50), var(--blue-100));
+        color: var(--blue-700);
+        display: flex; align-items: center; justify-content: center;
+        font-size: 14px;
+        flex-shrink: 0;
+    }
+    .dark .search-icon-badge {
+        background: linear-gradient(135deg, rgba(37, 99, 235, 0.18), rgba(59, 130, 246, 0.10));
+        color: #93C5FD;
+    }
+
+    .select-wrap {
+        position: relative;
+        border-radius: 12px;
+        background: var(--surface-soft);
+        border: 1px solid rgba(148, 163, 184, 0.16);
+        transition: all 0.25s ease;
+    }
+    .dark .select-wrap {
+        background: rgba(30, 41, 59, 0.5);
+        border-color: rgba(148, 163, 184, 0.10);
+    }
+    .select-wrap:hover { border-color: rgba(59, 130, 246, 0.3); }
+    .select-wrap select {
+        background: transparent;
+        border: none;
+        outline: none;
+        appearance: none;
+        padding: 10px 36px 10px 14px;
+        font-weight: 600;
+        font-size: 13px;
+        color: var(--ink-700);
+        cursor: pointer;
+        width: 100%;
+        font-family: inherit;
+    }
+    .dark .select-wrap select { color: #CBD5E1; }
+    .select-wrap::after {
+        content: '\f107';
+        font-family: 'Font Awesome 6 Free';
+        font-weight: 900;
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--ink-500);
+        font-size: 11px;
+        pointer-events: none;
+    }
+
+    /* ============================================
+       SECTION HEADERS
+    ============================================ */
+    .section-title {
+        font-weight: 800;
+        color: var(--ink-900);
+        letter-spacing: -0.02em;
+        display: flex; align-items: center; gap: 10px;
+        font-size: 20px;
+    }
+    .section-title-badge {
+        width: 32px; height: 32px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, var(--blue-50), var(--blue-100));
+        color: var(--blue-700);
+        display: flex; align-items: center; justify-content: center;
+        font-size: 14px;
+        box-shadow: 0 2px 6px -1px rgba(37, 99, 235, 0.15);
+        flex-shrink: 0;
+    }
+    .dark .section-title-badge {
+        background: linear-gradient(135deg, rgba(37, 99, 235, 0.25), rgba(59, 130, 246, 0.12));
+        color: #93C5FD;
+    }
+
+    /* ============================================
+       CATEGORIES MARQUEE
+    ============================================ */
+    .categories-marquee {
+        position: relative;
+        overflow: hidden;
+        padding: 6px 0 18px;
+        -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+        mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+        cursor: grab;
+    }
+    .categories-marquee:active { cursor: grabbing; }
+
+    .categories-track {
+        display: flex;
+        gap: 14px;
+        width: max-content;
+        will-change: transform;
+        transform: translateZ(0);
+        backface-visibility: hidden;
+    }
+    .categories-track.anim-2 { animation: categoriesScrollRight2 42s linear infinite; }
+    .categories-track.anim-4 { animation: categoriesScrollRight4 58s linear infinite; }
+
+    @keyframes categoriesScrollRight2 {
+        0%   { transform: translateX(-50%); }
+        100% { transform: translateX(0%); }
+    }
+    @keyframes categoriesScrollRight4 {
+        0%   { transform: translateX(-75%); }
+        100% { transform: translateX(0%); }
+    }
+
+    .categories-marquee:hover .categories-track,
+    .categories-marquee.paused .categories-track {
+        animation-play-state: paused;
+    }
+
+    /* Category Chip */
+    .category-chip {
+        min-width: 112px;
+        height: 108px;
+        padding: 14px 18px;
+        border-radius: 18px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        background: #FFFFFF;
+        border: 1px solid rgba(148, 163, 184, 0.14);
+        cursor: pointer;
+        transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                    box-shadow 0.35s ease,
+                    border-color 0.35s ease,
+                    background 0.35s ease;
+        flex-shrink: 0;
+        user-select: none;
+        box-shadow: var(--shadow-xs);
+        position: relative;
+        overflow: hidden;
+    }
+    .category-chip::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 18px;
+        background: linear-gradient(180deg, rgba(59, 130, 246, 0.04), transparent 40%);
+        opacity: 0;
+        transition: opacity 0.35s ease;
+        pointer-events: none;
+    }
+    .category-chip:hover::after { opacity: 1; }
+
+    .dark .category-chip {
+        background: linear-gradient(180deg, rgba(30, 41, 59, 0.85), rgba(15, 23, 42, 0.95));
+        border-color: rgba(148, 163, 184, 0.08);
+        box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    }
+    .category-chip:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 32px -12px rgba(30, 64, 175, 0.28), 0 4px 8px -2px rgba(15, 23, 42, 0.06);
+        border-color: rgba(59, 130, 246, 0.4);
+    }
+    .category-icon-wrap {
+        width: 44px;
+        height: 44px;
+        border-radius: 13px;
+        background: linear-gradient(135deg, var(--blue-50), var(--blue-100));
+        color: var(--blue-700);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 2px 4px rgba(37, 99, 235, 0.08);
+        position: relative;
+        z-index: 1;
+    }
+    .dark .category-icon-wrap {
+        background: linear-gradient(135deg, rgba(37, 99, 235, 0.25), rgba(59, 130, 246, 0.12));
+        color: #93C5FD;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+    .category-chip:hover .category-icon-wrap {
+        transform: scale(1.12) rotate(-6deg);
+    }
+    .category-chip span {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--ink-700);
+        letter-spacing: -0.01em;
+        white-space: nowrap;
+        position: relative;
+        z-index: 1;
+    }
+    .dark .category-chip span { color: #CBD5E1; }
+
+    .category-chip-all {
+        background: linear-gradient(135deg, var(--blue-700) 0%, var(--blue-500) 100%);
+        border-color: transparent;
+        box-shadow: 0 8px 20px -6px rgba(37, 99, 235, 0.5);
+    }
+    .category-chip-all::after {
+        background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.22), transparent 60%);
+        opacity: 1;
+    }
+    .category-chip-all .category-icon-wrap {
+        background: rgba(255, 255, 255, 0.18);
+        color: #FFFFFF;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.25);
+    }
+    .category-chip-all span { color: #FFFFFF; }
+    .category-chip-all:hover {
+        box-shadow: 0 22px 36px -10px rgba(37, 99, 235, 0.55);
+    }
+
+    @media (max-width: 640px) {
+        .categories-track { gap: 12px; }
+        .category-chip {
+            min-width: 96px;
+            height: 96px;
+            border-radius: 16px;
+            padding: 12px 14px;
+        }
+        .category-icon-wrap { width: 38px; height: 38px; font-size: 16px; border-radius: 11px; }
+        .category-chip span { font-size: 12px; }
+    }
+
+    /* ============================================
+       COURSE CARDS
+    ============================================ */
+    .course-card {
+        content-visibility: auto;
+        contain-intrinsic-size: 400px;
+        will-change: transform;
+        border-radius: 20px;
+        background: #FFFFFF;
+        border: 1px solid rgba(148, 163, 184, 0.14);
+        box-shadow: var(--shadow-sm);
+        overflow: hidden;
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                    box-shadow 0.4s ease,
+                    border-color 0.4s ease;
+        position: relative;
+    }
+    .dark .course-card {
+        background: linear-gradient(180deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
+        border-color: rgba(148, 163, 184, 0.08);
+    }
+    .course-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 24px 44px -16px rgba(30, 64, 175, 0.28), 0 8px 16px -8px rgba(15, 23, 42, 0.06);
+        border-color: rgba(59, 130, 246, 0.28);
+    }
+    .course-card .video-wrap {
+        position: relative;
+        aspect-ratio: 16 / 9;
+        background: #000;
+        overflow: hidden;
+    }
+    .course-card .video-wrap iframe {
+        position: absolute; inset: 0;
+        width: 100%; height: 100%;
+        border: 0;
+    }
+    .course-card .cat-pill {
+        position: absolute;
+        top: 12px; left: 12px;
+        z-index: 5;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 11px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(8px);
+        color: var(--blue-800);
+        font-size: 11px;
+        font-weight: 700;
+        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.12);
+        border: 1px solid rgba(255,255,255,0.5);
+    }
+    .dark .course-card .cat-pill {
+        background: rgba(15, 23, 42, 0.85);
+        color: #93C5FD;
+        border-color: rgba(255,255,255,0.08);
+    }
+    .course-card .cat-pill i {
+        color: var(--blue-600);
+        font-size: 9px;
+    }
+
+    .course-price-free {
+        display: inline-flex; align-items: center; gap: 6px;
+        padding: 5px 11px;
+        border-radius: 999px;
+        background: linear-gradient(135deg, #ECFDF5, #D1FAE5);
+        color: #047857;
+        font-size: 12px;
+        font-weight: 800;
+        border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+    .dark .course-price-free {
+        background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.10));
+        color: #6EE7B7;
+        border-color: rgba(16, 185, 129, 0.25);
+    }
+    .course-price-paid {
+        display: inline-flex; align-items: center; gap: 6px;
+        padding: 5px 11px;
+        border-radius: 999px;
+        background: linear-gradient(135deg, var(--blue-50), var(--blue-100));
+        color: var(--blue-800);
+        font-size: 12px;
+        font-weight: 800;
+        border: 1px solid rgba(59, 130, 246, 0.22);
+    }
+    .dark .course-price-paid {
+        background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(59, 130, 246, 0.10));
+        color: #93C5FD;
+        border-color: rgba(59, 130, 246, 0.3);
+    }
+
+    .btn-primary {
+        display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+        padding: 9px 18px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--blue-700) 0%, var(--blue-500) 100%);
+        color: #FFFFFF;
+        font-weight: 700;
+        font-size: 13px;
+        letter-spacing: -0.01em;
+        border: none;
+        cursor: pointer;
+        transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+        box-shadow: 0 6px 14px -4px rgba(37, 99, 235, 0.5), inset 0 1px 0 rgba(255,255,255,0.2);
+        position: relative;
+        overflow: hidden;
+    }
+    .btn-primary:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 10px 22px -6px rgba(37, 99, 235, 0.55), inset 0 1px 0 rgba(255,255,255,0.2);
+    }
+    .btn-primary:active { transform: translateY(0); }
+
+    .btn-enrolled {
+        display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+        padding: 9px 18px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #ECFDF5, #D1FAE5);
+        color: #047857;
+        font-weight: 700;
+        font-size: 13px;
+        border: 1px solid rgba(16, 185, 129, 0.25);
+        cursor: pointer;
+        transition: all 0.25s ease;
+    }
+    .btn-enrolled:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 8px 18px -6px rgba(16, 185, 129, 0.35);
+    }
+    .dark .btn-enrolled {
+        background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.10));
+        color: #6EE7B7;
+        border-color: rgba(16, 185, 129, 0.28);
+    }
+
+    /* ============================================
+       SKELETON
+    ============================================ */
     .skeleton {
-        background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+        background: linear-gradient(90deg, #EFF3F8 25%, #F8FAFC 50%, #EFF3F8 75%);
         background-size: 200% 100%;
-        animation: loading 1.5s infinite;
+        animation: loading 1.6s ease-in-out infinite;
+        border-radius: 12px;
     }
     .dark .skeleton {
-        background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+        background: linear-gradient(90deg, #1E293B 25%, #273449 50%, #1E293B 75%);
+        background-size: 200% 100%;
     }
     @keyframes loading {
         0% { background-position: 200% 0; }
         100% { background-position: -200% 0; }
     }
 
-    /* Custom Transitions */
-    .trans-all { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    /* ============================================
+       BOTTOM NAV
+    ============================================ */
+    .bottom-nav {
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: saturate(180%) blur(24px);
+        -webkit-backdrop-filter: saturate(180%) blur(24px);
+        border: 1px solid rgba(148, 163, 184, 0.18);
+        box-shadow: 0 12px 40px -8px rgba(15, 23, 42, 0.16), 0 4px 12px -4px rgba(15, 23, 42, 0.06);
+    }
+    .dark .bottom-nav {
+        background: rgba(15, 23, 42, 0.85);
+        border-color: rgba(148, 163, 184, 0.08);
+        box-shadow: 0 12px 40px -8px rgba(0, 0, 0, 0.6);
+    }
 
-    /* Video Player */
+    .nav-item {
+        display: flex; flex-direction: column; align-items: center; gap: 3px;
+        padding: 8px 14px;
+        border-radius: 14px;
+        color: var(--ink-500);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        min-width: 62px;
+    }
+    .nav-item i { font-size: 17px; transition: transform 0.3s ease; }
+    .nav-item span { font-size: 10px; font-weight: 700; letter-spacing: -0.01em; }
+    .nav-item:hover { color: var(--blue-600); }
+    .nav-item:hover i { transform: translateY(-1px); }
+    .nav-item.active {
+        color: #FFFFFF;
+        background: linear-gradient(135deg, var(--blue-700) 0%, var(--blue-500) 100%);
+        box-shadow: 0 8px 18px -6px rgba(37, 99, 235, 0.55), inset 0 1px 0 rgba(255,255,255,0.15);
+    }
+    .dark .nav-item.active {
+        background: linear-gradient(135deg, var(--blue-600) 0%, var(--blue-400) 100%);
+    }
+
+    /* ============================================
+       PLAYER OVERLAY
+    ============================================ */
+    #playerOverlay {
+        background:
+            radial-gradient(1200px 400px at 50% -10%, rgba(37, 99, 235, 0.10), transparent 70%),
+            var(--surface-soft);
+    }
+    .dark #playerOverlay {
+        background:
+            radial-gradient(1200px 400px at 50% -10%, rgba(37, 99, 235, 0.15), transparent 70%),
+            #0B1220;
+    }
+
+    .player-header {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: saturate(180%) blur(20px);
+        -webkit-backdrop-filter: saturate(180%) blur(20px);
+        border-bottom: 1px solid rgba(148, 163, 184, 0.14);
+    }
+    .dark .player-header {
+        background: rgba(11, 18, 32, 0.85);
+        border-bottom-color: rgba(148, 163, 184, 0.08);
+    }
+
     .video-container {
         position: relative;
-        padding-bottom: 56.25%; /* 16:9 */
+        padding-bottom: 56.25%;
         height: 0;
         overflow: hidden;
-        border-radius: 16px;
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        border-radius: 18px;
+        box-shadow: var(--shadow-xl);
+        border: 1px solid rgba(148, 163, 184, 0.14);
     }
     .video-container iframe {
         position: absolute;
         top: 0; left: 0; width: 100%; height: 100%;
     }
 
-    /* Load More Button */
-    .load-more-container {
-        text-align: center;
-        margin: 40px 0;
+    .playlist-panel {
+        background: var(--surface);
+        border: 1px solid rgba(148, 163, 184, 0.14);
+        box-shadow: var(--shadow-md);
     }
+    .dark .playlist-panel {
+        background: linear-gradient(180deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.85));
+        border-color: rgba(148, 163, 184, 0.08);
+    }
+
+    .lesson-row {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 12px;
+        border-radius: 12px;
+        border: 1px solid rgba(148, 163, 184, 0.12);
+        background: var(--surface-soft);
+        transition: all 0.25s ease;
+    }
+    .dark .lesson-row {
+        background: rgba(15, 23, 42, 0.5);
+        border-color: rgba(148, 163, 184, 0.08);
+    }
+    .lesson-row.done {
+        background: linear-gradient(135deg, #ECFDF5, #F0FDF4);
+        border-color: rgba(16, 185, 129, 0.22);
+    }
+    .dark .lesson-row.done {
+        background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(5, 150, 105, 0.06));
+        border-color: rgba(16, 185, 129, 0.22);
+    }
+    .lesson-row:hover {
+        border-color: rgba(59, 130, 246, 0.3);
+        transform: translateX(-2px);
+    }
+
+    /* ============================================
+       PROGRESS BAR
+    ============================================ */
+    .progress-track {
+        height: 8px;
+        background: var(--surface-mute);
+        border-radius: 999px;
+        overflow: hidden;
+        border: 1px solid rgba(148, 163, 184, 0.10);
+    }
+    .dark .progress-track { background: rgba(30, 41, 59, 0.8); }
+    .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--blue-600), var(--blue-400));
+        border-radius: 999px;
+        transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 0 12px rgba(59, 130, 246, 0.4);
+    }
+
+    /* ============================================
+       RESUME BANNER
+    ============================================ */
+    .resume-banner {
+        background:
+            radial-gradient(600px 200px at 100% 0%, rgba(59, 130, 246, 0.25), transparent 60%),
+            linear-gradient(135deg, var(--blue-900) 0%, var(--blue-700) 100%);
+        border: 1px solid rgba(96, 165, 250, 0.2);
+        box-shadow: var(--shadow-xl);
+        position: relative;
+        overflow: hidden;
+    }
+    .resume-banner::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+            linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+        background-size: 32px 32px;
+        pointer-events: none;
+        opacity: 0.6;
+    }
+
+    /* ============================================
+       LOAD MORE
+    ============================================ */
     .load-more-btn {
-        background: var(--glass-bg);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(255,255,255,0.2);
-        color: #4F46E5;
-        padding: 12px 40px;
-        border-radius: 50px;
-        font-weight: 600;
+        display: inline-flex; align-items: center; gap: 8px;
+        background: var(--surface);
+        border: 1px solid rgba(59, 130, 246, 0.25);
+        color: var(--blue-700);
+        padding: 12px 32px;
+        border-radius: 14px;
+        font-weight: 700;
+        font-size: 14px;
         cursor: pointer;
-        transition: all 0.3s;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    }
-    .dark .load-more-btn {
-        background: rgba(30,41,59,0.8);
-        color: #818cf8;
-        border-color: rgba(255,255,255,0.05);
+        transition: all 0.3s ease;
+        box-shadow: var(--shadow-sm);
+        font-family: inherit;
     }
     .load-more-btn:hover {
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(79,70,229,0.3);
+        background: var(--blue-50);
+        box-shadow: 0 12px 24px -8px rgba(37, 99, 235, 0.32);
+        border-color: rgba(59, 130, 246, 0.4);
     }
-    .load-more-btn:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-        transform: none;
+    .dark .load-more-btn {
+        background: rgba(30, 41, 59, 0.7);
+        color: #93C5FD;
+        border-color: rgba(59, 130, 246, 0.28);
+    }
+    .dark .load-more-btn:hover {
+        background: rgba(37, 99, 235, 0.15);
+    }
+
+    /* ============================================
+       WHATSAPP FLOATING
+    ============================================ */
+    .wa-float {
+        background: linear-gradient(135deg, #25D366, #128C7E);
+        box-shadow: 0 12px 28px -8px rgba(37, 211, 102, 0.55), inset 0 1px 0 rgba(255,255,255,0.25);
+        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+    }
+    .wa-float:hover {
+        transform: translateY(-4px) scale(1.06);
+        box-shadow: 0 18px 34px -8px rgba(37, 211, 102, 0.7);
+    }
+
+    /* ============================================
+       UTILITIES
+    ============================================ */
+    .divider-soft {
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(148, 163, 184, 0.25), transparent);
+    }
+
+    ::selection {
+        background: rgba(59, 130, 246, 0.22);
+        color: var(--blue-900);
+    }
+
+    /* Focus visible */
+    *:focus-visible {
+        outline: none;
+        box-shadow: var(--ring-blue);
+        border-radius: 10px;
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+        .categories-track.anim-2,
+        .categories-track.anim-4 { animation: none !important; }
+        *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            transition-duration: 0.01ms !important;
+        }
+    }
+
+    /* Custom scrollbar for playlist */
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: rgba(148, 163, 184, 0.4);
+        border-radius: 3px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: rgba(59, 130, 246, 0.5);
     }
 </style>
 </head>
 
-<body class="transition-colors duration-300 antialiased pb-24">
+<body class="transition-colors duration-300 antialiased pb-28">
 
-    <header class="fixed top-0 w-full z-50 glass trans-all shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-            <div class="flex items-center gap-3 cursor-pointer" onclick="showHome()">
-                <div class="w-10 h-10 bg-gradient-to-tr from-indigo-600 to-violet-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-indigo-500/30">
-                    <i class="fas fa-graduation-cap text-lg"></i>
+    <!-- =========================
+         HEADER
+    ========================== -->
+    <header class="fixed top-0 w-full z-50 glass">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3 cursor-pointer select-none" onclick="showHome()">
+                <div class="brand-badge flex items-center justify-center">
+                    <i class="fas fa-graduation-cap text-white text-[16px] relative z-10"></i>
                 </div>
-                <div>
-                    <h1 class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-violet-600 dark:from-indigo-400 dark:to-violet-400">Skillzoy</h1>
+                <div class="flex flex-col leading-none">
+                    <span class="text-[19px] font-extrabold brand-title">Skillzoy</span>
+                    <span class="text-[10px] font-semibold text-gray-500 dark:text-gray-400 mt-0.5 tracking-wider">ACADEMY</span>
                 </div>
             </div>
 
-            <div class="flex items-center gap-4">
-                <button onclick="toggleDarkMode()" class="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 trans-all">
-                    <i class="fas fa-moon dark:hidden"></i>
-                    <i class="fas fa-sun hidden dark:block"></i>
+            <div class="flex items-center gap-2">
+                <button onclick="toggleDarkMode()" class="icon-btn" aria-label="تبديل الوضع">
+                    <i class="fas fa-moon text-[14px] dark:hidden"></i>
+                    <i class="fas fa-sun text-[14px] hidden dark:block"></i>
                 </button>
-                <div class="relative cursor-pointer">
-                    <div class="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
-                        <i class="fas fa-bell"></i>
-                    </div>
-                    <span class="absolute top-0 right-0 w-3 h-3 bg-red-500 border-2 border-white dark:border-gray-900 rounded-full"></span>
-                </div>
+                <button class="icon-btn relative" aria-label="الإشعارات">
+                    <i class="fas fa-bell text-[14px]"></i>
+                    <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-gradient-to-br from-rose-500 to-red-600 rounded-full ring-2 ring-white dark:ring-gray-900"></span>
+                </button>
             </div>
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-4 mt-24 space-y-8">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 mt-20 sm:mt-24 space-y-6 sm:space-y-8">
 
-        <!-- حذف كامل لقسم heroSection -->
-
-        <section class="sticky top-20 z-40">
-            <div class="glass-card p-2 rounded-2xl flex flex-col md:flex-row gap-2 shadow-lg">
-                <div class="relative flex-1">
-                    <i class="fas fa-search absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                    <input type="text" id="searchInput" placeholder="ابحث عن مهارة جديدة..." 
-                        class="w-full bg-transparent border-none focus:ring-0 text-gray-700 dark:text-gray-200 pr-10 pl-4 py-3 placeholder-gray-400">
+        <!-- =========================
+             SEARCH BAR
+        ========================== -->
+        <section class="sticky top-[68px] z-40">
+            <div class="search-shell flex items-center gap-2 p-2">
+                <div class="flex-1 flex items-center gap-3 px-3">
+                    <div class="search-icon-badge">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <input type="text" id="searchInput" placeholder="ابحث عن مهارة، دورة، أو تخصص..." 
+                        class="search-input flex-1 py-2">
                 </div>
-                <div class="flex gap-2 overflow-x-auto scrollbar-hide py-1 md:py-0 px-1">
-                    <select id="categoryFilter" class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 border-none rounded-xl px-4 py-2 text-sm focus:ring-0 cursor-pointer min-w-[120px]">
+                <div class="select-wrap min-w-[130px] sm:min-w-[150px]">
+                    <select id="categoryFilter">
                         <option value="">كل التخصصات</option>
                     </select>
                 </div>
             </div>
         </section>
 
-        <section>
+        <!-- =========================
+             CATEGORIES MARQUEE
+        ========================== -->
+        <section class="pt-2">
             <div class="flex justify-between items-end mb-4 px-1">
-                <h3 class="text-xl font-bold text-gray-800 dark:text-white">التصنيفات الشائعة</h3>
+                <h3 class="section-title">
+                    <span class="section-title-badge"><i class="fas fa-layer-group"></i></span>
+                    التصنيفات الشائعة
+                </h3>
+                <span class="text-[11px] font-semibold text-gray-400 dark:text-gray-500 hidden sm:inline">اسحب للتنقل ←</span>
             </div>
-            <div id="categoriesContainer" class="flex gap-4 overflow-x-auto scrollbar-hide pb-4">
-                <div class="skeleton min-w-[100px] h-28 rounded-2xl"></div>
-                <div class="skeleton min-w-[100px] h-28 rounded-2xl"></div>
-                <div class="skeleton min-w-[100px] h-28 rounded-2xl"></div>
+            <div class="categories-marquee" id="categoriesMarquee">
+                <div class="categories-track" id="categoriesTrack">
+                    <div class="category-chip skeleton" style="border-radius:18px;"></div>
+                    <div class="category-chip skeleton" style="border-radius:18px;"></div>
+                    <div class="category-chip skeleton" style="border-radius:18px;"></div>
+                    <div class="category-chip skeleton" style="border-radius:18px;"></div>
+                    <div class="category-chip skeleton" style="border-radius:18px;"></div>
+                </div>
             </div>
         </section>
 
+        <!-- =========================
+             COURSES
+        ========================== -->
         <section id="coursesSection" class="min-h-[400px]">
-            <div class="flex justify-between items-end mb-4 px-1">
-                <h3 class="text-xl font-bold text-gray-800 dark:text-white flex items-center gap-2">
-                    <i class="fas fa-play-circle text-indigo-500"></i>
-                    الدورات المتاحة (شاهد الآن)
+            <div class="flex justify-between items-end mb-5 px-1">
+                <h3 class="section-title">
+                    <span class="section-title-badge"><i class="fas fa-play"></i></span>
+                    الدورات المتاحة
                 </h3>
+                <span class="text-[11px] font-semibold text-gray-400 dark:text-gray-500" id="coursesCount"></span>
             </div>
             
-            <div id="coursesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Skeletons will be shown initially, then replaced -->
-            </div>
+            <div id="coursesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6"></div>
             
-            <!-- Load More Button -->
-            <div class="load-more-container" id="loadMoreContainer">
-                <button class="load-more-btn" id="loadMoreBtn" style="display: none;">تحميل المزيد</button>
+            <div class="text-center my-10" id="loadMoreContainer">
+                <button class="load-more-btn" id="loadMoreBtn" style="display:none;">
+                    <span>تحميل المزيد</span>
+                    <i class="fas fa-arrow-down text-[11px]"></i>
+                </button>
             </div>
             
             <div id="noResults" class="hidden flex-col items-center justify-center py-20 text-center">
-                <div class="w-24 h-24 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-4">
-                    <i class="fas fa-search text-3xl text-gray-400"></i>
+                <div class="w-20 h-20 rounded-2xl bg-blue-50 dark:bg-blue-950/40 flex items-center justify-center mb-4 border border-blue-100 dark:border-blue-900/50">
+                    <i class="fas fa-search text-2xl text-blue-500"></i>
                 </div>
-                <h3 class="text-lg font-bold text-gray-700 dark:text-gray-300">لم يتم العثور على نتائج</h3>
+                <h3 class="text-lg font-extrabold text-gray-800 dark:text-white mb-1">لا توجد نتائج</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400">جرّب البحث بكلمات أخرى أو اختر تخصصاً مختلفاً</p>
             </div>
         </section>
 
+        <!-- =========================
+             MY COURSES
+        ========================== -->
         <section id="myCoursesView" class="hidden min-h-screen">
-            <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">دوراتي التعليمية</h2>
+            <h2 class="section-title mb-6">
+                <span class="section-title-badge"><i class="fas fa-book-reader"></i></span>
+                دوراتي التعليمية
+            </h2>
             
-            <div id="resumeLearningBanner" class="hidden mb-8 bg-gray-900 rounded-2xl p-6 text-white relative overflow-hidden shadow-xl">
-                <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div>
-                        <div class="text-xs font-semibold text-gray-400 mb-1 uppercase tracking-wider">أكمل من حيث توقفت</div>
-                        <h3 id="resumeTitle" class="text-xl font-bold mb-2">عنوان الدورة هنا</h3>
-                        <div class="flex items-center gap-2 text-sm text-gray-300">
-                            <i class="fas fa-play-circle"></i>
+            <div id="resumeLearningBanner" class="resume-banner hidden rounded-2xl p-6 sm:p-7 text-white mb-8">
+                <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-5">
+                    <div class="flex-1">
+                        <div class="inline-flex items-center gap-2 mb-3">
+                            <span class="w-1.5 h-1.5 rounded-full bg-blue-300 animate-pulse"></span>
+                            <span class="text-[11px] font-bold text-blue-200 uppercase tracking-wider">أكمل من حيث توقفت</span>
+                        </div>
+                        <h3 id="resumeTitle" class="text-xl sm:text-2xl font-extrabold mb-2 tracking-tight">عنوان الدورة هنا</h3>
+                        <div class="flex items-center gap-2 text-sm text-blue-100/90">
+                            <i class="fas fa-play-circle text-blue-300"></i>
                             <span id="resumeProgress">المقطع 4 من 12</span>
                         </div>
                     </div>
-                    <button id="resumeBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-xl font-bold trans-all shadow-lg shadow-indigo-600/30">
+                    <button id="resumeBtn" class="bg-white text-blue-800 hover:bg-blue-50 px-6 py-3 rounded-xl font-extrabold text-sm shadow-lg shadow-blue-900/30 transition-all hover:-translate-y-0.5 flex items-center justify-center gap-2 whitespace-nowrap">
+                        <i class="fas fa-play"></i>
                         استئناف المشاهدة
                     </button>
                 </div>
             </div>
 
-            <div id="myCoursesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                </div>
+            <div id="myCoursesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6"></div>
         </section>
 
-        <div id="playerOverlay" class="fixed inset-0 z-[60] bg-white dark:bg-gray-900 transform translate-y-full transition-transform duration-300 overflow-y-auto">
-            <div class="sticky top-0 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md z-10 px-4 py-4 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between">
-                <button onclick="closePlayer()" class="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:scale-110 trans-all">
-                    <i class="fas fa-arrow-right"></i>
+        <!-- =========================
+             PLAYER OVERLAY
+        ========================== -->
+        <div id="playerOverlay" class="fixed inset-0 z-[60] transform translate-y-full transition-transform duration-500 overflow-y-auto">
+            <div class="player-header sticky top-0 z-10 px-4 py-4 flex items-center justify-between">
+                <button onclick="closePlayer()" class="icon-btn" aria-label="رجوع">
+                    <i class="fas fa-arrow-right text-[14px]"></i>
                 </button>
-                <span class="font-bold text-gray-800 dark:text-gray-200">مشاهدة الدورة</span>
+                <div class="flex flex-col items-center">
+                    <span class="text-[11px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">مشاهدة الدورة</span>
+                    <span id="playerCourseLabel" class="text-[13px] font-extrabold text-gray-800 dark:text-white truncate max-w-[200px]"></span>
+                </div>
                 <div class="w-10"></div> 
             </div>
 
-            <div class="max-w-5xl mx-auto px-4 py-6">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 py-6">
                 <div class="video-container bg-black mb-6">
                     <iframe id="playerFrame" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
 
-                <div class="flex flex-col lg:flex-row gap-8">
-                    <div class="flex-1 space-y-4">
-                        <h1 id="playerCourseTitle" class="text-2xl font-bold text-gray-900 dark:text-white leading-snug"></h1>
-                        <p id="playerCourseDesc" class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed"></p>
+                <div class="flex flex-col lg:flex-row gap-6 lg:gap-8">
+                    <div class="flex-1 space-y-5">
+                        <div>
+                            <h1 id="playerCourseTitle" class="text-xl sm:text-2xl font-extrabold text-gray-900 dark:text-white leading-snug tracking-tight mb-3"></h1>
+                            <p id="playerCourseDesc" class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed"></p>
+                        </div>
                         
-                        <div class="flex items-center gap-4 py-4 border-y border-gray-100 dark:border-gray-800">
-                             <button onclick="toggleCompleteVideo()" id="markCompleteBtn" class="flex-1 bg-green-500 hover:bg-green-600 text-white py-3 rounded-xl font-bold shadow-lg shadow-green-500/30 trans-all flex items-center justify-center gap-2">
+                        <div class="divider-soft"></div>
+
+                        <div class="flex items-stretch gap-3">
+                            <button onclick="toggleCompleteVideo()" id="markCompleteBtn" class="btn-primary flex-1 py-3.5 text-[14px]">
                                 <i class="fas fa-check-circle"></i>
                                 <span>إكمال المقطع</span>
                             </button>
-                            <a href="https://wa.me/249908280115" target="_blank" class="flex-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 py-3 rounded-xl font-bold trans-all flex items-center justify-center gap-2">
-                                <i class="fab fa-whatsapp text-green-500 text-xl"></i>
+                            <a href="https://wa.me/249908280115" target="_blank" class="flex-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 py-3.5 rounded-xl font-extrabold text-[14px] transition-all flex items-center justify-center gap-2 border border-gray-200 dark:border-gray-700">
+                                <i class="fab fa-whatsapp text-green-500 text-lg"></i>
                                 <span>طلب الشهادة</span>
                             </a>
                         </div>
                     </div>
 
-                    <div class="lg:w-96 bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-4 h-fit">
+                    <div class="lg:w-[380px] playlist-panel rounded-2xl p-5 h-fit">
                         <div class="flex justify-between items-center mb-4">
-                            <h3 class="font-bold text-gray-800 dark:text-white">محتوى الدورة</h3>
-                            <span id="progressPercentage" class="text-xs font-bold bg-indigo-100 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-300 px-2 py-1 rounded-lg">0% مكتمل</span>
+                            <h3 class="font-extrabold text-gray-800 dark:text-white text-[15px]">محتوى الدورة</h3>
+                            <span id="progressPercentage" class="text-[11px] font-extrabold bg-blue-50 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300 px-2.5 py-1 rounded-lg border border-blue-100 dark:border-blue-900/50">0% مكتمل</span>
                         </div>
-                        <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden mb-4">
-                            <div id="progressBarFill" class="h-full bg-gradient-to-r from-indigo-500 to-purple-500 w-0 trans-all duration-1000"></div>
+                        <div class="progress-track mb-4">
+                            <div id="progressBarFill" class="progress-fill w-0"></div>
                         </div>
-                        <div id="playlistContainer" class="space-y-2 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
-                            </div>
+                        <div id="playlistContainer" class="space-y-2 max-h-[420px] overflow-y-auto custom-scrollbar pl-1"></div>
                     </div>
                 </div>
             </div>
@@ -314,25 +1084,29 @@
 
     </main>
 
-    <nav class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl border border-white/20 dark:border-gray-700 rounded-full px-6 py-3 shadow-2xl z-40 flex items-center gap-8 trans-all duration-500 w-[90%] max-w-sm justify-between">
-        <button onclick="showHome()" class="nav-btn active flex flex-col items-center gap-1 text-indigo-600 dark:text-indigo-400 trans-all">
-            <i class="fas fa-home text-xl"></i>
-            <span class="text-[10px] font-bold">الرئيسية</span>
+    <!-- =========================
+         BOTTOM NAV
+    ========================== -->
+    <nav class="fixed bottom-5 left-1/2 transform -translate-x-1/2 bottom-nav rounded-full px-3 py-2 z-40 flex items-center gap-1 w-[92%] max-w-sm justify-between">
+        <button onclick="showHome()" class="nav-item active">
+            <i class="fas fa-home"></i>
+            <span>الرئيسية</span>
         </button>
         
-        <button onclick="showMyCourses()" class="nav-btn flex flex-col items-center gap-1 text-gray-400 hover:text-indigo-500 dark:hover:text-indigo-300 trans-all relative">
-            <i class="fas fa-book-reader text-xl"></i>
-            <span class="text-[10px] font-bold">دوراتي</span>
-            <span id="myCoursesDot" class="hidden absolute top-0 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+        <button onclick="showMyCourses()" class="nav-item relative">
+            <i class="fas fa-book-reader"></i>
+            <span>دوراتي</span>
+            <span id="myCoursesDot" class="hidden absolute top-1.5 right-3 w-2 h-2 bg-gradient-to-br from-rose-500 to-red-600 rounded-full ring-2 ring-white dark:ring-gray-900"></span>
         </button>
         
-        <button onclick="openWhatsApp()" class="nav-btn flex flex-col items-center gap-1 text-gray-400 hover:text-green-500 trans-all">
-            <i class="fab fa-whatsapp text-xl"></i>
-            <span class="text-[10px] font-bold">تواصل</span>
+        <button onclick="openWhatsApp()" class="nav-item">
+            <i class="fab fa-whatsapp text-[18px]"></i>
+            <span>تواصل</span>
         </button>
     </nav>
 
-    <a href="https://wa.me/249908280115" target="_blank" class="hidden md:flex fixed bottom-8 left-8 w-14 h-14 bg-green-500 text-white rounded-full items-center justify-center shadow-lg shadow-green-500/40 hover:scale-110 trans-all z-50 animate-bounce">
+    <!-- WhatsApp Floating (Desktop) -->
+    <a href="https://wa.me/249908280115" target="_blank" class="hidden md:flex fixed bottom-8 left-8 w-14 h-14 wa-float text-white rounded-2xl items-center justify-center z-50">
         <i class="fab fa-whatsapp text-2xl"></i>
     </a>
 
@@ -348,7 +1122,6 @@
         measurementId: "G-WVHTQ4BGNJ"
     };
 
-    // --- ✅ INITIALIZE FIREBASE ---
     if (!firebase.apps.length) {
         firebase.initializeApp(firebaseConfig);
     }
@@ -367,48 +1140,54 @@
         pendingEnrollments: []
     };
 
-    // --- ✅🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥 LOCAL CACHE FOR COURSES WITH 6 HOURS TTL ---
+    // --- ✅ CACHE: 100 HOURS TTL ---
     const CACHE_KEY = "cachedCourses";
     const CACHE_TIMESTAMP_KEY = "cachedCoursesTimestamp";
-    const CACHE_DURATION_MS = 0 * 60 * 60 * 1000; // 6 hours
+    const CACHE_DURATION_MS = 100 * 60 * 60 * 1000;
 
     function saveCoursesToCache(courses) {
-        localStorage.setItem(CACHE_KEY, JSON.stringify(courses));
-        localStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
+        try {
+            localStorage.setItem(CACHE_KEY, JSON.stringify(courses));
+            localStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
+        } catch (e) { console.warn("Cache save failed:", e); }
     }
 
     function loadCoursesFromCache() {
-        const cached = localStorage.getItem(CACHE_KEY);
-        const timestamp = localStorage.getItem(CACHE_TIMESTAMP_KEY);
-        if (cached && timestamp) {
-            const age = Date.now() - parseInt(timestamp);
-            if (age < CACHE_DURATION_MS) {
-                return JSON.parse(cached);
+        try {
+            const cached = localStorage.getItem(CACHE_KEY);
+            const timestamp = localStorage.getItem(CACHE_TIMESTAMP_KEY);
+            if (cached && timestamp) {
+                const age = Date.now() - parseInt(timestamp);
+                if (age < CACHE_DURATION_MS) return JSON.parse(cached);
             }
-        }
+        } catch (e) { console.warn("Cache load failed:", e); }
         return null;
     }
 
-    // --- ✅ PAGINATION VARIABLES (based on filtered courses) ---
-    let allCourses = [];           // all courses from cache or server
-    let displayedCourses = [];     // currently filtered courses
-    let currentPage = 0;
+    // --- ✅ PAGINATION ---
+    let allCourses = [];
+    let displayedCourses = [];
     const pageSize = 20;
-    let hasMore = true;
-    let loadingMore = false;
+    let currentFilter = null;
+    let unsubscribeRealtime = null;
+    let realtimeInitialized = false;
 
-    // --- ✅ GLOBAL TOAST FUNCTION ---
+    // --- ✅ TOAST ---
     function showToast(message, type = 'info') {
+        const colorClass = type === 'success'
+            ? 'bg-gradient-to-br from-emerald-500 to-green-600'
+            : (type === 'error'
+                ? 'bg-gradient-to-br from-rose-500 to-red-600'
+                : 'bg-gradient-to-br from-slate-800 to-slate-900');
         const toast = document.createElement('div');
-        const colorClass = type === 'success' ? 'bg-green-500' : (type === 'error' ? 'bg-red-500' : 'bg-gray-800');
-        toast.className = `fixed top-6 left-1/2 transform -translate-x-1/2 ${colorClass} text-white px-6 py-3 rounded-full shadow-2xl z-[70] flex items-center gap-3 animate-float font-bold text-sm min-w-[300px] justify-center`;
-        toast.innerHTML = `
-            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-info-circle'}"></i>
-            <span>${message}</span>
-        `;
+        toast.className = `fixed top-6 left-1/2 transform -translate-x-1/2 ${colorClass} text-white px-5 py-3 rounded-2xl shadow-2xl z-[70] flex items-center gap-3 font-bold text-[13px] min-w-[280px] max-w-[90vw] justify-center`;
+        toast.style.boxShadow = '0 20px 40px -8px rgba(15,23,42,0.35)';
+        toast.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-info-circle'}"></i><span>${message}</span>`;
         document.body.appendChild(toast);
         setTimeout(() => {
             toast.style.opacity = '0';
+            toast.style.transition = 'opacity 0.3s, transform 0.3s';
+            toast.style.transform = 'translate(-50%, -10px)';
             setTimeout(() => toast.remove(), 300);
         }, 3000);
     }
@@ -431,19 +1210,29 @@
     function renderSkeletons() {
         const grid = document.getElementById('coursesGrid');
         grid.innerHTML = Array(6).fill(0).map(() => `
-            <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-gray-700">
+            <div class="course-card p-4">
                 <div class="skeleton w-full h-40 rounded-xl mb-4"></div>
-                <div class="skeleton w-3/4 h-6 rounded-lg mb-2"></div>
+                <div class="skeleton w-3/4 h-5 rounded-lg mb-3"></div>
                 <div class="skeleton w-1/2 h-4 rounded-lg mb-4"></div>
                 <div class="flex justify-between">
                     <div class="skeleton w-20 h-8 rounded-lg"></div>
-                    <div class="skeleton w-20 h-8 rounded-lg"></div>
+                    <div class="skeleton w-24 h-8 rounded-lg"></div>
                 </div>
             </div>
         `).join('');
     }
 
-    // --- ✅ ANONYMOUS AUTH + LOAD COURSES (CACHE FIRST, THEN SERVER IF EXPIRED) ---
+    // --- ✅ CHANGE DETECTION ---
+    function coursesChanged(oldCourses, newCourses) {
+        if (!oldCourses || !newCourses) return true;
+        if (oldCourses.length !== newCourses.length) return true;
+        const sig = c => `${c.id}|${c.title||''}|${c.category||''}|${c.description||''}|${c.price||''}|${c.playlist_id||''}|${c.num||''}`;
+        const oldSig = oldCourses.map(sig).sort().join('###');
+        const newSig = newCourses.map(sig).sort().join('###');
+        return oldSig !== newSig;
+    }
+
+    // --- ✅ INIT ---
     async function initializeApp() {
         try {
             if (!auth.currentUser) {
@@ -451,15 +1240,17 @@
                 console.log("✅ Anonymous login successful");
             }
 
-            // 1. Try to load from cache (6h TTL)
             const cachedCourses = loadCoursesFromCache();
             if (cachedCourses && cachedCourses.length > 0) {
                 allCourses = cachedCourses;
-                console.log(`📦 Loaded ${allCourses.length} courses from local cache (6h TTL)`);
+                console.log(`📦 Loaded ${allCourses.length} courses from cache (100h TTL)`);
                 renderCategories();
-                renderCourses(); // render first page
-            } else {
-                // No valid cache: fetch from server and cache
+                renderCourses();
+            }
+
+            setupRealtimeListener();
+
+            if (!cachedCourses || cachedCourses.length === 0) {
                 await fetchCoursesFromServerAndCache();
             }
         } catch (error) {
@@ -467,44 +1258,57 @@
             showToast("⚠️ حدث خطأ في الاتصال", "error");
             document.getElementById('coursesGrid').innerHTML = `
                 <div class="col-span-3 text-center py-16">
-                    <div class="w-24 h-24 bg-red-100 dark:bg-red-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-exclamation-triangle text-4xl text-red-500"></i>
+                    <div class="w-20 h-20 bg-red-50 dark:bg-red-950/30 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-exclamation-triangle text-3xl text-red-500"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2">تعذر تحميل الدورات</h3>
-                    <p class="text-gray-600 dark:text-gray-400">يرجى التحقق من اتصالك بالإنترنت.</p>
+                    <h3 class="text-lg font-extrabold text-gray-800 dark:text-white mb-1">تعذر تحميل الدورات</h3>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">يرجى التحقق من اتصالك بالإنترنت</p>
                 </div>
             `;
         }
 
-        // Background periodic flush for progress/enrollments
         setInterval(() => {
             flushProgressUpdates();
             flushEnrollments();
         }, 60000);
     }
 
+    // --- ✅ REAL-TIME ---
+    function setupRealtimeListener() {
+        if (unsubscribeRealtime) {
+            unsubscribeRealtime();
+            unsubscribeRealtime = null;
+        }
+
+        unsubscribeRealtime = db.collection('courses').onSnapshot((snapshot) => {
+            const serverCourses = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            serverCourses.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+
+            const hasChanged = coursesChanged(allCourses, serverCourses);
+
+            if (hasChanged) {
+                allCourses = serverCourses;
+                saveCoursesToCache(allCourses);
+                renderCategories();
+                renderCourses();
+                if (realtimeInitialized) console.log(`🔄 Real-time: ${allCourses.length} courses`);
+            }
+            realtimeInitialized = true;
+        }, (error) => { console.warn("Realtime listener error:", error); });
+    }
+
     async function fetchCoursesFromServerAndCache() {
         try {
             const snapshot = await db.collection('courses').get({ source: 'server' });
-            if (!snapshot.empty) {
-                const serverCourses = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                // sort by createdAt descending (if exists)
-                serverCourses.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
-                allCourses = serverCourses;
-                saveCoursesToCache(allCourses);
-                console.log(`📡 Fetched ${allCourses.length} courses from server and cached (6h)`);
-                renderCategories();
-                renderCourses();
-            } else {
-                console.log("No courses from server");
-                allCourses = [];
-                renderCategories();
-                renderCourses();
-            }
+            const serverCourses = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            serverCourses.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+            allCourses = serverCourses;
+            saveCoursesToCache(allCourses);
+            console.log(`📡 Fetched ${allCourses.length} courses and cached (100h)`);
+            renderCategories();
+            renderCourses();
         } catch (error) {
-            console.error("❌ Error fetching courses from server:", error);
-            showToast("تحديث الدورات فشل", "error");
-            // fallback: try cache again (maybe expired but we still use it)
+            console.error("❌ Error fetching from server:", error);
             const cached = loadCoursesFromCache();
             if (cached && cached.length) {
                 allCourses = cached;
@@ -518,36 +1322,44 @@
         }
     }
 
-    // --- ✅ RENDER CATEGORIES ---
+    // --- ✅ CATEGORIES ---
     function renderCategories() {
-        const container = document.getElementById('categoriesContainer');
+        const track = document.getElementById('categoriesTrack');
         const filterSelect = document.getElementById('categoryFilter');
 
         if (!allCourses || allCourses.length === 0) {
-            container.innerHTML = '<div class="text-gray-500 dark:text-gray-400 py-4">لا توجد تصنيفات متاحة</div>';
+            track.innerHTML = '<div class="text-gray-500 dark:text-gray-400 py-4 px-4 text-sm">لا توجد تصنيفات متاحة</div>';
+            track.classList.remove('anim-2', 'anim-4');
             filterSelect.innerHTML = '<option value="">كل التخصصات</option>';
             return;
         }
 
         const categories = [...new Set(allCourses.map(c => c.category || 'عام'))];
-        
-        container.innerHTML = `
-            <div onclick="filterByCategory('all')" class="min-w-[110px] h-28 cursor-pointer rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white flex flex-col items-center justify-center gap-2 shadow-lg shadow-indigo-500/30 trans-all hover:scale-105">
-                <i class="fas fa-th-large text-xl"></i>
-                <span class="text-sm font-bold">الكل</span>
+
+        let setHtml = `
+            <div onclick="filterByCategory('all')" class="category-chip category-chip-all">
+                <div class="category-icon-wrap"><i class="fas fa-th-large"></i></div>
+                <span>الكل</span>
             </div>
         `;
-
         categories.forEach(cat => {
-            container.innerHTML += `
-                <div onclick="filterByCategory('${cat}')" class="min-w-[110px] h-28 cursor-pointer rounded-2xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 flex flex-col items-center justify-center gap-2 hover:border-indigo-500 hover:shadow-lg trans-all group">
-                    <div class="w-10 h-10 rounded-full bg-indigo-50 dark:bg-gray-700 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-lg group-hover:scale-110 trans-all">
-                        ${getCategoryIcon(cat)}
-                    </div>
-                    <span class="text-sm font-bold text-gray-700 dark:text-gray-300">${cat}</span>
+            const safeCat = cat.replace(/'/g, "\\'");
+            setHtml += `
+                <div onclick="filterByCategory('${safeCat}')" class="category-chip">
+                    <div class="category-icon-wrap">${getCategoryIcon(cat)}</div>
+                    <span>${cat}</span>
                 </div>
             `;
         });
+
+        const numSets = categories.length < 10 ? 4 : 2;
+        let finalHtml = '';
+        for (let i = 0; i < numSets; i++) finalHtml += setHtml;
+
+        track.classList.remove('anim-2', 'anim-4');
+        track.innerHTML = finalHtml;
+        void track.offsetWidth;
+        track.classList.add(numSets === 4 ? 'anim-4' : 'anim-2');
 
         filterSelect.innerHTML = '<option value="">كل التخصصات</option>';
         categories.forEach(cat => {
@@ -586,182 +1398,174 @@
         return map[cat] || '<i class="fas fa-book"></i>';
     }
 
-    // --- ✅ RENDER COURSES (with filter and pagination) ---
+    // --- ✅ MARQUEE ---
+    function initCategoriesMarquee() {
+        const marquee = document.getElementById('categoriesMarquee');
+        if (!marquee) return;
+        let resumeTimeout = null;
+
+        const pause = () => {
+            if (resumeTimeout) { clearTimeout(resumeTimeout); resumeTimeout = null; }
+            marquee.classList.add('paused');
+        };
+        const resume = (delay = 1500) => {
+            if (resumeTimeout) clearTimeout(resumeTimeout);
+            resumeTimeout = setTimeout(() => marquee.classList.remove('paused'), delay);
+        };
+
+        marquee.addEventListener('touchstart', pause, { passive: true });
+        marquee.addEventListener('touchend', () => resume(1800), { passive: true });
+        marquee.addEventListener('touchcancel', () => resume(1800), { passive: true });
+        marquee.addEventListener('mouseenter', pause);
+        marquee.addEventListener('mouseleave', () => resume(0));
+        marquee.addEventListener('mousedown', pause);
+        marquee.addEventListener('mouseup', () => resume(1800));
+
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) pause();
+            else marquee.classList.remove('paused');
+        });
+    }
+
+    // --- ✅ BUILD COURSE CARD ---
+    function buildCourseCardHTML(course, isEnrolled) {
+        const isFree = (course.price === 'free' || course.price === 'مجانية' || !course.price);
+        const priceDisplay = isFree
+            ? '<span class="course-price-free"><i class="fas fa-bolt"></i> مجانية</span>'
+            : `<span class="course-price-paid"><i class="fas fa-tag"></i> ${course.price}</span>`;
+
+        let videoEmbed;
+        if (course.playlist_id) {
+            videoEmbed = `<iframe
+                              src="https://www.youtube.com/embed/videoseries?list=${course.playlist_id}"
+                              frameborder="0"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowfullscreen
+                              loading="lazy">
+                          </iframe>`;
+        } else {
+            videoEmbed = `<div class="absolute inset-0 w-full h-full bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 flex items-center justify-center text-gray-400"><i class="fas fa-video-slash text-2xl"></i></div>`;
+        }
+
+        return `
+            <div class="course-card">
+                <div class="video-wrap">
+                    ${videoEmbed}
+                    <div class="cat-pill">
+                        <i class="fas fa-circle"></i>
+                        ${course.category || 'عام'}
+                    </div>
+                </div>
+                <div class="p-5 flex flex-col flex-1">
+                    <h3 class="text-[15px] font-extrabold text-gray-800 dark:text-white mb-2 line-clamp-2 leading-snug tracking-tight">${course.title || 'بدون عنوان'}</h3>
+                    <p class="text-[13px] text-gray-500 dark:text-gray-400 mb-4 line-clamp-2 flex-1 leading-relaxed">${course.description || 'لا يوجد وصف'}</p>
+                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-gray-800">
+                        ${priceDisplay}
+                        <button onclick="${isEnrolled ? `openPlayer('${course.id}')` : `enrollCourse('${course.id}')`}"
+                            class="${isEnrolled ? 'btn-enrolled' : 'btn-primary'}">
+                            ${isEnrolled ? 'استكمال <i class="fas fa-play text-[9px]"></i>' : 'سجّل الآن <i class="fas fa-arrow-left text-[10px]"></i>'}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // --- ✅ RENDER COURSES ---
     function renderCourses(filter = null) {
+        if (filter !== null) currentFilter = filter;
         const grid = document.getElementById('coursesGrid');
         const loadMoreBtn = document.getElementById('loadMoreBtn');
+        const noResults = document.getElementById('noResults');
+        const coursesCount = document.getElementById('coursesCount');
+
         let filtered = allCourses;
 
         if (!filtered || filtered.length === 0) {
             grid.innerHTML = '';
-            document.getElementById('noResults').classList.remove('hidden');
-            document.getElementById('noResults').classList.add('flex');
+            noResults.classList.remove('hidden');
+            noResults.classList.add('flex');
             loadMoreBtn.style.display = 'none';
+            if (coursesCount) coursesCount.textContent = '';
             return;
         }
 
-        if (filter && filter !== 'all' && filter !== '') {
-            filtered = filtered.filter(c => 
-                (c.category || 'عام') === filter || 
-                (c.title && c.title.includes(filter))
+        const f = currentFilter;
+        if (f && f !== 'all' && f !== '') {
+            filtered = filtered.filter(c =>
+                (c.category || 'عام') === f ||
+                (c.title && c.title.includes(f)) ||
+                (c.description && c.description.includes(f))
             );
         }
 
         if (filtered.length === 0) {
             grid.innerHTML = '';
-            document.getElementById('noResults').classList.remove('hidden');
-            document.getElementById('noResults').classList.add('flex');
+            noResults.classList.remove('hidden');
+            noResults.classList.add('flex');
             loadMoreBtn.style.display = 'none';
+            if (coursesCount) coursesCount.textContent = '';
             return;
         }
 
-        document.getElementById('noResults').classList.add('hidden');
-        document.getElementById('noResults').classList.remove('flex');
+        noResults.classList.add('hidden');
+        noResults.classList.remove('flex');
 
-        // Pagination: عرض أول 20 فقط
-        const start = 0;
-        const end = pageSize;
-        const pageCourses = filtered.slice(start, end);
-        const totalFiltered = filtered.length;
-        const hasMoreFiltered = totalFiltered > end;
-
-        // حفظ القائمة المعروضة في متغير عام للاستفادة منها في "تحميل المزيد"
+        const pageCourses = filtered.slice(0, pageSize);
         displayedCourses = filtered;
 
-        // بناء HTML
         grid.innerHTML = pageCourses.map(course => {
             const isEnrolled = appState.myCourses.includes(course.id);
-            const priceDisplay = (course.price === 'free' || course.price === 'مجانية') 
-                ? '<span class="text-green-500 font-bold">مجانية</span>' 
-                : `<span class="text-indigo-600 dark:text-indigo-400 font-bold font-mono">${course.price}</span>`;
-
-            let videoEmbed = '';
-            if (course.playlist_id) {
-                videoEmbed = `<iframe class="absolute inset-0 w-full h-full" 
-                                      src="https://www.youtube.com/embed/videoseries?list=${course.playlist_id}" 
-                                      frameborder="0" 
-                                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                      allowfullscreen
-                                      loading="lazy">
-                              </iframe>`;
-            } else {
-                videoEmbed = `<div class="absolute inset-0 w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-500"><i class="fas fa-video-slash"></i> لا يوجد فيديو</div>`;
-            }
-
-            return `
-            <div class="glass-card rounded-2xl overflow-hidden hover:transform hover:-translate-y-2 trans-all group h-full flex flex-col">
-                <div class="relative w-full aspect-video bg-black rounded-t-2xl overflow-hidden">
-                    ${videoEmbed}
-                    <div class="absolute top-2 left-2 z-20 bg-black/60 backdrop-blur-md text-white text-xs px-2 py-1 rounded-lg border border-white/20">
-                        ${course.category || 'عام'}
-                    </div>
-                </div>
-                <div class="p-5 flex flex-col flex-1">
-                    <h3 class="text-lg font-bold text-gray-800 dark:text-white mb-2 line-clamp-2">${course.title}</h3>
-                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-4 line-clamp-2 flex-1">${course.description || 'لا يوجد وصف'}</p>
-                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-gray-700">
-                        ${priceDisplay}
-                        <button onclick="${isEnrolled ? `openPlayer('${course.id}')` : `enrollCourse('${course.id}')`}" 
-                            class="${isEnrolled ? 'bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400' : 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/30'} 
-                            px-4 py-2 rounded-xl text-sm font-bold hover:brightness-110 trans-all">
-                            ${isEnrolled ? 'استكمال الدورة <i class="fas fa-play text-xs mr-1"></i>' : 'تسجيل الآن'}
-                        </button>
-                    </div>
-                </div>
-            </div>
-            `;
+            return buildCourseCardHTML(course, isEnrolled);
         }).join('');
 
-        // إظهار أو إخفاء زر "تحميل المزيد" بناءً على ما إذا كان هناك المزيد من النتائج
-        if (hasMoreFiltered && (filtered.length > pageSize)) {
-            loadMoreBtn.style.display = 'inline-block';
-            loadMoreBtn.onclick = () => loadMoreFilteredCourses(filter);
+        if (coursesCount) coursesCount.textContent = `${filtered.length} دورة`;
+
+        if (filtered.length > pageSize) {
+            loadMoreBtn.style.display = 'inline-flex';
+            loadMoreBtn.onclick = () => loadMoreFilteredCourses();
         } else {
             loadMoreBtn.style.display = 'none';
         }
     }
 
-    // دالة لتحميل المزيد من الدورات بناءً على الفلتر الحالي
-    function loadMoreFilteredCourses(filter) {
+    function loadMoreFilteredCourses() {
         const loadMoreBtn = document.getElementById('loadMoreBtn');
         const grid = document.getElementById('coursesGrid');
-        
         const currentDisplayCount = grid.children.length;
         const totalFiltered = displayedCourses.length;
-        
         if (currentDisplayCount >= totalFiltered) {
             loadMoreBtn.style.display = 'none';
             return;
         }
-        
         const nextCount = Math.min(currentDisplayCount + pageSize, totalFiltered);
         const nextCourses = displayedCourses.slice(currentDisplayCount, nextCount);
-        
+        const fragment = document.createDocumentFragment();
         nextCourses.forEach(course => {
             const isEnrolled = appState.myCourses.includes(course.id);
-            const priceDisplay = (course.price === 'free' || course.price === 'مجانية') 
-                ? '<span class="text-green-500 font-bold">مجانية</span>' 
-                : `<span class="text-indigo-600 dark:text-indigo-400 font-bold font-mono">${course.price}</span>`;
-
-            let videoEmbed = '';
-            if (course.playlist_id) {
-                videoEmbed = `<iframe class="absolute inset-0 w-full h-full" 
-                                      src="https://www.youtube.com/embed/videoseries?list=${course.playlist_id}" 
-                                      frameborder="0" 
-                                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                      allowfullscreen
-                                      loading="lazy">
-                              </iframe>`;
-            } else {
-                videoEmbed = `<div class="absolute inset-0 w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-500"><i class="fas fa-video-slash"></i> لا يوجد فيديو</div>`;
-            }
-
-            const card = document.createElement('div');
-            card.className = 'glass-card rounded-2xl overflow-hidden hover:transform hover:-translate-y-2 trans-all group h-full flex flex-col';
-            card.innerHTML = `
-                <div class="relative w-full aspect-video bg-black rounded-t-2xl overflow-hidden">
-                    ${videoEmbed}
-                    <div class="absolute top-2 left-2 z-20 bg-black/60 backdrop-blur-md text-white text-xs px-2 py-1 rounded-lg border border-white/20">
-                        ${course.category || 'عام'}
-                    </div>
-                </div>
-                <div class="p-5 flex flex-col flex-1">
-                    <h3 class="text-lg font-bold text-gray-800 dark:text-white mb-2 line-clamp-2">${course.title}</h3>
-                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-4 line-clamp-2 flex-1">${course.description || 'لا يوجد وصف'}</p>
-                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-gray-700">
-                        ${priceDisplay}
-                        <button onclick="${isEnrolled ? `openPlayer('${course.id}')` : `enrollCourse('${course.id}')`}" 
-                            class="${isEnrolled ? 'bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400' : 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/30'} 
-                            px-4 py-2 rounded-xl text-sm font-bold hover:brightness-110 trans-all">
-                            ${isEnrolled ? 'استكمال الدورة <i class="fas fa-play text-xs mr-1"></i>' : 'تسجيل الآن'}
-                        </button>
-                    </div>
-                </div>
-            `;
-            grid.appendChild(card);
+            const wrapper = document.createElement('div');
+            wrapper.innerHTML = buildCourseCardHTML(course, isEnrolled).trim();
+            fragment.appendChild(wrapper.firstChild);
         });
-
+        grid.appendChild(fragment);
         if (currentDisplayCount + nextCourses.length >= totalFiltered) {
             loadMoreBtn.style.display = 'none';
         }
     }
 
-    // --- ✅ ENROLLMENT (with batch) ---
+    // --- ✅ ENROLLMENT ---
     function enrollCourse(id) {
         if (!appState.myCourses.includes(id)) {
             appState.myCourses.push(id);
             localStorage.setItem("myCourses", JSON.stringify(appState.myCourses));
-            
             if (!appState.progress[id]) {
                 appState.progress[id] = { completed: [], total: 10 };
                 localStorage.setItem("courseProgress", JSON.stringify(appState.progress));
             }
-            
-            showToast("تم التسجيل بنجاح! 🎉", "success");
+            showToast("تم التسجيل بنجاح 🎉", "success");
             renderCourses();
             renderMyCourses();
             updateNavState();
-
             queueEnrollmentWrite(id);
         }
     }
@@ -777,46 +1581,39 @@
 
     async function flushEnrollments() {
         if (appState.pendingEnrollments.length === 0 || !auth.currentUser) return;
-        
         const batch = db.batch();
         const userRef = db.collection('users').doc(auth.currentUser.uid);
-        
         appState.pendingEnrollments.forEach(enrollment => {
             const enrollmentRef = userRef.collection('enrollments').doc(enrollment.courseId);
             batch.set(enrollmentRef, {
                 enrolledAt: firebase.firestore.FieldValue.serverTimestamp()
             }, { merge: true });
         });
-        
         try {
             await batch.commit();
-            console.log(`✅ Flushed ${appState.pendingEnrollments.length} enrollments to Firestore`);
+            console.log(`✅ Flushed ${appState.pendingEnrollments.length} enrollments`);
             appState.pendingEnrollments = [];
-        } catch (error) {
-            console.error("Error flushing enrollments:", error);
-        }
+        } catch (error) { console.error("Error flushing enrollments:", error); }
     }
 
-    // --- ✅ PLAYER LOGIC ---
+    // --- ✅ PLAYER ---
     function openPlayer(id) {
         const course = allCourses.find(c => c.id === id);
         if (!course) return;
-
         appState.currentCourseId = id;
         document.getElementById('playerCourseTitle').innerText = course.title;
+        document.getElementById('playerCourseLabel').innerText = course.title;
         document.getElementById('playerCourseDesc').innerText = course.description || '';
-        
+
         const frame = document.getElementById('playerFrame');
         if (course.playlist_id) {
             frame.src = `https://www.youtube.com/embed/videoseries?list=${course.playlist_id}`;
         } else {
             frame.src = "";
         }
-
         const totalVideos = course.num || 10;
         renderPlaylistItems(id, totalVideos);
         document.getElementById('playerOverlay').classList.remove('translate-y-full');
-        
         localStorage.setItem("lastViewedCourse", JSON.stringify({ id: course.id, title: course.title }));
     }
 
@@ -831,19 +1628,18 @@
         const container = document.getElementById('playlistContainer');
         const progressData = appState.progress[courseId] || { completed: [] };
         let html = '';
-
         for (let i = 1; i <= totalVideos; i++) {
             const isCompleted = progressData.completed.includes(i);
             html += `
-                <div class="flex items-center justify-between p-3 rounded-xl ${isCompleted ? 'bg-green-50 dark:bg-green-900/20' : 'bg-white dark:bg-gray-800'} border border-gray-100 dark:border-gray-700">
+                <div class="lesson-row ${isCompleted ? 'done' : ''}">
                     <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${isCompleted ? 'bg-green-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300'}">
-                            ${isCompleted ? '<i class="fas fa-check"></i>' : i}
+                        <div class="w-9 h-9 rounded-xl flex items-center justify-center text-[12px] font-extrabold ${isCompleted ? 'bg-gradient-to-br from-emerald-500 to-green-600 text-white' : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-300'}">
+                            ${isCompleted ? '<i class="fas fa-check text-[11px]"></i>' : i}
                         </div>
-                        <span class="text-sm font-medium text-gray-700 dark:text-gray-200">الدرس رقم ${i}</span>
+                        <span class="text-[13px] font-bold text-gray-700 dark:text-gray-200">الدرس ${i}</span>
                     </div>
-                    <button onclick="toggleLessonComplete(${i})" class="text-gray-400 hover:text-green-500 trans-all">
-                        <i class="far fa-circle ${isCompleted ? 'fas fa-check-circle text-green-500' : ''}"></i>
+                    <button onclick="toggleLessonComplete(${i})" class="w-8 h-8 rounded-lg flex items-center justify-center transition-all ${isCompleted ? 'text-emerald-500' : 'text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/30'}">
+                        <i class="fas ${isCompleted ? 'fa-check-circle' : 'fa-circle'} text-[13px]"></i>
                     </button>
                 </div>
             `;
@@ -856,22 +1652,18 @@
         const id = appState.currentCourseId;
         if (!id) return;
         if (!appState.progress[id]) appState.progress[id] = { completed: [] };
-        
         const list = appState.progress[id].completed;
         if (list.includes(lessonIndex)) {
             appState.progress[id].completed = list.filter(i => i !== lessonIndex);
         } else {
             appState.progress[id].completed.push(lessonIndex);
         }
-        
         localStorage.setItem("courseProgress", JSON.stringify(appState.progress));
-        
         if (!appState.pendingProgressUpdates[id]) {
             appState.pendingProgressUpdates[id] = { completed: [...appState.progress[id].completed] };
         } else {
             appState.pendingProgressUpdates[id].completed = [...appState.progress[id].completed];
         }
-
         const course = allCourses.find(c => c.id === id);
         const total = course?.num || 10;
         renderPlaylistItems(id, total);
@@ -880,10 +1672,8 @@
 
     async function flushProgressUpdates() {
         if (Object.keys(appState.pendingProgressUpdates).length === 0 || !auth.currentUser) return;
-        
         const batch = db.batch();
         const userId = auth.currentUser.uid;
-        
         for (const [courseId, progress] of Object.entries(appState.pendingProgressUpdates)) {
             const docRef = db.collection('users').doc(userId).collection('progress').doc(courseId);
             batch.set(docRef, {
@@ -891,36 +1681,27 @@
                 updatedAt: firebase.firestore.FieldValue.serverTimestamp()
             }, { merge: true });
         }
-        
         try {
             await batch.commit();
-            console.log(`✅ Progress batch written to Firestore (${Object.keys(appState.pendingProgressUpdates).length} courses)`);
+            console.log(`✅ Progress batch (${Object.keys(appState.pendingProgressUpdates).length})`);
             appState.pendingProgressUpdates = {};
-        } catch (error) {
-            console.error("Error writing progress batch:", error);
-        }
+        } catch (error) { console.error("Error writing progress batch:", error); }
     }
 
     function toggleCompleteVideo() {
         const id = appState.currentCourseId;
         if (!id) return;
-        
         const course = allCourses.find(c => c.id === id);
         const total = course?.num || 10;
-        
         if (!appState.progress[id]) appState.progress[id] = { completed: [] };
         const completedList = appState.progress[id].completed;
-        
         let targetLesson = 1;
-        while (completedList.includes(targetLesson) && targetLesson <= total) {
-            targetLesson++;
-        }
-        
+        while (completedList.includes(targetLesson) && targetLesson <= total) targetLesson++;
         if (targetLesson <= total) {
             toggleLessonComplete(targetLesson);
             showToast(`✅ تم إكمال الدرس ${targetLesson}`, 'success');
         } else {
-            showToast('🎉 لقد أتممت جميع الدروس بالفعل!', 'info');
+            showToast('🎉 لقد أتممت جميع الدروس!', 'info');
         }
     }
 
@@ -931,13 +1712,11 @@
         document.getElementById('progressPercentage').innerText = `${percent}% مكتمل`;
     }
 
-    // --- ✅ MY COURSES PAGE ---
+    // --- ✅ MY COURSES ---
     function renderMyCourses() {
         const grid = document.getElementById('myCoursesGrid');
-        
-        const lastViewed = JSON.parse(localStorage.getItem("lastViewedCourse"));
+        const lastViewed = JSON.parse(localStorage.getItem("lastViewedCourse") || 'null');
         const banner = document.getElementById('resumeLearningBanner');
-        
         if (lastViewed && appState.myCourses.includes(lastViewed.id)) {
             banner.classList.remove('hidden');
             document.getElementById('resumeTitle').innerText = lastViewed.title;
@@ -945,37 +1724,41 @@
         } else {
             banner.classList.add('hidden');
         }
-
         if (appState.myCourses.length === 0) {
-            grid.innerHTML = `<div class="col-span-3 text-center text-gray-500 py-10">لم تقم بالتسجيل في أي دورة بعد.</div>`;
+            grid.innerHTML = `
+                <div class="col-span-3 text-center py-16">
+                    <div class="w-20 h-20 rounded-2xl bg-blue-50 dark:bg-blue-950/40 flex items-center justify-center mx-auto mb-4 border border-blue-100 dark:border-blue-900/50">
+                        <i class="fas fa-book-open text-2xl text-blue-500"></i>
+                    </div>
+                    <h3 class="text-lg font-extrabold text-gray-800 dark:text-white mb-1">لا توجد دورات بعد</h3>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">سجّل في دورتك الأولى وابدأ رحلة التعلم</p>
+                </div>
+            `;
             return;
         }
-
         grid.innerHTML = appState.myCourses.map(id => {
             const course = allCourses.find(c => c.id === id);
             if (!course) return '';
-            
             const total = course.num || 10;
             const completed = appState.progress[id]?.completed.length || 0;
             const percent = Math.round((completed / total) * 100);
-
             return `
-                <div class="glass-card rounded-2xl p-4 flex gap-4 items-center cursor-pointer hover:bg-white/50 dark:hover:bg-gray-700/50 trans-all" onclick="openPlayer('${id}')">
-                    <div class="w-20 h-20 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-2xl shrink-0">
+                <div class="course-card p-4 flex gap-4 items-center cursor-pointer" onclick="openPlayer('${id}')">
+                    <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-700 to-blue-500 flex items-center justify-center text-white text-2xl shrink-0 shadow-lg shadow-blue-500/30">
                         <i class="fas fa-play"></i>
                     </div>
                     <div class="flex-1 min-w-0">
-                        <h4 class="font-bold text-gray-800 dark:text-white truncate">${course.title}</h4>
-                        <div class="flex justify-between items-center text-xs text-gray-500 dark:text-gray-400 mt-1 mb-2">
+                        <h4 class="font-extrabold text-gray-800 dark:text-white truncate text-[14px] mb-1">${course.title}</h4>
+                        <div class="flex justify-between items-center text-[11px] font-bold text-gray-500 dark:text-gray-400 mb-2">
                             <span>${completed}/${total} درس</span>
                             <span>${percent}%</span>
                         </div>
-                        <div class="h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                            <div class="h-full bg-green-500 rounded-full" style="width: ${percent}%"></div>
+                        <div class="progress-track" style="height:6px;">
+                            <div class="progress-fill" style="width:${percent}%"></div>
                         </div>
                     </div>
-                    <button onclick="removeCourse('${id}', event)" class="text-gray-300 hover:text-red-500 px-2 trans-all">
-                        <i class="fas fa-trash-alt"></i>
+                    <button onclick="removeCourse('${id}', event)" class="w-8 h-8 rounded-lg flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition-all">
+                        <i class="fas fa-trash-alt text-[12px]"></i>
                     </button>
                 </div>
             `;
@@ -998,7 +1781,7 @@
         document.getElementById('coursesSection').classList.remove('hidden');
         document.getElementById('myCoursesView').classList.add('hidden');
         setActiveNav(0);
-        window.scrollTo(0, 0);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function showMyCourses() {
@@ -1006,19 +1789,14 @@
         document.getElementById('myCoursesView').classList.remove('hidden');
         renderMyCourses();
         setActiveNav(1);
-        window.scrollTo(0, 0);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function setActiveNav(index) {
-        const btns = document.querySelectorAll('.nav-btn');
+        const btns = document.querySelectorAll('.nav-item');
         btns.forEach((b, i) => {
-            if (i === index) {
-                b.classList.add('text-indigo-600', 'dark:text-indigo-400', 'active');
-                b.classList.remove('text-gray-400');
-            } else {
-                b.classList.remove('text-indigo-600', 'dark:text-indigo-400', 'active');
-                b.classList.add('text-gray-400');
-            }
+            if (i === index) b.classList.add('active');
+            else b.classList.remove('active');
         });
     }
 
@@ -1036,22 +1814,38 @@
 
     // --- ✅ FILTERS ---
     function filterByCategory(cat) {
-        renderCourses(cat === 'all' ? null : cat);
+        currentFilter = (cat === 'all') ? null : cat;
+        renderCourses(currentFilter);
+        const target = document.getElementById('coursesSection');
+        window.scrollTo({ top: target.offsetTop - 100, behavior: 'smooth' });
+    }
+
+    function debounce(fn, delay) {
+        let t;
+        return function(...args) {
+            clearTimeout(t);
+            t = setTimeout(() => fn.apply(this, args), delay);
+        };
     }
 
     function setupEventListeners() {
-        document.getElementById('searchInput').addEventListener('input', (e) => {
-            renderCourses(e.target.value);
-        });
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', debounce((e) => {
+            currentFilter = e.target.value;
+            renderCourses(currentFilter);
+        }, 250));
+
         document.getElementById('categoryFilter').addEventListener('change', (e) => {
-            renderCourses(e.target.value);
+            currentFilter = e.target.value;
+            renderCourses(currentFilter);
         });
     }
 
-    // --- ✅ INITIALIZE EVERYTHING ---
+    // --- ✅ DOMContentLoaded ---
     document.addEventListener('DOMContentLoaded', () => {
         setupTheme();
         renderSkeletons();
+        initCategoriesMarquee();
         initializeApp();
         setupEventListeners();
         updateNavState();
@@ -1062,25 +1856,21 @@
         });
     });
 
-    // ===== antidebug (بقيت كما هي) =====
+    // ===== antidebug =====
     (() => {
         document.addEventListener("keydown", (e) => {
             if (
                 (e.ctrlKey && e.shiftKey && ["I", "C", "J", "L"].includes(e.key.toUpperCase())) ||
                 (e.key === "F12") ||
                 (e.ctrlKey && e.key.toUpperCase() === "U")
-            ) {
-                e.preventDefault();
-            }
+            ) e.preventDefault();
         });
         document.addEventListener("copy", e => e.preventDefault());
         document.addEventListener("cut", e => e.preventDefault());
         document.addEventListener("contextmenu", e => e.preventDefault());
         document.addEventListener("selectstart", e => e.preventDefault());
         let detectSize = () => {
-            if (window.outerWidth - window.innerWidth > 200 || window.outerHeight - window.innerHeight > 200) {
-                console.clear();
-            }
+            if (window.outerWidth - window.innerWidth > 200 || window.outerHeight - window.innerHeight > 200) console.clear();
         };
         window.addEventListener("resize", detectSize);
         let start = performance.now();
