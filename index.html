@@ -425,113 +425,6 @@
             transform: scale(1.1) rotate(10deg);
             box-shadow: 0 15px 40px rgba(30, 58, 138, 0.4);
         }
-
-        /* ====== حركة التصنيفات (قيم ومبادئ) التلقائية ====== */
-        .values-marquee {
-            position: relative;
-            overflow: hidden;
-            padding: 20px 0 30px;
-            -webkit-mask-image: linear-gradient(to right, 
-                transparent 0%, 
-                black 6%, 
-                black 94%, 
-                transparent 100%);
-            mask-image: linear-gradient(to right, 
-                transparent 0%, 
-                black 6%, 
-                black 94%, 
-                transparent 100%);
-            cursor: grab;
-        }
-
-        .values-marquee:active {
-            cursor: grabbing;
-        }
-
-        .values-track {
-            display: flex;
-            gap: 24px;
-            width: max-content;
-            direction: ltr;
-            will-change: transform;
-            animation: valuesScrollRight 45s linear infinite;
-        }
-
-        /* في RTL نريد الحركة نحو اليمين: نبدأ من -50% وننتهي عند 0% */
-        @keyframes valuesScrollRight {
-            0%   { transform: translateX(-50%); }
-            100% { transform: translateX(0%); }
-        }
-
-        /* إيقاف مؤقت عند التمرير أو اللمس */
-        .values-marquee:hover .values-track,
-        .values-marquee.paused .values-track {
-            animation-play-state: paused;
-        }
-
-        /* بطاقات القيم داخل الماركيه */
-        .values-track .value-card {
-            direction: rtl;
-            flex: 0 0 auto;
-            width: 360px;
-            padding: 32px 24px;
-            text-align: center;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 24px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.6);
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-        }
-
-        .dark .values-track .value-card {
-            background: rgba(15, 23, 42, 0.9);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        }
-
-        .values-track .value-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 50px rgba(30, 58, 138, 0.2);
-        }
-
-        @media (max-width: 1024px) {
-            .values-track .value-card {
-                width: 320px;
-                padding: 28px 20px;
-            }
-        }
-
-        @media (max-width: 640px) {
-            .values-track {
-                gap: 16px;
-                animation-duration: 32s;
-            }
-            .values-track .value-card {
-                width: 260px;
-                padding: 24px 18px;
-            }
-            .values-track .value-icon-container {
-                width: 64px;
-                height: 64px;
-                font-size: 26px;
-            }
-            .values-marquee {
-                -webkit-mask-image: linear-gradient(to right, 
-                    transparent 0%, 
-                    black 4%, 
-                    black 96%, 
-                    transparent 100%);
-                mask-image: linear-gradient(to right, 
-                    transparent 0%, 
-                    black 4%, 
-                    black 96%, 
-                    transparent 100%);
-            }
-        }
-        /* ====== نهاية حركة التصنيفات ====== */
         
         .modern-footer {
             background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
@@ -743,12 +636,22 @@
         }
         
         @keyframes slideInLeft {
-            from { transform: translateX(-100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
         
         @keyframes fadeOut {
-            to { opacity: 0; transform: translateX(-100%); display: none; }
+            to {
+                opacity: 0;
+                transform: translateX(-100%);
+                display: none;
+            }
         }
         
         @keyframes bounce {
@@ -757,8 +660,14 @@
         }
         
         @keyframes countUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         .counting-number {
@@ -967,13 +876,26 @@
         }
         
         @keyframes popIn {
-            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
-            100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.5);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
         }
         
         @keyframes popOut {
-            0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-            100% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); display: none; }
+            0% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.5);
+                display: none;
+            }
         }
 
         .direct-access-btn {
@@ -1351,6 +1273,7 @@
         </div>
     </section>
 
+    <!-- Process Section - تم تبديل الخطوتين 1 و 2 -->
     <section id="process" class="py-24 bg-gradient-to-br from-blue-50 to-white dark:from-gray-900 dark:to-gray-800">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16 fade-in-up">
@@ -1364,6 +1287,7 @@
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Step 1 (كان Step 2) - دخول مباشر -->
                 <div class="modern-card p-8 text-center fade-in-up">
                     <div class="value-icon-container mb-6">
                         <i class="fas fa-bolt"></i>
@@ -1375,6 +1299,7 @@
                     <div class="mt-6 text-3xl font-bold text-primary opacity-50">01</div>
                 </div>
                 
+                <!-- Step 2 (كان Step 1) - اختر دورتك -->
                 <div class="modern-card p-8 text-center fade-in-up" style="animation-delay: 0.1s;">
                     <div class="value-icon-container mb-6">
                         <i class="fas fa-hand-pointer"></i>
@@ -1386,6 +1311,7 @@
                     <div class="mt-6 text-3xl font-bold text-primary opacity-50">02</div>
                 </div>
                 
+                <!-- Step 3 - ابدأ التعلم -->
                 <div class="modern-card p-8 text-center fade-in-up" style="animation-delay: 0.2s;">
                     <div class="value-icon-container mb-6">
                         <i class="fas fa-play-circle"></i>
@@ -1397,6 +1323,7 @@
                     <div class="mt-6 text-3xl font-bold text-primary opacity-50">03</div>
                 </div>
                 
+                <!-- Step 4 - الحصول على الشهادة -->
                 <div class="modern-card p-8 text-center fade-in-up" style="animation-delay: 0.3s;">
                     <div class="value-icon-container mb-6">
                         <i class="fas fa-award"></i>
@@ -1535,8 +1462,7 @@
         </div>
     </section>
 
-    <!-- ====== Values Section - الآن بحركة تلقائية نحو اليمين ====== -->
-    <section id="values" class="py-24 bg-white dark:bg-gray-900 overflow-hidden">
+    <section id="values" class="py-24 bg-white dark:bg-gray-900">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16 fade-in-up">
                 <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
@@ -1547,122 +1473,66 @@
                     نؤمن بأن التعليم يجب أن يكون شاملاً ومتاحًا للجميع
                 </p>
             </div>
-
-            <div class="fade-in-up">
-                <div class="values-marquee" id="valuesMarquee">
-                    <div class="values-track" id="valuesTrack">
-                        <!-- المجموعة الأصلية -->
-                        <div class="value-card">
-                            <div class="value-icon-container">
-                                <i class="fas fa-universal-access"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">إمكانية الوصول</h3>
-                            <p class="text-gray-600 dark:text-gray-400">
-                                نضمن أن تكون منصتنا ودوراتنا متاحة للجميع، بغض النظر عن القدرات أو الظروف
-                            </p>
-                        </div>
-                        <div class="value-card">
-                            <div class="value-icon-container">
-                                <i class="fas fa-shield-alt"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">الأمان</h3>
-                            <p class="text-gray-600 dark:text-gray-400">
-                                نحافظ على أعلى معايير الأمان لحماية بيانات مستخدمينا
-                            </p>
-                        </div>
-                        <div class="value-card">
-                            <div class="value-icon-container">
-                                <i class="fas fa-trophy"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">التميز</h3>
-                            <p class="text-gray-600 dark:text-gray-400">
-                                نسعى للتميز في كل ما نقدمه، من محتوى تعليمي عالي الجودة
-                            </p>
-                        </div>
-                        <div class="value-card">
-                            <div class="value-icon-container">
-                                <i class="fas fa-users"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">الشمولية</h3>
-                            <p class="text-gray-600 dark:text-gray-400">
-                                نؤمن بأن التعليم حق للجميع. نعمل على إنشاء مجتمع تعليمي شامل
-                            </p>
-                        </div>
-                        <div class="value-card">
-                            <div class="value-icon-container">
-                                <i class="fas fa-globe"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">التنوع</h3>
-                            <p class="text-gray-600 dark:text-gray-400">
-                                نحتفي بالتنوع في خلفيات متعلمينا ومحتوانا التعليمي
-                            </p>
-                        </div>
-                        <div class="value-card">
-                            <div class="value-icon-container">
-                                <i class="fas fa-graduation-cap"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">المعرفة</h3>
-                            <p class="text-gray-600 dark:text-gray-400">
-                                نكرس جهودنا لنشر المعرفة القيمة والمهارات العملية
-                            </p>
-                        </div>
-
-                        <!-- المجموعة المكررة (للحركة اللانهائية) -->
-                        <div class="value-card" aria-hidden="true">
-                            <div class="value-icon-container">
-                                <i class="fas fa-universal-access"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">إمكانية الوصول</h3>
-                            <p class="text-gray-600 dark:text-gray-400">
-                                نضمن أن تكون منصتنا ودوراتنا متاحة للجميع، بغض النظر عن القدرات أو الظروف
-                            </p>
-                        </div>
-                        <div class="value-card" aria-hidden="true">
-                            <div class="value-icon-container">
-                                <i class="fas fa-shield-alt"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">الأمان</h3>
-                            <p class="text-gray-600 dark:text-gray-400">
-                                نحافظ على أعلى معايير الأمان لحماية بيانات مستخدمينا
-                            </p>
-                        </div>
-                        <div class="value-card" aria-hidden="true">
-                            <div class="value-icon-container">
-                                <i class="fas fa-trophy"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">التميز</h3>
-                            <p class="text-gray-600 dark:text-gray-400">
-                                نسعى للتميز في كل ما نقدمه، من محتوى تعليمي عالي الجودة
-                            </p>
-                        </div>
-                        <div class="value-card" aria-hidden="true">
-                            <div class="value-icon-container">
-                                <i class="fas fa-users"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">الشمولية</h3>
-                            <p class="text-gray-600 dark:text-gray-400">
-                                نؤمن بأن التعليم حق للجميع. نعمل على إنشاء مجتمع تعليمي شامل
-                            </p>
-                        </div>
-                        <div class="value-card" aria-hidden="true">
-                            <div class="value-icon-container">
-                                <i class="fas fa-globe"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">التنوع</h3>
-                            <p class="text-gray-600 dark:text-gray-400">
-                                نحتفي بالتنوع في خلفيات متعلمينا ومحتوانا التعليمي
-                            </p>
-                        </div>
-                        <div class="value-card" aria-hidden="true">
-                            <div class="value-icon-container">
-                                <i class="fas fa-graduation-cap"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">المعرفة</h3>
-                            <p class="text-gray-600 dark:text-gray-400">
-                                نكرس جهودنا لنشر المعرفة القيمة والمهارات العملية
-                            </p>
-                        </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="value-card modern-card p-8 text-center fade-in-up">
+                    <div class="value-icon-container">
+                        <i class="fas fa-universal-access"></i>
                     </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">إمكانية الوصول</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        نضمن أن تكون منصتنا ودوراتنا متاحة للجميع، بغض النظر عن القدرات أو الظروف
+                    </p>
+                </div>
+                
+                <div class="value-card modern-card p-8 text-center fade-in-up" style="animation-delay: 0.1s;">
+                    <div class="value-icon-container">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">الأمان</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        نحافظ على أعلى معايير الأمان لحماية بيانات مستخدمينا
+                    </p>
+                </div>
+                
+                <div class="value-card modern-card p-8 text-center fade-in-up" style="animation-delay: 0.2s;">
+                    <div class="value-icon-container">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">التميز</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        نسعى للتميز في كل ما نقدمه، من محتوى تعليمي عالي الجودة
+                    </p>
+                </div>
+                
+                <div class="value-card modern-card p-8 text-center fade-in-up" style="animation-delay: 0.3s;">
+                    <div class="value-icon-container">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">الشمولية</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        نؤمن بأن التعليم حق للجميع. نعمل على إنشاء مجتمع تعليمي شامل
+                    </p>
+                </div>
+                
+                <div class="value-card modern-card p-8 text-center fade-in-up" style="animation-delay: 0.4s;">
+                    <div class="value-icon-container">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">التنوع</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        نحتفي بالتنوع في خلفيات متعلمينا ومحتوانا التعليمي
+                    </p>
+                </div>
+                
+                <div class="value-card modern-card p-8 text-center fade-in-up" style="animation-delay: 0.5s;">
+                    <div class="value-icon-container">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">المعرفة</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        نكرس جهودنا لنشر المعرفة القيمة والمهارات العملية
+                    </p>
                 </div>
             </div>
         </div>
@@ -1875,58 +1745,6 @@
             }
         });
         
-        // ===== حركة التصنيفات (القيم) - إيقاف عند اللمس =====
-        (function initValuesMarquee() {
-            const marquee = document.getElementById('valuesMarquee');
-            const track = document.getElementById('valuesTrack');
-            if (!marquee || !track) return;
-
-            let resumeTimeout = null;
-
-            // عند اللمس أو بدء السحب
-            const pauseMarquee = () => {
-                if (resumeTimeout) {
-                    clearTimeout(resumeTimeout);
-                    resumeTimeout = null;
-                }
-                marquee.classList.add('paused');
-            };
-
-            // عند رفع الإصبع - استئناف بعد تأخير قصير
-            const resumeMarquee = () => {
-                if (resumeTimeout) clearTimeout(resumeTimeout);
-                resumeTimeout = setTimeout(() => {
-                    marquee.classList.remove('paused');
-                }, 1800);
-            };
-
-            // أحداث اللمس للجوال
-            marquee.addEventListener('touchstart', pauseMarquee, { passive: true });
-            marquee.addEventListener('touchend', resumeMarquee, { passive: true });
-            marquee.addEventListener('touchcancel', resumeMarquee, { passive: true });
-
-            // أحداث الماوس للكمبيوتر
-            marquee.addEventListener('mouseenter', pauseMarquee);
-            marquee.addEventListener('mouseleave', () => {
-                if (resumeTimeout) clearTimeout(resumeTimeout);
-                marquee.classList.remove('paused');
-            });
-
-            // عند سحب البطاقة بالماوس (mousedown)
-            marquee.addEventListener('mousedown', pauseMarquee);
-            marquee.addEventListener('mouseup', resumeMarquee);
-
-            // إيقاف عندما تكون الصفحة غير مرئية (لتوفير الموارد)
-            document.addEventListener('visibilitychange', () => {
-                if (document.hidden) {
-                    marquee.classList.add('paused');
-                } else {
-                    marquee.classList.remove('paused');
-                }
-            });
-        })();
-        
-        // تهيئة GSAP للانيميشنات
         document.addEventListener('DOMContentLoaded', function() {
             gsap.registerPlugin(ScrollTrigger);
             
@@ -1943,7 +1761,6 @@
                 });
             });
             
-            // ملاحظة: تم استثناء .value-card من تأثير hover GSAP لأنها الآن داخل الماركيه
             gsap.utils.toArray('.modern-card').forEach(card => {
                 card.addEventListener('mouseenter', () => {
                     gsap.to(card, {
@@ -2028,6 +1845,16 @@
                     });
                 }
             });
+            
+            setInterval(() => {
+                gsap.to('.value-icon-container', {
+                    scale: 1.1,
+                    duration: 0.5,
+                    repeat: 1,
+                    yoyo: true,
+                    stagger: 0.1
+                });
+            }, 3000);
             
             gsap.from('.gradient-text', {
                 duration: 2,
