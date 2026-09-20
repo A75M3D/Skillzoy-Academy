@@ -34,7 +34,7 @@
 </script>
 <style>
     /* ============================================
-       DESIGN SYSTEM
+       DESIGN TOKENS — Blue & White
     ============================================ */
     :root {
         --blue-50:  #EFF6FF;
@@ -53,12 +53,7 @@
         --ink-500: #64748B;
         --ink-400: #94A3B8;
 
-        --surface: #FFFFFF;
-        --surface-soft: #F8FAFC;
-        --surface-mute: #F1F5F9;
-
         --border-soft: rgba(148, 163, 184, 0.16);
-        --border-blue: rgba(59, 130, 246, 0.2);
     }
 
     * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
@@ -320,30 +315,29 @@
     .dark .section-title { color: #F1F5F9; }
 
     /* ============================================
-       CATEGORIES MARQUEE
+       CATEGORIES — Horizontal Scroll (NO auto-animation)
     ============================================ */
-    .cats-viewport {
-        position: relative;
-        overflow: hidden;
-        padding: 6px 4px 18px;
-        margin: 0 -14px;
-        -webkit-mask-image: linear-gradient(to left, transparent 0, black 40px, black calc(100% - 40px), transparent 100%);
-        mask-image: linear-gradient(to left, transparent 0, black 40px, black calc(100% - 40px), transparent 100%);
-    }
-    @media (min-width: 768px) {
-        .cats-viewport {
-            margin: 0 -24px;
-            -webkit-mask-image: linear-gradient(to left, transparent 0, black 60px, black calc(100% - 60px), transparent 100%);
-            mask-image: linear-gradient(to left, transparent 0, black 60px, black calc(100% - 60px), transparent 100%);
-        }
-    }
-
-    .cats-track {
+    .cats-scroll {
         display: flex;
         gap: 10px;
-        width: max-content;
-        will-change: transform;
-        transform: translate3d(0,0,0);
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 6px 4px 14px;
+        margin: 0 -14px;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        scroll-snap-type: x proximity;
+    }
+    .cats-scroll::-webkit-scrollbar { display: none; }
+    @media (min-width: 768px) {
+        .cats-scroll {
+            margin: 0 -24px;
+            padding-left: 24px;
+            padding-right: 24px;
+            scroll-snap-type: none;
+        }
     }
 
     .cat-chip {
@@ -366,6 +360,7 @@
         box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
         user-select: none;
         -webkit-user-select: none;
+        scroll-snap-align: start;
     }
     .dark .cat-chip {
         background: linear-gradient(180deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
@@ -421,6 +416,19 @@
         border-color: transparent;
     }
 
+    /* Active state for filter */
+    .cat-chip.selected {
+        border-color: rgba(59, 130, 246, 0.55);
+        box-shadow: 0 12px 24px -8px rgba(30, 64, 175, 0.35), 0 0 0 3px rgba(59, 130, 246, 0.12);
+        transform: translateY(-2px);
+    }
+    .cat-chip.selected:not(.cat-chip-all) {
+        background: linear-gradient(180deg, #EFF6FF, #FFFFFF);
+    }
+    .dark .cat-chip.selected:not(.cat-chip-all) {
+        background: linear-gradient(180deg, rgba(37, 99, 235, 0.18), rgba(15, 23, 42, 0.9));
+    }
+
     /* Skeleton chip */
     .cat-chip-skel {
         width: 96px; height: 96px;
@@ -440,7 +448,7 @@
         .cat-chip { width: 108px; height: 108px; border-radius: 18px; }
         .cat-chip-icon { width: 44px; height: 44px; border-radius: 13px; font-size: 18px; }
         .cat-chip-label { font-size: 12.5px; }
-        .cats-track { gap: 14px; }
+        .cats-scroll { gap: 14px; }
         .cat-chip-skel { width: 108px; height: 108px; }
     }
 
@@ -1279,9 +1287,7 @@
 
 <body>
 
-    <!-- =========================
-         HEADER
-    ========================== -->
+    <!-- HEADER -->
     <header class="app-header">
         <div class="app-header-inner">
             <div class="flex items-center gap-3 cursor-pointer select-none" onclick="showHome()">
@@ -1309,9 +1315,7 @@
 
     <main class="app-main">
 
-        <!-- =========================
-             SEARCH
-        ========================== -->
+        <!-- SEARCH -->
         <section class="search-section">
             <div class="search-card">
                 <div class="search-input-wrap">
@@ -1328,28 +1332,23 @@
             </div>
         </section>
 
-        <!-- =========================
-             CATEGORIES
-        ========================== -->
+        <!-- CATEGORIES -->
         <section>
             <div class="section-head">
                 <div class="section-icon"><i class="fas fa-layer-group"></i></div>
                 <h3 class="section-title">التصنيفات</h3>
+                <span style="margin-right:auto;font-size:11px;font-weight:700;color:#94A3B8;">اسحب للتنقل ←</span>
             </div>
-            <div class="cats-viewport" id="catsViewport">
-                <div class="cats-track" id="catsTrack">
-                    <div class="cat-chip-skel"></div>
-                    <div class="cat-chip-skel"></div>
-                    <div class="cat-chip-skel"></div>
-                    <div class="cat-chip-skel"></div>
-                    <div class="cat-chip-skel"></div>
-                </div>
+            <div class="cats-scroll scrollbar-hide" id="catsScroll">
+                <div class="cat-chip-skel"></div>
+                <div class="cat-chip-skel"></div>
+                <div class="cat-chip-skel"></div>
+                <div class="cat-chip-skel"></div>
+                <div class="cat-chip-skel"></div>
             </div>
         </section>
 
-        <!-- =========================
-             COURSES
-        ========================== -->
+        <!-- COURSES -->
         <section id="coursesSection">
             <div class="section-head">
                 <div class="section-icon"><i class="fas fa-play"></i></div>
@@ -1373,9 +1372,7 @@
             </div>
         </section>
 
-        <!-- =========================
-             MY COURSES
-        ========================== -->
+        <!-- MY COURSES -->
         <section id="myCoursesView" style="display:none;">
             <div class="section-head">
                 <div class="section-icon"><i class="fas fa-book-reader"></i></div>
@@ -1407,9 +1404,7 @@
 
     </main>
 
-    <!-- =========================
-         PLAYER OVERLAY
-    ========================== -->
+    <!-- PLAYER -->
     <div id="playerOverlay">
         <div class="player-topbar">
             <button onclick="closePlayer()" class="icon-btn" aria-label="رجوع">
@@ -1454,9 +1449,7 @@
         </div>
     </div>
 
-    <!-- =========================
-         BOTTOM NAV
-    ========================== -->
+    <!-- BOTTOM NAV -->
     <nav class="bottom-nav">
         <button onclick="showHome()" class="nav-item active" id="navHome">
             <i class="fas fa-home"></i>
@@ -1473,7 +1466,6 @@
         </button>
     </nav>
 
-    <!-- WhatsApp Float -->
     <a href="https://wa.me/249908280115" target="_blank" class="wa-float">
         <i class="fab fa-whatsapp"></i>
     </a>
@@ -1541,7 +1533,7 @@
     let realtimeInitialized = false;
 
     // ==========================================
-    // FALLBACK CATEGORIES (if Firebase empty)
+    // FALLBACK CATEGORIES
     // ==========================================
     const FALLBACK_CATEGORIES = [
         { name: 'برمجة', icon: 'fa-code' },
@@ -1689,7 +1681,6 @@
             if (!cached || !cached.length) await fetchFromServer();
         } catch (e) {
             console.error("Init error:", e);
-            // Fallback: show fallback categories with empty courses
             renderCategories(true);
             renderCourses();
             showToast("⚠️ تعذر الاتصال", "error");
@@ -1702,13 +1693,12 @@
     }
 
     // ==========================================
-    // RENDER CATEGORIES
+    // RENDER CATEGORIES — Horizontal scroll, no animation
     // ==========================================
-    let categoriesReady = false;
     function renderCategories(useFallback = false) {
-        const track = document.getElementById('catsTrack');
+        const scroll = document.getElementById('catsScroll');
         const filterSelect = document.getElementById('categoryFilter');
-        if (!track || !filterSelect) return;
+        if (!scroll || !filterSelect) return;
 
         let categories = [];
         let useFallbackIcons = false;
@@ -1720,45 +1710,31 @@
             categories = [...new Set(allCourses.map(c => c.category || 'عام'))];
         }
 
-        // Build chip set
-        const allChip = `
-            <div onclick="filterByCategory('all')" class="cat-chip cat-chip-all">
+        // Build chips
+        let html = `
+            <div onclick="filterByCategory('all')" class="cat-chip cat-chip-all ${currentFilter === null ? 'selected' : ''}" data-cat="all">
                 <div class="cat-chip-icon"><i class="fas fa-th-large"></i></div>
                 <span class="cat-chip-label">الكل</span>
             </div>
         `;
 
-        let chips = allChip;
         categories.forEach(cat => {
             const safe = cat.replace(/'/g, "\\'");
             const icon = useFallbackIcons
                 ? (FALLBACK_CATEGORIES.find(c => c.name === cat)?.icon || 'fa-book')
                 : getCatIcon(cat);
-            chips += `
-                <div onclick="filterByCategory('${safe}')" class="cat-chip">
+            const isSelected = currentFilter === cat;
+            html += `
+                <div onclick="filterByCategory('${safe}')" class="cat-chip ${isSelected ? 'selected' : ''}" data-cat="${cat}">
                     <div class="cat-chip-icon"><i class="fas ${icon}"></i></div>
                     <span class="cat-chip-label">${cat}</span>
                 </div>
             `;
         });
 
-        // Duplicate 2x for seamless loop
-        track.innerHTML = chips + chips;
+        scroll.innerHTML = html;
 
-        // Reset marquee position
-        marqueeState.position = 0;
-        marqueeState.setWidth = 0;
-        track.style.transform = 'translate3d(0,0,0)';
-
-        // Re-measure after DOM update
-        requestAnimationFrame(() => {
-            marqueeState.setWidth = track.scrollWidth / 2;
-            // Start position: shifted left by setWidth (showing second set)
-            track.style.transform = `translate3d(${-marqueeState.setWidth}px, 0, 0)`;
-            marqueeState.position = 0;
-        });
-
-        // Filter select
+        // Filter select options
         filterSelect.innerHTML = '<option value="">كل التخصصات</option>';
         categories.forEach(cat => {
             const opt = document.createElement('option');
@@ -1767,80 +1743,7 @@
             filterSelect.appendChild(opt);
         });
 
-        categoriesReady = true;
-        console.log(`✅ Rendered ${categories.length} categories`);
-    }
-
-    // ==========================================
-    // CATEGORIES MARQUEE (JS-based, robust)
-    // ==========================================
-    const marqueeState = {
-        position: 0,
-        setWidth: 0,
-        paused: false,
-        resumeTimer: null,
-        speed: 0.4, // px per frame @60fps ≈ 24px/s
-        lastFrame: 0
-    };
-
-    function initCategoriesMarquee() {
-        const viewport = document.getElementById('catsViewport');
-        const track = document.getElementById('catsTrack');
-        if (!viewport || !track) return;
-
-        // Pause on interaction
-        const pause = () => {
-            marqueeState.paused = true;
-            if (marqueeState.resumeTimer) {
-                clearTimeout(marqueeState.resumeTimer);
-                marqueeState.resumeTimer = null;
-            }
-        };
-        const resume = (delay = 0) => {
-            if (marqueeState.resumeTimer) clearTimeout(marqueeState.resumeTimer);
-            marqueeState.resumeTimer = setTimeout(() => {
-                marqueeState.paused = false;
-            }, delay);
-        };
-
-        viewport.addEventListener('mouseenter', pause);
-        viewport.addEventListener('mouseleave', () => resume(0));
-        viewport.addEventListener('touchstart', pause, { passive: true });
-        viewport.addEventListener('touchend', () => resume(2000), { passive: true });
-        viewport.addEventListener('touchcancel', () => resume(2000), { passive: true });
-        viewport.addEventListener('mousedown', pause);
-        viewport.addEventListener('mouseup', () => resume(2000));
-
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden) pause();
-            else resume(0);
-        });
-
-        // Re-measure on resize
-        let resizeTimer;
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(() => {
-                marqueeState.setWidth = track.scrollWidth / 2;
-                marqueeState.position = 0;
-                track.style.transform = `translate3d(${-marqueeState.setWidth}px, 0, 0)`;
-            }, 200);
-        });
-
-        // Animation loop
-        function tick(now) {
-            if (marqueeState.setWidth > 0 && !marqueeState.paused) {
-                marqueeState.position += marqueeState.speed;
-                if (marqueeState.position >= marqueeState.setWidth) {
-                    marqueeState.position -= marqueeState.setWidth;
-                }
-                // translateX: from -setWidth to 0 (moves content to the RIGHT)
-                const x = marqueeState.position - marqueeState.setWidth;
-                track.style.transform = `translate3d(${x}px, 0, 0)`;
-            }
-            requestAnimationFrame(tick);
-        }
-        requestAnimationFrame(tick);
+        console.log(`✅ Rendered ${categories.length} categories (horizontal scroll)`);
     }
 
     // ==========================================
@@ -2202,10 +2105,24 @@
     }
 
     // ==========================================
-    // FILTER
+    // FILTER — updates both grid and chip selection
     // ==========================================
     function filterByCategory(cat) {
         currentFilter = cat === 'all' ? null : cat;
+
+        // Update chip selection
+        document.querySelectorAll('.cat-chip').forEach(chip => {
+            const chipCat = chip.getAttribute('data-cat');
+            const isAll = chipCat === 'all';
+            const shouldSelect = (isAll && currentFilter === null) || (chipCat === currentFilter);
+            if (shouldSelect) chip.classList.add('selected');
+            else chip.classList.remove('selected');
+        });
+
+        // Sync select dropdown
+        const sel = document.getElementById('categoryFilter');
+        if (sel) sel.value = currentFilter || '';
+
         renderCourses(currentFilter);
         const sec = document.getElementById('coursesSection');
         const y = sec.getBoundingClientRect().top + window.pageYOffset - 100;
@@ -2227,11 +2144,22 @@
         const search = document.getElementById('searchInput');
         search.addEventListener('input', debounce(e => {
             currentFilter = e.target.value || null;
+            // Clear chip selection when searching
+            document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('selected'));
             renderCourses(currentFilter);
         }, 250));
 
         document.getElementById('categoryFilter').addEventListener('change', e => {
-            currentFilter = e.target.value || null;
+            const val = e.target.value || null;
+            currentFilter = val;
+            // Update chip selection
+            document.querySelectorAll('.cat-chip').forEach(chip => {
+                const chipCat = chip.getAttribute('data-cat');
+                const isAll = chipCat === 'all';
+                const shouldSelect = (isAll && currentFilter === null) || (chipCat === currentFilter);
+                if (shouldSelect) chip.classList.add('selected');
+                else chip.classList.remove('selected');
+            });
             renderCourses(currentFilter);
         });
     }
@@ -2242,7 +2170,6 @@
     document.addEventListener('DOMContentLoaded', () => {
         setupTheme();
         renderSkeletons();
-        initCategoriesMarquee();
         setupEvents();
         updateNavState();
         initializeApp();
