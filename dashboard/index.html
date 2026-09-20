@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Skillzoy Academy | منصة رائدة في التعليم الألكتروني</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#1E40AF">
 
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
@@ -12,7 +12,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
@@ -20,23 +20,7 @@
       darkMode: 'class',
       theme: {
         extend: {
-          fontFamily: { sans: ['Cairo', 'sans-serif'] },
-          colors: {
-            primary: '#1E40AF',
-            brand: {
-              50:  '#EFF6FF',
-              100: '#DBEAFE',
-              200: '#BFDBFE',
-              300: '#93C5FD',
-              400: '#60A5FA',
-              500: '#3B82F6',
-              600: '#2563EB',
-              700: '#1D4ED8',
-              800: '#1E40AF',
-              900: '#1E3A8A',
-              950: '#172554'
-            }
-          }
+          fontFamily: { sans: ['Cairo', 'sans-serif'] }
         }
       }
     }
@@ -50,7 +34,7 @@
 </script>
 <style>
     /* ============================================
-       DESIGN TOKENS — Premium Blue & White
+       DESIGN SYSTEM
     ============================================ */
     :root {
         --blue-50:  #EFF6FF;
@@ -63,879 +47,1280 @@
         --blue-700: #1D4ED8;
         --blue-800: #1E40AF;
         --blue-900: #1E3A8A;
-        --blue-950: #172554;
 
         --ink-900: #0F172A;
         --ink-700: #334155;
         --ink-500: #64748B;
-        --ink-300: #CBD5E1;
+        --ink-400: #94A3B8;
 
         --surface: #FFFFFF;
         --surface-soft: #F8FAFC;
         --surface-mute: #F1F5F9;
 
-        --ring-blue: 0 0 0 4px rgba(59, 130, 246, 0.14);
-        --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.06);
-        --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.08), 0 1px 2px rgba(15, 23, 42, 0.04);
-        --shadow-md: 0 4px 12px -2px rgba(15, 23, 42, 0.08), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
-        --shadow-lg: 0 12px 28px -6px rgba(30, 64, 175, 0.16), 0 4px 10px -4px rgba(15, 23, 42, 0.06);
-        --shadow-xl: 0 24px 48px -12px rgba(30, 64, 175, 0.20), 0 8px 16px -8px rgba(15, 23, 42, 0.08);
-        --shadow-glow: 0 8px 32px -4px rgba(59, 130, 246, 0.35);
-
-        --border-soft: 1px solid rgba(148, 163, 184, 0.16);
-        --border-blue: 1px solid rgba(59, 130, 246, 0.18);
+        --border-soft: rgba(148, 163, 184, 0.16);
+        --border-blue: rgba(59, 130, 246, 0.2);
     }
 
-    .dark {
-        --surface: #0B1220;
-        --surface-soft: #0F172A;
-        --surface-mute: #1E293B;
+    * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
 
-        --ink-900: #F1F5F9;
-        --ink-700: #CBD5E1;
-        --ink-500: #94A3B8;
-        --ink-300: #475569;
-
-        --border-soft: 1px solid rgba(148, 163, 184, 0.10);
-        --border-blue: 1px solid rgba(59, 130, 246, 0.22);
-
-        --shadow-lg: 0 12px 28px -6px rgba(0, 0, 0, 0.5), 0 4px 10px -4px rgba(0, 0, 0, 0.3);
-        --shadow-xl: 0 24px 48px -12px rgba(0, 0, 0, 0.6), 0 8px 16px -8px rgba(0, 0, 0, 0.4);
-    }
-
-    * { -webkit-tap-highlight-color: transparent; }
-
-    html, body {
-        font-family: 'Cairo', system-ui, -apple-system, sans-serif;
-        text-rendering: optimizeLegibility;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-    }
+    html { -webkit-text-size-adjust: 100%; }
 
     body {
-        background:
-            radial-gradient(1200px 600px at 100% -10%, rgba(59, 130, 246, 0.08), transparent 60%),
-            radial-gradient(900px 500px at -10% 10%, rgba(37, 99, 235, 0.06), transparent 55%),
-            linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%);
+        font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+        background: #F5F8FC;
         color: var(--ink-900);
         min-height: 100vh;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        padding-bottom: 110px;
+        overflow-x: hidden;
     }
 
     .dark body {
-        background:
-            radial-gradient(1200px 600px at 100% -10%, rgba(59, 130, 246, 0.10), transparent 60%),
-            radial-gradient(900px 500px at -10% 10%, rgba(37, 99, 235, 0.08), transparent 55%),
-            linear-gradient(180deg, #0B1220 0%, #0F172A 100%);
-        color: var(--ink-900);
+        background: #0A0F1E;
+        color: #F1F5F9;
     }
 
     .scrollbar-hide::-webkit-scrollbar { display: none; }
     .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 
     /* ============================================
-       SURFACES
-    ============================================ */
-    .glass {
-        background: rgba(255, 255, 255, 0.82);
-        backdrop-filter: saturate(180%) blur(20px);
-        -webkit-backdrop-filter: saturate(180%) blur(20px);
-        border-bottom: 1px solid rgba(148, 163, 184, 0.14);
-    }
-    .dark .glass {
-        background: rgba(11, 18, 32, 0.75);
-        border-bottom: 1px solid rgba(148, 163, 184, 0.08);
-    }
-
-    .glass-card {
-        background: var(--surface);
-        border: var(--border-soft);
-        box-shadow: var(--shadow-sm);
-        transition: box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-                    transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-                    border-color 0.35s ease;
-    }
-    .dark .glass-card {
-        background: linear-gradient(180deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.85));
-        border: 1px solid rgba(148, 163, 184, 0.08);
-    }
-
-    /* ============================================
        HEADER
     ============================================ */
-    .brand-badge {
+    .app-header {
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        z-index: 50;
+        background: rgba(255, 255, 255, 0.88);
+        backdrop-filter: saturate(180%) blur(20px);
+        -webkit-backdrop-filter: saturate(180%) blur(20px);
+        border-bottom: 1px solid var(--border-soft);
+    }
+    .dark .app-header {
+        background: rgba(10, 15, 30, 0.85);
+        border-bottom-color: rgba(148, 163, 184, 0.08);
+    }
+    .app-header-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 16px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    @media (min-width: 768px) {
+        .app-header-inner { padding: 0 24px; height: 68px; }
+    }
+
+    .logo-badge {
         width: 40px; height: 40px;
         border-radius: 12px;
-        background: linear-gradient(135deg, var(--blue-700) 0%, var(--blue-500) 60%, #38BDF8 130%);
-        box-shadow:
-            0 1px 0 rgba(255,255,255,0.3) inset,
-            0 8px 20px -6px rgba(29, 78, 216, 0.55);
-        position: relative;
-        overflow: hidden;
+        background: linear-gradient(135deg, #1E40AF 0%, #3B82F6 100%);
+        display: flex; align-items: center; justify-content: center;
+        color: #fff;
+        font-size: 18px;
+        box-shadow: 0 6px 16px -4px rgba(30, 64, 175, 0.5);
+        flex-shrink: 0;
     }
-    .brand-badge::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.4), transparent 55%);
-        pointer-events: none;
-    }
-    .brand-title {
-        background: linear-gradient(135deg, var(--blue-800) 0%, var(--blue-500) 70%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+    .logo-title {
+        font-size: 18px;
+        font-weight: 900;
         letter-spacing: -0.02em;
-    }
-    .dark .brand-title {
-        background: linear-gradient(135deg, #93C5FD 0%, #60A5FA 70%);
+        background: linear-gradient(135deg, #1E3A8A 0%, #3B82F6 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
+        line-height: 1;
+    }
+    .dark .logo-title {
+        background: linear-gradient(135deg, #93C5FD 0%, #60A5FA 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    .logo-sub {
+        font-size: 9px;
+        font-weight: 800;
+        letter-spacing: 0.15em;
+        color: #94A3B8;
+        margin-top: 3px;
+        line-height: 1;
     }
 
     .icon-btn {
         width: 40px; height: 40px;
         border-radius: 12px;
-        background: var(--surface-soft);
-        border: var(--border-soft);
-        color: var(--ink-700);
+        background: #F1F5F9;
         display: flex; align-items: center; justify-content: center;
+        color: #475569;
+        font-size: 15px;
+        border: none;
+        cursor: pointer;
         transition: all 0.25s ease;
+        flex-shrink: 0;
         position: relative;
     }
-    .icon-btn:hover {
-        background: var(--blue-50);
-        color: var(--blue-700);
-        border-color: rgba(59, 130, 246, 0.28);
-        transform: translateY(-1px);
+    .icon-btn:hover { background: #DBEAFE; color: #1E40AF; }
+    .dark .icon-btn { background: rgba(30, 41, 59, 0.7); color: #CBD5E1; }
+    .dark .icon-btn:hover { background: rgba(37, 99, 235, 0.2); color: #93C5FD; }
+
+    /* ============================================
+       LAYOUT
+    ============================================ */
+    .app-main {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 76px 14px 0;
     }
-    .dark .icon-btn {
-        background: rgba(30, 41, 59, 0.6);
-        color: #CBD5E1;
-    }
-    .dark .icon-btn:hover {
-        background: rgba(37, 99, 235, 0.15);
-        color: #93C5FD;
-        border-color: rgba(59, 130, 246, 0.35);
+    @media (min-width: 768px) {
+        .app-main { padding: 92px 24px 0; }
     }
 
     /* ============================================
        SEARCH BAR
     ============================================ */
-    .search-shell {
-        background: var(--surface);
-        border: 1px solid rgba(148, 163, 184, 0.18);
-        border-radius: 18px;
-        box-shadow: var(--shadow-md);
+    .search-section {
+        position: sticky;
+        top: 68px;
+        z-index: 40;
+        padding: 8px 0;
+    }
+    @media (min-width: 768px) {
+        .search-section { top: 76px; }
+    }
+
+    .search-card {
+        background: #FFFFFF;
+        border: 1px solid var(--border-soft);
+        border-radius: 16px;
+        padding: 6px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        box-shadow: 0 4px 16px -4px rgba(15, 23, 42, 0.08), 0 1px 2px rgba(15, 23, 42, 0.04);
         transition: box-shadow 0.3s ease, border-color 0.3s ease;
-        position: relative;
-        overflow: hidden;
     }
-    .search-shell::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        border-radius: 18px;
-        padding: 1px;
-        background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.05));
-        -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-        -webkit-mask-composite: xor;
-        mask-composite: exclude;
-        pointer-events: none;
+    @media (min-width: 640px) {
+        .search-card { flex-direction: row; align-items: center; }
     }
-    .dark .search-shell {
-        background: rgba(15, 23, 42, 0.7);
-        border-color: rgba(148, 163, 184, 0.10);
+    .dark .search-card {
+        background: rgba(15, 23, 42, 0.85);
+        border-color: rgba(148, 163, 184, 0.08);
+        box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.4);
     }
-    .search-shell:focus-within {
-        box-shadow: var(--shadow-lg), var(--ring-blue);
+    .search-card:focus-within {
         border-color: rgba(59, 130, 246, 0.4);
+        box-shadow: 0 8px 24px -6px rgba(30, 64, 175, 0.18);
     }
 
-    .search-input {
-        background: transparent;
-        border: none;
-        outline: none;
-        color: var(--ink-900);
-        font-weight: 500;
-        font-size: 15px;
+    .search-input-wrap {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 4px 6px;
+        min-width: 0;
     }
-    .search-input::placeholder { color: var(--ink-500); opacity: 0.85; }
-    .dark .search-input { color: #F1F5F9; }
-    .dark .search-input::placeholder { color: #64748B; }
-
-    .search-icon-badge {
+    .search-icon-pill {
         width: 34px; height: 34px;
         border-radius: 10px;
-        background: linear-gradient(135deg, var(--blue-50), var(--blue-100));
-        color: var(--blue-700);
+        background: linear-gradient(135deg, #EFF6FF, #DBEAFE);
+        color: #1D4ED8;
         display: flex; align-items: center; justify-content: center;
-        font-size: 14px;
+        font-size: 13px;
         flex-shrink: 0;
     }
-    .dark .search-icon-badge {
-        background: linear-gradient(135deg, rgba(37, 99, 235, 0.18), rgba(59, 130, 246, 0.10));
+    .dark .search-icon-pill {
+        background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(59, 130, 246, 0.1));
         color: #93C5FD;
     }
+    #searchInput {
+        flex: 1;
+        border: none;
+        outline: none;
+        background: transparent;
+        font-family: inherit;
+        font-size: 15px;
+        font-weight: 500;
+        color: var(--ink-900);
+        padding: 8px 0;
+        min-width: 0;
+    }
+    #searchInput::placeholder { color: #94A3B8; font-weight: 500; }
+    .dark #searchInput { color: #F1F5F9; }
+    .dark #searchInput::placeholder { color: #64748B; }
 
-    .select-wrap {
+    .filter-select-wrap {
         position: relative;
+        background: #F8FAFC;
+        border: 1px solid var(--border-soft);
         border-radius: 12px;
-        background: var(--surface-soft);
-        border: 1px solid rgba(148, 163, 184, 0.16);
         transition: all 0.25s ease;
+        min-width: 130px;
     }
-    .dark .select-wrap {
-        background: rgba(30, 41, 59, 0.5);
-        border-color: rgba(148, 163, 184, 0.10);
-    }
-    .select-wrap:hover { border-color: rgba(59, 130, 246, 0.3); }
-    .select-wrap select {
+    .dark .filter-select-wrap { background: rgba(30, 41, 59, 0.5); border-color: rgba(148,163,184,0.08); }
+    .filter-select-wrap:hover { border-color: rgba(59, 130, 246, 0.3); }
+    #categoryFilter {
+        width: 100%;
         background: transparent;
         border: none;
         outline: none;
-        appearance: none;
-        padding: 10px 36px 10px 14px;
-        font-weight: 600;
-        font-size: 13px;
-        color: var(--ink-700);
-        cursor: pointer;
-        width: 100%;
         font-family: inherit;
+        font-size: 13px;
+        font-weight: 700;
+        color: #334155;
+        padding: 11px 14px 11px 34px;
+        appearance: none;
+        -webkit-appearance: none;
+        cursor: pointer;
     }
-    .dark .select-wrap select { color: #CBD5E1; }
-    .select-wrap::after {
+    .dark #categoryFilter { color: #CBD5E1; }
+    .filter-select-wrap::after {
         content: '\f107';
         font-family: 'Font Awesome 6 Free';
         font-weight: 900;
         position: absolute;
-        left: 14px;
+        left: 12px;
         top: 50%;
         transform: translateY(-50%);
-        color: var(--ink-500);
+        color: #94A3B8;
         font-size: 11px;
         pointer-events: none;
     }
 
     /* ============================================
-       SECTION HEADERS
+       SECTION HEADER
     ============================================ */
-    .section-title {
-        font-weight: 800;
-        color: var(--ink-900);
-        letter-spacing: -0.02em;
-        display: flex; align-items: center; gap: 10px;
-        font-size: 20px;
+    .section-head {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 20px 4px 12px;
     }
-    .section-title-badge {
+    .section-icon {
         width: 32px; height: 32px;
         border-radius: 10px;
-        background: linear-gradient(135deg, var(--blue-50), var(--blue-100));
-        color: var(--blue-700);
+        background: linear-gradient(135deg, #EFF6FF, #DBEAFE);
+        color: #1D4ED8;
         display: flex; align-items: center; justify-content: center;
-        font-size: 14px;
-        box-shadow: 0 2px 6px -1px rgba(37, 99, 235, 0.15);
+        font-size: 13px;
         flex-shrink: 0;
     }
-    .dark .section-title-badge {
-        background: linear-gradient(135deg, rgba(37, 99, 235, 0.25), rgba(59, 130, 246, 0.12));
+    .dark .section-icon {
+        background: linear-gradient(135deg, rgba(37,99,235,0.22), rgba(59,130,246,0.1));
         color: #93C5FD;
     }
+    .section-title {
+        font-size: 17px;
+        font-weight: 900;
+        color: var(--ink-900);
+        letter-spacing: -0.02em;
+    }
+    .dark .section-title { color: #F1F5F9; }
 
     /* ============================================
        CATEGORIES MARQUEE
     ============================================ */
-    .categories-marquee {
+    .cats-viewport {
         position: relative;
         overflow: hidden;
-        padding: 6px 0 18px;
-        -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
-        mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
-        cursor: grab;
+        padding: 6px 4px 18px;
+        margin: 0 -14px;
+        -webkit-mask-image: linear-gradient(to left, transparent 0, black 40px, black calc(100% - 40px), transparent 100%);
+        mask-image: linear-gradient(to left, transparent 0, black 40px, black calc(100% - 40px), transparent 100%);
     }
-    .categories-marquee:active { cursor: grabbing; }
+    @media (min-width: 768px) {
+        .cats-viewport {
+            margin: 0 -24px;
+            -webkit-mask-image: linear-gradient(to left, transparent 0, black 60px, black calc(100% - 60px), transparent 100%);
+            mask-image: linear-gradient(to left, transparent 0, black 60px, black calc(100% - 60px), transparent 100%);
+        }
+    }
 
-    .categories-track {
+    .cats-track {
         display: flex;
-        gap: 14px;
+        gap: 10px;
         width: max-content;
         will-change: transform;
-        transform: translateZ(0);
-        backface-visibility: hidden;
-    }
-    .categories-track.anim-2 { animation: categoriesScrollRight2 42s linear infinite; }
-    .categories-track.anim-4 { animation: categoriesScrollRight4 58s linear infinite; }
-
-    @keyframes categoriesScrollRight2 {
-        0%   { transform: translateX(-50%); }
-        100% { transform: translateX(0%); }
-    }
-    @keyframes categoriesScrollRight4 {
-        0%   { transform: translateX(-75%); }
-        100% { transform: translateX(0%); }
+        transform: translate3d(0,0,0);
     }
 
-    .categories-marquee:hover .categories-track,
-    .categories-marquee.paused .categories-track {
-        animation-play-state: paused;
-    }
-
-    /* Category Chip */
-    .category-chip {
-        min-width: 112px;
-        height: 108px;
-        padding: 14px 18px;
-        border-radius: 18px;
+    .cat-chip {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 10px;
+        gap: 8px;
+        width: 96px;
+        height: 96px;
+        padding: 10px 8px;
+        border-radius: 16px;
         background: #FFFFFF;
-        border: 1px solid rgba(148, 163, 184, 0.14);
+        border: 1px solid var(--border-soft);
         cursor: pointer;
-        transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-                    box-shadow 0.35s ease,
-                    border-color 0.35s ease,
-                    background 0.35s ease;
         flex-shrink: 0;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                    box-shadow 0.3s ease,
+                    border-color 0.3s ease;
+        box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
         user-select: none;
-        box-shadow: var(--shadow-xs);
-        position: relative;
-        overflow: hidden;
+        -webkit-user-select: none;
     }
-    .category-chip::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        border-radius: 18px;
-        background: linear-gradient(180deg, rgba(59, 130, 246, 0.04), transparent 40%);
-        opacity: 0;
-        transition: opacity 0.35s ease;
-        pointer-events: none;
-    }
-    .category-chip:hover::after { opacity: 1; }
-
-    .dark .category-chip {
-        background: linear-gradient(180deg, rgba(30, 41, 59, 0.85), rgba(15, 23, 42, 0.95));
+    .dark .cat-chip {
+        background: linear-gradient(180deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
         border-color: rgba(148, 163, 184, 0.08);
-        box-shadow: 0 1px 2px rgba(0,0,0,0.2);
     }
-    .category-chip:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 20px 32px -12px rgba(30, 64, 175, 0.28), 0 4px 8px -2px rgba(15, 23, 42, 0.06);
-        border-color: rgba(59, 130, 246, 0.4);
+    .cat-chip:active { transform: scale(0.96); }
+    .cat-chip:hover {
+        transform: translateY(-4px);
+        border-color: rgba(59, 130, 246, 0.35);
+        box-shadow: 0 12px 24px -8px rgba(30, 64, 175, 0.25);
     }
-    .category-icon-wrap {
-        width: 44px;
-        height: 44px;
-        border-radius: 13px;
-        background: linear-gradient(135deg, var(--blue-50), var(--blue-100));
-        color: var(--blue-700);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 18px;
-        transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 2px 4px rgba(37, 99, 235, 0.08);
-        position: relative;
-        z-index: 1;
+    .cat-chip-icon {
+        width: 38px; height: 38px;
+        border-radius: 11px;
+        background: linear-gradient(135deg, #EFF6FF, #DBEAFE);
+        color: #1D4ED8;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 16px;
+        flex-shrink: 0;
+        transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
-    .dark .category-icon-wrap {
-        background: linear-gradient(135deg, rgba(37, 99, 235, 0.25), rgba(59, 130, 246, 0.12));
+    .dark .cat-chip-icon {
+        background: linear-gradient(135deg, rgba(37, 99, 235, 0.22), rgba(59, 130, 246, 0.1));
         color: #93C5FD;
-        box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
     }
-    .category-chip:hover .category-icon-wrap {
-        transform: scale(1.12) rotate(-6deg);
-    }
-    .category-chip span {
-        font-size: 13px;
-        font-weight: 700;
-        color: var(--ink-700);
-        letter-spacing: -0.01em;
+    .cat-chip:hover .cat-chip-icon { transform: scale(1.1) rotate(-5deg); }
+    .cat-chip-label {
+        font-size: 11.5px;
+        font-weight: 800;
+        color: #334155;
+        text-align: center;
+        line-height: 1.1;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
         white-space: nowrap;
-        position: relative;
-        z-index: 1;
     }
-    .dark .category-chip span { color: #CBD5E1; }
+    .dark .cat-chip-label { color: #CBD5E1; }
 
-    .category-chip-all {
-        background: linear-gradient(135deg, var(--blue-700) 0%, var(--blue-500) 100%);
+    /* "All" chip special */
+    .cat-chip-all {
+        background: linear-gradient(135deg, #1E40AF 0%, #3B82F6 100%);
         border-color: transparent;
-        box-shadow: 0 8px 20px -6px rgba(37, 99, 235, 0.5);
+        box-shadow: 0 8px 20px -6px rgba(30, 64, 175, 0.5);
     }
-    .category-chip-all::after {
-        background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.22), transparent 60%);
-        opacity: 1;
-    }
-    .category-chip-all .category-icon-wrap {
-        background: rgba(255, 255, 255, 0.18);
+    .cat-chip-all .cat-chip-icon {
+        background: rgba(255,255,255,0.18);
         color: #FFFFFF;
-        box-shadow: inset 0 1px 0 rgba(255,255,255,0.25);
     }
-    .category-chip-all span { color: #FFFFFF; }
-    .category-chip-all:hover {
-        box-shadow: 0 22px 36px -10px rgba(37, 99, 235, 0.55);
+    .cat-chip-all .cat-chip-label { color: #FFFFFF; }
+    .cat-chip-all:hover {
+        box-shadow: 0 16px 28px -8px rgba(30, 64, 175, 0.6);
+        border-color: transparent;
     }
 
-    @media (max-width: 640px) {
-        .categories-track { gap: 12px; }
-        .category-chip {
-            min-width: 96px;
-            height: 96px;
-            border-radius: 16px;
-            padding: 12px 14px;
-        }
-        .category-icon-wrap { width: 38px; height: 38px; font-size: 16px; border-radius: 11px; }
-        .category-chip span { font-size: 12px; }
+    /* Skeleton chip */
+    .cat-chip-skel {
+        width: 96px; height: 96px;
+        border-radius: 16px;
+        background: linear-gradient(90deg, #EFF3F8 25%, #F8FAFC 50%, #EFF3F8 75%);
+        background-size: 200% 100%;
+        animation: skel 1.6s ease-in-out infinite;
+        flex-shrink: 0;
+    }
+    .dark .cat-chip-skel {
+        background: linear-gradient(90deg, #1E293B 25%, #273449 50%, #1E293B 75%);
+        background-size: 200% 100%;
+    }
+    @keyframes skel { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+    @media (min-width: 640px) {
+        .cat-chip { width: 108px; height: 108px; border-radius: 18px; }
+        .cat-chip-icon { width: 44px; height: 44px; border-radius: 13px; font-size: 18px; }
+        .cat-chip-label { font-size: 12.5px; }
+        .cats-track { gap: 14px; }
+        .cat-chip-skel { width: 108px; height: 108px; }
     }
 
     /* ============================================
        COURSE CARDS
     ============================================ */
+    .courses-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+    @media (min-width: 640px) { .courses-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; } }
+    @media (min-width: 1024px) { .courses-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
+
     .course-card {
-        content-visibility: auto;
-        contain-intrinsic-size: 400px;
-        will-change: transform;
-        border-radius: 20px;
         background: #FFFFFF;
-        border: 1px solid rgba(148, 163, 184, 0.14);
-        box-shadow: var(--shadow-sm);
+        border: 1px solid var(--border-soft);
+        border-radius: 18px;
         overflow: hidden;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05), 0 1px 2px rgba(15, 23, 42, 0.03);
         transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
                     box-shadow 0.4s ease,
                     border-color 0.4s ease;
-        position: relative;
+        display: flex;
+        flex-direction: column;
+        content-visibility: auto;
+        contain-intrinsic-size: 380px;
     }
     .dark .course-card {
-        background: linear-gradient(180deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
-        border-color: rgba(148, 163, 184, 0.08);
+        background: linear-gradient(180deg, rgba(30, 41, 59, 0.55), rgba(15, 23, 42, 0.85));
+        border-color: rgba(148, 163, 184, 0.07);
     }
     .course-card:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 24px 44px -16px rgba(30, 64, 175, 0.28), 0 8px 16px -8px rgba(15, 23, 42, 0.06);
+        transform: translateY(-4px);
         border-color: rgba(59, 130, 246, 0.28);
+        box-shadow: 0 20px 36px -14px rgba(30, 64, 175, 0.22), 0 6px 14px -6px rgba(15, 23, 42, 0.06);
     }
-    .course-card .video-wrap {
+
+    .course-media {
         position: relative;
+        width: 100%;
         aspect-ratio: 16 / 9;
-        background: #000;
+        background: #0F172A;
         overflow: hidden;
     }
-    .course-card .video-wrap iframe {
+    .course-media iframe {
         position: absolute; inset: 0;
         width: 100%; height: 100%;
         border: 0;
     }
-    .course-card .cat-pill {
+    .course-cat-badge {
         position: absolute;
-        top: 12px; left: 12px;
-        z-index: 5;
+        top: 10px;
+        right: 10px;
+        z-index: 3;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 5px 10px;
+        border-radius: 999px;
+        background: rgba(15, 23, 42, 0.75);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        color: #FFFFFF;
+        font-size: 10.5px;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        max-width: calc(100% - 20px);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .course-cat-badge i {
+        font-size: 6px;
+        color: #60A5FA;
+    }
+
+    .course-body {
+        padding: 14px;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+    @media (min-width: 768px) { .course-body { padding: 16px; } }
+
+    .course-title {
+        font-size: 15px;
+        font-weight: 800;
+        color: var(--ink-900);
+        line-height: 1.4;
+        margin-bottom: 6px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        letter-spacing: -0.01em;
+    }
+    .dark .course-title { color: #F1F5F9; }
+
+    .course-desc {
+        font-size: 12.5px;
+        color: var(--ink-500);
+        line-height: 1.6;
+        margin-bottom: 14px;
+        flex: 1;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    .dark .course-desc { color: #94A3B8; }
+
+    .course-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding-top: 14px;
+        border-top: 1px solid var(--border-soft);
+    }
+    .dark .course-footer { border-top-color: rgba(148, 163, 184, 0.08); }
+
+    .price-free {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 5px 10px;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #ECFDF5, #D1FAE5);
+        color: #047857;
+        font-size: 11.5px;
+        font-weight: 800;
+        border: 1px solid rgba(16, 185, 129, 0.18);
+        white-space: nowrap;
+    }
+    .dark .price-free {
+        background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.08));
+        color: #6EE7B7;
+        border-color: rgba(16, 185, 129, 0.22);
+    }
+    .price-paid {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 5px 10px;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #EFF6FF, #DBEAFE);
+        color: #1E40AF;
+        font-size: 11.5px;
+        font-weight: 800;
+        border: 1px solid rgba(59, 130, 246, 0.2);
+        white-space: nowrap;
+    }
+    .dark .price-paid {
+        background: linear-gradient(135deg, rgba(37, 99, 235, 0.18), rgba(59, 130, 246, 0.08));
+        color: #93C5FD;
+        border-color: rgba(59, 130, 246, 0.25);
+    }
+
+    .btn-enroll {
         display: inline-flex;
         align-items: center;
         gap: 6px;
-        padding: 5px 11px;
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(8px);
-        color: var(--blue-800);
-        font-size: 11px;
-        font-weight: 700;
-        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.12);
-        border: 1px solid rgba(255,255,255,0.5);
+        padding: 8px 14px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, #1D4ED8 0%, #3B82F6 100%);
+        color: #FFFFFF;
+        font-family: inherit;
+        font-size: 12.5px;
+        font-weight: 800;
+        border: none;
+        cursor: pointer;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+        box-shadow: 0 4px 12px -3px rgba(29, 78, 216, 0.45);
+        white-space: nowrap;
+        letter-spacing: -0.01em;
     }
-    .dark .course-card .cat-pill {
-        background: rgba(15, 23, 42, 0.85);
-        color: #93C5FD;
-        border-color: rgba(255,255,255,0.08);
+    .btn-enroll:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 8px 18px -4px rgba(29, 78, 216, 0.5);
     }
-    .course-card .cat-pill i {
-        color: var(--blue-600);
-        font-size: 9px;
-    }
+    .btn-enroll:active { transform: translateY(0); }
 
-    .course-price-free {
-        display: inline-flex; align-items: center; gap: 6px;
-        padding: 5px 11px;
-        border-radius: 999px;
+    .btn-continue {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 14px;
+        border-radius: 10px;
         background: linear-gradient(135deg, #ECFDF5, #D1FAE5);
         color: #047857;
-        font-size: 12px;
+        font-family: inherit;
+        font-size: 12.5px;
         font-weight: 800;
-        border: 1px solid rgba(16, 185, 129, 0.2);
+        border: 1px solid rgba(16, 185, 129, 0.22);
+        cursor: pointer;
+        transition: all 0.25s ease;
+        white-space: nowrap;
     }
-    .dark .course-price-free {
-        background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.10));
+    .dark .btn-continue {
+        background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.08));
         color: #6EE7B7;
         border-color: rgba(16, 185, 129, 0.25);
     }
-    .course-price-paid {
-        display: inline-flex; align-items: center; gap: 6px;
-        padding: 5px 11px;
-        border-radius: 999px;
-        background: linear-gradient(135deg, var(--blue-50), var(--blue-100));
-        color: var(--blue-800);
-        font-size: 12px;
-        font-weight: 800;
-        border: 1px solid rgba(59, 130, 246, 0.22);
-    }
-    .dark .course-price-paid {
-        background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(59, 130, 246, 0.10));
-        color: #93C5FD;
-        border-color: rgba(59, 130, 246, 0.3);
-    }
-
-    .btn-primary {
-        display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-        padding: 9px 18px;
-        border-radius: 12px;
-        background: linear-gradient(135deg, var(--blue-700) 0%, var(--blue-500) 100%);
-        color: #FFFFFF;
-        font-weight: 700;
-        font-size: 13px;
-        letter-spacing: -0.01em;
-        border: none;
-        cursor: pointer;
-        transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
-        box-shadow: 0 6px 14px -4px rgba(37, 99, 235, 0.5), inset 0 1px 0 rgba(255,255,255,0.2);
-        position: relative;
-        overflow: hidden;
-    }
-    .btn-primary:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 10px 22px -6px rgba(37, 99, 235, 0.55), inset 0 1px 0 rgba(255,255,255,0.2);
-    }
-    .btn-primary:active { transform: translateY(0); }
-
-    .btn-enrolled {
-        display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-        padding: 9px 18px;
-        border-radius: 12px;
-        background: linear-gradient(135deg, #ECFDF5, #D1FAE5);
-        color: #047857;
-        font-weight: 700;
-        font-size: 13px;
-        border: 1px solid rgba(16, 185, 129, 0.25);
-        cursor: pointer;
-        transition: all 0.25s ease;
-    }
-    .btn-enrolled:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 8px 18px -6px rgba(16, 185, 129, 0.35);
-    }
-    .dark .btn-enrolled {
-        background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.10));
-        color: #6EE7B7;
-        border-color: rgba(16, 185, 129, 0.28);
-    }
-
-    /* ============================================
-       SKELETON
-    ============================================ */
-    .skeleton {
-        background: linear-gradient(90deg, #EFF3F8 25%, #F8FAFC 50%, #EFF3F8 75%);
-        background-size: 200% 100%;
-        animation: loading 1.6s ease-in-out infinite;
-        border-radius: 12px;
-    }
-    .dark .skeleton {
-        background: linear-gradient(90deg, #1E293B 25%, #273449 50%, #1E293B 75%);
-        background-size: 200% 100%;
-    }
-    @keyframes loading {
-        0% { background-position: 200% 0; }
-        100% { background-position: -200% 0; }
-    }
+    .btn-continue:hover { transform: translateY(-1px); box-shadow: 0 6px 14px -4px rgba(16, 185, 129, 0.3); }
 
     /* ============================================
        BOTTOM NAV
     ============================================ */
     .bottom-nav {
+        position: fixed;
+        bottom: max(16px, env(safe-area-inset-bottom));
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 45;
+        width: calc(100% - 28px);
+        max-width: 400px;
+        padding: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 4px;
+        border-radius: 999px;
         background: rgba(255, 255, 255, 0.92);
-        backdrop-filter: saturate(180%) blur(24px);
-        -webkit-backdrop-filter: saturate(180%) blur(24px);
-        border: 1px solid rgba(148, 163, 184, 0.18);
-        box-shadow: 0 12px 40px -8px rgba(15, 23, 42, 0.16), 0 4px 12px -4px rgba(15, 23, 42, 0.06);
+        backdrop-filter: saturate(180%) blur(20px);
+        -webkit-backdrop-filter: saturate(180%) blur(20px);
+        border: 1px solid var(--border-soft);
+        box-shadow: 0 12px 32px -8px rgba(15, 23, 42, 0.18), 0 4px 10px -4px rgba(15, 23, 42, 0.08);
     }
     .dark .bottom-nav {
-        background: rgba(15, 23, 42, 0.85);
+        background: rgba(15, 23, 42, 0.9);
         border-color: rgba(148, 163, 184, 0.08);
-        box-shadow: 0 12px 40px -8px rgba(0, 0, 0, 0.6);
+        box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.5);
     }
 
     .nav-item {
-        display: flex; flex-direction: column; align-items: center; gap: 3px;
-        padding: 8px 14px;
-        border-radius: 14px;
-        color: var(--ink-500);
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 3px;
+        padding: 8px 6px;
+        border-radius: 999px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        color: #64748B;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        font-family: inherit;
         position: relative;
-        min-width: 62px;
     }
-    .nav-item i { font-size: 17px; transition: transform 0.3s ease; }
-    .nav-item span { font-size: 10px; font-weight: 700; letter-spacing: -0.01em; }
-    .nav-item:hover { color: var(--blue-600); }
-    .nav-item:hover i { transform: translateY(-1px); }
+    .nav-item i { font-size: 16px; transition: transform 0.3s ease; }
+    .nav-item span { font-size: 10px; font-weight: 800; letter-spacing: -0.01em; }
+    .nav-item:hover { color: #1D4ED8; }
     .nav-item.active {
+        background: linear-gradient(135deg, #1D4ED8 0%, #3B82F6 100%);
         color: #FFFFFF;
-        background: linear-gradient(135deg, var(--blue-700) 0%, var(--blue-500) 100%);
-        box-shadow: 0 8px 18px -6px rgba(37, 99, 235, 0.55), inset 0 1px 0 rgba(255,255,255,0.15);
+        box-shadow: 0 6px 16px -4px rgba(29, 78, 216, 0.5);
     }
+    .dark .nav-item { color: #94A3B8; }
+    .dark .nav-item:hover { color: #93C5FD; }
     .dark .nav-item.active {
-        background: linear-gradient(135deg, var(--blue-600) 0%, var(--blue-400) 100%);
+        background: linear-gradient(135deg, #2563EB 0%, #60A5FA 100%);
+        color: #FFFFFF;
     }
+    .nav-dot {
+        position: absolute;
+        top: 6px;
+        right: calc(50% - 16px);
+        width: 7px; height: 7px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #EF4444, #DC2626);
+        box-shadow: 0 0 0 2px #FFFFFF;
+    }
+    .dark .nav-dot { box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.9); }
 
     /* ============================================
        PLAYER OVERLAY
     ============================================ */
     #playerOverlay {
-        background:
-            radial-gradient(1200px 400px at 50% -10%, rgba(37, 99, 235, 0.10), transparent 70%),
-            var(--surface-soft);
+        position: fixed;
+        inset: 0;
+        z-index: 70;
+        background: #F5F8FC;
+        transform: translateY(100%);
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
-    .dark #playerOverlay {
-        background:
-            radial-gradient(1200px 400px at 50% -10%, rgba(37, 99, 235, 0.15), transparent 70%),
-            #0B1220;
-    }
+    .dark #playerOverlay { background: #0A0F1E; }
+    #playerOverlay.show { transform: translateY(0); }
 
-    .player-header {
-        background: rgba(255, 255, 255, 0.85);
+    .player-topbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: rgba(255, 255, 255, 0.9);
         backdrop-filter: saturate(180%) blur(20px);
         -webkit-backdrop-filter: saturate(180%) blur(20px);
-        border-bottom: 1px solid rgba(148, 163, 184, 0.14);
+        border-bottom: 1px solid var(--border-soft);
+        padding: 12px 14px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
-    .dark .player-header {
-        background: rgba(11, 18, 32, 0.85);
+    .dark .player-topbar {
+        background: rgba(10, 15, 30, 0.88);
         border-bottom-color: rgba(148, 163, 184, 0.08);
     }
 
-    .video-container {
-        position: relative;
-        padding-bottom: 56.25%;
-        height: 0;
-        overflow: hidden;
-        border-radius: 18px;
-        box-shadow: var(--shadow-xl);
-        border: 1px solid rgba(148, 163, 184, 0.14);
+    .player-content {
+        max-width: 1024px;
+        margin: 0 auto;
+        padding: 16px 14px 40px;
     }
-    .video-container iframe {
-        position: absolute;
-        top: 0; left: 0; width: 100%; height: 100%;
+    @media (min-width: 768px) { .player-content { padding: 20px 24px 60px; } }
+
+    .video-shell {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        background: #000;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 20px 40px -16px rgba(15, 23, 42, 0.35), 0 4px 12px -4px rgba(15, 23, 42, 0.15);
+        margin-bottom: 20px;
+    }
+    .video-shell iframe {
+        position: absolute; inset: 0;
+        width: 100%; height: 100%;
+        border: 0;
     }
 
+    .player-title {
+        font-size: 20px;
+        font-weight: 900;
+        color: var(--ink-900);
+        letter-spacing: -0.02em;
+        line-height: 1.35;
+        margin-bottom: 8px;
+    }
+    .dark .player-title { color: #F1F5F9; }
+
+    .player-desc {
+        font-size: 13px;
+        color: var(--ink-500);
+        line-height: 1.7;
+        margin-bottom: 18px;
+    }
+    .dark .player-desc { color: #94A3B8; }
+
+    .player-actions {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 24px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid var(--border-soft);
+    }
+    .dark .player-actions { border-bottom-color: rgba(148, 163, 184, 0.08); }
+
+    .btn-complete {
+        flex: 1;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 13px 16px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #059669 0%, #10B981 100%);
+        color: #FFFFFF;
+        font-family: inherit;
+        font-size: 13.5px;
+        font-weight: 800;
+        border: none;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        box-shadow: 0 6px 16px -4px rgba(5, 150, 105, 0.4);
+    }
+    .btn-complete:hover { transform: translateY(-1px); box-shadow: 0 10px 22px -6px rgba(5, 150, 105, 0.5); }
+
+    .btn-cert {
+        flex: 1;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 13px 16px;
+        border-radius: 12px;
+        background: #FFFFFF;
+        color: var(--ink-700);
+        font-family: inherit;
+        font-size: 13.5px;
+        font-weight: 800;
+        border: 1px solid var(--border-soft);
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.25s ease;
+    }
+    .dark .btn-cert {
+        background: rgba(30, 41, 59, 0.6);
+        color: #CBD5E1;
+        border-color: rgba(148, 163, 184, 0.08);
+    }
+    .btn-cert:hover { transform: translateY(-1px); border-color: rgba(59, 130, 246, 0.3); }
+    .btn-cert .wa-icon { color: #10B981; font-size: 17px; }
+
     .playlist-panel {
-        background: var(--surface);
-        border: 1px solid rgba(148, 163, 184, 0.14);
-        box-shadow: var(--shadow-md);
+        background: #FFFFFF;
+        border: 1px solid var(--border-soft);
+        border-radius: 16px;
+        padding: 16px;
     }
     .dark .playlist-panel {
-        background: linear-gradient(180deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.85));
+        background: linear-gradient(180deg, rgba(30, 41, 59, 0.5), rgba(15, 23, 42, 0.8));
         border-color: rgba(148, 163, 184, 0.08);
+    }
+
+    .playlist-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 12px;
+    }
+    .playlist-head h3 {
+        font-size: 14px;
+        font-weight: 900;
+        color: var(--ink-900);
+    }
+    .dark .playlist-head h3 { color: #F1F5F9; }
+    .progress-pct {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 9px;
+        border-radius: 7px;
+        background: linear-gradient(135deg, #EFF6FF, #DBEAFE);
+        color: #1E40AF;
+        font-size: 10.5px;
+        font-weight: 800;
+        border: 1px solid rgba(59, 130, 246, 0.18);
+    }
+    .dark .progress-pct {
+        background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(59, 130, 246, 0.1));
+        color: #93C5FD;
+        border-color: rgba(59, 130, 246, 0.25);
+    }
+
+    .progress-track {
+        height: 6px;
+        background: #F1F5F9;
+        border-radius: 999px;
+        overflow: hidden;
+        margin-bottom: 14px;
+    }
+    .dark .progress-track { background: rgba(30, 41, 59, 0.8); }
+    .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #1D4ED8, #60A5FA);
+        border-radius: 999px;
+        transition: width 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
     }
 
     .lesson-row {
-        display: flex; align-items: center; justify-content: space-between;
-        padding: 12px;
-        border-radius: 12px;
-        border: 1px solid rgba(148, 163, 184, 0.12);
-        background: var(--surface-soft);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 10px 12px;
+        border-radius: 11px;
+        background: #F8FAFC;
+        border: 1px solid var(--border-soft);
         transition: all 0.25s ease;
+        margin-bottom: 6px;
     }
     .dark .lesson-row {
         background: rgba(15, 23, 42, 0.5);
-        border-color: rgba(148, 163, 184, 0.08);
+        border-color: rgba(148, 163, 184, 0.06);
     }
     .lesson-row.done {
         background: linear-gradient(135deg, #ECFDF5, #F0FDF4);
         border-color: rgba(16, 185, 129, 0.22);
     }
     .dark .lesson-row.done {
-        background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(5, 150, 105, 0.06));
-        border-color: rgba(16, 185, 129, 0.22);
-    }
-    .lesson-row:hover {
-        border-color: rgba(59, 130, 246, 0.3);
-        transform: translateX(-2px);
+        background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.05));
+        border-color: rgba(16, 185, 129, 0.2);
     }
 
-    /* ============================================
-       PROGRESS BAR
-    ============================================ */
-    .progress-track {
-        height: 8px;
-        background: var(--surface-mute);
-        border-radius: 999px;
-        overflow: hidden;
-        border: 1px solid rgba(148, 163, 184, 0.10);
+    .lesson-num {
+        width: 32px; height: 32px;
+        border-radius: 9px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 12px;
+        font-weight: 900;
+        flex-shrink: 0;
+        background: #E2E8F0;
+        color: #475569;
     }
-    .dark .progress-track { background: rgba(30, 41, 59, 0.8); }
-    .progress-fill {
-        height: 100%;
-        background: linear-gradient(90deg, var(--blue-600), var(--blue-400));
-        border-radius: 999px;
-        transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 0 12px rgba(59, 130, 246, 0.4);
+    .dark .lesson-num { background: rgba(51, 65, 85, 0.7); color: #CBD5E1; }
+    .lesson-row.done .lesson-num {
+        background: linear-gradient(135deg, #059669, #10B981);
+        color: #FFFFFF;
     }
+    .lesson-label {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--ink-700);
+    }
+    .dark .lesson-label { color: #CBD5E1; }
+
+    .lesson-check {
+        width: 28px; height: 28px;
+        border-radius: 8px;
+        display: flex; align-items: center; justify-content: center;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        color: #94A3B8;
+        font-size: 14px;
+        transition: all 0.25s ease;
+        flex-shrink: 0;
+    }
+    .lesson-check:hover { background: rgba(59, 130, 246, 0.1); color: #1D4ED8; }
+    .lesson-row.done .lesson-check { color: #10B981; }
+
+    .custom-scroll::-webkit-scrollbar { width: 5px; }
+    .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+    .custom-scroll::-webkit-scrollbar-thumb {
+        background: rgba(148, 163, 184, 0.35);
+        border-radius: 3px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb:hover { background: rgba(59, 130, 246, 0.5); }
 
     /* ============================================
        RESUME BANNER
     ============================================ */
     .resume-banner {
-        background:
-            radial-gradient(600px 200px at 100% 0%, rgba(59, 130, 246, 0.25), transparent 60%),
-            linear-gradient(135deg, var(--blue-900) 0%, var(--blue-700) 100%);
-        border: 1px solid rgba(96, 165, 250, 0.2);
-        box-shadow: var(--shadow-xl);
         position: relative;
         overflow: hidden;
+        border-radius: 20px;
+        padding: 20px;
+        background:
+            radial-gradient(500px 200px at 100% 0%, rgba(96, 165, 250, 0.3), transparent 60%),
+            linear-gradient(135deg, #1E3A8A 0%, #1D4ED8 60%, #3B82F6 120%);
+        color: #FFFFFF;
+        box-shadow: 0 20px 40px -14px rgba(30, 64, 175, 0.5);
+        margin-bottom: 22px;
     }
     .resume-banner::before {
         content: '';
         position: absolute;
         inset: 0;
         background-image:
-            linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
-        background-size: 32px 32px;
+            linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+        background-size: 28px 28px;
+        opacity: 0.5;
         pointer-events: none;
-        opacity: 0.6;
+    }
+    .resume-inner { position: relative; z-index: 2; }
+    @media (min-width: 640px) {
+        .resume-banner { padding: 24px 28px; }
+        .resume-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    }
+    .resume-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 10.5px;
+        font-weight: 800;
+        color: #BFDBFE;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+    }
+    .resume-pulse {
+        width: 6px; height: 6px;
+        border-radius: 50%;
+        background: #60A5FA;
+        box-shadow: 0 0 0 0 rgba(96, 165, 250, 0.7);
+        animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+        0% { box-shadow: 0 0 0 0 rgba(96, 165, 250, 0.7); }
+        70% { box-shadow: 0 0 0 10px rgba(96, 165, 250, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(96, 165, 250, 0); }
+    }
+    .resume-title {
+        font-size: 18px;
+        font-weight: 900;
+        letter-spacing: -0.02em;
+        margin-bottom: 6px;
+        line-height: 1.3;
+    }
+    .resume-meta {
+        font-size: 12px;
+        color: #BFDBFE;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-weight: 600;
+    }
+    .btn-resume {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 12px 22px;
+        border-radius: 12px;
+        background: #FFFFFF;
+        color: #1E3A8A;
+        font-family: inherit;
+        font-size: 13.5px;
+        font-weight: 900;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 24px -8px rgba(0, 0, 0, 0.3);
+        margin-top: 16px;
+        width: 100%;
+    }
+    @media (min-width: 640px) { .btn-resume { width: auto; margin-top: 0; } }
+    .btn-resume:hover {
+        transform: translateY(-2px);
+        background: #F8FAFC;
+        box-shadow: 0 14px 30px -8px rgba(0, 0, 0, 0.35);
     }
 
     /* ============================================
        LOAD MORE
     ============================================ */
-    .load-more-btn {
-        display: inline-flex; align-items: center; gap: 8px;
-        background: var(--surface);
-        border: 1px solid rgba(59, 130, 246, 0.25);
-        color: var(--blue-700);
-        padding: 12px 32px;
-        border-radius: 14px;
-        font-weight: 700;
-        font-size: 14px;
+    .load-more-wrap { text-align: center; margin: 32px 0 12px; }
+    .btn-load-more {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 28px;
+        border-radius: 12px;
+        background: #FFFFFF;
+        color: #1E40AF;
+        font-family: inherit;
+        font-size: 13.5px;
+        font-weight: 800;
+        border: 1px solid rgba(59, 130, 246, 0.28);
         cursor: pointer;
         transition: all 0.3s ease;
-        box-shadow: var(--shadow-sm);
-        font-family: inherit;
+        box-shadow: 0 2px 6px -1px rgba(15, 23, 42, 0.05);
     }
-    .load-more-btn:hover {
+    .btn-load-more:hover {
         transform: translateY(-2px);
-        background: var(--blue-50);
-        box-shadow: 0 12px 24px -8px rgba(37, 99, 235, 0.32);
+        background: #EFF6FF;
+        box-shadow: 0 12px 22px -8px rgba(29, 78, 216, 0.28);
         border-color: rgba(59, 130, 246, 0.4);
     }
-    .dark .load-more-btn {
+    .dark .btn-load-more {
         background: rgba(30, 41, 59, 0.7);
         color: #93C5FD;
+        border-color: rgba(59, 130, 246, 0.25);
+    }
+    .dark .btn-load-more:hover { background: rgba(37, 99, 235, 0.15); }
+
+    /* ============================================
+       EMPTY STATE
+    ============================================ */
+    .empty-state {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 20px;
+        text-align: center;
+    }
+    .empty-state.show { display: flex; }
+    .empty-icon {
+        width: 80px; height: 80px;
+        border-radius: 20px;
+        background: linear-gradient(135deg, #EFF6FF, #DBEAFE);
+        display: flex; align-items: center; justify-content: center;
+        color: #1D4ED8;
+        font-size: 30px;
+        margin-bottom: 16px;
+    }
+    .dark .empty-icon {
+        background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(59, 130, 246, 0.1));
+        color: #93C5FD;
+    }
+    .empty-title {
+        font-size: 16px;
+        font-weight: 900;
+        color: var(--ink-900);
+        margin-bottom: 6px;
+    }
+    .dark .empty-title { color: #F1F5F9; }
+    .empty-desc {
+        font-size: 13px;
+        color: var(--ink-500);
+        max-width: 320px;
+    }
+    .dark .empty-desc { color: #94A3B8; }
+
+    /* ============================================
+       TOAST
+    ============================================ */
+    .toast {
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 100;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 20px;
+        border-radius: 14px;
+        font-size: 13px;
+        font-weight: 800;
+        color: #FFFFFF;
+        min-width: 280px;
+        max-width: calc(100vw - 32px);
+        justify-content: center;
+        box-shadow: 0 16px 32px -8px rgba(15, 23, 42, 0.35);
+        animation: toastIn 0.3s ease;
+        font-family: inherit;
+    }
+    @keyframes toastIn {
+        from { opacity: 0; transform: translate(-50%, -20px); }
+        to { opacity: 1; transform: translate(-50%, 0); }
+    }
+
+    /* ============================================
+       MY COURSES
+    ============================================ */
+    .my-course-card {
+        background: #FFFFFF;
+        border: 1px solid var(--border-soft);
+        border-radius: 16px;
+        padding: 14px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+    }
+    .dark .my-course-card {
+        background: linear-gradient(180deg, rgba(30, 41, 59, 0.5), rgba(15, 23, 42, 0.8));
+        border-color: rgba(148, 163, 184, 0.08);
+    }
+    .my-course-card:hover {
+        transform: translateY(-2px);
         border-color: rgba(59, 130, 246, 0.28);
+        box-shadow: 0 12px 24px -8px rgba(30, 64, 175, 0.18);
     }
-    .dark .load-more-btn:hover {
-        background: rgba(37, 99, 235, 0.15);
+    .my-course-thumb {
+        width: 64px; height: 64px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, #1D4ED8 0%, #3B82F6 100%);
+        display: flex; align-items: center; justify-content: center;
+        color: #FFFFFF;
+        font-size: 22px;
+        flex-shrink: 0;
+        box-shadow: 0 6px 14px -4px rgba(29, 78, 216, 0.4);
     }
+    .my-course-body { flex: 1; min-width: 0; }
+    .my-course-title {
+        font-size: 14px;
+        font-weight: 800;
+        color: var(--ink-900);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 6px;
+    }
+    .dark .my-course-title { color: #F1F5F9; }
+    .my-course-meta {
+        display: flex;
+        justify-content: space-between;
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--ink-500);
+        margin-bottom: 6px;
+    }
+    .dark .my-course-meta { color: #94A3B8; }
+    .my-progress-track {
+        height: 5px;
+        background: #F1F5F9;
+        border-radius: 999px;
+        overflow: hidden;
+    }
+    .dark .my-progress-track { background: rgba(30, 41, 59, 0.8); }
+    .my-progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #1D4ED8, #60A5FA);
+        border-radius: 999px;
+        transition: width 0.6s ease;
+    }
+    .my-course-remove {
+        width: 32px; height: 32px;
+        border-radius: 9px;
+        display: flex; align-items: center; justify-content: center;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        color: #94A3B8;
+        font-size: 12px;
+        transition: all 0.25s ease;
+        flex-shrink: 0;
+    }
+    .my-course-remove:hover { background: #FEF2F2; color: #DC2626; }
+    .dark .my-course-remove:hover { background: rgba(220, 38, 38, 0.15); }
 
-    /* ============================================
-       WHATSAPP FLOATING
-    ============================================ */
+    /* WhatsApp floating */
     .wa-float {
+        position: fixed;
+        bottom: 24px;
+        left: 24px;
+        z-index: 44;
+        width: 54px;
+        height: 54px;
+        border-radius: 16px;
         background: linear-gradient(135deg, #25D366, #128C7E);
+        color: #FFFFFF;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        text-decoration: none;
         box-shadow: 0 12px 28px -8px rgba(37, 211, 102, 0.55), inset 0 1px 0 rgba(255,255,255,0.25);
-        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
-    .wa-float:hover {
-        transform: translateY(-4px) scale(1.06);
-        box-shadow: 0 18px 34px -8px rgba(37, 211, 102, 0.7);
-    }
-
-    /* ============================================
-       UTILITIES
-    ============================================ */
-    .divider-soft {
-        height: 1px;
-        background: linear-gradient(90deg, transparent, rgba(148, 163, 184, 0.25), transparent);
-    }
-
-    ::selection {
-        background: rgba(59, 130, 246, 0.22);
-        color: var(--blue-900);
-    }
-
-    /* Focus visible */
-    *:focus-visible {
-        outline: none;
-        box-shadow: var(--ring-blue);
-        border-radius: 10px;
-    }
-
-    /* Reduced motion */
-    @media (prefers-reduced-motion: reduce) {
-        .categories-track.anim-2,
-        .categories-track.anim-4 { animation: none !important; }
-        *, *::before, *::after {
-            animation-duration: 0.01ms !important;
-            transition-duration: 0.01ms !important;
-        }
-    }
-
-    /* Custom scrollbar for playlist */
-    .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-        background: rgba(148, 163, 184, 0.4);
-        border-radius: 3px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-        background: rgba(59, 130, 246, 0.5);
-    }
+    .wa-float:hover { transform: translateY(-4px) scale(1.06); }
+    @media (min-width: 768px) { .wa-float { display: flex; } }
 </style>
 </head>
 
-<body class="transition-colors duration-300 antialiased pb-28">
+<body>
 
     <!-- =========================
          HEADER
     ========================== -->
-    <header class="fixed top-0 w-full z-50 glass">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    <header class="app-header">
+        <div class="app-header-inner">
             <div class="flex items-center gap-3 cursor-pointer select-none" onclick="showHome()">
-                <div class="brand-badge flex items-center justify-center">
-                    <i class="fas fa-graduation-cap text-white text-[16px] relative z-10"></i>
+                <div class="logo-badge">
+                    <i class="fas fa-graduation-cap"></i>
                 </div>
-                <div class="flex flex-col leading-none">
-                    <span class="text-[19px] font-extrabold brand-title">Skillzoy</span>
-                    <span class="text-[10px] font-semibold text-gray-500 dark:text-gray-400 mt-0.5 tracking-wider">ACADEMY</span>
+                <div class="flex flex-col">
+                    <span class="logo-title">Skillzoy</span>
+                    <span class="logo-sub">ACADEMY</span>
                 </div>
             </div>
 
             <div class="flex items-center gap-2">
                 <button onclick="toggleDarkMode()" class="icon-btn" aria-label="تبديل الوضع">
-                    <i class="fas fa-moon text-[14px] dark:hidden"></i>
-                    <i class="fas fa-sun text-[14px] hidden dark:block"></i>
+                    <i class="fas fa-moon dark:hidden"></i>
+                    <i class="fas fa-sun hidden dark:block"></i>
                 </button>
-                <button class="icon-btn relative" aria-label="الإشعارات">
-                    <i class="fas fa-bell text-[14px]"></i>
-                    <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-gradient-to-br from-rose-500 to-red-600 rounded-full ring-2 ring-white dark:ring-gray-900"></span>
+                <button class="icon-btn" aria-label="الإشعارات">
+                    <i class="fas fa-bell"></i>
+                    <span style="position:absolute;top:8px;right:8px;width:7px;height:7px;border-radius:50%;background:linear-gradient(135deg,#EF4444,#DC2626);box-shadow:0 0 0 2px #fff;"></span>
                 </button>
             </div>
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 mt-20 sm:mt-24 space-y-6 sm:space-y-8">
+    <main class="app-main">
 
         <!-- =========================
-             SEARCH BAR
+             SEARCH
         ========================== -->
-        <section class="sticky top-[68px] z-40">
-            <div class="search-shell flex items-center gap-2 p-2">
-                <div class="flex-1 flex items-center gap-3 px-3">
-                    <div class="search-icon-badge">
+        <section class="search-section">
+            <div class="search-card">
+                <div class="search-input-wrap">
+                    <div class="search-icon-pill">
                         <i class="fas fa-search"></i>
                     </div>
-                    <input type="text" id="searchInput" placeholder="ابحث عن مهارة، دورة، أو تخصص..." 
-                        class="search-input flex-1 py-2">
+                    <input type="text" id="searchInput" placeholder="ابحث عن مهارة، دورة، أو تخصص...">
                 </div>
-                <div class="select-wrap min-w-[130px] sm:min-w-[150px]">
+                <div class="filter-select-wrap">
                     <select id="categoryFilter">
                         <option value="">كل التخصصات</option>
                     </select>
@@ -944,23 +1329,20 @@
         </section>
 
         <!-- =========================
-             CATEGORIES MARQUEE
+             CATEGORIES
         ========================== -->
-        <section class="pt-2">
-            <div class="flex justify-between items-end mb-4 px-1">
-                <h3 class="section-title">
-                    <span class="section-title-badge"><i class="fas fa-layer-group"></i></span>
-                    التصنيفات الشائعة
-                </h3>
-                <span class="text-[11px] font-semibold text-gray-400 dark:text-gray-500 hidden sm:inline">اسحب للتنقل ←</span>
+        <section>
+            <div class="section-head">
+                <div class="section-icon"><i class="fas fa-layer-group"></i></div>
+                <h3 class="section-title">التصنيفات</h3>
             </div>
-            <div class="categories-marquee" id="categoriesMarquee">
-                <div class="categories-track" id="categoriesTrack">
-                    <div class="category-chip skeleton" style="border-radius:18px;"></div>
-                    <div class="category-chip skeleton" style="border-radius:18px;"></div>
-                    <div class="category-chip skeleton" style="border-radius:18px;"></div>
-                    <div class="category-chip skeleton" style="border-radius:18px;"></div>
-                    <div class="category-chip skeleton" style="border-radius:18px;"></div>
+            <div class="cats-viewport" id="catsViewport">
+                <div class="cats-track" id="catsTrack">
+                    <div class="cat-chip-skel"></div>
+                    <div class="cat-chip-skel"></div>
+                    <div class="cat-chip-skel"></div>
+                    <div class="cat-chip-skel"></div>
+                    <div class="cat-chip-skel"></div>
                 </div>
             </div>
         </section>
@@ -968,150 +1350,138 @@
         <!-- =========================
              COURSES
         ========================== -->
-        <section id="coursesSection" class="min-h-[400px]">
-            <div class="flex justify-between items-end mb-5 px-1">
-                <h3 class="section-title">
-                    <span class="section-title-badge"><i class="fas fa-play"></i></span>
-                    الدورات المتاحة
-                </h3>
-                <span class="text-[11px] font-semibold text-gray-400 dark:text-gray-500" id="coursesCount"></span>
+        <section id="coursesSection">
+            <div class="section-head">
+                <div class="section-icon"><i class="fas fa-play"></i></div>
+                <h3 class="section-title">الدورات المتاحة</h3>
+                <span id="coursesCount" style="margin-right:auto;font-size:11px;font-weight:700;color:#94A3B8;"></span>
             </div>
-            
-            <div id="coursesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6"></div>
-            
-            <div class="text-center my-10" id="loadMoreContainer">
-                <button class="load-more-btn" id="loadMoreBtn" style="display:none;">
+
+            <div class="courses-grid" id="coursesGrid"></div>
+
+            <div class="load-more-wrap">
+                <button class="btn-load-more" id="loadMoreBtn" style="display:none;">
                     <span>تحميل المزيد</span>
-                    <i class="fas fa-arrow-down text-[11px]"></i>
+                    <i class="fas fa-arrow-down" style="font-size:11px;"></i>
                 </button>
             </div>
-            
-            <div id="noResults" class="hidden flex-col items-center justify-center py-20 text-center">
-                <div class="w-20 h-20 rounded-2xl bg-blue-50 dark:bg-blue-950/40 flex items-center justify-center mb-4 border border-blue-100 dark:border-blue-900/50">
-                    <i class="fas fa-search text-2xl text-blue-500"></i>
-                </div>
-                <h3 class="text-lg font-extrabold text-gray-800 dark:text-white mb-1">لا توجد نتائج</h3>
-                <p class="text-sm text-gray-500 dark:text-gray-400">جرّب البحث بكلمات أخرى أو اختر تخصصاً مختلفاً</p>
+
+            <div class="empty-state" id="noResults">
+                <div class="empty-icon"><i class="fas fa-search"></i></div>
+                <h3 class="empty-title">لا توجد نتائج</h3>
+                <p class="empty-desc">جرّب البحث بكلمات أخرى أو اختر تخصصاً مختلفاً</p>
             </div>
         </section>
 
         <!-- =========================
              MY COURSES
         ========================== -->
-        <section id="myCoursesView" class="hidden min-h-screen">
-            <h2 class="section-title mb-6">
-                <span class="section-title-badge"><i class="fas fa-book-reader"></i></span>
-                دوراتي التعليمية
-            </h2>
-            
-            <div id="resumeLearningBanner" class="resume-banner hidden rounded-2xl p-6 sm:p-7 text-white mb-8">
-                <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-5">
-                    <div class="flex-1">
-                        <div class="inline-flex items-center gap-2 mb-3">
-                            <span class="w-1.5 h-1.5 rounded-full bg-blue-300 animate-pulse"></span>
-                            <span class="text-[11px] font-bold text-blue-200 uppercase tracking-wider">أكمل من حيث توقفت</span>
+        <section id="myCoursesView" style="display:none;">
+            <div class="section-head">
+                <div class="section-icon"><i class="fas fa-book-reader"></i></div>
+                <h3 class="section-title">دوراتي التعليمية</h3>
+            </div>
+
+            <div class="resume-banner" id="resumeLearningBanner" style="display:none;">
+                <div class="resume-inner">
+                    <div>
+                        <div class="resume-label">
+                            <span class="resume-pulse"></span>
+                            أكمل من حيث توقفت
                         </div>
-                        <h3 id="resumeTitle" class="text-xl sm:text-2xl font-extrabold mb-2 tracking-tight">عنوان الدورة هنا</h3>
-                        <div class="flex items-center gap-2 text-sm text-blue-100/90">
-                            <i class="fas fa-play-circle text-blue-300"></i>
-                            <span id="resumeProgress">المقطع 4 من 12</span>
+                        <h3 class="resume-title" id="resumeTitle">عنوان الدورة</h3>
+                        <div class="resume-meta">
+                            <i class="fas fa-play-circle"></i>
+                            <span id="resumeProgress">المقطع 1 من 10</span>
                         </div>
                     </div>
-                    <button id="resumeBtn" class="bg-white text-blue-800 hover:bg-blue-50 px-6 py-3 rounded-xl font-extrabold text-sm shadow-lg shadow-blue-900/30 transition-all hover:-translate-y-0.5 flex items-center justify-center gap-2 whitespace-nowrap">
+                    <button class="btn-resume" id="resumeBtn">
                         <i class="fas fa-play"></i>
                         استئناف المشاهدة
                     </button>
                 </div>
             </div>
 
-            <div id="myCoursesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6"></div>
+            <div id="myCoursesGrid" style="display:grid;grid-template-columns:1fr;gap:12px;"></div>
         </section>
-
-        <!-- =========================
-             PLAYER OVERLAY
-        ========================== -->
-        <div id="playerOverlay" class="fixed inset-0 z-[60] transform translate-y-full transition-transform duration-500 overflow-y-auto">
-            <div class="player-header sticky top-0 z-10 px-4 py-4 flex items-center justify-between">
-                <button onclick="closePlayer()" class="icon-btn" aria-label="رجوع">
-                    <i class="fas fa-arrow-right text-[14px]"></i>
-                </button>
-                <div class="flex flex-col items-center">
-                    <span class="text-[11px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">مشاهدة الدورة</span>
-                    <span id="playerCourseLabel" class="text-[13px] font-extrabold text-gray-800 dark:text-white truncate max-w-[200px]"></span>
-                </div>
-                <div class="w-10"></div> 
-            </div>
-
-            <div class="max-w-5xl mx-auto px-4 sm:px-6 py-6">
-                <div class="video-container bg-black mb-6">
-                    <iframe id="playerFrame" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                </div>
-
-                <div class="flex flex-col lg:flex-row gap-6 lg:gap-8">
-                    <div class="flex-1 space-y-5">
-                        <div>
-                            <h1 id="playerCourseTitle" class="text-xl sm:text-2xl font-extrabold text-gray-900 dark:text-white leading-snug tracking-tight mb-3"></h1>
-                            <p id="playerCourseDesc" class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed"></p>
-                        </div>
-                        
-                        <div class="divider-soft"></div>
-
-                        <div class="flex items-stretch gap-3">
-                            <button onclick="toggleCompleteVideo()" id="markCompleteBtn" class="btn-primary flex-1 py-3.5 text-[14px]">
-                                <i class="fas fa-check-circle"></i>
-                                <span>إكمال المقطع</span>
-                            </button>
-                            <a href="https://wa.me/249908280115" target="_blank" class="flex-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 py-3.5 rounded-xl font-extrabold text-[14px] transition-all flex items-center justify-center gap-2 border border-gray-200 dark:border-gray-700">
-                                <i class="fab fa-whatsapp text-green-500 text-lg"></i>
-                                <span>طلب الشهادة</span>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="lg:w-[380px] playlist-panel rounded-2xl p-5 h-fit">
-                        <div class="flex justify-between items-center mb-4">
-                            <h3 class="font-extrabold text-gray-800 dark:text-white text-[15px]">محتوى الدورة</h3>
-                            <span id="progressPercentage" class="text-[11px] font-extrabold bg-blue-50 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300 px-2.5 py-1 rounded-lg border border-blue-100 dark:border-blue-900/50">0% مكتمل</span>
-                        </div>
-                        <div class="progress-track mb-4">
-                            <div id="progressBarFill" class="progress-fill w-0"></div>
-                        </div>
-                        <div id="playlistContainer" class="space-y-2 max-h-[420px] overflow-y-auto custom-scrollbar pl-1"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
     </main>
 
     <!-- =========================
+         PLAYER OVERLAY
+    ========================== -->
+    <div id="playerOverlay">
+        <div class="player-topbar">
+            <button onclick="closePlayer()" class="icon-btn" aria-label="رجوع">
+                <i class="fas fa-arrow-right"></i>
+            </button>
+            <div style="text-align:center;flex:1;min-width:0;">
+                <div style="font-size:10px;font-weight:800;color:#94A3B8;letter-spacing:0.1em;">مشاهدة الدورة</div>
+                <div id="playerCourseLabel" style="font-size:13px;font-weight:900;color:#0F172A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;"></div>
+            </div>
+            <div style="width:40px;"></div>
+        </div>
+
+        <div class="player-content">
+            <div class="video-shell">
+                <iframe id="playerFrame" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+
+            <h1 class="player-title" id="playerCourseTitle"></h1>
+            <p class="player-desc" id="playerCourseDesc"></p>
+
+            <div class="player-actions">
+                <button class="btn-complete" onclick="toggleCompleteVideo()">
+                    <i class="fas fa-check-circle"></i>
+                    <span>إكمال المقطع</span>
+                </button>
+                <a href="https://wa.me/249908280115" target="_blank" class="btn-cert">
+                    <i class="fab fa-whatsapp wa-icon"></i>
+                    <span>طلب الشهادة</span>
+                </a>
+            </div>
+
+            <div class="playlist-panel">
+                <div class="playlist-head">
+                    <h3>محتوى الدورة</h3>
+                    <span class="progress-pct" id="progressPercentage">0% مكتمل</span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" id="progressBarFill" style="width:0%;"></div>
+                </div>
+                <div id="playlistContainer" class="custom-scroll" style="max-height:380px;overflow-y:auto;padding-left:4px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================
          BOTTOM NAV
     ========================== -->
-    <nav class="fixed bottom-5 left-1/2 transform -translate-x-1/2 bottom-nav rounded-full px-3 py-2 z-40 flex items-center gap-1 w-[92%] max-w-sm justify-between">
-        <button onclick="showHome()" class="nav-item active">
+    <nav class="bottom-nav">
+        <button onclick="showHome()" class="nav-item active" id="navHome">
             <i class="fas fa-home"></i>
             <span>الرئيسية</span>
         </button>
-        
-        <button onclick="showMyCourses()" class="nav-item relative">
+        <button onclick="showMyCourses()" class="nav-item" id="navMy">
             <i class="fas fa-book-reader"></i>
             <span>دوراتي</span>
-            <span id="myCoursesDot" class="hidden absolute top-1.5 right-3 w-2 h-2 bg-gradient-to-br from-rose-500 to-red-600 rounded-full ring-2 ring-white dark:ring-gray-900"></span>
+            <span class="nav-dot" id="myCoursesDot" style="display:none;"></span>
         </button>
-        
         <button onclick="openWhatsApp()" class="nav-item">
-            <i class="fab fa-whatsapp text-[18px]"></i>
+            <i class="fab fa-whatsapp"></i>
             <span>تواصل</span>
         </button>
     </nav>
 
-    <!-- WhatsApp Floating (Desktop) -->
-    <a href="https://wa.me/249908280115" target="_blank" class="hidden md:flex fixed bottom-8 left-8 w-14 h-14 wa-float text-white rounded-2xl items-center justify-center z-50">
-        <i class="fab fa-whatsapp text-2xl"></i>
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/249908280115" target="_blank" class="wa-float">
+        <i class="fab fa-whatsapp"></i>
     </a>
 
 <script>
-    // --- ✅ FIREBASE CONFIG ---
+    // ==========================================
+    // FIREBASE
+    // ==========================================
     const firebaseConfig = {
         apiKey: "AIzaSyDgFy0-QL0YuGgqgtcx9541Cs7QxBewRKQ",
         authDomain: "skillzoy-5ba3c.firebaseapp.com",
@@ -1122,49 +1492,47 @@
         measurementId: "G-WVHTQ4BGNJ"
     };
 
-    if (!firebase.apps.length) {
-        firebase.initializeApp(firebaseConfig);
-    }
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
     const auth = firebase.auth();
 
-    // --- ✅ STATE MANAGEMENT ---
-    let appState = {
-        courses: [],
+    // ==========================================
+    // STATE
+    // ==========================================
+    const appState = {
         myCourses: JSON.parse(localStorage.getItem("myCourses")) || [],
         progress: JSON.parse(localStorage.getItem("courseProgress")) || {},
         darkMode: localStorage.getItem("darkMode") === "true",
         currentCourseId: null,
-        lastSyncTimestamp: localStorage.getItem("lastSyncTimestamp") || null,
         pendingProgressUpdates: {},
         pendingEnrollments: []
     };
 
-    // --- ✅ CACHE: 100 HOURS TTL ---
+    // ==========================================
+    // CACHE 100h
+    // ==========================================
     const CACHE_KEY = "cachedCourses";
-    const CACHE_TIMESTAMP_KEY = "cachedCoursesTimestamp";
-    const CACHE_DURATION_MS = 100 * 60 * 60 * 1000;
+    const CACHE_TS_KEY = "cachedCoursesTimestamp";
+    const CACHE_TTL = 100 * 60 * 60 * 1000;
 
-    function saveCoursesToCache(courses) {
+    function saveCache(courses) {
         try {
             localStorage.setItem(CACHE_KEY, JSON.stringify(courses));
-            localStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
+            localStorage.setItem(CACHE_TS_KEY, Date.now().toString());
         } catch (e) { console.warn("Cache save failed:", e); }
     }
-
-    function loadCoursesFromCache() {
+    function loadCache() {
         try {
-            const cached = localStorage.getItem(CACHE_KEY);
-            const timestamp = localStorage.getItem(CACHE_TIMESTAMP_KEY);
-            if (cached && timestamp) {
-                const age = Date.now() - parseInt(timestamp);
-                if (age < CACHE_DURATION_MS) return JSON.parse(cached);
-            }
+            const c = localStorage.getItem(CACHE_KEY);
+            const t = localStorage.getItem(CACHE_TS_KEY);
+            if (c && t && (Date.now() - parseInt(t)) < CACHE_TTL) return JSON.parse(c);
         } catch (e) { console.warn("Cache load failed:", e); }
         return null;
     }
 
-    // --- ✅ PAGINATION ---
+    // ==========================================
+    // VARIABLES
+    // ==========================================
     let allCourses = [];
     let displayedCourses = [];
     const pageSize = 20;
@@ -1172,33 +1540,48 @@
     let unsubscribeRealtime = null;
     let realtimeInitialized = false;
 
-    // --- ✅ TOAST ---
+    // ==========================================
+    // FALLBACK CATEGORIES (if Firebase empty)
+    // ==========================================
+    const FALLBACK_CATEGORIES = [
+        { name: 'برمجة', icon: 'fa-code' },
+        { name: 'تصميم', icon: 'fa-paint-brush' },
+        { name: 'تسويق', icon: 'fa-bullhorn' },
+        { name: 'لغات', icon: 'fa-language' },
+        { name: 'تطوير الذات', icon: 'fa-lightbulb' },
+        { name: 'إدارة', icon: 'fa-chart-line' },
+        { name: 'تصوير', icon: 'fa-camera' },
+        { name: 'فنون', icon: 'fa-palette' }
+    ];
+
+    // ==========================================
+    // TOAST
+    // ==========================================
     function showToast(message, type = 'info') {
-        const colorClass = type === 'success'
-            ? 'bg-gradient-to-br from-emerald-500 to-green-600'
+        const bg = type === 'success'
+            ? 'linear-gradient(135deg, #059669, #10B981)'
             : (type === 'error'
-                ? 'bg-gradient-to-br from-rose-500 to-red-600'
-                : 'bg-gradient-to-br from-slate-800 to-slate-900');
+                ? 'linear-gradient(135deg, #DC2626, #EF4444)'
+                : 'linear-gradient(135deg, #1E40AF, #3B82F6)');
         const toast = document.createElement('div');
-        toast.className = `fixed top-6 left-1/2 transform -translate-x-1/2 ${colorClass} text-white px-5 py-3 rounded-2xl shadow-2xl z-[70] flex items-center gap-3 font-bold text-[13px] min-w-[280px] max-w-[90vw] justify-center`;
-        toast.style.boxShadow = '0 20px 40px -8px rgba(15,23,42,0.35)';
+        toast.className = 'toast';
+        toast.style.background = bg;
         toast.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-info-circle'}"></i><span>${message}</span>`;
         document.body.appendChild(toast);
         setTimeout(() => {
             toast.style.opacity = '0';
+            toast.style.transform = 'translate(-50%, -12px)';
             toast.style.transition = 'opacity 0.3s, transform 0.3s';
-            toast.style.transform = 'translate(-50%, -10px)';
             setTimeout(() => toast.remove(), 300);
         }, 3000);
     }
 
-    // --- ✅ THEME ---
+    // ==========================================
+    // THEME
+    // ==========================================
     function setupTheme() {
-        if (appState.darkMode) {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
+        if (appState.darkMode) document.documentElement.classList.add('dark');
+        else document.documentElement.classList.remove('dark');
     }
     function toggleDarkMode() {
         appState.darkMode = !appState.darkMode;
@@ -1206,264 +1589,296 @@
         document.documentElement.classList.toggle('dark');
     }
 
-    // --- ✅ SKELETONS ---
+    // ==========================================
+    // SKELETONS
+    // ==========================================
     function renderSkeletons() {
         const grid = document.getElementById('coursesGrid');
         grid.innerHTML = Array(6).fill(0).map(() => `
-            <div class="course-card p-4">
-                <div class="skeleton w-full h-40 rounded-xl mb-4"></div>
-                <div class="skeleton w-3/4 h-5 rounded-lg mb-3"></div>
-                <div class="skeleton w-1/2 h-4 rounded-lg mb-4"></div>
-                <div class="flex justify-between">
-                    <div class="skeleton w-20 h-8 rounded-lg"></div>
-                    <div class="skeleton w-24 h-8 rounded-lg"></div>
+            <div class="course-card" style="padding:14px;">
+                <div style="width:100%;height:160px;border-radius:12px;background:linear-gradient(90deg,#EFF3F8 25%,#F8FAFC 50%,#EFF3F8 75%);background-size:200% 100%;animation:skel 1.6s infinite;margin-bottom:14px;"></div>
+                <div style="width:75%;height:18px;border-radius:6px;background:linear-gradient(90deg,#EFF3F8 25%,#F8FAFC 50%,#EFF3F8 75%);background-size:200% 100%;animation:skel 1.6s infinite;margin-bottom:8px;"></div>
+                <div style="width:50%;height:14px;border-radius:6px;background:linear-gradient(90deg,#EFF3F8 25%,#F8FAFC 50%,#EFF3F8 75%);background-size:200% 100%;animation:skel 1.6s infinite;margin-bottom:16px;"></div>
+                <div style="display:flex;justify-content:space-between;">
+                    <div style="width:70px;height:26px;border-radius:8px;background:linear-gradient(90deg,#EFF3F8 25%,#F8FAFC 50%,#EFF3F8 75%);background-size:200% 100%;animation:skel 1.6s infinite;"></div>
+                    <div style="width:80px;height:26px;border-radius:8px;background:linear-gradient(90deg,#EFF3F8 25%,#F8FAFC 50%,#EFF3F8 75%);background-size:200% 100%;animation:skel 1.6s infinite;"></div>
                 </div>
             </div>
         `).join('');
     }
 
-    // --- ✅ CHANGE DETECTION ---
-    function coursesChanged(oldCourses, newCourses) {
-        if (!oldCourses || !newCourses) return true;
-        if (oldCourses.length !== newCourses.length) return true;
+    // ==========================================
+    // COURSE ICON MAP
+    // ==========================================
+    function getCatIcon(cat) {
+        const map = {
+            'برمجة': 'fa-code', 'تصميم': 'fa-paint-brush', 'تسويق': 'fa-bullhorn',
+            'لغات': 'fa-language', 'طب وصحة': 'fa-heartbeat', 'أعمال': 'fa-briefcase',
+            'تطوير الذات': 'fa-lightbulb', 'مهارات تقنية': 'fa-laptop-code',
+            'إدارة': 'fa-chart-line', 'محاسبة': 'fa-calculator', 'تصوير': 'fa-camera',
+            'طبخ': 'fa-utensils', 'لياقة بدنية': 'fa-dumbbell', 'فنون': 'fa-palette',
+            'موسيقى': 'fa-music', 'قيادة': 'fa-car', 'تعليم': 'fa-chalkboard-teacher',
+            'استشارات': 'fa-handshake', 'سفر': 'fa-plane', 'عقارات': 'fa-home',
+            'تداول': 'fa-chart-bar', 'زراعة': 'fa-leaf'
+        };
+        return map[cat] || 'fa-book';
+    }
+
+    // ==========================================
+    // REAL-TIME
+    // ==========================================
+    function coursesChanged(a, b) {
+        if (!a || !b) return true;
+        if (a.length !== b.length) return true;
         const sig = c => `${c.id}|${c.title||''}|${c.category||''}|${c.description||''}|${c.price||''}|${c.playlist_id||''}|${c.num||''}`;
-        const oldSig = oldCourses.map(sig).sort().join('###');
-        const newSig = newCourses.map(sig).sort().join('###');
-        return oldSig !== newSig;
+        return a.map(sig).sort().join('###') !== b.map(sig).sort().join('###');
     }
 
-    // --- ✅ INIT ---
-    async function initializeApp() {
-        try {
-            if (!auth.currentUser) {
-                await auth.signInAnonymously();
-                console.log("✅ Anonymous login successful");
-            }
-
-            const cachedCourses = loadCoursesFromCache();
-            if (cachedCourses && cachedCourses.length > 0) {
-                allCourses = cachedCourses;
-                console.log(`📦 Loaded ${allCourses.length} courses from cache (100h TTL)`);
-                renderCategories();
-                renderCourses();
-            }
-
-            setupRealtimeListener();
-
-            if (!cachedCourses || cachedCourses.length === 0) {
-                await fetchCoursesFromServerAndCache();
-            }
-        } catch (error) {
-            console.error("❌ Initialization error:", error);
-            showToast("⚠️ حدث خطأ في الاتصال", "error");
-            document.getElementById('coursesGrid').innerHTML = `
-                <div class="col-span-3 text-center py-16">
-                    <div class="w-20 h-20 bg-red-50 dark:bg-red-950/30 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-exclamation-triangle text-3xl text-red-500"></i>
-                    </div>
-                    <h3 class="text-lg font-extrabold text-gray-800 dark:text-white mb-1">تعذر تحميل الدورات</h3>
-                    <p class="text-sm text-gray-500 dark:text-gray-400">يرجى التحقق من اتصالك بالإنترنت</p>
-                </div>
-            `;
-        }
-
-        setInterval(() => {
-            flushProgressUpdates();
-            flushEnrollments();
-        }, 60000);
-    }
-
-    // --- ✅ REAL-TIME ---
-    function setupRealtimeListener() {
-        if (unsubscribeRealtime) {
-            unsubscribeRealtime();
-            unsubscribeRealtime = null;
-        }
-
-        unsubscribeRealtime = db.collection('courses').onSnapshot((snapshot) => {
-            const serverCourses = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    function setupRealtime() {
+        if (unsubscribeRealtime) unsubscribeRealtime();
+        unsubscribeRealtime = db.collection('courses').onSnapshot(snap => {
+            const serverCourses = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             serverCourses.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
-
-            const hasChanged = coursesChanged(allCourses, serverCourses);
-
-            if (hasChanged) {
+            if (coursesChanged(allCourses, serverCourses)) {
                 allCourses = serverCourses;
-                saveCoursesToCache(allCourses);
+                saveCache(allCourses);
                 renderCategories();
                 renderCourses();
                 if (realtimeInitialized) console.log(`🔄 Real-time: ${allCourses.length} courses`);
             }
             realtimeInitialized = true;
-        }, (error) => { console.warn("Realtime listener error:", error); });
+        }, err => console.warn("Realtime error:", err));
     }
 
-    async function fetchCoursesFromServerAndCache() {
+    async function fetchFromServer() {
         try {
-            const snapshot = await db.collection('courses').get({ source: 'server' });
-            const serverCourses = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            serverCourses.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
-            allCourses = serverCourses;
-            saveCoursesToCache(allCourses);
-            console.log(`📡 Fetched ${allCourses.length} courses and cached (100h)`);
+            const snap = await db.collection('courses').get({ source: 'server' });
+            const sc = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            sc.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+            allCourses = sc;
+            saveCache(allCourses);
             renderCategories();
             renderCourses();
-        } catch (error) {
-            console.error("❌ Error fetching from server:", error);
-            const cached = loadCoursesFromCache();
+        } catch (e) {
+            console.error("Server fetch error:", e);
+            const c = loadCache();
+            allCourses = c && c.length ? c : [];
+            renderCategories();
+            renderCourses();
+        }
+    }
+
+    // ==========================================
+    // INIT
+    // ==========================================
+    async function initializeApp() {
+        try {
+            if (!auth.currentUser) await auth.signInAnonymously();
+            console.log("✅ Anonymous auth");
+
+            const cached = loadCache();
             if (cached && cached.length) {
                 allCourses = cached;
-                renderCategories();
-                renderCourses();
-            } else {
-                allCourses = [];
+                console.log(`📦 Cache: ${cached.length} courses`);
                 renderCategories();
                 renderCourses();
             }
+
+            setupRealtime();
+
+            if (!cached || !cached.length) await fetchFromServer();
+        } catch (e) {
+            console.error("Init error:", e);
+            // Fallback: show fallback categories with empty courses
+            renderCategories(true);
+            renderCourses();
+            showToast("⚠️ تعذر الاتصال", "error");
         }
+
+        setInterval(() => {
+            flushProgress();
+            flushEnrollments();
+        }, 60000);
     }
 
-    // --- ✅ CATEGORIES ---
-    function renderCategories() {
-        const track = document.getElementById('categoriesTrack');
+    // ==========================================
+    // RENDER CATEGORIES
+    // ==========================================
+    let categoriesReady = false;
+    function renderCategories(useFallback = false) {
+        const track = document.getElementById('catsTrack');
         const filterSelect = document.getElementById('categoryFilter');
+        if (!track || !filterSelect) return;
 
-        if (!allCourses || allCourses.length === 0) {
-            track.innerHTML = '<div class="text-gray-500 dark:text-gray-400 py-4 px-4 text-sm">لا توجد تصنيفات متاحة</div>';
-            track.classList.remove('anim-2', 'anim-4');
-            filterSelect.innerHTML = '<option value="">كل التخصصات</option>';
-            return;
+        let categories = [];
+        let useFallbackIcons = false;
+
+        if (useFallback || allCourses.length === 0) {
+            categories = FALLBACK_CATEGORIES.map(c => c.name);
+            useFallbackIcons = true;
+        } else {
+            categories = [...new Set(allCourses.map(c => c.category || 'عام'))];
         }
 
-        const categories = [...new Set(allCourses.map(c => c.category || 'عام'))];
-
-        let setHtml = `
-            <div onclick="filterByCategory('all')" class="category-chip category-chip-all">
-                <div class="category-icon-wrap"><i class="fas fa-th-large"></i></div>
-                <span>الكل</span>
+        // Build chip set
+        const allChip = `
+            <div onclick="filterByCategory('all')" class="cat-chip cat-chip-all">
+                <div class="cat-chip-icon"><i class="fas fa-th-large"></i></div>
+                <span class="cat-chip-label">الكل</span>
             </div>
         `;
+
+        let chips = allChip;
         categories.forEach(cat => {
-            const safeCat = cat.replace(/'/g, "\\'");
-            setHtml += `
-                <div onclick="filterByCategory('${safeCat}')" class="category-chip">
-                    <div class="category-icon-wrap">${getCategoryIcon(cat)}</div>
-                    <span>${cat}</span>
+            const safe = cat.replace(/'/g, "\\'");
+            const icon = useFallbackIcons
+                ? (FALLBACK_CATEGORIES.find(c => c.name === cat)?.icon || 'fa-book')
+                : getCatIcon(cat);
+            chips += `
+                <div onclick="filterByCategory('${safe}')" class="cat-chip">
+                    <div class="cat-chip-icon"><i class="fas ${icon}"></i></div>
+                    <span class="cat-chip-label">${cat}</span>
                 </div>
             `;
         });
 
-        const numSets = categories.length < 10 ? 4 : 2;
-        let finalHtml = '';
-        for (let i = 0; i < numSets; i++) finalHtml += setHtml;
+        // Duplicate 2x for seamless loop
+        track.innerHTML = chips + chips;
 
-        track.classList.remove('anim-2', 'anim-4');
-        track.innerHTML = finalHtml;
-        void track.offsetWidth;
-        track.classList.add(numSets === 4 ? 'anim-4' : 'anim-2');
+        // Reset marquee position
+        marqueeState.position = 0;
+        marqueeState.setWidth = 0;
+        track.style.transform = 'translate3d(0,0,0)';
 
+        // Re-measure after DOM update
+        requestAnimationFrame(() => {
+            marqueeState.setWidth = track.scrollWidth / 2;
+            // Start position: shifted left by setWidth (showing second set)
+            track.style.transform = `translate3d(${-marqueeState.setWidth}px, 0, 0)`;
+            marqueeState.position = 0;
+        });
+
+        // Filter select
         filterSelect.innerHTML = '<option value="">كل التخصصات</option>';
         categories.forEach(cat => {
-            const option = document.createElement('option');
-            option.value = cat;
-            option.innerText = cat;
-            filterSelect.appendChild(option);
+            const opt = document.createElement('option');
+            opt.value = cat;
+            opt.innerText = cat;
+            filterSelect.appendChild(opt);
         });
+
+        categoriesReady = true;
+        console.log(`✅ Rendered ${categories.length} categories`);
     }
 
-    function getCategoryIcon(cat) {
-        const map = {
-            'برمجة': '<i class="fas fa-code"></i>',
-            'تصميم': '<i class="fas fa-paint-brush"></i>',
-            'تسويق': '<i class="fas fa-bullhorn"></i>',
-            'لغات': '<i class="fas fa-language"></i>',
-            'طب وصحة': '<i class="fas fa-heartbeat"></i>',
-            'أعمال': '<i class="fas fa-briefcase"></i>',
-            'تطوير الذات': '<i class="fas fa-lightbulb"></i>',
-            'مهارات تقنية': '<i class="fas fa-laptop-code"></i>',
-            'إدارة': '<i class="fas fa-chart-line"></i>',
-            'محاسبة': '<i class="fas fa-calculator"></i>',
-            'تصوير': '<i class="fas fa-camera"></i>',
-            'طبخ': '<i class="fas fa-utensils"></i>',
-            'لياقة بدنية': '<i class="fas fa-dumbbell"></i>',
-            'فنون': '<i class="fas fa-palette"></i>',
-            'موسيقى': '<i class="fas fa-music"></i>',
-            'قيادة': '<i class="fas fa-car"></i>',
-            'تعليم': '<i class="fas fa-chalkboard-teacher"></i>',
-            'استشارات': '<i class="fas fa-handshake"></i>',
-            'سفر': '<i class="fas fa-plane"></i>',
-            'عقارات': '<i class="fas fa-home"></i>',
-            'تداول': '<i class="fas fa-chart-bar"></i>',
-            'زراعة': '<i class="fas fa-leaf"></i>'
-        };
-        return map[cat] || '<i class="fas fa-book"></i>';
-    }
+    // ==========================================
+    // CATEGORIES MARQUEE (JS-based, robust)
+    // ==========================================
+    const marqueeState = {
+        position: 0,
+        setWidth: 0,
+        paused: false,
+        resumeTimer: null,
+        speed: 0.4, // px per frame @60fps ≈ 24px/s
+        lastFrame: 0
+    };
 
-    // --- ✅ MARQUEE ---
     function initCategoriesMarquee() {
-        const marquee = document.getElementById('categoriesMarquee');
-        if (!marquee) return;
-        let resumeTimeout = null;
+        const viewport = document.getElementById('catsViewport');
+        const track = document.getElementById('catsTrack');
+        if (!viewport || !track) return;
 
+        // Pause on interaction
         const pause = () => {
-            if (resumeTimeout) { clearTimeout(resumeTimeout); resumeTimeout = null; }
-            marquee.classList.add('paused');
+            marqueeState.paused = true;
+            if (marqueeState.resumeTimer) {
+                clearTimeout(marqueeState.resumeTimer);
+                marqueeState.resumeTimer = null;
+            }
         };
-        const resume = (delay = 1500) => {
-            if (resumeTimeout) clearTimeout(resumeTimeout);
-            resumeTimeout = setTimeout(() => marquee.classList.remove('paused'), delay);
+        const resume = (delay = 0) => {
+            if (marqueeState.resumeTimer) clearTimeout(marqueeState.resumeTimer);
+            marqueeState.resumeTimer = setTimeout(() => {
+                marqueeState.paused = false;
+            }, delay);
         };
 
-        marquee.addEventListener('touchstart', pause, { passive: true });
-        marquee.addEventListener('touchend', () => resume(1800), { passive: true });
-        marquee.addEventListener('touchcancel', () => resume(1800), { passive: true });
-        marquee.addEventListener('mouseenter', pause);
-        marquee.addEventListener('mouseleave', () => resume(0));
-        marquee.addEventListener('mousedown', pause);
-        marquee.addEventListener('mouseup', () => resume(1800));
+        viewport.addEventListener('mouseenter', pause);
+        viewport.addEventListener('mouseleave', () => resume(0));
+        viewport.addEventListener('touchstart', pause, { passive: true });
+        viewport.addEventListener('touchend', () => resume(2000), { passive: true });
+        viewport.addEventListener('touchcancel', () => resume(2000), { passive: true });
+        viewport.addEventListener('mousedown', pause);
+        viewport.addEventListener('mouseup', () => resume(2000));
 
         document.addEventListener('visibilitychange', () => {
             if (document.hidden) pause();
-            else marquee.classList.remove('paused');
+            else resume(0);
         });
+
+        // Re-measure on resize
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                marqueeState.setWidth = track.scrollWidth / 2;
+                marqueeState.position = 0;
+                track.style.transform = `translate3d(${-marqueeState.setWidth}px, 0, 0)`;
+            }, 200);
+        });
+
+        // Animation loop
+        function tick(now) {
+            if (marqueeState.setWidth > 0 && !marqueeState.paused) {
+                marqueeState.position += marqueeState.speed;
+                if (marqueeState.position >= marqueeState.setWidth) {
+                    marqueeState.position -= marqueeState.setWidth;
+                }
+                // translateX: from -setWidth to 0 (moves content to the RIGHT)
+                const x = marqueeState.position - marqueeState.setWidth;
+                track.style.transform = `translate3d(${x}px, 0, 0)`;
+            }
+            requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
     }
 
-    // --- ✅ BUILD COURSE CARD ---
-    function buildCourseCardHTML(course, isEnrolled) {
+    // ==========================================
+    // BUILD COURSE CARD
+    // ==========================================
+    function buildCourseCard(course, isEnrolled) {
         const isFree = (course.price === 'free' || course.price === 'مجانية' || !course.price);
-        const priceDisplay = isFree
-            ? '<span class="course-price-free"><i class="fas fa-bolt"></i> مجانية</span>'
-            : `<span class="course-price-paid"><i class="fas fa-tag"></i> ${course.price}</span>`;
+        const priceHTML = isFree
+            ? '<span class="price-free"><i class="fas fa-bolt"></i> مجانية</span>'
+            : `<span class="price-paid"><i class="fas fa-tag"></i> ${course.price}</span>`;
 
-        let videoEmbed;
+        let media;
         if (course.playlist_id) {
-            videoEmbed = `<iframe
-                              src="https://www.youtube.com/embed/videoseries?list=${course.playlist_id}"
-                              frameborder="0"
-                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                              allowfullscreen
-                              loading="lazy">
-                          </iframe>`;
+            media = `<iframe src="https://www.youtube.com/embed/videoseries?list=${course.playlist_id}"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen loading="lazy"></iframe>`;
         } else {
-            videoEmbed = `<div class="absolute inset-0 w-full h-full bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 flex items-center justify-center text-gray-400"><i class="fas fa-video-slash text-2xl"></i></div>`;
+            media = `<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#E2E8F0,#CBD5E1);color:#64748B;font-size:24px;"><i class="fas fa-video-slash"></i></div>`;
         }
 
         return `
             <div class="course-card">
-                <div class="video-wrap">
-                    ${videoEmbed}
-                    <div class="cat-pill">
+                <div class="course-media">
+                    ${media}
+                    <div class="course-cat-badge">
                         <i class="fas fa-circle"></i>
                         ${course.category || 'عام'}
                     </div>
                 </div>
-                <div class="p-5 flex flex-col flex-1">
-                    <h3 class="text-[15px] font-extrabold text-gray-800 dark:text-white mb-2 line-clamp-2 leading-snug tracking-tight">${course.title || 'بدون عنوان'}</h3>
-                    <p class="text-[13px] text-gray-500 dark:text-gray-400 mb-4 line-clamp-2 flex-1 leading-relaxed">${course.description || 'لا يوجد وصف'}</p>
-                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-gray-800">
-                        ${priceDisplay}
+                <div class="course-body">
+                    <h3 class="course-title">${course.title || 'بدون عنوان'}</h3>
+                    <p class="course-desc">${course.description || 'لا يوجد وصف'}</p>
+                    <div class="course-footer">
+                        ${priceHTML}
                         <button onclick="${isEnrolled ? `openPlayer('${course.id}')` : `enrollCourse('${course.id}')`}"
-                            class="${isEnrolled ? 'btn-enrolled' : 'btn-primary'}">
-                            ${isEnrolled ? 'استكمال <i class="fas fa-play text-[9px]"></i>' : 'سجّل الآن <i class="fas fa-arrow-left text-[10px]"></i>'}
+                            class="${isEnrolled ? 'btn-continue' : 'btn-enroll'}">
+                            ${isEnrolled ? 'استكمال <i class="fas fa-play" style="font-size:9px;"></i>' : 'سجّل الآن <i class="fas fa-arrow-left" style="font-size:10px;"></i>'}
                         </button>
                     </div>
                 </div>
@@ -1471,22 +1886,23 @@
         `;
     }
 
-    // --- ✅ RENDER COURSES ---
+    // ==========================================
+    // RENDER COURSES
+    // ==========================================
     function renderCourses(filter = null) {
         if (filter !== null) currentFilter = filter;
         const grid = document.getElementById('coursesGrid');
         const loadMoreBtn = document.getElementById('loadMoreBtn');
         const noResults = document.getElementById('noResults');
-        const coursesCount = document.getElementById('coursesCount');
+        const countEl = document.getElementById('coursesCount');
 
         let filtered = allCourses;
 
         if (!filtered || filtered.length === 0) {
             grid.innerHTML = '';
-            noResults.classList.remove('hidden');
-            noResults.classList.add('flex');
+            noResults.classList.add('show');
             loadMoreBtn.style.display = 'none';
-            if (coursesCount) coursesCount.textContent = '';
+            if (countEl) countEl.textContent = '';
             return;
         }
 
@@ -1501,191 +1917,170 @@
 
         if (filtered.length === 0) {
             grid.innerHTML = '';
-            noResults.classList.remove('hidden');
-            noResults.classList.add('flex');
+            noResults.classList.add('show');
             loadMoreBtn.style.display = 'none';
-            if (coursesCount) coursesCount.textContent = '';
+            if (countEl) countEl.textContent = '';
             return;
         }
 
-        noResults.classList.add('hidden');
-        noResults.classList.remove('flex');
-
-        const pageCourses = filtered.slice(0, pageSize);
+        noResults.classList.remove('show');
+        const firstPage = filtered.slice(0, pageSize);
         displayedCourses = filtered;
 
-        grid.innerHTML = pageCourses.map(course => {
-            const isEnrolled = appState.myCourses.includes(course.id);
-            return buildCourseCardHTML(course, isEnrolled);
-        }).join('');
-
-        if (coursesCount) coursesCount.textContent = `${filtered.length} دورة`;
+        grid.innerHTML = firstPage.map(c => buildCourseCard(c, appState.myCourses.includes(c.id))).join('');
+        if (countEl) countEl.textContent = `${filtered.length} دورة`;
 
         if (filtered.length > pageSize) {
             loadMoreBtn.style.display = 'inline-flex';
-            loadMoreBtn.onclick = () => loadMoreFilteredCourses();
+            loadMoreBtn.onclick = loadMore;
         } else {
             loadMoreBtn.style.display = 'none';
         }
     }
 
-    function loadMoreFilteredCourses() {
-        const loadMoreBtn = document.getElementById('loadMoreBtn');
+    function loadMore() {
         const grid = document.getElementById('coursesGrid');
-        const currentDisplayCount = grid.children.length;
-        const totalFiltered = displayedCourses.length;
-        if (currentDisplayCount >= totalFiltered) {
+        const loadMoreBtn = document.getElementById('loadMoreBtn');
+        const shown = grid.children.length;
+        const total = displayedCourses.length;
+        if (shown >= total) {
             loadMoreBtn.style.display = 'none';
             return;
         }
-        const nextCount = Math.min(currentDisplayCount + pageSize, totalFiltered);
-        const nextCourses = displayedCourses.slice(currentDisplayCount, nextCount);
-        const fragment = document.createDocumentFragment();
-        nextCourses.forEach(course => {
-            const isEnrolled = appState.myCourses.includes(course.id);
-            const wrapper = document.createElement('div');
-            wrapper.innerHTML = buildCourseCardHTML(course, isEnrolled).trim();
-            fragment.appendChild(wrapper.firstChild);
+        const nextCount = Math.min(shown + pageSize, total);
+        const nextCourses = displayedCourses.slice(shown, nextCount);
+        const frag = document.createDocumentFragment();
+        nextCourses.forEach(c => {
+            const wrap = document.createElement('div');
+            wrap.innerHTML = buildCourseCard(c, appState.myCourses.includes(c.id));
+            frag.appendChild(wrap.firstElementChild);
         });
-        grid.appendChild(fragment);
-        if (currentDisplayCount + nextCourses.length >= totalFiltered) {
-            loadMoreBtn.style.display = 'none';
-        }
+        grid.appendChild(frag);
+        if (shown + nextCourses.length >= total) loadMoreBtn.style.display = 'none';
     }
 
-    // --- ✅ ENROLLMENT ---
+    // ==========================================
+    // ENROLLMENT
+    // ==========================================
     function enrollCourse(id) {
         if (!appState.myCourses.includes(id)) {
             appState.myCourses.push(id);
             localStorage.setItem("myCourses", JSON.stringify(appState.myCourses));
             if (!appState.progress[id]) {
-                appState.progress[id] = { completed: [], total: 10 };
+                appState.progress[id] = { completed: [] };
                 localStorage.setItem("courseProgress", JSON.stringify(appState.progress));
             }
             showToast("تم التسجيل بنجاح 🎉", "success");
             renderCourses();
             renderMyCourses();
             updateNavState();
-            queueEnrollmentWrite(id);
+            if (auth.currentUser) {
+                appState.pendingEnrollments.push({
+                    userId: auth.currentUser.uid,
+                    courseId: id
+                });
+            }
         }
     }
 
-    function queueEnrollmentWrite(courseId) {
-        if (!auth.currentUser) return;
-        appState.pendingEnrollments.push({
-            userId: auth.currentUser.uid,
-            courseId,
-            enrolledAt: new Date().toISOString()
-        });
-    }
-
     async function flushEnrollments() {
-        if (appState.pendingEnrollments.length === 0 || !auth.currentUser) return;
+        if (!appState.pendingEnrollments.length || !auth.currentUser) return;
         const batch = db.batch();
         const userRef = db.collection('users').doc(auth.currentUser.uid);
-        appState.pendingEnrollments.forEach(enrollment => {
-            const enrollmentRef = userRef.collection('enrollments').doc(enrollment.courseId);
-            batch.set(enrollmentRef, {
+        appState.pendingEnrollments.forEach(e => {
+            batch.set(userRef.collection('enrollments').doc(e.courseId), {
                 enrolledAt: firebase.firestore.FieldValue.serverTimestamp()
             }, { merge: true });
         });
         try {
             await batch.commit();
-            console.log(`✅ Flushed ${appState.pendingEnrollments.length} enrollments`);
             appState.pendingEnrollments = [];
-        } catch (error) { console.error("Error flushing enrollments:", error); }
+        } catch (e) { console.warn("Enroll flush error:", e); }
     }
 
-    // --- ✅ PLAYER ---
+    // ==========================================
+    // PLAYER
+    // ==========================================
     function openPlayer(id) {
         const course = allCourses.find(c => c.id === id);
         if (!course) return;
         appState.currentCourseId = id;
-        document.getElementById('playerCourseTitle').innerText = course.title;
-        document.getElementById('playerCourseLabel').innerText = course.title;
+        document.getElementById('playerCourseTitle').innerText = course.title || '';
+        document.getElementById('playerCourseLabel').innerText = course.title || '';
         document.getElementById('playerCourseDesc').innerText = course.description || '';
 
         const frame = document.getElementById('playerFrame');
-        if (course.playlist_id) {
-            frame.src = `https://www.youtube.com/embed/videoseries?list=${course.playlist_id}`;
-        } else {
-            frame.src = "";
-        }
-        const totalVideos = course.num || 10;
-        renderPlaylistItems(id, totalVideos);
-        document.getElementById('playerOverlay').classList.remove('translate-y-full');
+        frame.src = course.playlist_id ? `https://www.youtube.com/embed/videoseries?list=${course.playlist_id}` : '';
+
+        renderPlaylist(id, course.num || 10);
+        document.getElementById('playerOverlay').classList.add('show');
+        document.body.style.overflow = 'hidden';
         localStorage.setItem("lastViewedCourse", JSON.stringify({ id: course.id, title: course.title }));
     }
 
     function closePlayer() {
-        document.getElementById('playerOverlay').classList.add('translate-y-full');
-        document.getElementById('playerFrame').src = "";
+        document.getElementById('playerOverlay').classList.remove('show');
+        document.getElementById('playerFrame').src = '';
+        document.body.style.overflow = '';
         renderMyCourses();
-        flushProgressUpdates();
+        flushProgress();
     }
 
-    function renderPlaylistItems(courseId, totalVideos) {
+    function renderPlaylist(courseId, total) {
         const container = document.getElementById('playlistContainer');
-        const progressData = appState.progress[courseId] || { completed: [] };
+        const prog = appState.progress[courseId] || { completed: [] };
         let html = '';
-        for (let i = 1; i <= totalVideos; i++) {
-            const isCompleted = progressData.completed.includes(i);
+        for (let i = 1; i <= total; i++) {
+            const done = prog.completed.includes(i);
             html += `
-                <div class="lesson-row ${isCompleted ? 'done' : ''}">
-                    <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-xl flex items-center justify-center text-[12px] font-extrabold ${isCompleted ? 'bg-gradient-to-br from-emerald-500 to-green-600 text-white' : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-300'}">
-                            ${isCompleted ? '<i class="fas fa-check text-[11px]"></i>' : i}
-                        </div>
-                        <span class="text-[13px] font-bold text-gray-700 dark:text-gray-200">الدرس ${i}</span>
+                <div class="lesson-row ${done ? 'done' : ''}">
+                    <div style="display:flex;align-items:center;gap:10px;">
+                        <div class="lesson-num">${done ? '<i class="fas fa-check" style="font-size:10px;"></i>' : i}</div>
+                        <span class="lesson-label">الدرس ${i}</span>
                     </div>
-                    <button onclick="toggleLessonComplete(${i})" class="w-8 h-8 rounded-lg flex items-center justify-center transition-all ${isCompleted ? 'text-emerald-500' : 'text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/30'}">
-                        <i class="fas ${isCompleted ? 'fa-check-circle' : 'fa-circle'} text-[13px]"></i>
+                    <button class="lesson-check" onclick="toggleLesson(${i})">
+                        <i class="fas ${done ? 'fa-check-circle' : 'fa-circle'}"></i>
                     </button>
                 </div>
             `;
         }
         container.innerHTML = html;
-        updateProgressUI(courseId, totalVideos);
+        updateProgressUI(courseId, total);
     }
 
-    function toggleLessonComplete(lessonIndex) {
+    function toggleLesson(idx) {
         const id = appState.currentCourseId;
         if (!id) return;
         if (!appState.progress[id]) appState.progress[id] = { completed: [] };
         const list = appState.progress[id].completed;
-        if (list.includes(lessonIndex)) {
-            appState.progress[id].completed = list.filter(i => i !== lessonIndex);
+        if (list.includes(idx)) {
+            appState.progress[id].completed = list.filter(i => i !== idx);
         } else {
-            appState.progress[id].completed.push(lessonIndex);
+            appState.progress[id].completed.push(idx);
         }
         localStorage.setItem("courseProgress", JSON.stringify(appState.progress));
-        if (!appState.pendingProgressUpdates[id]) {
-            appState.pendingProgressUpdates[id] = { completed: [...appState.progress[id].completed] };
-        } else {
-            appState.pendingProgressUpdates[id].completed = [...appState.progress[id].completed];
-        }
+        if (!appState.pendingProgressUpdates[id]) appState.pendingProgressUpdates[id] = { completed: [] };
+        appState.pendingProgressUpdates[id].completed = [...appState.progress[id].completed];
+
         const course = allCourses.find(c => c.id === id);
-        const total = course?.num || 10;
-        renderPlaylistItems(id, total);
-        updateProgressUI(id, total);
+        renderPlaylist(id, course?.num || 10);
     }
 
-    async function flushProgressUpdates() {
-        if (Object.keys(appState.pendingProgressUpdates).length === 0 || !auth.currentUser) return;
+    async function flushProgress() {
+        if (!Object.keys(appState.pendingProgressUpdates).length || !auth.currentUser) return;
         const batch = db.batch();
         const userId = auth.currentUser.uid;
-        for (const [courseId, progress] of Object.entries(appState.pendingProgressUpdates)) {
-            const docRef = db.collection('users').doc(userId).collection('progress').doc(courseId);
-            batch.set(docRef, {
-                completed: progress.completed,
-                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-            }, { merge: true });
+        for (const [courseId, p] of Object.entries(appState.pendingProgressUpdates)) {
+            batch.set(
+                db.collection('users').doc(userId).collection('progress').doc(courseId),
+                { completed: p.completed, updatedAt: firebase.firestore.FieldValue.serverTimestamp() },
+                { merge: true }
+            );
         }
         try {
             await batch.commit();
-            console.log(`✅ Progress batch (${Object.keys(appState.pendingProgressUpdates).length})`);
             appState.pendingProgressUpdates = {};
-        } catch (error) { console.error("Error writing progress batch:", error); }
+        } catch (e) { console.warn("Progress flush error:", e); }
     }
 
     function toggleCompleteVideo() {
@@ -1694,110 +2089,106 @@
         const course = allCourses.find(c => c.id === id);
         const total = course?.num || 10;
         if (!appState.progress[id]) appState.progress[id] = { completed: [] };
-        const completedList = appState.progress[id].completed;
-        let targetLesson = 1;
-        while (completedList.includes(targetLesson) && targetLesson <= total) targetLesson++;
-        if (targetLesson <= total) {
-            toggleLessonComplete(targetLesson);
-            showToast(`✅ تم إكمال الدرس ${targetLesson}`, 'success');
+        const list = appState.progress[id].completed;
+        let next = 1;
+        while (list.includes(next) && next <= total) next++;
+        if (next <= total) {
+            toggleLesson(next);
+            showToast(`✅ تم إكمال الدرس ${next}`, 'success');
         } else {
             showToast('🎉 لقد أتممت جميع الدروس!', 'info');
         }
     }
 
     function updateProgressUI(id, total) {
-        const completed = appState.progress[id]?.completed.length || 0;
-        const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
-        document.getElementById('progressBarFill').style.width = `${percent}%`;
-        document.getElementById('progressPercentage').innerText = `${percent}% مكتمل`;
+        const done = appState.progress[id]?.completed.length || 0;
+        const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+        document.getElementById('progressBarFill').style.width = pct + '%';
+        document.getElementById('progressPercentage').innerText = pct + '% مكتمل';
     }
 
-    // --- ✅ MY COURSES ---
+    // ==========================================
+    // MY COURSES
+    // ==========================================
     function renderMyCourses() {
         const grid = document.getElementById('myCoursesGrid');
-        const lastViewed = JSON.parse(localStorage.getItem("lastViewedCourse") || 'null');
+        const last = JSON.parse(localStorage.getItem("lastViewedCourse") || 'null');
         const banner = document.getElementById('resumeLearningBanner');
-        if (lastViewed && appState.myCourses.includes(lastViewed.id)) {
-            banner.classList.remove('hidden');
-            document.getElementById('resumeTitle').innerText = lastViewed.title;
-            document.getElementById('resumeBtn').onclick = () => openPlayer(lastViewed.id);
+
+        if (last && appState.myCourses.includes(last.id)) {
+            banner.style.display = 'block';
+            document.getElementById('resumeTitle').innerText = last.title;
+            document.getElementById('resumeBtn').onclick = () => openPlayer(last.id);
         } else {
-            banner.classList.add('hidden');
+            banner.style.display = 'none';
         }
-        if (appState.myCourses.length === 0) {
+
+        if (!appState.myCourses.length) {
             grid.innerHTML = `
-                <div class="col-span-3 text-center py-16">
-                    <div class="w-20 h-20 rounded-2xl bg-blue-50 dark:bg-blue-950/40 flex items-center justify-center mx-auto mb-4 border border-blue-100 dark:border-blue-900/50">
-                        <i class="fas fa-book-open text-2xl text-blue-500"></i>
-                    </div>
-                    <h3 class="text-lg font-extrabold text-gray-800 dark:text-white mb-1">لا توجد دورات بعد</h3>
-                    <p class="text-sm text-gray-500 dark:text-gray-400">سجّل في دورتك الأولى وابدأ رحلة التعلم</p>
+                <div class="empty-state show" style="grid-column:1/-1;">
+                    <div class="empty-icon"><i class="fas fa-book-open"></i></div>
+                    <h3 class="empty-title">لا توجد دورات بعد</h3>
+                    <p class="empty-desc">سجّل في دورتك الأولى وابدأ رحلة التعلم</p>
                 </div>
             `;
             return;
         }
+
         grid.innerHTML = appState.myCourses.map(id => {
-            const course = allCourses.find(c => c.id === id);
-            if (!course) return '';
-            const total = course.num || 10;
-            const completed = appState.progress[id]?.completed.length || 0;
-            const percent = Math.round((completed / total) * 100);
+            const c = allCourses.find(x => x.id === id);
+            if (!c) return '';
+            const total = c.num || 10;
+            const done = appState.progress[id]?.completed.length || 0;
+            const pct = Math.round((done / total) * 100);
             return `
-                <div class="course-card p-4 flex gap-4 items-center cursor-pointer" onclick="openPlayer('${id}')">
-                    <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-700 to-blue-500 flex items-center justify-center text-white text-2xl shrink-0 shadow-lg shadow-blue-500/30">
-                        <i class="fas fa-play"></i>
-                    </div>
-                    <div class="flex-1 min-w-0">
-                        <h4 class="font-extrabold text-gray-800 dark:text-white truncate text-[14px] mb-1">${course.title}</h4>
-                        <div class="flex justify-between items-center text-[11px] font-bold text-gray-500 dark:text-gray-400 mb-2">
-                            <span>${completed}/${total} درس</span>
-                            <span>${percent}%</span>
+                <div class="my-course-card" onclick="openPlayer('${id}')">
+                    <div class="my-course-thumb"><i class="fas fa-play"></i></div>
+                    <div class="my-course-body">
+                        <h4 class="my-course-title">${c.title}</h4>
+                        <div class="my-course-meta">
+                            <span>${done}/${total} درس</span>
+                            <span>${pct}%</span>
                         </div>
-                        <div class="progress-track" style="height:6px;">
-                            <div class="progress-fill" style="width:${percent}%"></div>
+                        <div class="my-progress-track">
+                            <div class="my-progress-fill" style="width:${pct}%"></div>
                         </div>
                     </div>
-                    <button onclick="removeCourse('${id}', event)" class="w-8 h-8 rounded-lg flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition-all">
-                        <i class="fas fa-trash-alt text-[12px]"></i>
+                    <button class="my-course-remove" onclick="removeCourse('${id}', event)">
+                        <i class="fas fa-trash-alt"></i>
                     </button>
                 </div>
             `;
         }).join('');
     }
 
-    function removeCourse(id, event) {
-        event.stopPropagation();
-        if (confirm("هل أنت متأكد من حذف الدورة؟")) {
-            appState.myCourses = appState.myCourses.filter(cid => cid !== id);
-            localStorage.setItem("myCourses", JSON.stringify(appState.myCourses));
-            renderMyCourses();
-            renderCourses();
-            updateNavState();
-        }
+    function removeCourse(id, e) {
+        e.stopPropagation();
+        if (!confirm("هل تريد حذف الدورة؟")) return;
+        appState.myCourses = appState.myCourses.filter(x => x !== id);
+        localStorage.setItem("myCourses", JSON.stringify(appState.myCourses));
+        renderMyCourses();
+        renderCourses();
+        updateNavState();
     }
 
-    // --- ✅ NAVIGATION ---
+    // ==========================================
+    // NAVIGATION
+    // ==========================================
     function showHome() {
-        document.getElementById('coursesSection').classList.remove('hidden');
-        document.getElementById('myCoursesView').classList.add('hidden');
-        setActiveNav(0);
+        document.getElementById('coursesSection').style.display = '';
+        document.getElementById('myCoursesView').style.display = 'none';
+        document.getElementById('navHome').classList.add('active');
+        document.getElementById('navMy').classList.remove('active');
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function showMyCourses() {
-        document.getElementById('coursesSection').classList.add('hidden');
-        document.getElementById('myCoursesView').classList.remove('hidden');
+        document.getElementById('coursesSection').style.display = 'none';
+        document.getElementById('myCoursesView').style.display = '';
+        document.getElementById('navHome').classList.remove('active');
+        document.getElementById('navMy').classList.add('active');
         renderMyCourses();
-        setActiveNav(1);
         window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function setActiveNav(index) {
-        const btns = document.querySelectorAll('.nav-item');
-        btns.forEach((b, i) => {
-            if (i === index) b.classList.add('active');
-            else b.classList.remove('active');
-        });
     }
 
     function openWhatsApp() {
@@ -1805,85 +2196,74 @@
     }
 
     function updateNavState() {
-        if (appState.myCourses.length > 0) {
-            document.getElementById('myCoursesDot').classList.remove('hidden');
-        } else {
-            document.getElementById('myCoursesDot').classList.add('hidden');
-        }
+        const dot = document.getElementById('myCoursesDot');
+        if (appState.myCourses.length > 0) dot.style.display = 'block';
+        else dot.style.display = 'none';
     }
 
-    // --- ✅ FILTERS ---
+    // ==========================================
+    // FILTER
+    // ==========================================
     function filterByCategory(cat) {
-        currentFilter = (cat === 'all') ? null : cat;
+        currentFilter = cat === 'all' ? null : cat;
         renderCourses(currentFilter);
-        const target = document.getElementById('coursesSection');
-        window.scrollTo({ top: target.offsetTop - 100, behavior: 'smooth' });
+        const sec = document.getElementById('coursesSection');
+        const y = sec.getBoundingClientRect().top + window.pageYOffset - 100;
+        window.scrollTo({ top: y, behavior: 'smooth' });
     }
 
+    // ==========================================
+    // SEARCH
+    // ==========================================
     function debounce(fn, delay) {
         let t;
-        return function(...args) {
+        return function (...args) {
             clearTimeout(t);
             t = setTimeout(() => fn.apply(this, args), delay);
         };
     }
 
-    function setupEventListeners() {
-        const searchInput = document.getElementById('searchInput');
-        searchInput.addEventListener('input', debounce((e) => {
-            currentFilter = e.target.value;
+    function setupEvents() {
+        const search = document.getElementById('searchInput');
+        search.addEventListener('input', debounce(e => {
+            currentFilter = e.target.value || null;
             renderCourses(currentFilter);
         }, 250));
 
-        document.getElementById('categoryFilter').addEventListener('change', (e) => {
-            currentFilter = e.target.value;
+        document.getElementById('categoryFilter').addEventListener('change', e => {
+            currentFilter = e.target.value || null;
             renderCourses(currentFilter);
         });
     }
 
-    // --- ✅ DOMContentLoaded ---
+    // ==========================================
+    // BOOT
+    // ==========================================
     document.addEventListener('DOMContentLoaded', () => {
         setupTheme();
         renderSkeletons();
         initCategoriesMarquee();
-        initializeApp();
-        setupEventListeners();
+        setupEvents();
         updateNavState();
+        initializeApp();
 
         window.addEventListener('beforeunload', () => {
-            flushProgressUpdates();
+            flushProgress();
             flushEnrollments();
         });
     });
 
-    // ===== antidebug =====
+    // ==========================================
+    // ANTIDEBUG
+    // ==========================================
     (() => {
-        document.addEventListener("keydown", (e) => {
-            if (
-                (e.ctrlKey && e.shiftKey && ["I", "C", "J", "L"].includes(e.key.toUpperCase())) ||
-                (e.key === "F12") ||
-                (e.ctrlKey && e.key.toUpperCase() === "U")
-            ) e.preventDefault();
+        document.addEventListener("keydown", e => {
+            if ((e.ctrlKey && e.shiftKey && ["I","C","J","L"].includes(e.key.toUpperCase())) || e.key === "F12" || (e.ctrlKey && e.key.toUpperCase() === "U")) e.preventDefault();
         });
         document.addEventListener("copy", e => e.preventDefault());
         document.addEventListener("cut", e => e.preventDefault());
         document.addEventListener("contextmenu", e => e.preventDefault());
         document.addEventListener("selectstart", e => e.preventDefault());
-        let detectSize = () => {
-            if (window.outerWidth - window.innerWidth > 200 || window.outerHeight - window.innerHeight > 200) console.clear();
-        };
-        window.addEventListener("resize", detectSize);
-        let start = performance.now();
-        console.log("%c ", "font-size:200px;");
-        let end = performance.now();
-        if (end - start > 50) console.clear();
-        const observer = new MutationObserver(() => { console.clear(); });
-        observer.observe(document.documentElement, { attributes: true, childList: false, subtree: false });
-        setInterval(() => {
-            const t = Date.now();
-            debugger;
-            if (Date.now() - t > 100) console.clear();
-        }, 500);
     })();
 </script>
 </body>
